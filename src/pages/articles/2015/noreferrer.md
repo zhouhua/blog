@@ -300,11 +300,11 @@ window.open('http://www.no-referer.de/' + url);</pre>
 
 但是这个类库存在几个问题：
 
-1.  不支持jquery 1.8+版本（依赖$.browser的缘故）；
+1.  不支持jquery 1.8+版本（依赖`$.browser`的缘故）；
 2.  不支持IE 11（IE 11由于userAgent发生变化，老版本jquery不会把它认为是msie）；
 3.  google的跳转在国内无法使用；
 4.  不支持动态创建的a标签，或者ajax请求回来的html片断中的a标签
 
 针对这几个问题，我做了小修改，需要的可以下载使用。[下载新的noreferrer.js](http://zhouhua.qiniudn.com//wp-content/uploads/2015/03/zh_noreferrer.js)
 
-这个版本无脑地把$.browser的代码重新跑了一遍，添加了对IE 11的识别。把google的地址替换成no-referer.de。最重要的是添加$.noreferrerReg()方法，动态创建a标签后可以运行一下。
+这个版本无脑地把`$.browser`的代码重新跑了一遍，添加了对IE 11的识别。把google的地址替换成no-referer.de。最重要的是添加$.noreferrerReg()方法，动态创建a标签后可以运行一下。

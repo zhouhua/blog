@@ -101,7 +101,7 @@ date: 2015-03-10 16:31:50
 
 ## 简单粗暴地多次使用$.animate
 
-可以看到，每个方块的运动都可以分解成四步，每一步都是向一个方向运动。于是如果要用$.animate来实现，可以在一个循环里，依次调用四遍$.animate来实现：
+可以看到，每个方块的运动都可以分解成四步，每一步都是向一个方向运动。于是如果要用`$.animate`来实现，可以在一个循环里，依次调用四遍`$.animate`来实现：
 
 <pre class="lang:css decode:true " title="CSS" >#container{
   position: relative;
