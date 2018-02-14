@@ -36,7 +36,7 @@ date: 2017-11-01 10:00:00
 <input type="number" id="input"/>
 ```
 
-```javascript
+```javascript{7,20}
 const input = document.querySelector('#input');
 
 const format = /-?\d{0,5}(\.\d{0,2})?/;
