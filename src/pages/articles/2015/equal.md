@@ -12,29 +12,29 @@ date: 2015-05-08 20:12:30
 
 javascript在判断两个值是否相等时，有两种方式
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >==</pre>
+`==`
 
  和
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >===</pre>
+`===`
 
  。这两者的区别我就不多说了，随便一本js书上都有，总之一般情形下我们有这样的结论：
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >==</pre>
+`==`
 
  省事，但结果混乱，很多情形下近乎伪科学，不建议使用，很多人更是视其为洪水猛兽，避之不及（它的坑太多，我写不完，不写了）；
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >===</pre>
+`===`
 
  很严谨，在绝大多数情形下，应该使用。这个结论我是很认同的，并且尽量这么做。但是，javascript作为一门任性的语言，不打打脸怎么好玩呢。那么一起来愉快地玩坏
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >===</pre>
+`===`
 
  吧[icon name="smile-o" class=""]。
 
 要玩坏
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >===</pre>
+`===`
 
  ，只需要用到0。没错，就是数字0。在javascript中，数字都是以浮点数的形式参与运算，其编码规则遵循[IEEE_754](http://baike.baidu.com/view/1698149.htm)标准（0.2+0.1不等于0.3这个问题怪它！）。重点也不是这个标准，重点是按照这个标准，数字编码会有一位符号位表示正负，所以对于任何数字，非正即负。那么问题来了，0呢？答案是0也是有正负的。通常我们看到的，它义的0都是+0，但在javascript中-0也是存在的。而在实际运算中，某些场景下，计算结果会产生+0和-0的差异；同样+0和-0参与计算时，可能会导致不同的结果。但在直观感受上，很明显+0和-0应该是相等的才对，于是javascript在语言层面上想消除这种差异，所以：
 
@@ -48,16 +48,16 @@ javascript在判断两个值是否相等时，有两种方式
 
 这不科学，明明判定为完全相同的值，进行相同的运算后，结果会不相等。对于开发者而言，我们并不能在任何场景下信任
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >===</pre>
+`===`
 
  ，它也有不靠谱的时候。
 
 应对这种“不科学”的情形也很简单：</p>
 
-<pre class="lang:js decode:true">function isEqual(a, b){
+`function isEqual(a, b){
     if (a !== b) return false;
     return a !== 0 || 1 / a === 1 / b;
-}</pre>
+}`
 
 * * *
 
@@ -77,7 +77,7 @@ javascript在判断两个值是否相等时，有两种方式
 
 这是一个使用二进制表示浮点数的方案，应用很广泛。它规定了一位符号位表示正负，0也不例外，这是负0产生的原因。这是带符号位的浮点数表示方案的通病，当然，不带符号位的方案就可以避免这个问题。不过这个问题并不严重，通常程序语言并不希望开发者知道负0的存在，直接在语言层面上规定正0和负0相等，这才是+0===-0的本质原因。
 
-我说负0的问题并不严重，是因为其使用场景少，出bug机率低。说到不严重，肯定有严重的问题，那就是浮点数精度的问题，数值是精确的、连续的；而数值编码是离散的，很多时候不准确的。毕竟32位也好、64位也好，能表现的浮点数是有限的。从0.1、0.2到0.9，真正能精确表达的只有0.5，其他的数字都是近似值。你可以自己尝试一下，不管js、java还是c++，浮点数运算从来不可靠，比如0.2+0.1并不等于0.3。如果你有过c++或者java编程经验，很可能接触过一些奇葩的代码来处理浮点数比较，比如定义一个精度0.002f（假设），如果abs(floatA-floatB)&lt;0.002f，则认为两者相等。很反人类，但没办法。编程语言有错吗？没有，但现实就是要妥协。
+我说负0的问题并不严重，是因为其使用场景少，出bug机率低。说到不严重，肯定有严重的问题，那就是浮点数精度的问题，数值是精确的、连续的；而数值编码是离散的，很多时候不准确的。毕竟32位也好、64位也好，能表现的浮点数是有限的。从0.1、0.2到0.9，真正能精确表达的只有0.5，其他的数字都是近似值。你可以自己尝试一下，不管js、java还是c++，浮点数运算从来不可靠，比如0.2+0.1并不等于0.3。如果你有过c++或者java编程经验，很可能接触过一些奇葩的代码来处理浮点数比较，比如定义一个精度0.002f（假设），如果abs(floatA-floatB)<0.002f，则认为两者相等。很反人类，但没办法。编程语言有错吗？没有，但现实就是要妥协。
 
 ## 关于负0
 
@@ -87,15 +87,15 @@ javascript在判断两个值是否相等时，有两种方式
 
 首先我要说负0不常见，但绝不是大家想的通常不可能出现。其实一些常见的、简单的场景下就有可能出现-0。比如
 
-<pre class="lang:js decode:1 inline:1 " >Math.ceil(-0.1)</pre>
+`Math.ceil(-0.1)`
 
  、
 
-<pre class="lang:js decode:1 inline:1 " >Math.round(-0.1)</pre>
+`Math.round(-0.1)`
 
  ；还有不常见的
 
-<pre class="lang:js decode:1 inline:1 " >Math.atan2(-1, Infinity)</pre>
+`Math.atan2(-1, Infinity)`
 
  等。由正负0而产生不同计算结果的操作相对会更多一点，比如文章中的举例的倒数运算。
 
@@ -107,15 +107,15 @@ javascript在判断两个值是否相等时，有两种方式
 
 通常情况下，===在js中，表示判断类型和值是否都完全相等。都说通常了，肯定有反例。很多熟悉js的人都知道这样一个知识点，NaN!==NaN。所以我们常常可以看到这样的代码：
 
-<pre class="lang:js decode:true ">function isNaN (num){
+`function isNaN (num){
     return num !== num;
-}</pre>
+}`
 
 这就是编程语言为了满足直观的理解而操纵运算符的结果。+0和-0同样是这样，它们的编码并不同，但却判定它们相等。
 
 对于以上两个点，EmacScript 6中加入了Object.is方法来处理：
 
-<pre class="lang:js decode:true">Object.defineProperty(Object, 'is', {
+`Object.defineProperty(Object, 'is', {
   value: function(x, y) {
     if (x === y) {
       // 0 === -0, but they are not identical
@@ -126,13 +126,13 @@ javascript在判断两个值是否相等时，有两种方式
     // NaNs are the only non-reflexive value, i.e., if x !== x,
     // then x is a NaN.
     // isNaN is broken: it converts its argument to number, so
-    // isNaN("foo") =&gt; true
-    return x !== x &amp;&amp; y !== y;
+    // isNaN("foo") => true
+    return x !== x && y !== y;
   },
   configurable: true,
   enumerable: false,
   writable: true
-});</pre>
+});`
 
 参考资料：
 

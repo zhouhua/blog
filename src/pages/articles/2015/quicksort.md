@@ -27,7 +27,7 @@ date: 2015-06-18 12:08:03
 
 所以快速排序的核心是不断把原数组做切割，切割成小数组后再对小数组进行相同的处理，这是一种典型的分治的算法设计思路。实现一个简单的快速排序算法并不困难。我们不妨试一下： 
 
-<pre class="lang:js decode:true">function QuickSort(arr, func) {
+`function QuickSort(arr, func) {
     if (!arr || !arr.length) return [];
     if (arr.length === 1) return arr;
     var pivot = arr[0];
@@ -41,7 +41,7 @@ date: 2015-06-18 12:08:03
         }
     }
     return basicSort(smallSet, func).concat([pivot]).concat(basicSort(bigSet, func));
-}</pre>
+}`
 
 这是一个非常基础的实现，选取数组的第一项作为基准元素。
 
@@ -53,7 +53,7 @@ date: 2015-06-18 12:08:03
 
 说了这么多，还是实现一个带分区的快速排序吧： 
 
-<pre class="lang:js decode:true ">function swap(arr, from, to) {
+`function swap(arr, from, to) {
     if (from == to) return;
     var temp = arr[from];
     arr[from] = arr[to];
@@ -78,7 +78,7 @@ function QuickSortWithPartition(arr, func, from, to) {
     QuickSortWithPartition(arr, func, from, smallIndex - 1);
     QuickSortWithPartition(arr, func, smallIndex + 1, to);
     return arr;
-}</pre>
+}`
 
 看起来代码长了很多，不过并不算复杂。首先由于涉及到数组元素交换，所以先实现一个 <span id="crayon-55823efe7490c399715279" class="crayon-syntax crayon-syntax-inline  crayon-theme-zhouhua crayon-theme-zhouhua-inline crayon-font-monaco"><span class="crayon-pre crayon-code"><span class="crayon-v">swap</span></span></span>方法来处理元素交换。快速排序算法中，增加了两个参数， <span id="crayon-55823efe74911969289365" class="crayon-syntax crayon-syntax-inline  crayon-theme-zhouhua crayon-theme-zhouhua-inline crayon-font-monaco"><span class="crayon-pre crayon-code"><span class="crayon-v">from</span></span></span>和 <span id="crayon-55823efe74917892073239" class="crayon-syntax crayon-syntax-inline  crayon-theme-zhouhua crayon-theme-zhouhua-inline crayon-font-monaco"><span class="crayon-pre crayon-code"><span class="crayon-st">to</span></span></span>，分别表示当前要处理这个数组的哪个部分， <span id="crayon-55823efe7491c780726351" class="crayon-syntax crayon-syntax-inline  crayon-theme-zhouhua crayon-theme-zhouhua-inline crayon-font-monaco"><span class="crayon-pre crayon-code"><span class="crayon-v">from</span></span></span>是起始索引， <span id="crayon-55823efe74922683449995" class="crayon-syntax crayon-syntax-inline  crayon-theme-zhouhua crayon-theme-zhouhua-inline crayon-font-monaco"><span class="crayon-pre crayon-code"><span class="crayon-st">to</span></span></span>是终止索引；如果这两个参数缺失，则表示处理整个数组。
 
@@ -92,7 +92,7 @@ function QuickSortWithPartition(arr, func, from, to) {
 
 我们也来尝试写一下实现： 
 
-<pre class="lang:js decode:true">function QuickSortWithPartitionOp(arr, func, from, to) {
+`function QuickSortWithPartitionOp(arr, func, from, to) {
     if (!arr || !arr.length) return [];
     from = from === void 0 ? 0 : from;
     to = to === void 0 ? arr.length - 1 : to;
@@ -101,10 +101,10 @@ function QuickSortWithPartition(arr, func, from, to) {
     var smallEnd = from + 1;
     var bigBegin = to;
     while (smallEnd < bigBegin) {
-        while (func(arr[bigBegin], pivot) > 0 &amp;&amp; smallEnd < bigBegin) {
+        while (func(arr[bigBegin], pivot) > 0 && smallEnd < bigBegin) {
             bigBegin--;
         }
-        while (func(arr[smallEnd], pivot) < 0 &amp;&amp; smallEnd < bigBegin) {
+        while (func(arr[smallEnd], pivot) < 0 && smallEnd < bigBegin) {
             smallEnd++;
         }
         if (smallEnd < bigBegin) {
@@ -115,7 +115,7 @@ function QuickSortWithPartition(arr, func, from, to) {
     QuickSortWithPartitionOp(arr, func, from, smallEnd - 1);
     QuickSortWithPartitionOp(arr, func, smallEnd + 1, to);
     return arr;
-}</pre>
+}`
 
 ## 分区与性能
 
@@ -133,7 +133,7 @@ function QuickSortWithPartition(arr, func, from, to) {
 
 简单实现一下获取基准元素的方法：
 
-<pre class="lang:js decode:true">function getPivot(arr, func, from, to) {
+`function getPivot(arr, func, from, to) {
     var middle = (from + to) >> 1;
     var i0 = arr[from];
     var i1 = arr[to];
@@ -161,7 +161,7 @@ function QuickSortWithPartition(arr, func, from, to) {
             return i2;
         }
     }
-}</pre>
+}`
 
 这个例子里我完全没管基准元素的位置，一是降低复杂度，另一个原因是下面讨论重复元素处理时，基准元素的位置没什么意义。不过我把最小的值赋给了第一个元素，最大的值赋给了第二个元素，后面处理重复元素时会有帮助。
 
@@ -175,7 +175,7 @@ function QuickSortWithPartition(arr, func, from, to) {
 
 那么对于重复元素应该怎么处理呢？从性能的角度，如果发现一个元素与基准元素相同，那么它应该被记录下来，避免后续再进行不必要的比较。所以还是得改分区的代码。
 
-<pre class="lang:js decode:true">function QuickSortWithPartitionDump(arr, func, from, to) {
+`function QuickSortWithPartitionDump(arr, func, from, to) {
     if (!arr || !arr.length) return [];
     from = from === void 0 ? 0 : from;
     to = to === void 0 ? arr.length - 1 : to;
@@ -189,7 +189,7 @@ function QuickSortWithPartition(arr, func, from, to) {
             smallEnd++;
             swap(arr, i, smallEnd);
         } else if (order > 0) {
-            while (bigBegin > i &amp;&amp; order > 0) {
+            while (bigBegin > i && order > 0) {
                 bigBegin--;
                 order = func(arr[bigBegin], pivot);
             }
@@ -204,7 +204,7 @@ function QuickSortWithPartition(arr, func, from, to) {
     QuickSortWithPartitionDump(arr, func, from, smallEnd);
     QuickSortWithPartitionDump(arr, func, bigBegin, to);
     return arr;
-}</pre>
+}`
 
 简单解释一下这段代码，上文已经说过，在 <span id="crayon-55823efe749bc239866524" class="crayon-syntax crayon-syntax-inline  crayon-theme-zhouhua crayon-theme-zhouhua-inline crayon-font-monaco"><span class="crayon-pre crayon-code"><span class="crayon-v">getPivot</span></span></span>方法中，我将比基准小的元素放到第一位，把比基准大的元素放到最后一位。定义三个变量 <span id="crayon-55823efe749c2545522118" class="crayon-syntax crayon-syntax-inline  crayon-theme-zhouhua crayon-theme-zhouhua-inline crayon-font-monaco"><span class="crayon-pre crayon-code"><span class="crayon-v">smallEnd</span></span></span>、 <span id="crayon-55823efe749c8631653491" class="crayon-syntax crayon-syntax-inline  crayon-theme-zhouhua crayon-theme-zhouhua-inline crayon-font-monaco"><span class="crayon-pre crayon-code"><span class="crayon-v">bigBegin</span></span></span>、 <span id="crayon-55823efe749cd772947600" class="crayon-syntax crayon-syntax-inline  crayon-theme-zhouhua crayon-theme-zhouhua-inline crayon-font-monaco"><span class="crayon-pre crayon-code"><span class="crayon-v">i</span></span></span>，从 <span id="crayon-55823efe749d3693385942" class="crayon-syntax crayon-syntax-inline  crayon-theme-zhouhua crayon-theme-zhouhua-inline crayon-font-monaco"><span class="crayon-pre crayon-code"><span class="crayon-v">from</span></span></span>到<span id="crayon-55823efe749d8347613362" class="crayon-syntax crayon-syntax-inline  crayon-theme-zhouhua crayon-theme-zhouhua-inline crayon-font-monaco"><span class="crayon-pre crayon-code"><span class="crayon-v">smallEnd</span></span></span>之间的元素都比基准元素小，从 <span id="crayon-55823efe749de144619752" class="crayon-syntax crayon-syntax-inline  crayon-theme-zhouhua crayon-theme-zhouhua-inline crayon-font-monaco"><span class="crayon-pre crayon-code"><span class="crayon-v">smallEnd</span></span></span>到 <span id="crayon-55823efe749e3538024602" class="crayon-syntax crayon-syntax-inline  crayon-theme-zhouhua crayon-theme-zhouhua-inline crayon-font-monaco"><span class="crayon-pre crayon-code"><span class="crayon-v">i</span></span></span>之间的元素都和基准元素一样大，从<span id="crayon-55823efe749e9018494957" class="crayon-syntax crayon-syntax-inline  crayon-theme-zhouhua crayon-theme-zhouhua-inline crayon-font-monaco"><span class="crayon-pre crayon-code"><span class="crayon-v">i</span></span></span>到 <span id="crayon-55823efe749ee179249772" class="crayon-syntax crayon-syntax-inline  crayon-theme-zhouhua crayon-theme-zhouhua-inline crayon-font-monaco"><span class="crayon-pre crayon-code"><span class="crayon-v">bigBegin</span></span></span>之间的元素都是还没有比较的，从 <span id="crayon-55823efe749f4779126120" class="crayon-syntax crayon-syntax-inline  crayon-theme-zhouhua crayon-theme-zhouhua-inline crayon-font-monaco"><span class="crayon-pre crayon-code"><span class="crayon-v">bigBegin</span></span></span>到 <span id="crayon-55823efe749f9199085068" class="crayon-syntax crayon-syntax-inline  crayon-theme-zhouhua crayon-theme-zhouhua-inline crayon-font-monaco"><span class="crayon-pre crayon-code"><span class="crayon-st">to</span></span></span>之间的元素都比基准元素大。了解这个关系就好理解这段代码了。遍历从 <span id="crayon-55823efe749ff492114727" class="crayon-syntax crayon-syntax-inline  crayon-theme-zhouhua crayon-theme-zhouhua-inline crayon-font-monaco"><span class="crayon-pre crayon-code"><span class="crayon-v">smallEnd</span> <span class="crayon-o">+</span> <span class="crayon-cn">1</span></span></span>到 <span id="crayon-55823efe74a04163830805" class="crayon-syntax crayon-syntax-inline  crayon-theme-zhouhua crayon-theme-zhouhua-inline crayon-font-monaco"><span class="crayon-pre crayon-code"><span class="crayon-v">bigBegin</span></span></span>之间的元素：
 
@@ -216,7 +216,7 @@ function QuickSortWithPartition(arr, func, from, to) {
 
 对于小数组（小于16项或10项。v8认为10项以下的是小数组。），可能使用快速排序的速度还不如平均复杂度更高的选择排序。所以对于小数组，可以使用选择排序法要提高性能，减少递归深度。
 
-<pre class="lang:js decode:true">function insertionSort(a, func, from, to) {
+`function insertionSort(a, func, from, to) {
     for (var i = from + 1; i < to; i++) {
         var element = a[i];
         for (var j = i - 1; j >= from; j--) {
@@ -229,7 +229,7 @@ function QuickSortWithPartition(arr, func, from, to) {
         }
         a[j + 1] = element;
     }
-}</pre>
+}`
 
 ## v8引擎没有做的优化
 
@@ -239,7 +239,7 @@ function QuickSortWithPartition(arr, func, from, to) {
 
 快速排序递归很深，如果递归太深的话，很可以出现“爆栈”，我们应该尽可能避免这种情况。上面提到的对小数组采用选择排序算法，以及采用内省排序算法都可以减少递归深度。不过v8引擎中，做了一些不太常见的优化，每次我们分区后，v8引擎会选择元素少的分区进行递归，而将元素多的分区直接通过循环处理，无疑这样的处理大大减小了递归深度。我大致把v8这种处理的过程写一下：
 
-<pre class="lang:js decode:true ">function quickSort(arr, from, to){
+`function quickSort(arr, from, to){
     while(true){
         // 排序分区过程省略
         // ...
@@ -252,7 +252,7 @@ function QuickSortWithPartition(arr, func, from, to) {
             from = bigBegin;
         }
     }
-}</pre>
+}`
 
 不得不说是一个很巧妙的实现。
 

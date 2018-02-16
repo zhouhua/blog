@@ -12,7 +12,7 @@ layout: post
 date: 2015-04-15 17:21:57
 ---
 
-表单验证的需求简直太常见了。“**<span style="color: #ff0000;">所有用户的输入都是不可信的</span>**”这个思想指导我们在设计表单的时候，一定要进行用户输入的验证。对于用户体验而言，越早的反馈则越佳，所以表单验证的工作应该尽可能地在前端就进行（当然，前端对于后端而言也是输入端，所以后端仍然需要进行检验）。简单的表单验证完全可以给input绑定几个change事件来进行。但表单一复杂，或者相似验证规则一多，这种编码的方式就很难管理事件了。这时候，我们通常需要使用一些库来帮助我们处理表单验证的工作。前端表单验证的库太多了，随便一搜：[表单验证-百度搜索](https://www.baidu.com/s?ie=UTF-8&amp;wd=%E8%A1%A8%E5%8D%95%E9%AA%8C%E8%AF%81)。</p>
+表单验证的需求简直太常见了。“**<span style="color: #ff0000;">所有用户的输入都是不可信的</span>**”这个思想指导我们在设计表单的时候，一定要进行用户输入的验证。对于用户体验而言，越早的反馈则越佳，所以表单验证的工作应该尽可能地在前端就进行（当然，前端对于后端而言也是输入端，所以后端仍然需要进行检验）。简单的表单验证完全可以给input绑定几个change事件来进行。但表单一复杂，或者相似验证规则一多，这种编码的方式就很难管理事件了。这时候，我们通常需要使用一些库来帮助我们处理表单验证的工作。前端表单验证的库太多了，随便一搜：[表单验证-百度搜索](https://www.baidu.com/s?ie=UTF-8&wd=%E8%A1%A8%E5%8D%95%E9%AA%8C%E8%AF%81)。</p>
 
 那……为什么还要自己实现一个呢？因为去年工作中遇到了比较复杂的验证逻辑，选一个别人的库一是要学习api，二是维护起来困难，要符合自己的页面风格也不是那么轻松；再加上表单验证器并不复杂，于是就打算自己写一个。所以这个表单验证器并不算那么地通用，不过我觉得传播思路和方法更重要，要想修修改改变成一个通用的库也很容易，只是没那么重要罢了（其实是懒……）。
 
@@ -26,35 +26,35 @@ jquery + bootstrap。jquery看来是缺不了，bootstrap没那么重要，对�
 
 一个典型的bootstrap风格的表单项应该长这个样子：
 
-<pre class="lang:xhtml mark:5 decode:true">&lt;div class="form-group"&gt;
-    &lt;label class="col-xs-2 control-label"&gt;手机号码
-        &lt;span class="request"&gt;*&lt;/span&gt;：&lt;/label&gt;
-    &lt;div class="col-xs-6"&gt;
-        &lt;input class="form-control" name="mobile" type="text" data-validate-disable="true" data-validate="request:notrim mobile" /&gt;
-        &lt;p class="text-info"&gt;请输入真实手机号码。&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;div class="help-block col-xs-4"&gt;&amp;nbsp;&lt;/div&gt;
-&lt;/div&gt;</pre>
+`<div class="form-group">
+    <label class="col-xs-2 control-label">手机号码
+        <span class="request">*</span>：</label>
+    <div class="col-xs-6">
+        <input class="form-control" name="mobile" type="text" data-validate-disable="true" data-validate="request:notrim mobile" />
+        <p class="text-info">请输入真实手机号码。</p>
+    </div>
+    <div class="help-block col-xs-4">&nbsp;</div>
+</div>`
 
  重点看第5行，对于一个普通的input组件，我加了两个属性，
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >data-validate-disable</pre>
+`data-validate-disable`
 
  有值表示表单验证时，会跳过这个input组件；
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >data-validate</pre>
+`data-validate`
 
  则存放如果要验证的话，将采用什么样的验证规则。这个例子中表示要验证这个input组件是否为空、是否为手机号码这两个规则。注意，在
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >request</pre>
+`request`
 
  的后面我还加了一点内容，这是我想传递给验证规则的参数，比如这里我期望告诉验证器，如果input值只有空格，也认为是有值的。相似的，我们可以定义一个规则
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >min</pre>
+`min`
 
  来处理最少几个字符，并在html中把这个设定值传递进来，就像这样：
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >data-validate="min:10"</pre>
+`data-validate="min:10"`
 
  。我也期望一个验证规则允许多个参数传递，参数与参数之间用逗号隔开。
 
@@ -62,7 +62,7 @@ jquery + bootstrap。jquery看来是缺不了，bootstrap没那么重要，对�
 
 ## 先写个jquery插件吧
 
-<pre class="lang:js decode:true">(function ($) {
+`(function ($) {
     $.fn.validation = function () {
         return this.each(function () {
             var $this = $(this);
@@ -74,29 +74,29 @@ jquery + bootstrap。jquery看来是缺不了，bootstrap没那么重要，对�
                 .on('focus.zh', clear);
         });
     };
-}(jQuery));</pre>
+}(jQuery));`
 
  给jquery对象添加一个
 
-<pre class="lang:js decode:1 inline:1 " >validation</pre>
+`validation`
 
  方法，用法很简单：
 
-<pre class="lang:js decode:1 inline:1 " >$(Selector).validation()</pre>
+`$(Selector).validation()`
 
  。支持链式调用。_Selector_比较自由，如果是
 
-<pre class="lang:js decode:1 inline:1 " >:input</pre>
+`:input`
 
  元素，则直接给这些元素初始化验证器；否则找出它们所有的
 
-<pre class="lang:js decode:1 inline:1 " >:input</pre>
+`:input`
 
  子元素，给这些子元素初始化验证器。什么意思呢？就以上面的html片断为例，你可以任性地使用如下任意一种方式初始化验证器：
 
-*   <pre class="lang:js decode:1 inline:1 " >$('[name=mobile]').validation(); // 选择:input</pre> 
-*   <pre class="lang:js decode:1 inline:1 " >$('.form-group').validation(); // 选择普通节点，对所有:input子元素生效</pre> 
-*   <pre class="lang:js decode:1 inline:1 " >$('body').validation(); // 对页面中所有的:input元素生效</pre>
+*   `$('[name=mobile]').validation(); // 选择:input` 
+*   `$('.form-group').validation(); // 选择普通节点，对所有:input子元素生效` 
+*   `$('body').validation(); // 对页面中所有的:input元素生效`
 
 再说说所谓的初始化，其实就是绑定事件。那么要绑定什么事件呢？主观上，对于一个输入框，当我们输入好了，焦点离开时，应该就进行输入内容的验证，并给出验证结果。如果验证失败，会有提示信息，但这些提示信息应该在重新获得焦点时清除，否则当用户在修正输入的时候还一直提示上次的错误信息，会让用户无所适从。那么针对以上的情况，我们需要在失去焦点（_blur_）和获得焦点（_focus_）时分别绑定验证的方法（_validate_）和清除错误信息的方法（_clear_）。另外针对checkbox、radiobox、select等控件，最好也给select事件绑定验证方法。
 
@@ -109,7 +109,8 @@ jquery + bootstrap。jquery看来是缺不了，bootstrap没那么重要，对�
 
 ## 清除错误消息及验证状态设置
 
-<pre class="lang:js decode:true">function clear() {
+```javascript
+function clear() {
     var $this = $(this);
     var $parent = $this.closest('.form-group');
     if (!$parent.attr('data-for') || 
@@ -136,7 +137,8 @@ function warningHandler(msg) {
     var $parent = this.closest('.form-group');
     $parent.removeClass('waiting').addClass('has-warning').
         attr('data-for', this.prop('name')).find('.help-block').text(msg);
-}</pre>
+}
+```
 
  这一段一起说，因为这部分内容是dom操作相关的，与bootstrap强相关，如果你不用bootstrap，那就尽情地替换掉吧（估计改几个类名就行了）。这几个函数的用途从名字上就可以看出。clear上面已经提到过，清空验证信息；另外三个分别处理验证通过、验证失败和警告时的信息展示。简单是简单，但这里有两个问题需要额外考虑一下。
 
@@ -154,7 +156,8 @@ function warningHandler(msg) {
 
 我们给输入控件的_blur_和_select_事件绑定了_validate_方法，那么这个validate方法如何实现呢？
 
-<pre class="lang:js mark:3-5,17,20-30 decode:true">function validate() {
+```javascript
+function validate() {
     var $this = $(this);
     var success = new $.Callbacks();
     var fail = new $.Callbacks();
@@ -184,7 +187,8 @@ function warningHandler(msg) {
             }
         }
     }
-}</pre>
+}
+```
 
  先看这段代码的前一部分，我定义了三个`$.Callbacks`对象，分别用以处理不同验证结果的响应。从效果上，不用`$.Callbacks`对象，直接传递函数引用也是可行的，我是想把dom操作和验证逻辑分离开，用类似事件触发的异步形式来处理验证逻辑。
 
@@ -192,19 +196,19 @@ function warningHandler(msg) {
 
 重点看20~30行，这段是关键。第21行中，我们把_data-validate_中的内容按空白（空格、tab、换行）切割到一个数组_conditions_中，_conditions_中的每一项都是一条需要验证的规则。那么很自然地，遍历这个数组。再看第26行，引入了一个新的方法_pickStrategy_，很明显它是对这条规则进行验证。先别管它的实现，看看它接收的参数。还记得前面我们说要允许用
 
-<pre class="lang:js decode:1 inline:1 " >rule:param1,param2</pre>
+`rule:param1,param2`
 
  的形式给验证规则传入参数吗？_pickStrategy_拿到的第一个参数就是
 
-<pre class="lang:js decode:1 inline:1 " >[rule, param1, param2]</pre>
+`[rule, param1, param2]`
 
  ，通过
 
-<pre class="lang:js decode:1 inline:1 " >condition.spit(/[:,]/g)</pre>
+`condition.spit(/[:,]/g)`
 
  解析出。第二个参数是当前处理的控件的jquery对象，后面三个分别是验证成功、失败、警告三种情形的回调对象。如果验证失败，_pickStrategy_应该返回
 
-<pre class="lang:js decode:1 inline:1 " >false</pre>
+`false`
 
  ，同时中止验证，否则验证下一条规则。
 
@@ -214,7 +218,7 @@ function warningHandler(msg) {
 
 设计模式是搞软件工程的人常常挂在嘴边的词汇，表示对设计的复用。当然前端开发在工程化的进程上每家公司情况各异，我估计绝大多数公司的前端开发并不考虑工程上的问题，只考虑完成需求。因而对于没有OO编程开发背景的前端开发而言，设计模式可能是陌生的，甚至程序设计（别紧张，没有在说程序编写）本身就是陌生的。由于工程化的忽略和javascript语言本身的优点（很多模式没必要实现）和缺点（很多模式无法实现），前端开发中很少提设计模式。那么前端开发者怎么理解设计模式呢？设计模式就是一系统问题（场景）的通用解决思路。比如有人觉得jquery的链式调用很好用，能很大程度降低工作量，于是在别的地方也用函数
 
-<pre class="lang:js decode:1 inline:1 " >return this;</pre>
+`return this;`
 
  的方式构造支持链式调用的函数，这就可以认为是一个模式（谈不上设计模式）。
 
@@ -228,13 +232,13 @@ function warningHandler(msg) {
 
 先实现一个策略池吧：
 
-<pre class="lang:js decode:true  ">$.validation.strategy = {};</pre>
+`$.validation.strategy = {};`
 
  太棒了，一句代码就完事了，爱死javascript了！
 
 再回到_pickStrategy_方法，看看怎么从这个策略池中拿到我们需要的验证规则：
 
-<pre class="lang:js mark:3,5 decode:true">function pickStrategy(tokens, scope, success, fail, warning) {
+`function pickStrategy(tokens, scope, success, fail, warning) {
     var name = tokens.shift();
     var strategy = $.validation.strategy[name];
     if (strategy) {
@@ -244,32 +248,32 @@ function warningHandler(msg) {
         success.fire();
         return true;
     }
-}</pre>
+}`
 
  先说这个_token_，还记得它是什么吗？如果要验证的规则是“min:5”，那么_token_就是
 
-<pre class="lang:js decode:1 inline:1 " >['min', '5']</pre>
+`['min', '5']`
 
  这个数组。第2行取出这个数组的第一项
 
-<pre class="lang:js decode:1 inline:1 " >'min'</pre>
+`'min'`
 
  ，再从策略池中取出这个验证规则。如果没有这个规则，则跳过这次验证，认为此次通过；如果有这个规则，则执行这个规则（见第5行），需要注意一下第5行的_token_已经发生变化了，除去规则名称，只剩下参数了，延续前面的例子，这里_token_应该是
 
-<pre class="lang:js decode:1 inline:1 " >['5']</pre>
+`['5']`
 
  。
 
 现在我们的策略池是空的，那可不行，先试着写一个验证“min”规则的方法吧：
 
-<pre class="lang:js decode:true">$.validation.strategy.min = function (condition, success, fail) {
+`$.validation.strategy.min = function (condition, success, fail) {
     if (this.val() === '') {
         success.fire();
         return true;
     }
-    var length = +(condition &amp;&amp; condition[0]);
+    var length = +(condition && condition[0]);
     if (length) {
-        if (this.val().length &gt;= length) {
+        if (this.val().length >= length) {
             success.fire();
             return true;
         }
@@ -282,25 +286,26 @@ function warningHandler(msg) {
         success.fire();
         return true;
     }
-}</pre>
+}`
 
  这个方法内，_this_指向当前验证的控件的jquery对象，第1个参数是额外带给验证规则的参数；第2个参数是验证成功的回调，使用时需要配合
 
-<pre class="lang:js decode:1 inline:1 " >return true;</pre>
+`return true;`
 
  （见9、10行）；第3个参数是验证失败的回调，使用是需要配合
 
-<pre class="lang:js decode:1 inline:1 " >return false;</pre>
+`return false;`
 
  （见13、14行）；第4个参数是警告的回调，需要配合
 
-<pre class="lang:js decode:1 inline:1 " >return true;</pre>
+`return true;`
 
  ，这个验证中没用到。
 
 起始的几个验证方法也可以直接写在策略池中，我写了几个，供大家参考（代码比较长，展开需谨慎。不想展开？你可能要错过身份证验证、邮箱验证、url验证等一堆干货了！）：
 
-<pre class="minimize:true lang:js decode:true ">$.validation.constants = {
+```javascript
+$.validation.constants = {
     'request': /./,
     'trimLeft': /^\s+/,
     'trimRight': /\s+$/,
@@ -313,7 +318,7 @@ function warningHandler(msg) {
     'mobile': /^1[345789]\d{9}$/,
     'telephone': /^\d{7,8}([ +-]\d+)?$/,
     'email': /^[a-z0-9.\-_+]+@[a-z0-9\-_]+(.[a-z0-9\-_]+)+$/i,
-    'url': /^(https?:\/\/)?(([\d]{1,3}\.){3}[\d]{1,3}|([\d\w_!~*\\'()-]+\.)*([\d\w][\d\w-]{0,61})?[\d\w]\.[\w]{2,6})(:[\d]{1,4})?((\/?)|(\/[\d\w_!~*\\'().;?:@&amp;=+$,%#-]+)+\/?)$/
+    'url': /^(https?:\/\/)?(([\d]{1,3}\.){3}[\d]{1,3}|([\d\w_!~*\\'()-]+\.)*([\d\w][\d\w-]{0,61})?[\d\w]\.[\w]{2,6})(:[\d]{1,4})?((\/?)|(\/[\d\w_!~*\\'().;?:@&=+$,%#-]+)+\/?)$/
 };
 
 $.validation.strategy = {
@@ -336,7 +341,7 @@ $.validation.strategy = {
             }
         }
         else {
-            if (condition &amp;&amp; condition[0]) {
+            if (condition && condition[0]) {
                 switch (condition[0].toLowerCase()) {
                     case 'notrim':
                         break;
@@ -364,9 +369,9 @@ $.validation.strategy = {
             success.fire();
             return true;
         }
-        var length = +(condition &amp;&amp; condition[0]);
+        var length = +(condition && condition[0]);
         if (length) {
-            if (this.val().length &gt;= length) {
+            if (this.val().length >= length) {
                 success.fire();
                 return true;
             }
@@ -381,9 +386,9 @@ $.validation.strategy = {
         }
     },
     'max': function (condition, success, fail) {
-        var length = +(condition &amp;&amp; condition[0]);
+        var length = +(condition && condition[0]);
         if (length) {
-            if (this.val().length &lt;= length) {
+            if (this.val().length <= length) {
                 success.fire();
                 return true;
             }
@@ -420,11 +425,11 @@ $.validation.strategy = {
             else if (/^\d+[~-]\d+$/.test(c)) {
                 var match = c.match(/\d+/g);
                 var length = value.length;
-                if (length &lt; +match[0]) {
+                if (length < +match[0]) {
                     fail.fire('请至少输入' + match[0] + '位数字！');
                     return false;
                 }
-                if (length &gt; +match[1]) {
+                if (length > +match[1]) {
                     fail.fire('最多只能输入' + match[1] + '位数字！');
                     return false;
                 }
@@ -545,7 +550,7 @@ $.validation.strategy = {
             var wi = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
             var check = ['1', '0', 'x', '9', '8', '7', '6', '5', '4', '3', '2'];
             var _sum = 0;
-            for (var i = 0; i &lt; 17; i++) {
+            for (var i = 0; i < 17; i++) {
                 _sum += +numbers[i] * +wi[i];
             }
             if (numbers[17] != check[_sum % 11]) {
@@ -584,7 +589,7 @@ $.validation.strategy = {
             var s;
             var a;
             var numbers = value.split('');
-            for (var i = 0; i &lt; 15; i++) {
+            for (var i = 0; i < 15; i++) {
                 a = +numbers[i];
                 s = (p % 11) + a;
                 p = (s % 10) * 2;
@@ -604,15 +609,16 @@ $.validation.strategy = {
             return false;
         }
     }
-};</pre>
+};
+```
 
 ## 添加验证规则
 
 说好的支持自定义验证规则呢？放心，不会少的，而且超简单：
 
-<pre class="lang:js decode:true ">$.validation = function (condition, process) {
+`$.validation = function (condition, process) {
     $.validation.strategy[condition] = process;
-};</pre>
+};`
 
  加个静态方法搞定。
 
@@ -620,7 +626,7 @@ $.validation.strategy = {
 
 有些场景下需要手动check一下表单内容才放心吧：
 
-<pre class="lang:js decode:true ">$.fn.exec = function () {
+`$.fn.exec = function () {
     return this.each(function () {
         var $this = $(this);
         if (!$this.is(':input')) {
@@ -628,7 +634,7 @@ $.validation.strategy = {
         }
         $this.blur();
     });
-};</pre>
+};`
 
  原理很简单，对:input子元素触发一次blur事件。
 
@@ -638,7 +644,7 @@ $.validation.strategy = {
 
 1.  没做通用的ajax验证
 现在对于ajax的验证，可以这样做：
-<pre class="lang:js decode:true ">$.validation('ajax_xx',function(c, s, f) {
+`$.validation('ajax_xx',function(c, s, f) {
     $.post('some_url',function(data){
         if (data.success) {
             s.fire();
@@ -646,7 +652,7 @@ $.validation.strategy = {
             f.fire('xxxxxxxx');
         }
     });
-});</pre>
+});`
  表单提交前，除了检查有没有.has-error的元素找到填写出错项，还要检查有没有.wait元素，如果有的话都不能立刻提交。
 如果要有一个通用的ajax验证机制，可以自行扩展_$.validation_方法
 

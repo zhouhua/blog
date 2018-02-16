@@ -15,13 +15,13 @@ date: 2015-03-31 17:47:49
 
 在一个页面A中，点击一个链接，浏览器会跳转到页面B。那么如何描述A和B的关系呢？我们把A定义为B的refer/referrer/referer（由于历史的原因，你看到上面这几个词都可以认为是同一个意思，下面统一描述为referrer）。通俗地说，A是B的来源页面/引荐页面。从技术实现上，你从浏览器起发出的任何请求（不准确，先这么理解吧），例如打开新页面、请求静态资源、ajax、请求后端api等等，都会在请求头部添加
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >Referer</pre>
+`Referer`
 
  字段。也许你会发现这个词拼错了，少了个r，但你不可以把它当成错误，虽然最初确实是个错误，但由于在它成为http事实标准前，没有人去纠正这个错误，于是就形成了现在局面。看看具体的例子，在百度上搜索QQ，然后打开腾讯的页面，我们看看它的请求头是什么样的：![20150330201952](http://www.zhouhua.info/wp-content/uploads/2015/03/20150330201952.png)</p>
 
 也可以通过
 
-<pre class="lang:js decode:1 inline:1 " >document.referrer</pre>
+`document.referrer`
 
  来获取当前页面的referrer地址。
 
@@ -56,7 +56,7 @@ date: 2015-03-31 17:47:49
 <dd><span style="color: #0000ff;">不靠谱</span></dd>
 <dt>使用服务器中转一下，302到目标页面</dt>
 <dd><span style="color: #008000;">可行，但麻烦</span></dd>
-<dt>使用&lt;mete http-equiv="refresh"&gt;转向</dt>
+<dt>使用<mete http-equiv="refresh">转向</dt>
 <dd><span style="color: #0000ff;">待验证</span></dd>
 </dl>
 
@@ -66,8 +66,8 @@ date: 2015-03-31 17:47:49
 
 使用window.open新开页面，并插入一段javascript，用来重定向到目标页面：
 
-<pre class="lang:js decode:true">var url = "http://www.baidu.com/"
-window.open('javascript:window.name;', '&lt;script&gt;location.replace("'+url+'")&lt;\/script&gt;');</pre>
+`var url = "http://www.baidu.com/"
+window.open('javascript:window.name;', '<script>location.replace("'+url+'")<\/script>');`
 
 <table>
 <tbody>
@@ -92,8 +92,8 @@ window.open('javascript:window.name;', '&lt;script&gt;location.replace("'+url+'"
 
 通过指定data:text/html来强制浏览器打开一个指定空页面：
 
-<pre class="lang:js decode:true">var url = "http://www.baidu.com/"
-window.open('data:text/html,&lt;html&gt;&lt;body&gt;&lt;script&gt;location.replace("' + url + '")&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;');</pre>
+`var url = "http://www.baidu.com/"
+window.open('data:text/html,<html><body><script>location.replace("' + url + '")</script></body></html>');`
 
 当然也可以直接写在a标签的href属性里。
 
@@ -118,12 +118,12 @@ window.open('data:text/html,&lt;html&gt;&lt;body&gt;&lt;script&gt;location.repla
 
 类似于
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >href="javascript:void(0);"</pre>
+`href="javascript:void(0);"`
 
  ，一段javascript也是能够当成页面打开的。于是有：
 
-<pre class="lang:js decode:true">var url = "http://www.baidu.com/"
-window.open('javascript:location.replace("' + url + '")');</pre>
+`var url = "http://www.baidu.com/"
+window.open('javascript:location.replace("' + url + '")');`
 
 <table>
 <tbody>
@@ -146,12 +146,12 @@ window.open('javascript:location.replace("' + url + '")');</pre>
 
 类似方法二，也是新打开一个页面，不过不是通过javascript跳转，而是通过
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >&lt;mete http-equiv="refresh"&gt;</pre>
+`<mete http-equiv="refresh">`
 
  跳转：
 
-<pre class="lang:js decode:true">var url = "http://www.baidu.com/"
-window.open('data:text/html,&lt;html&gt;&lt;head&gt;&lt;meta http-equiv="Refresh" content="0;' + url + '"/&gt;&lt;/head&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;');</pre>
+`var url = "http://www.baidu.com/"
+window.open('data:text/html,<html><head><meta http-equiv="Refresh" content="0;' + url + '"/></head><body></body></html>');`
 
 <table>
 <tbody>
@@ -176,20 +176,20 @@ window.open('data:text/html,&lt;html&gt;&lt;head&gt;&lt;meta http-equiv="Refresh
 
 综合方法一和方法四，用
 
-<pre class="lang:js decode:1 inline:1 " >window.open()</pre>
+`window.open()`
 
  新打开一个页面，不过不是通过javascript跳转，而是通过
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >&lt;mete http-equiv="refresh"&gt;</pre>
+`<mete http-equiv="refresh">`
 
  跳转：
 
-<pre class="lang:js decode:true">var url = "http://www.baidu.com/";
+`var url = "http://www.baidu.com/";
 var win = window.open(null, '_blank');
 var doc = win.document;
 doc.clear();
-doc.write('&lt;html&gt;&lt;head&gt;&lt;meta http-equiv="Refresh" content="0; URL=' + url + '"/&gt;&lt;/head&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;');
-doc.close();</pre>
+doc.write('<html><head><meta http-equiv="Refresh" content="0; URL=' + url + '"/></head><body></body></html>');
+doc.close();`
 
 <table>
 <tbody>
@@ -214,24 +214,24 @@ doc.close();</pre>
 
 先来创建一个空页面，假设是bridge.html：
 
-<pre class="lang:xhtml decode:true">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head lang="en"&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;title&gt;&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;script&gt;
+`<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
     var url = location.search.replace('?url=', '');
     location.replace(decodeURI(url));
-&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</pre>
+</script>
+</body>
+</html>`
 
 要跳转到目标页面，先跳转到bridge.html：
 
-<pre class="lang:js decode:true">var url = "http://baidu.com";
-window.open('bridge.html?url=' + encodeUri(url));</pre>
+`var url = "http://baidu.com";
+window.open('bridge.html?url=' + encodeUri(url));`
 
 <table>
 <tbody>
@@ -256,7 +256,7 @@ window.open('bridge.html?url=' + encodeUri(url));</pre>
 
 这是最简易直观的实现方式，如果一个a标签设置了rel="noreferrer"，那么就表示点击这个链接时不要传递referrer信息。（注意，这个html5标准中和referrer是正确的拼法）
 
-<pre class="lang:xhtml decode:true">&lt;a href="http://baidu.com" target="_blank" rel="noreferrer"&gt;跳转&lt;/a&gt;</pre>
+`<a href="http://baidu.com" target="_blank" rel="noreferrer">跳转</a>`
 
 <table>
 <tbody>
@@ -283,13 +283,13 @@ window.open('bridge.html?url=' + encodeUri(url));</pre>
 
 1.  google
 
-<pre class="lang:js decode:true">var url = "http://www.baidu.com";
-window.open('http://www.google.com/url?q=' + encodeURIComponent(url));</pre>
+`var url = "http://www.baidu.com";
+window.open('http://www.google.com/url?q=' + encodeURIComponent(url));`
 
  2. http://www.no-referer.de
 
-<pre class="lang:js decode:true ">var url = "http://www.baidu.com";
-window.open('http://www.no-referer.de/' + url);</pre>
+`var url = "http://www.baidu.com";
+window.open('http://www.no-referer.de/' + url);`
 
  国内google不能正常访问，可以试试下面那个服务。
 

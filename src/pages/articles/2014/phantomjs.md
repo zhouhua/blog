@@ -447,7 +447,7 @@ var webserver = require('webserver');
 var server = webserver.create();
 var service = server.listen(8080, function(request, response) {
     response.statusCode = 200;
-    response.write('&amp;lt;html&gt;&amp;lt;body&gt;Hello!&amp;lt;/body&gt;&amp;lt;/html&gt;')
+    response.write('<html><body>Hello!</body></html>')
     response.close();
 });
 ```

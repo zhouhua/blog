@@ -42,28 +42,28 @@ date: 2015-06-05 23:27:56
 
 首先要告诉浏览器：我是搜索引擎。做法很简单，在网页的head部分加上这样一行：
 
-<pre class="lang:xhtml decode:true">&lt;link rel="search" type="application/opensearchdescription+xml" href="http://www.zhouhua.info/opensearch.xml" title="step over"&gt;</pre>
+`<link rel="search" type="application/opensearchdescription+xml" href="http://www.zhouhua.info/opensearch.xml" title="step over">`
 
 我们看到type定义了一种从来没见过的mine类型
 
-<pre class="lang:ini decode:1 inline:1 " >application/opensearchdescription+xml</pre>
+`application/opensearchdescription+xml`
 
  ，不用紧张，这是openSearch标准规定的，你不用额外对服务器进行配置，只要提供一个能访问到的xml文件。在这个例子中，我的xml文件路径为
 
-<pre class="lang:js decode:1 inline:1 " >http://www.zhouhua.info/opensearch.xml</pre>
+`http://www.zhouhua.info/opensearch.xml`
 
  。关键就是要看这个xml是什么样的。标准中定义了很多，但我觉得设置几个简单的属性就够了：
 
-<pre class="lang:xhtml decode:true">&lt;?xml version="1.0"?&gt;
-&lt;OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"&gt;
-    &lt;ShortName&gt;屠龙刀&lt;/ShortName&gt;
-    &lt;Description&gt;搜索周骅的博客&lt;/Description&gt;
-    &lt;Url type="text/html" method="get" template="http://zhouhua.info/?s={searchTerms}"/&gt;
-&lt;/OpenSearchDescription&gt;</pre>
+`<?xml version="1.0"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+    <ShortName>屠龙刀</ShortName>
+    <Description>搜索周骅的博客</Description>
+    <Url type="text/html" method="get" template="http://zhouhua.info/?s={searchTerms}"/>
+</OpenSearchDescription>`
 
 我这里定义了三个属性，ShortName表示搜索引擎的名字，Description代表搜索引擎的描述，这都比较好理解。比较重要的是Url属性，它定义了搜索的方式。有这个例子里，规定了搜索结果是以text/html的形式返回，规定了用get方式去访问搜索action，规定了处理搜索的url为http://zhouhua.info/?s={searchTerms}，其中{searchTerms}会被用户输入的关键字替换。有一个比较有意思的功能，我稍微说一下，如果你的站点有搜索词建议的功能，你可以再定义一条Url字段，将template指向请求搜索建议的ajax地址，同时设置rel属性为suggestion。类似这样：
 
-<pre class="lang:xhtml decode:true">&lt;Url type="application/json" rel="suggestions" template="http://my_site/suggest?q={searchTerms}" /&gt;</pre>
+`<Url type="application/json" rel="suggestions" template="http://my_site/suggest?q={searchTerms}" />`
 
 标准里定义了Url可以有四种rel类型，我感觉比较有价值的就两种，一种是设置获取搜索结果的url，rel为result，这种最重要，如果不设置rel属性，那么会默认这个Url字段是这个作用；第二种是设置获取搜索建议的url，它的rel属性为suggestions，如果取这个值，那么这个属性是不可以省略的。其他的两种取值就不说了。
 
@@ -90,17 +90,17 @@ date: 2015-06-05 23:27:56
 
 如果有这样一个表单，chrome会认为这是一个搜索框，并根据这个表单的信息推断出这个网站的搜索方法。在我的网站中，恰恰有这样的表单：
 
-<pre class="lang:xhtml decode:true">&lt;form role="search" method="get" id="searchform" class="searchform" action="http://www.zhouhua.info/"&gt;
-    &lt;div&gt;
-        &lt;label class="screen-reader-text" for="s"&gt;搜索：&lt;/label&gt;
-    &lt;input type="text" value="" name="s" id="s"&gt;
-    &lt;input type="submit" id="searchsubmit" value="搜索"&gt;
-    &lt;/div&gt;
-&lt;/form&gt;</pre>
+`<form role="search" method="get" id="searchform" class="searchform" action="http://www.zhouhua.info/">
+    <div>
+        <label class="screen-reader-text" for="s">搜索：</label>
+    <input type="text" value="" name="s" id="s">
+    <input type="submit" id="searchsubmit" value="搜索">
+    </div>
+</form>`
 
 这个表单提供的信息和
 
-<pre class="lang:xhtml decode:1 inline:1 " >&lt;Url type="text/html" method="get" template="http://zhouhua.info/?s={searchTerms}"/&gt;</pre>
+`<Url type="text/html" method="get" template="http://zhouhua.info/?s={searchTerms}"/>`
 
  是等价的。但并不能提供更多的信息了，所以一开始，chrome直接是拿网站的域名当成是搜索引擎的名字。
 
@@ -112,12 +112,12 @@ date: 2015-06-05 23:27:56
 
 MDN的文档中有一个示例程序还是值得学习一下，它对AddSearchProvider做了兼容性的提升：
 
-<pre class="lang:js decode:true">function installSearchEngine() {
- if (window.external &amp;&amp; ("AddSearchProvider" in window.external)) {
+`function installSearchEngine() {
+ if (window.external && ("AddSearchProvider" in window.external)) {
    // Firefox 2 and IE 7, OpenSearch
    window.external.AddSearchProvider("http://example.com/search-plugin.xml");
- } else if (window.sidebar &amp;&amp; ("addSearchEngine" in window.sidebar)) {
-   // Firefox &lt;= 1.5, Sherlock
+ } else if (window.sidebar && ("addSearchEngine" in window.sidebar)) {
+   // Firefox <= 1.5, Sherlock
    window.sidebar.addSearchEngine("http://example.com/search-plugin.src",
                                   "http://example.com/search-icon.png",
                                   "Search Plugin", "");
@@ -125,7 +125,7 @@ MDN的文档中有一个示例程序还是值得学习一下，它对AddSearchPr
    // No search engine support (IE 6, Opera, etc).
    alert("No search engine support");
  }
-}</pre>
+}`
 
 ## 合
 

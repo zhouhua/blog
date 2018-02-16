@@ -14,108 +14,108 @@ date: 2015-05-07 23:57:29
 
 我们知道，正则表达式中，可以用
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >.</pre>
+`.`
 
  表示任意单个字符，但在underscore和jquery的源代码中，我们可以看到，这些著名类库的代码中，经常并不是用
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >.</pre>
+`.`
 
  来表示任意字符，而是使用
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >[\w\W]</pre>
+`[\w\W]`
 
  或者
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >[\s\S]</pre>
+`[\s\S]`
 
  。乍一看，好像表达的含义是一样的，可是为什么放着简单的方法不用，而去多绕个圈子？今天就简单说说这个问题。
 
 首先我们必须要正确理解
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >.</pre>
+`.`
 
  的含义。其实说它表示任意单个字符，可能会让人产生误解，必须要强调一下，这个“任意单个字符”不包括控制换行的字符，也就是不包含
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >\n</pre>
+`\n`
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >\r</pre>
+`\r`
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >\u2028</pre>
+`\u2028`
 
  或
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >\u2029</pre>
+`\u2029`
 
  这几个字符。而
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >\W</pre>
+`\W`
 
  和
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >\s</pre>
+`\s`
 
  中是能够包含这些字符的。那个这两种写法的差异也就很清晰了，就是能否匹配到几个换行控制符的差异。
 
-那么在什么时候我们需要考虑这几个换行控制符呢？当要处理的字符串可能包含换行时。这样的情景太多了，处理html字符串、处理template、nodejs读取文本等等。
+那么在什么时候我们需要考虑这几个换行控制符呢？当要处理的字符串可能包含换行时。这样的情景太多了，处理html字符串、处理template、Node.js读取文本等等。
 
 提及多行文本的场景，我们很容易想到正则表达式的
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >m</pre>
+`m`
 
  模式（多行模式）。那么多行模式对我们今天讨论的问题有影响吗？我不是很确定。为什么不确定呢？有些人信誓旦旦地声称单行模式下
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >.</pre>
+`.`
 
  的含义与多行模式下不同，单选模式下等同于
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >[\w\W]</pre>
+`[\w\W]`
 
  或者
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >[\s\S]</pre>
+`[\s\S]`
 
  ，而多行模式下会排除换行控制符。但据我试验，以及参考MDN的说法，这是不对的。的确有很多语言的正则表达式会有上述特性，但在javascript中我没有看到，不知道会不会有浏览器方面的差异。那么多行模式对于javascript而言影响的是什么呢？我认为仅仅是改变了
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >^</pre>
+`^`
 
  和
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >$</pre>
+`$`
 
  标识的含义：单行模式下，分别表示整个字符串的开始的结尾；多行模式下表示每一行的开始和结尾。而不管多行模式还是单行模式，我认为
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >.</pre>
+`.`
 
  都是不包含换行控制字符的，等价于
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >[^\n\r\u2028\u2029]</pre>
+`[^\n\r\u2028\u2029]`
 
  。
 
 再多延伸一点点，对于**现代浏览器**，可以直接用
 
-<pre class="lang:js highlight:0 decode:1 inline:1 " >[^]</pre>
+`[^]`
 
 来匹配任意字符的。
 
 例子程序不想写了，有兴趣的可以自己试验一下，分别用
 
-<pre class="lang:js decode:1 inline:1 " >/.&#42;/g</pre>
+`/.&#42;/g`
 
  、
 
-<pre class="lang:js decode:1 inline:1 " >/^.&#42;$/g</pre>
+`/^.&#42;$/g`
 
  、
 
-<pre class="lang:js decode:1 inline:1 " >/.&#42;/gm</pre>
+`/.&#42;/gm`
 
  、
 
-<pre class="lang:js decode:1 inline:1 " >/^.&#42;$/gm</pre>
+`/^.&#42;$/gm`
 
  来匹配一下
 
-<pre class="lang:js decode:1 inline:1 " >"abc\nedf"</pre>
+`"abc\nedf"`
 
  ，其中道理不言自明。

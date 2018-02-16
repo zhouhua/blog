@@ -23,7 +23,7 @@ Meterial Design把App的部件、面板、模态框等都抽象成了卡片。�
 
 以上的阴影定义虽然是AI的格式，但很容易就能转换成前端的语言：
 
-<pre class="lang:css decode:true">.z-index-1{
+`.z-index-1{
     box-shadow: 0 1px 1.5px rgba(0,0,0,0.12), 0 1px 1px rgba(0,0,0,0.24);
 }
 .z-index-2{
@@ -37,7 +37,7 @@ Meterial Design把App的部件、面板、模态框等都抽象成了卡片。�
 }
 .z-index-5{
     box-shadow: 0 19px 19px rgba(0,0,0,0.30), 0 15px 6px rgba(0,0,0,0.22);
-}</pre>
+}`
 
 看看效果：
 
@@ -51,7 +51,7 @@ Meterial Design把App的部件、面板、模态框等都抽象成了卡片。�
 
 嗯，确实比我自己实现的感觉要优雅。
 
-> 先插几句话，<pre class="lang:css highlight:0 decode:1 inline:1 " >box-shadow</pre> 属性很有意思，它允许有若干重属性值，效果是相互叠加。张鑫旭有一篇博客谈这个问题（[传送门](http://www.zhangxinxu.com/wordpress/2013/11/css-css3-box-shadow-%E7%9B%92%E9%98%B4%E5%BD%B1-%E5%9B%BE%E5%BD%A2%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF/)），写得很好，大家可以参考一下。
+> 先插几句话，`box-shadow` 属性很有意思，它允许有若干重属性值，效果是相互叠加。张鑫旭有一篇博客谈这个问题（[传送门](http://www.zhangxinxu.com/wordpress/2013/11/css-css3-box-shadow-%E7%9B%92%E9%98%B4%E5%BD%B1-%E5%9B%BE%E5%BD%A2%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF/)），写得很好，大家可以参考一下。
 
 这样的阴影效果大家自行感受，我觉得不管怎么样，好过我自己编造、瞎调出来的。但为什么要使用双重阴影？官方解释是用两个光源来模拟现实场景，一个是关键光，一个是环境光，所以会产生两个阴影。另外[@jordanfc迟方的回答](http://www.zhihu.com/question/28865209/answer/42385558)很棒，但很多是结论性的东西，我们需要更多一点思考。
 
@@ -69,7 +69,7 @@ Meterial Design把App的部件、面板、模态框等都抽象成了卡片。�
 
 ![light](http://www.zhouhua.info/wp-content/uploads/2015/03/light.png)
 
-假设阴影模糊半径为Blur，观察点距离物体的垂直投影边界为x（0&lt;=x&lt;=Blur），降维到一维情形下，光源长度为L，能照到观察点的光源长度为l，那么有：
+假设阴影模糊半径为Blur，观察点距离物体的垂直投影边界为x（0<=x<=Blur），降维到一维情形下，光源长度为L，能照到观察点的光源长度为l，那么有：
 
 ![png](http://www.zhouhua.info/wp-content/uploads/2015/03/png.png)
 
@@ -107,7 +107,7 @@ A、B为常数，A+B=1。当x=0时，s=0，这时阴影最浓，为0pacity；当
 
 翻译成css就是
 
-<pre class="lang:css decode:true ">box-shadow: 0 3px 3px 0 rgba(0,0,0,0.3532);</pre>
+`box-shadow: 0 3px 3px 0 rgba(0,0,0,0.3532);`
 
  对比看一下效果，能看出有差异吗？
 

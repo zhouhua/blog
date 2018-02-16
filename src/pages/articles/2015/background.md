@@ -53,7 +53,7 @@ background-clip: <border-box|padding-box|content-box|inherit>#
 <td>3.0 (522) </td>
 </tr>
 <tr>
-<td><pre class="inline:true decode:1 " >content-box</pre></td>
+<td><code>content-box</code></td>
 <td>1.0</td>
 <td>4.0 (2.0) </td>
 <td>9.0 </td>
@@ -103,7 +103,7 @@ MDN 上指出 `background-origin` 可以有多个属性值，我还是没试出
 <td>3.0 (522) </td>
 </tr>
 <tr>
-<td><pre class="inline:true decode:1 " >content-box</pre></td>
+<td><code>content-box</code></td>
 <td>1.0</td>
 <td>4.0 (2.0) </td>
 <td>9.0 </td>

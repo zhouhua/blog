@@ -162,7 +162,7 @@ OK，至此现在该分析网页本身的结构了。首先我在代码中发现
 
 ![](./kindle/content.png)
 
-我们可以直接用 `\$('[_host="' + scope.hostName + '"] .bbs-content')` 把正文节点都找出来，然后拼合在一起，完成！
+我们可以直接用 `$('[_host="' + scope.hostName + '"] .bbs-content')` 把正文节点都找出来，然后拼合在一起，完成！
 
 ### 输出 HTML
 
@@ -176,7 +176,7 @@ function writer(scope) {
     var html='<!DOCTYPE html><html><head lang="en"><title>'+
         scope.title+
         '</title></head><body>'+
-        scope.content.replace(/&lt;br\/&gt;$/, '')+
+        scope.content.replace(/<br\/>$/, '')+
         '</body></html>';
     var path=outputPath+'/'+scope.title.replace(/[ \\\/:,，\?？\-\.\+]/g,'')+'.html';
     fs.write(path,html,{
