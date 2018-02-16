@@ -7,9 +7,7 @@ tags:
   - 同步
   - 并发
   - 异步
-categories:
-  - 技术
-  - javascript
+category: 技术
 layout: post
 date: 2014-03-18 22:45:57
 ---

@@ -6,8 +6,7 @@ tags:
   - 性能优化
   - 递归
 id: 532
-categories:
-  - 技术
+category: 技术
 layout: post
 date: 2016-01-11 10:51:24
 ---

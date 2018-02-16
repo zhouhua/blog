@@ -4,8 +4,7 @@ tags:
   - Javascript
   - 正则表达式
 id: 384
-categories:
-  - 技术
+category: 技术
 layout: post
 date: 2015-04-07 15:10:10
 ---

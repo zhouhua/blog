@@ -3,8 +3,7 @@ title: “===”也有不靠谱的时候
 tags:
   - Javascript
 id: 430
-categories:
-  - 技术
+category: 技术
 layout: post
 date: 2015-05-08 20:12:30
 ---

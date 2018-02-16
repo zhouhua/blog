@@ -12,8 +12,7 @@ tags:
   - 算法
   - 选择排序
 id: 473
-categories:
-  - 技术
+category: 技术
 layout: post
 date: 2015-06-18 12:08:03
 ---

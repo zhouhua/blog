@@ -6,8 +6,7 @@ tags:
   - 色彩
   - 透明
 id: 309
-categories:
-  - 技术
+category: 技术
 layout: post
 date: 2015-03-23 17:05:23
 ---

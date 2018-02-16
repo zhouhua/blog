@@ -5,9 +5,7 @@ tags:
   - getComputedStyle
   - Javascript
   - 前端开发
-categories:
-  - 技术
-  - css
+category: 技术
 layout: post
 date: 2014-08-20 22:49:26
 ---

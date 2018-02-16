@@ -7,8 +7,7 @@ tags:
   - 动画
   - 缓动函数
 id: 270
-categories:
-  - 技术
+category: 技术
 layout: post
 date: 2015-03-10 16:31:50
 ---

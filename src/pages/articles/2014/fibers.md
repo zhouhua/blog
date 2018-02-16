@@ -7,9 +7,7 @@ tags:
   - 多线程
   - 纤程
 id: 46
-categories:
-  - 技术
-  - javascript
+category: 技术
 layout: post
 date: 2014-03-13 22:38:40
 ---

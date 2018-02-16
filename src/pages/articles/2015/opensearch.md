@@ -5,8 +5,7 @@ tags:
   - OpenSearch
   - 搜索
 id: 447
-categories:
-  - 技术
+category: 技术
 layout: post
 date: 2015-06-05 23:27:56
 ---

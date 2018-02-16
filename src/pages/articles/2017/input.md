@@ -3,8 +3,7 @@ title: 征服number类型的input框
 tags:
   - input
   - javascript
-categories:
-  - 技术
+category: 技术
 layout: post
 date: 2017-11-01 10:00:00
 ---

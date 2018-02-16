@@ -10,8 +10,7 @@ tags:
   - 正则表达式
   - 灾难性回溯
 id: 437
-categories:
-  - 技术
+category: 技术
 layout: post
 date: 2015-06-02 00:52:15
 ---

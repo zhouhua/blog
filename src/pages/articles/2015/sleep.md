@@ -6,8 +6,7 @@ tags:
   - Javascript
   - nodejs
 id: 264
-categories:
-  - 技术
+category: 技术
 layout: post
 date: 2015-03-04 15:34:22
 ---

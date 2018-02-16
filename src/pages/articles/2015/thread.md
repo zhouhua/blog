@@ -8,8 +8,7 @@ tags:
   - 多线程
   - 性能
 id: 297
-categories:
-  - 技术
+category: 技术
 layout: post
 date: 2015-03-16 15:29:53
 ---

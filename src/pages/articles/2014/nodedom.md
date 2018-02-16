@@ -4,9 +4,7 @@ tags:
   - dom
   - jsdom
   - Node.js
-categories:
-  - 技术
-  - javascript
+category: 技术
 layout: post
 date: 2014-03-05 22:32:36
 ---

@@ -8,8 +8,7 @@ tags:
   - 阴影
   - 颜色
 id: 323
-categories:
-  - 技术
+category: 技术
 layout: post
 date: 2015-03-24 18:12:43
 ---

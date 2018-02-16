@@ -6,9 +6,7 @@ tags:
   - phantomjs
   - 多线程
   - 无头测试
-categories:
-  - 技术
-  - javascript
+category: 技术
 layout: post
 date: 2014-03-19 22:47:40
 ---

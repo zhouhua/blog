@@ -6,8 +6,7 @@ tags:
   - referer
   - referrer
 id: 363
-categories:
-  - 技术
+category: 技术
 layout: post
 date: 2015-03-31 17:47:49
 ---

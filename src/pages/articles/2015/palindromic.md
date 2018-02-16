@@ -4,8 +4,7 @@ tags:
   - Javascript
   - 正则
 id: 352
-categories:
-  - 技术
+category: 技术
 layout: post
 date: 2015-03-26 15:14:04
 ---

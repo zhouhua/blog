@@ -5,8 +5,7 @@ tags:
   - 多行模式
   - 正则表达式
 id: 426
-categories:
-  - 技术
+category: 技术
 layout: post
 date: 2015-05-07 23:57:29
 ---
