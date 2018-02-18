@@ -1,5 +1,5 @@
 ---
-title: 在Node.js中使用多线程编程
+title: 在 Node.js 中使用多线程编程
 tags:
   - addon
   - c/c++
@@ -13,7 +13,7 @@ layout: post
 date: 2015-03-16 15:29:53
 ---
 
-在以前的博文[别说不可能，Node.js中实现sleep](http://www.zhouhua.info/2015/03/04/sleep/)中，我向大家介绍了Node.js addon的用法。今天的主题还是addon，继续挖掘c/c++的能力，弥补Node.js的弱点。</p>
+在以前的博文[别说不可能，Node.js 中实现 sleep](/2015/sleep)中，我向大家介绍了 Node.js addon 的用法。今天的主题还是 addon，继续挖掘 c/c++ 的能力，弥补Node.js的弱点。
 
 我曾多次提到过Node.js的性能问题。其实就语言本身而言，Node.js的性能还是很高的，虽然不及大多部静态语言，但差距也并不大；相对其他动态语言而言，速度优势非常明显。但为什么我们常常说Node.js不能胜任CPU密集型场景呢？因为由于其单线程特性，对于CPU密集型场景，它并不能充分利用CPU。计算机科学中有一个著名的**Amdahl定律**：
 

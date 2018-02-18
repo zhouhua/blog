@@ -1,5 +1,5 @@
 ---
-title: 别说不可能，Node.js中实现sleep
+title: 别说不可能，Node.js 中实现 sleep
 tags:
   - addon
   - CSS
@@ -83,27 +83,27 @@ npm init
 
 ## C++ 编码
 
- OK，既然已经配置了源代码是 hello.cc，那就建立一个这样的文件。有一个问题需要提前提醒大家，我们所写的 c++ 模块最终是要被v8引擎使用，所以api、写法等受到v8引擎的制约。而不同版本的 Node.js 其实采用的 v8 引擎的版本也不尽相同，这也就意味着很难用一套 c++ 代码满足不同版本的 Node.js（指编译过程，编译完成后跨版本应该能够使用，没有验证过。github 不能上传二进制类库，所以 github 上开源会有麻烦。npm 可以直接上传二进制类库，跳过编译步骤，所以问题相对较小）。
+OK，既然已经配置了源代码是 hello.cc，那就建立一个这样的文件。有一个问题需要提前提醒大家，我们所写的 c++ 模块最终是要被v8引擎使用，所以api、写法等受到v8引擎的制约。而不同版本的 Node.js 其实采用的 v8 引擎的版本也不尽相同，这也就意味着很难用一套 c++ 代码满足不同版本的 Node.js（指编译过程，编译完成后跨版本应该能够使用，没有验证过。github 不能上传二进制类库，所以 github 上开源会有麻烦。npm 可以直接上传二进制类库，跳过编译步骤，所以问题相对较小）。
 
 ### node 0.11 及以上版本：
 
-```c++
+```cpp
 #include <node.h>
 #include <v8.h>
 
 using namespace v8;
 
 void SleepFunc(const v8::FunctionCallbackInfo<Value>& args) {
-  Isolate* isolate = Isolate::GetCurrent();
-  HandleScope scope(isolate);
-  double arg0 = args[0] -> NumberValue();
-  Sleep(arg0);
+    Isolate* isolate = Isolate::GetCurrent();
+    HandleScope scope(isolate);
+    double arg0 = args[0] -> NumberValue();
+    Sleep(arg0);
 }
 
 void Init(Handle<Object> exports) {
-  Isolate* isolate = Isolate::GetCurrent();
-  exports->Set(String::NewFromUtf8(isolate, "sleep"),
-      FunctionTemplate::New(isolate, SleepFunc)->GetFunction());
+    Isolate* isolate = Isolate::GetCurrent();
+    exports->Set(String::NewFromUtf8(isolate, "sleep"),
+        FunctionTemplate::New(isolate, SleepFunc)->GetFunction());
 }
 
 NODE_MODULE(hello, Init);
@@ -111,28 +111,28 @@ NODE_MODULE(hello, Init);
 
 ### node 0.10 及以下版本：
 
-```c++
+```cpp
 #include <node.h>
 #include <v8.h>
 
 using namespace v8;
 
 Handle<Value> SleepFun(const Arguments& args) {
-  HandleScope scope;  
-  double arg0 = args[0] -> NumberValue();
-  Sleep(arg0);
-  return scope.Close(Undefined());
+    HandleScope scope;
+    double arg0 = args[0] -> NumberValue();
+    Sleep(arg0);
+    return scope.Close(Undefined());
 }
 
 void Init(Handle<Object> exports) {
-  exports->Set(String::NewSymbol("sleep"),
-      FunctionTemplate::New(SleepFun)->GetFunction());
+    exports->Set(String::NewSymbol("sleep"),
+        FunctionTemplate::New(SleepFun)->GetFunction());
 }
 
 NODE_MODULE(hello, Init);
 ```
 
- 可以看出，变化还是相当大的，如果能屏蔽这些差异就太好了，有办法了？我写这么多还不就是想告诉你有办法。是时候请出 nan 库了。
+可以看出，变化还是相当大的，如果能屏蔽这些差异就太好了，有办法了？我写这么多还不就是想告诉你有办法。是时候请出 nan 库了。
 
 ### nan
 
@@ -140,7 +140,7 @@ NODE_MODULE(hello, Init);
 
 先安装：`npm install --save nan`，看看同样的功能，用了nan后如何实现：
 
-```c++
+```cpp
 #include <nan.h>
 using namespace v8;
 
@@ -162,7 +162,7 @@ NODE_MODULE(hello, Init);
 
 从下往上看：`NODE_MODULE(hello, Init);` 这句定义 addon 的入口。注意第一个参数要与我们在 binding.gyp 中 target_name 一项一致。第二个参数就是 addon 的入口函数。
 
-```c++
+```cpp
 void Init(Handle<Object> exports){
     exports->Set(NanSymbol("sleep"), FunctionTemplate::New(Sleep)->GetFunction());
 }
@@ -178,7 +178,7 @@ void Init(Handle<Object> exports){
 
 Sleep 是一个函数，下来就来看看 Sleep 的定义：
 
-```c++
+```cpp
 NAN_METHOD(Sleep){
     NanScope();
     double arg0=args[0]->NumberValue();

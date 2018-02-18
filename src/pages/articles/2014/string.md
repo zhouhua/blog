@@ -1,5 +1,5 @@
 ---
-title: javascript实现各种字符串搜索算法
+title: javascript 实现各种字符串搜索算法
 tags:
   - Horspool算法
   - Javascript

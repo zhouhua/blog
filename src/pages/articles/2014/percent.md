@@ -1,5 +1,5 @@
 ---
-title: padding、margin纵向取值问题
+title: padding、margin 纵向取值问题
 tags:
   - CSS
   - margin

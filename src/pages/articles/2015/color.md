@@ -1,5 +1,5 @@
 ---
-title: 带Alpha通道的色彩叠加问题
+title: 带 Alpha 通道的色彩叠加问题
 tags:
   - alpha通道
   - color

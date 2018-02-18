@@ -1,5 +1,5 @@
 ---
-title: 深入了解javascript的sort方法
+title: 深入了解 javascript 的 sort 方法
 tags:
   - Javascript
   - quicksort

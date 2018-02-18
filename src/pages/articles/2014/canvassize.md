@@ -1,5 +1,5 @@
 ---
-title: canvas元素的宽高
+title: canvas 元素的宽高
 tags:
   - canvas
   - CSS

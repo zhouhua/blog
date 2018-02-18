@@ -1,5 +1,5 @@
 ---
-title: phantomjs配合kindlegen，kindle看天涯不费力
+title: phantomjs 配合 kindlegen，kindle 看天涯不费力
 tags:
   - Javascript
   - kindle

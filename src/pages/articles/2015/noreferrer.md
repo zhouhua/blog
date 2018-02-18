@@ -1,5 +1,5 @@
 ---
-title: 聊聊rel=noreferrer的事
+title: 聊聊 rel=noreferrer 的事
 tags:
   - Javascript
   - noreferrer

@@ -1,5 +1,5 @@
 ---
-title: 谈谈正则表达式中的“.”
+title: 谈谈正则表达式中的 “.”
 tags:
   - Javascript
   - 多行模式
