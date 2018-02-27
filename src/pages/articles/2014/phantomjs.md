@@ -23,7 +23,7 @@ phantomjs 实现了一个无界面的 webkit 浏览器。虽然没有界面，�
 
 ### 简单示例
 
-```js test.js
+```javascript
 var page = require('webpage').create(),
     system = require('system'),
     address;
