@@ -36,8 +36,8 @@ class PostTemplateDetails extends React.Component {
                 <script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js" />
                 <script dangerouslySetInnerHTML={{
                     __html: `var gitalk = new Gitalk({
-                        clientID: 'aa19479305bd5ae2cc05',
-                        clientSecret: '5514529cafdd958f72e2119eec0ff0fa876963ab',
+                        clientID: 'c6feba9cda7803e3c181',
+                        clientSecret: 'aed071632e47d501bc5c50a8a1540188a2db957d',
                         repo: 'blog',
                         owner: 'zhouhua-js',
                         admin: ['zhouhua'],
