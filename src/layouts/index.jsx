@@ -11,11 +11,7 @@ class Layout extends React.Component {
         return (
             <div className="layout">
                 <Helmet defaultTitle="Step Over" />
-
                 {children()}
-                <div className="notice">
-                    网站建设中...
-                </div>
             </div>
         );
     }

@@ -5,22 +5,6 @@
 @import "base";
 @import "pages";
 
-.layout {
-    position: relative;
-    padding-top: 60px;
-    & .notice {
-        height: 60px;
-        width: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        background: #c0d3f5;
-        line-height: 60px;
-        text-align: center;
-        color: #666;
-    }
-}
-
 .post-single__body {
     .gatsby-highlight-code-line {
         background-color: #444;
