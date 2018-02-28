@@ -48,6 +48,7 @@
     "gatsby-source-filesystem": "^1.5.20",
     "gatsby-transformer-remark": "^1.7.28",
     "gatsby-transformer-sharp": "^1.6.16",
+    "gitalk": "^1.2.2",
     "lodash": "^4.17.4",
     "react": "^16.2.0",
     "react-disqus-comments": "^1.1.1",

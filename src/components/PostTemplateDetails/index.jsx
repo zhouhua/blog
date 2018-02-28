@@ -1,6 +1,8 @@
 import React from 'react';
 import Link from 'gatsby-link';
 import moment from 'moment';
+import 'gitalk/dist/gitalk.css';
+// import gitalk from 'gitalk';
 import './style.scss';
 
 class PostTemplateDetails extends React.Component {
@@ -31,15 +33,18 @@ class PostTemplateDetails extends React.Component {
 
         const commentsBlock = (
             <div id="lv-container" data-id="city" data-uid="MTAyMC8zNDQ0Mi8xMDk3OQ==">
+                <script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js" />
                 <script dangerouslySetInnerHTML={{
-                    __html: `(function(d, s) {
-                        var j, e = d.getElementsByTagName(s)[0];
-                        if (typeof LivereTower === 'function') { return; }
-                        j = d.createElement(s);
-                        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-                        j.async = true;
-                        e.parentNode.insertBefore(j, e);
-                    })(document, 'script');`
+                    __html: `var gitalk = new Gitalk({
+                        clientID: 'aa19479305bd5ae2cc05',
+                        clientSecret: '5514529cafdd958f72e2119eec0ff0fa876963ab',
+                        repo: 'blog',
+                        owner: 'zhouhua-js',
+                        admin: ['zhouhua'],
+                        id: window.location.pathname, // Ensure uniqueness and length less than 50
+                        distractionFreeMode: false // Facebook-like distraction free mode
+                    });
+                    gitalk.render('gitalk-container');`
                 }}
                 />
             </div>
