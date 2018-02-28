@@ -30,7 +30,6 @@ module.exports = class HTML extends React.Component {
                         name="viewport"
                         content="width=device-width, initial-scale=1, shrink-to-fit=no"
                     />
-                    <meta name="baidu-site-verification" content="BFSng7slnw" />
                     {this.props.headComponents}
                     {css}
                     <script dangerouslySetInnerHTML={{
@@ -53,6 +52,21 @@ module.exports = class HTML extends React.Component {
                         dangerouslySetInnerHTML={{ __html: this.props.body }}
                     />
                     {this.props.postBodyComponents}
+                    <script dangerouslySetInnerHTML={{
+                        __html: `(function(){
+                            var bp = document.createElement('script');
+                            var curProtocol = window.location.protocol.split(':')[0];
+                            if (curProtocol === 'https'){
+                        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+                        }
+                        else{
+                        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                        }
+                            var s = document.getElementsByTagName("script")[0];
+                            s.parentNode.insertBefore(bp, s);
+                        })();`
+                    }}
+                    />
                 </body>
             </html>
         );
