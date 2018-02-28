@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'gatsby-link';
 import moment from 'moment';
-import Disqus from '../Disqus/Disqus';
 import './style.scss';
 
 class PostTemplateDetails extends React.Component {
@@ -31,8 +30,18 @@ class PostTemplateDetails extends React.Component {
         );
 
         const commentsBlock = (
-            <div>
-                <Disqus postNode={post} />
+            <div id="lv-container" data-id="city" data-uid="MTAyMC8zNDQ0Mi8xMDk3OQ==">
+                <script dangerouslySetInnerHTML={{
+                    __html: `(function(d, s) {
+                        var j, e = d.getElementsByTagName(s)[0];
+                        if (typeof LivereTower === 'function') { return; }
+                        j = d.createElement(s);
+                        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                        j.async = true;
+                        e.parentNode.insertBefore(j, e);
+                    })(document, 'script');`
+                }}
+                />
             </div>
         );
 

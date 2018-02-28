@@ -4,7 +4,6 @@ module.exports = {
         title: 'Step Over',
         subtitle: '有趣的灵魂终会相遇',
         copyright: '© All rights reserved.',
-        disqusShortname: '',
         menu: [
             {
                 label: '文章',
@@ -102,6 +101,21 @@ module.exports = {
                         resolve: 'gatsby-remark-responsive-iframe',
                         options: { wrapperStyle: 'margin-bottom: 1.0725rem' }
                     },
+                    {
+                        resolve: 'gatsby-remark-external-links',
+                        options: {
+                            target: '_blank',
+                            rel: 'nofollow'
+                        }
+                    },
+                    {
+                        resolve: 'gatsby-remark-flowchart',
+                        options: {
+                            // see more details on https://github.com/adrai/flowchart.js
+                            'fill': 'white',
+                            'line-color': 'black'
+                        }
+                    },
                     'gatsby-remark-prismjs',
                     'gatsby-remark-copy-linked-files',
                     'gatsby-remark-smartypants',
@@ -151,6 +165,27 @@ module.exports = {
                             priority: 0.7
                         };
                     })
+            }
+        },
+        {
+            resolve: 'gatsby-plugin-accessibilityjs',
+            options: {
+                injectStyles: false,
+                errorClassName: false
+            }
+        }, {
+            resolve: 'gatsby-plugin-favicon',
+            options: {
+                logo: './src/pages/photo.jpg',
+                injectHTML: true,
+                icons: {
+                    android: true,
+                    appleIcon: true,
+                    appleStartup: true,
+                    favicons: true,
+                    firefox: true,
+                    windows: true
+                }
             }
         },
         'gatsby-plugin-offline',
