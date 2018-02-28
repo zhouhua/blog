@@ -12,57 +12,44 @@ layout: post
 date: 2015-04-15 17:21:57
 ---
 
-表单验证的需求简直太常见了。“**<span style="color: #ff0000;">所有用户的输入都是不可信的</span>**”这个思想指导我们在设计表单的时候，一定要进行用户输入的验证。对于用户体验而言，越早的反馈则越佳，所以表单验证的工作应该尽可能地在前端就进行（当然，前端对于后端而言也是输入端，所以后端仍然需要进行检验）。简单的表单验证完全可以给input绑定几个change事件来进行。但表单一复杂，或者相似验证规则一多，这种编码的方式就很难管理事件了。这时候，我们通常需要使用一些库来帮助我们处理表单验证的工作。前端表单验证的库太多了，随便一搜：[表单验证-百度搜索](https://www.baidu.com/s?ie=UTF-8&wd=%E8%A1%A8%E5%8D%95%E9%AA%8C%E8%AF%81)。</p>
+表单验证的需求简直太常见了。“**<span style="color: #ff0000;">所有用户的输入都是不可信的</span>**”这个思想指导我们在设计表单的时候，一定要进行用户输入的验证。对于用户体验而言，越早的反馈则越佳，所以表单验证的工作应该尽可能地在前端就进行（当然，前端对于后端而言也是输入端，所以后端仍然需要进行检验）。简单的表单验证完全可以给 input 绑定几个 change 事件来进行。但表单一复杂，或者相似验证规则一多，这种编码的方式就很难管理事件了。这时候，我们通常需要使用一些库来帮助我们处理表单验证的工作。前端表单验证的库太多了，随便一搜：[表单验证-百度搜索](https://www.baidu.com/s?ie=UTF-8&wd=%E8%A1%A8%E5%8D%95%E9%AA%8C%E8%AF%81)。</p>
 
-那……为什么还要自己实现一个呢？因为去年工作中遇到了比较复杂的验证逻辑，选一个别人的库一是要学习api，二是维护起来困难，要符合自己的页面风格也不是那么轻松；再加上表单验证器并不复杂，于是就打算自己写一个。所以这个表单验证器并不算那么地通用，不过我觉得传播思路和方法更重要，要想修修改改变成一个通用的库也很容易，只是没那么重要罢了（其实是懒……）。
+那……为什么还要自己实现一个呢？因为去年工作中遇到了比较复杂的验证逻辑，选一个别人的库一是要学习 api，二是维护起来困难，要符合自己的页面风格也不是那么轻松；再加上表单验证器并不复杂，于是就打算自己写一个。所以这个表单验证器并不算那么地通用，不过我觉得传播思路和方法更重要，要想修修改改变成一个通用的库也很容易，只是没那么重要罢了（其实是懒……）。
 
 ## 依赖
 
-jquery + bootstrap。jquery看来是缺不了，bootstrap没那么重要，对代码稍做修改就可以取消依赖。
+jquery + bootstrap。jquery 看来是缺不了，bootstrap 没那么重要，对代码稍做修改就可以取消依赖。
 
 ## 能做什么
 
-我期望这个表单验证器直接在html代码中指定好需要采用什么样的规则，不需要用javascript进行多余的配置；允许暂时跳过验证；允许扩展验证规则；提供验证难过、验证失败、警告三种验证结果；允许手动触发验证等等。
+我期望这个表单验证器直接在 html 代码中指定好需要采用什么样的规则，不需要用 javascript 进行多余的配置；允许暂时跳过验证；允许扩展验证规则；提供验证难过、验证失败、警告三种验证结果；允许手动触发验证等等。
 
-一个典型的bootstrap风格的表单项应该长这个样子：
+一个典型的 bootstrap 风格的表单项应该长这个样子：
 
-`<div class="form-group">
+```html{8,9}
+<div class="form-group">
     <label class="col-xs-2 control-label">手机号码
         <span class="request">*</span>：</label>
     <div class="col-xs-6">
-        <input class="form-control" name="mobile" type="text" data-validate-disable="true" data-validate="request:notrim mobile" />
+        <input class="form-control"
+               name="mobile"
+               type="text"
+               data-validate-disable="true"
+               data-validate="request:notrim mobile" />
         <p class="text-info">请输入真实手机号码。</p>
     </div>
     <div class="help-block col-xs-4">&nbsp;</div>
-</div>`
+</div>
+```
 
- 重点看第5行，对于一个普通的input组件，我加了两个属性，
-
-`data-validate-disable`
-
- 有值表示表单验证时，会跳过这个input组件；
-
-`data-validate`
-
- 则存放如果要验证的话，将采用什么样的验证规则。这个例子中表示要验证这个input组件是否为空、是否为手机号码这两个规则。注意，在
-
-`request`
-
- 的后面我还加了一点内容，这是我想传递给验证规则的参数，比如这里我期望告诉验证器，如果input值只有空格，也认为是有值的。相似的，我们可以定义一个规则
-
-`min`
-
- 来处理最少几个字符，并在html中把这个设定值传递进来，就像这样：
-
-`data-validate="min:10"`
-
- 。我也期望一个验证规则允许多个参数传递，参数与参数之间用逗号隔开。
+重点看第5行，对于一个普通的 input 组件，我加了两个属性，`data-validate-disable` 有值表示表单验证时，会跳过这个 input 组件；`data-validate` 则存放如果要验证的话，将采用什么样的验证规则。这个例子中表示要验证这个 input 组件是否为空、是否为手机号码这两个规则。注意，在 `request` 的后面我还加了一点内容，这是我想传递给验证规则的参数，比如这里我期望告诉验证器，如果 input 值只有空格，也认为是有值的。相似的，我们可以定义一个规则 `min` 来处理最少几个字符，并在 html 中把这个设定值传递进来，就像这样：`data-validate="min:10"`。我也期望一个验证规则允许多个参数传递，参数与参数之间用逗号隔开。
 
 看起来很有意思，那就开始动手吧。
 
 ## 先写个jquery插件吧
 
-`(function ($) {
+```javascript
+(function ($) {
     $.fn.validation = function () {
         return this.each(function () {
             var $this = $(this);
@@ -74,38 +61,23 @@ jquery + bootstrap。jquery看来是缺不了，bootstrap没那么重要，对�
                 .on('focus.zh', clear);
         });
     };
-}(jQuery));`
+}(jQuery));
+```
 
- 给jquery对象添加一个
+给jquery对象添加一个 `validation` 方法，用法很简单：`$(<Selector>).validation()`。支持链式调用。`Selector` 比较自由，如果是 `:input` 元素，则直接给这些元素初始化验证器；否则找出它们所有的 `:input` 子元素，给这些子元素初始化验证器。什么意思呢？就以上面的 html 片断为例，你可以任性地使用如下任意一种方式初始化验证器：
 
-`validation`
+* `$('[name=mobile]').validation(); // 选择 :input`
+* `$('.form-group').validation(); // 选择普通节点，对所有 :input 子元素生效`
+* `$('body').validation(); // 对页面中所有的 :input 元素生效`
 
- 方法，用法很简单：
+再说说所谓的初始化，其实就是绑定事件。那么要绑定什么事件呢？主观上，对于一个输入框，当我们输入好了，焦点离开时，应该就进行输入内容的验证，并给出验证结果。如果验证失败，会有提示信息，但这些提示信息应该在重新获得焦点时清除，否则当用户在修正输入的时候还一直提示上次的错误信息，会让用户无所适从。那么针对以上的情况，我们需要在失去焦点（`blur`）和获得焦点（`focus`）时分别绑定验证的方法（`validate`）和清除错误信息的方法（`clear`）。另外针对 checkbox、radiobox、select 等控件，最好也给 `select` 事件绑定验证方法。
 
-`$(Selector).validation()`
+> 为什么不使用更通用 `change` 事件来绑定验证方法呢？原因有二：
+>
+> 1. 我觉得有些场景需要用 javascript 载入默认值或历史输入。这些内容应该延后验证（不是不验证），不然刚打开页面就是表单验证错误让人很难受。所以 `change` 事件不合适。
+> 2. 由于获得焦点会清空错误消息，如果没有修改内容，直接失去焦点，这时不会触发 `change` 事件，导致不会再验证，表现为错误信息丢失。
 
- 。支持链式调用。_Selector_比较自由，如果是
-
-`:input`
-
- 元素，则直接给这些元素初始化验证器；否则找出它们所有的
-
-`:input`
-
- 子元素，给这些子元素初始化验证器。什么意思呢？就以上面的html片断为例，你可以任性地使用如下任意一种方式初始化验证器：
-
-*   `$('[name=mobile]').validation(); // 选择:input` 
-*   `$('.form-group').validation(); // 选择普通节点，对所有:input子元素生效` 
-*   `$('body').validation(); // 对页面中所有的:input元素生效`
-
-再说说所谓的初始化，其实就是绑定事件。那么要绑定什么事件呢？主观上，对于一个输入框，当我们输入好了，焦点离开时，应该就进行输入内容的验证，并给出验证结果。如果验证失败，会有提示信息，但这些提示信息应该在重新获得焦点时清除，否则当用户在修正输入的时候还一直提示上次的错误信息，会让用户无所适从。那么针对以上的情况，我们需要在失去焦点（_blur_）和获得焦点（_focus_）时分别绑定验证的方法（_validate_）和清除错误信息的方法（_clear_）。另外针对checkbox、radiobox、select等控件，最好也给select事件绑定验证方法。
-
-> 为什么不使用更通用change事件来绑定验证方法呢？原因有二：
-> 
-> 1.  我觉得有些场景需要用javascript载入默认值或历史输入。这些内容应该延后验证（不是不验证），不然刚打开页面就是表单验证错误让人很难受。所以change事件不合适。
-> 2.  由于获得焦点会清空错误消息，如果没有修改内容，直接失去焦点，这时不会触发change事件，导致不会再验证，表现为错误信息丢失。
-
-那下面就来具体看看_validate_和_clear_两个方法。
+那下面就来具体看看 `validate` 和 `clear` 两个方法。
 
 ## 清除错误消息及验证状态设置
 
@@ -113,9 +85,10 @@ jquery + bootstrap。jquery看来是缺不了，bootstrap没那么重要，对�
 function clear() {
     var $this = $(this);
     var $parent = $this.closest('.form-group');
-    if (!$parent.attr('data-for') || 
+    if (!$parent.attr('data-for') ||
         $parent.attr('data-for') === $this.prop('name')) {
-        $parent.attr('data-for', null).removeClass('has-error waiting has-warning')
+        $parent.attr('data-for', null)
+            .removeClass('has-error waiting has-warning')
             .find('.help-block').text('');
     }
 }
@@ -129,18 +102,22 @@ function successHandler() {
 
 function failHandler(msg) {
     var $parent = this.closest('.form-group');
-    $parent.removeClass('has-warning waiting').addClass('has-error').
-        attr('data-for', this.prop('name')).find('.help-block').text(msg);
+    $parent.removeClass('has-warning waiting')
+        .addClass('has-error')
+        .attr('data-for', this.prop('name'))
+        .find('.help-block').text(msg);
 }
 
 function warningHandler(msg) {
     var $parent = this.closest('.form-group');
-    $parent.removeClass('waiting').addClass('has-warning').
-        attr('data-for', this.prop('name')).find('.help-block').text(msg);
+    $parent.removeClass('waiting')
+        .addClass('has-warning')
+        .attr('data-for', this.prop('name'))
+        .find('.help-block').text(msg);
 }
 ```
 
- 这一段一起说，因为这部分内容是dom操作相关的，与bootstrap强相关，如果你不用bootstrap，那就尽情地替换掉吧（估计改几个类名就行了）。这几个函数的用途从名字上就可以看出。clear上面已经提到过，清空验证信息；另外三个分别处理验证通过、验证失败和警告时的信息展示。简单是简单，但这里有两个问题需要额外考虑一下。
+ 这一段一起说，因为这部分内容是 dom 操作相关的，与 bootstrap 强相关，如果你不用 bootstrap，那就尽情地替换掉吧（估计改几个类名就行了）。这几个函数的用途从名字上就可以看出。`clear` 上面已经提到过，清空验证信息；另外三个分别处理验证通过、验证失败和警告时的信息展示。简单是简单，但这里有两个问题需要额外考虑一下。
 
 第一个是验证信息优先级的问题：
 
@@ -148,15 +125,15 @@ function warningHandler(msg) {
 
 另一个问题是同一个表单单元中有多个输入控件的问题，就像这样：
 
-![QQ20150415121912](http://www.zhouhua.info/wp-content/uploads/2015/04/QQ20150415121912.png)
+![QQ20150415121912](./validation/QQ20150415121912.png)
 
-几个控件共用了一个错误信息展示文本，我觉得如果某一个控件输入内容有误，必须再次修改这个控件内容才能清空错误信息，修改别的控件时，这个错误信息应该保留。所以在清除错误信息时，我们额外需要知道这个错误信息是由哪个控件引起的。在上面的示例中，我们在处理验证错误和警告时，把引起问题的控件的_name_记录到表单单元的_data-for_属性中了。到需要清空的时候再比对一下_data-for_和当前控件的_name_是不是一致，不一致就不清空错误信息。
+几个控件共用了一个错误信息展示文本，我觉得如果某一个控件输入内容有误，必须再次修改这个控件内容才能清空错误信息，修改别的控件时，这个错误信息应该保留。所以在清除错误信息时，我们额外需要知道这个错误信息是由哪个控件引起的。在上面的示例中，我们在处理验证错误和警告时，把引起问题的控件的 `name` 记录到表单单元的 `data-for` 属性中了。到需要清空的时候再比对一下 `data-for` 和当前控件的 `name` 是不是一致，不一致就不清空错误信息。
 
 ## 处理验证流程
 
-我们给输入控件的_blur_和_select_事件绑定了_validate_方法，那么这个validate方法如何实现呢？
+我们给输入控件的 `blur` 和 `select` 事件绑定了 `validate` 方法，那么这个 `validate` 方法如何实现呢？
 
-```javascript
+```javascript{3-5,17,20-29}
 function validate() {
     var $this = $(this);
     var success = new $.Callbacks();
@@ -178,8 +155,7 @@ function validate() {
     }
     if ($this.attr('data-validate')) {
         var conditions = ($this.attr('data-validate') || '').split(/\s+/g);
-        for (var i in
-            conditions) {
+        for (var i in conditions) {
             var condition = conditions[i];
             $parent.addClass('waiting');
             if (!pickStrategy(condition.split(/[:,]/g), $this, success, fail, warning)) {
@@ -190,55 +166,38 @@ function validate() {
 }
 ```
 
- 先看这段代码的前一部分，我定义了三个`$.Callbacks`对象，分别用以处理不同验证结果的响应。从效果上，不用`$.Callbacks`对象，直接传递函数引用也是可行的，我是想把dom操作和验证逻辑分离开，用类似事件触发的异步形式来处理验证逻辑。
+先看这段代码的前一部分，我定义了三个 `$.Callbacks` 对象，分别用以处理不同验证结果的响应。从效果上，不用 `$.Callbacks` 对象，直接传递函数引用也是可行的，我是想把 dom 操作和验证逻辑分离开，用类似事件触发的异步形式来处理验证逻辑。
 
-再看第17行，它规定了两种情形不执行验证，一种是控件被禁用，另一种是控件中存在_data-validate-disable_属性。这个不用多解释了。
+再看第17行，它规定了两种情形不执行验证，一种是控件被禁用，另一种是控件中存在`data-validate-disable`属性。这个不用多解释了。
 
-重点看20~30行，这段是关键。第21行中，我们把_data-validate_中的内容按空白（空格、tab、换行）切割到一个数组_conditions_中，_conditions_中的每一项都是一条需要验证的规则。那么很自然地，遍历这个数组。再看第26行，引入了一个新的方法_pickStrategy_，很明显它是对这条规则进行验证。先别管它的实现，看看它接收的参数。还记得前面我们说要允许用
-
-`rule:param1,param2`
-
- 的形式给验证规则传入参数吗？_pickStrategy_拿到的第一个参数就是
-
-`[rule, param1, param2]`
-
- ，通过
-
-`condition.spit(/[:,]/g)`
-
- 解析出。第二个参数是当前处理的控件的jquery对象，后面三个分别是验证成功、失败、警告三种情形的回调对象。如果验证失败，_pickStrategy_应该返回
-
-`false`
-
- ，同时中止验证，否则验证下一条规则。
+重点看20~29行，这段是关键。第21行中，我们把 `data-validate` 中的内容按空白（空格、tab、换行）切割到一个数组 `conditions` 中，`conditions`中的每一项都是一条需要验证的规则。那么很自然地，遍历这个数组。再看第25行，引入了一个新的方法 `pickStrategy`，很明显它是对这条规则进行验证。先别管它的实现，看看它接收的参数。还记得前面我们说要允许用 `rule:param1,param2` 的形式给验证规则传入参数吗？`pickStrategy` 拿到的第一个参数就是 `[rule, param1, param2]`，通过 `condition.spit(/[:,]/g)` 解析出。第二个参数是当前处理的控件的 jquery 对象，后面三个分别是验证成功、失败、警告三种情形的回调对象。如果验证失败，`pickStrategy`应该返回 `false`，同时中止验证，否则验证下一条规则。
 
 ## 策略模式
 
-下面就要来说_pickStrategy_方法了，不过先要补充一点背景知识——策略模式。策略模式是一种设计模式。
+下面就要来说 `pickStrategy` 方法了，不过先要补充一点背景知识——策略模式。策略模式是一种设计模式。
 
-设计模式是搞软件工程的人常常挂在嘴边的词汇，表示对设计的复用。当然前端开发在工程化的进程上每家公司情况各异，我估计绝大多数公司的前端开发并不考虑工程上的问题，只考虑完成需求。因而对于没有OO编程开发背景的前端开发而言，设计模式可能是陌生的，甚至程序设计（别紧张，没有在说程序编写）本身就是陌生的。由于工程化的忽略和javascript语言本身的优点（很多模式没必要实现）和缺点（很多模式无法实现），前端开发中很少提设计模式。那么前端开发者怎么理解设计模式呢？设计模式就是一系统问题（场景）的通用解决思路。比如有人觉得jquery的链式调用很好用，能很大程度降低工作量，于是在别的地方也用函数
+设计模式是搞软件工程的人常常挂在嘴边的词汇，表示对设计的复用。当然前端开发在工程化的进程上每家公司情况各异，我估计绝大多数公司的前端开发并不考虑工程上的问题，只考虑完成需求。因而对于没有 OO 编程开发背景的前端开发而言，设计模式可能是陌生的，甚至程序设计（别紧张，没有在说程序编写）本身就是陌生的。由于工程化的忽略和 javascript 语言本身的优点（很多模式没必要实现）和缺点（很多模式无法实现），前端开发中很少提设计模式。那么前端开发者怎么理解设计模式呢？设计模式就是一系统问题（场景）的通用解决思路。比如有人觉得 jquery 的链式调用很好用，能很大程度降低工作量，于是在别的地方也用函数 `return this;` 的方式构造支持链式调用的函数，这就可以认为是一个模式（谈不上设计模式）。
 
-`return this;`
+那策略模式是为了解决什么问题，或应对什么场景的呢？如果干一件事、完成一个任务可以有不同的策略，不同的算法来完成，这些策略、算法应该具有相同的输入和输出，但可以使用不同的资源（即不 care 中间实现差异）。具体要采用什么策略和方法则在程序运行时依据条件选择。举个例子？
 
- 的方式构造支持链式调用的函数，这就可以认为是一个模式（谈不上设计模式）。
+![QQ20150415155218](./validation/QQ20150415155218.png)
 
-那策略模式是为了解决什么问题，或应对什么场景的呢？如果干一件事、完成一个任务可以有不同的策略，不同的算法来完成，这些策略、算法应该具有相同的输入和输出，但可以使用不同的资源（即不care中间实现差异）。具体要采用什么策略和方法则在程序运行时依据条件选择。举个例子？
+压缩文件时，你可以选择不同的算法，但它们拥有相同的输入和输出。
 
-![QQ20150415155218](http://www.zhouhua.info/wp-content/uploads/2015/04/QQ20150415155218.png)
-
- 压缩文件，你可以选择不同的算法，但它们拥有相同的输入和输出。
-
-那么我们做表单验证跟策略模式有什么关系呢？我们完全可以把每个验证规则看作是一个策略，我们支持的所有的策略放在一起，取个高大上的名字叫“策略池”。当我们想验证一个规则的时候，只需要去策略池中取出这个策略跑一下，不需要在一个很大的函数里面跑一堆if...else，或者switch...case。另外如果有新的规则加进来，只要把它塞到策略池中，无需更改已有的代码，**实现验证规则和验证流程解耦**。
+那么我们做表单验证跟策略模式有什么关系呢？我们完全可以把每个验证规则看作是一个策略，我们支持的所有的策略放在一起，取个高大上的名字叫“策略池”。当我们想验证一个规则的时候，只需要去策略池中取出这个策略跑一下，不需要在一个很大的函数里面跑一堆 if...else，或者 switch...case。另外如果有新的规则加进来，只要把它塞到策略池中，无需更改已有的代码，**实现验证规则和验证流程解耦**。
 
 先实现一个策略池吧：
 
-`$.validation.strategy = {};`
+```javascript
+$.validation.strategy = {};
+```
 
- 太棒了，一句代码就完事了，爱死javascript了！
+ 太棒了，一句代码就完事了，爱死 javascript 了！
 
-再回到_pickStrategy_方法，看看怎么从这个策略池中拿到我们需要的验证规则：
+再回到 `pickStrategy` 方法，看看怎么从这个策略池中拿到我们需要的验证规则：
 
-`function pickStrategy(tokens, scope, success, fail, warning) {
+```javascript
+function pickStrategy(tokens, scope, success, fail, warning) {
     var name = tokens.shift();
     var strategy = $.validation.strategy[name];
     if (strategy) {
@@ -248,25 +207,15 @@ function validate() {
         success.fire();
         return true;
     }
-}`
+}
+```
 
- 先说这个_token_，还记得它是什么吗？如果要验证的规则是“min:5”，那么_token_就是
+ 先说这个 `token`，还记得它是什么吗？如果要验证的规则是 “min:5”，那么 `token` 就是 `['min', '5']` 这个数组。第2行取出这个数组的第一项 `'min'`，再从策略池中取出这个验证规则。如果没有这个规则，则跳过这次验证，认为此次通过；如果有这个规则，则执行这个规则（见第5行），需要注意一下第5行的 `token` 已经发生变化了，除去规则名称，只剩下参数了，延续前面的例子，这里 `token` 应该是 `['5']`。
 
-`['min', '5']`
+现在我们的策略池是空的，那可不行，先试着写一个验证 “min” 规则的方法吧：
 
- 这个数组。第2行取出这个数组的第一项
-
-`'min'`
-
- ，再从策略池中取出这个验证规则。如果没有这个规则，则跳过这次验证，认为此次通过；如果有这个规则，则执行这个规则（见第5行），需要注意一下第5行的_token_已经发生变化了，除去规则名称，只剩下参数了，延续前面的例子，这里_token_应该是
-
-`['5']`
-
- 。
-
-现在我们的策略池是空的，那可不行，先试着写一个验证“min”规则的方法吧：
-
-`$.validation.strategy.min = function (condition, success, fail) {
+```javascript{9,10,13,14}
+$.validation.strategy.min = function (condition, success, fail) {
     if (this.val() === '') {
         success.fire();
         return true;
@@ -286,23 +235,12 @@ function validate() {
         success.fire();
         return true;
     }
-}`
+}
+```
 
- 这个方法内，_this_指向当前验证的控件的jquery对象，第1个参数是额外带给验证规则的参数；第2个参数是验证成功的回调，使用时需要配合
+ 这个方法内，`this` 指向当前验证的控件的 jquery 对象，第1个参数是额外带给验证规则的参数；第2个参数是验证成功的回调，使用时需要配合 `return true;`（见9、10行）；第3个参数是验证失败的回调，使用是需要配合 `return false;`（见13、14行）；第4个参数是警告的回调，需要配合 `return true;`，这个验证中没用到。
 
-`return true;`
-
- （见9、10行）；第3个参数是验证失败的回调，使用是需要配合
-
-`return false;`
-
- （见13、14行）；第4个参数是警告的回调，需要配合
-
-`return true;`
-
- ，这个验证中没用到。
-
-起始的几个验证方法也可以直接写在策略池中，我写了几个，供大家参考（代码比较长，展开需谨慎。不想展开？你可能要错过身份证验证、邮箱验证、url验证等一堆干货了！）：
+起始的几个验证方法也可以直接写在策略池中，我写了几个，供大家参考（代码比较长，包含身份证验证、邮箱验证、url验证等一堆干货！）：
 
 ```javascript
 $.validation.constants = {
@@ -616,17 +554,20 @@ $.validation.strategy = {
 
 说好的支持自定义验证规则呢？放心，不会少的，而且超简单：
 
-`$.validation = function (condition, process) {
+```javascript
+$.validation = function (condition, process) {
     $.validation.strategy[condition] = process;
-};`
+};
+```
 
- 加个静态方法搞定。
+加个静态方法搞定。
 
 ## 手动发起验证
 
 有些场景下需要手动check一下表单内容才放心吧：
 
-`$.fn.exec = function () {
+```javascript
+$.fn.exec = function () {
     return this.each(function () {
         var $this = $(this);
         if (!$this.is(':input')) {
@@ -634,37 +575,42 @@ $.validation.strategy = {
         }
         $this.blur();
     });
-};`
+};
+```
 
- 原理很简单，对:input子元素触发一次blur事件。
+原理很简单，对 `:input` 子元素触发一次 `blur` 事件。
 
 ## 还有一些是我没有做的
 
 都不是很复杂，因为我的业务场景不关注这些，所以就懒过去了。
 
-1.  没做通用的ajax验证
-现在对于ajax的验证，可以这样做：
-`$.validation('ajax_xx',function(c, s, f) {
-    $.post('some_url',function(data){
-        if (data.success) {
-            s.fire();
-        }else{
-            f.fire('xxxxxxxx');
-        }
+1. 没做通用的 ajax 验证
+
+    现在对于 ajax 的验证，可以这样做：
+    
+    ```javascript
+    $.validation('ajax_xx',function(c, s, f) {
+        $.post('some_url',function(data){
+            if (data.success) {
+                s.fire();
+            }else{
+                f.fire('xxxxxxxx');
+            }
+        });
     });
-});`
- 表单提交前，除了检查有没有.has-error的元素找到填写出错项，还要检查有没有.wait元素，如果有的话都不能立刻提交。
-如果要有一个通用的ajax验证机制，可以自行扩展_$.validation_方法
+    ```
 
-2.  没做验证失败时表单提交阻断
-正如上一条中说的，表单提交前，需要检查.has-error和.wait元素，可以自行扩展_$.fn.validation_方法，添加form的submit事件绑定。
+    表单提交前，除了检查有没有 `.has-error` 的元素找到填写出错项，还要检查有没有 `.wait` 元素，如果有的话都不能立刻提交。
+    如果要有一个通用的 ajax 验证机制，可以自行扩展 `$.validation` 方法
 
-3.  没有为handle验证状态的dom操作提供接口
-不想做，bootstrap挺好的。
+2. 没做验证失败时表单提交阻断
 
-4.  没有测试用例
-不打算给这些代码添加逻辑了，不想写测试用例。
+    正如上一条中说的，表单提交前，需要检查 `.has-error` 和 `.wait` 元素，可以自行扩展 `$.fn.validation` 方法，添加 form 的 `submit` 事件绑定。
 
-## 下载
+3. 没有为 handle 验证状态的 dom 操作提供接口
 
-[validation.js](http://www.zhouhua.info/wp-content/uploads/2015/04/validation.js)
+    不想做，bootstrap 挺好的。
+
+4. 没有测试用例
+
+    不打算给这些代码添加逻辑了，不想写测试用例。
