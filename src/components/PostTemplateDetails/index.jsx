@@ -32,7 +32,8 @@ class PostTemplateDetails extends React.Component {
         );
 
         const commentsBlock = (
-            <div id="gitalk-container">
+            <div>
+                <div id="gitalk-container" />
                 <script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js" />
                 <script dangerouslySetInnerHTML={{
                     __html: `var gitalk = new Gitalk({
