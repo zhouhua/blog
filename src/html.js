@@ -30,6 +30,7 @@ module.exports = class HTML extends React.Component {
                         name="viewport"
                         content="width=device-width, initial-scale=1, shrink-to-fit=no"
                     />
+                    <meta name="google-site-verification" content="H3GRerWi10v9pEgpKP6bhB4RbEEEJ-P3MlMdKdim_DA" />
                     {this.props.headComponents}
                     {css}
                     <script dangerouslySetInnerHTML={{
