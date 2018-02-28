@@ -1,6 +1,6 @@
 module.exports = {
     siteMetadata: {
-        url: 'https://www.zhouhua.info',
+        url: 'https://www.zhouhua.site',
         title: 'Step Over',
         subtitle: '有趣的灵魂终会相遇',
         copyright: '© All rights reserved.',
@@ -131,7 +131,7 @@ module.exports = {
               }
               allSitePage(
                 filter: {
-                  path: { regex: "/^(?!/404/|/404.html|/dev-404-page/|/offline-plugin-app-shell-fallback)/" }
+                  path: { regex: "/^(?!/404/|/404.html|/dev-404-page/)/" }
                 }
               ) {
                 edges {
