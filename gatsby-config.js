@@ -108,14 +108,6 @@ module.exports = {
                             rel: 'nofollow'
                         }
                     },
-                    {
-                        resolve: 'gatsby-remark-flowchart',
-                        options: {
-                            // see more details on https://github.com/adrai/flowchart.js
-                            'fill': 'white',
-                            'line-color': 'black'
-                        }
-                    },
                     'gatsby-remark-prismjs',
                     'gatsby-remark-copy-linked-files',
                     'gatsby-remark-smartypants',
