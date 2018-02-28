@@ -1,6 +1,6 @@
 module.exports = {
     siteMetadata: {
-        url: 'https://www.zhouhua.info/',
+        url: 'https://www.zhouhua.info',
         title: 'Step Over',
         subtitle: '有趣的灵魂终会相遇',
         copyright: '© All rights reserved.',
