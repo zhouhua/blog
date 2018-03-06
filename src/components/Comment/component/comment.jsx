@@ -14,7 +14,7 @@ const ZHTW = buildDistanceInWordsLocaleZHTW();
 const ES = buildDistanceInWordsLocaleES();
 const FR = buildDistanceInWordsLocaleFR();
 const RU = buildDistanceInWordsLocaleRU();
-window.GT_i18n_distanceInWordsLocaleMap = {
+const GT_i18n_distanceInWordsLocaleMap = {
     'zh': ZHCN,
     'zh-CN': ZHCN,
     'zh-TW': ZHTW,
@@ -65,17 +65,17 @@ export default ({
                     <span className="gt-comment-date">
                         {distanceInWordsToNow(comment.created_at, {
                             addSuffix: true,
-                            locale: { distanceInWords: window.GT_i18n_distanceInWordsLocaleMap[language] }
+                            locale: { distanceInWords: GT_i18n_distanceInWordsLocaleMap[language] }
                         })}
                     </span>
 
                     {reactions &&
-                    <a className="gt-comment-like" onClick={likeCallback}>
-                        {reactions.viewerHasReacted ?
-                            <Svg className="gt-ico-heart" name="heart_on" text={reactionTotalCount} /> :
-                            <Svg className="gt-ico-heart" name="heart" text={reactionTotalCount} />
-                        }
-                    </a>
+                        <a className="gt-comment-like" onClick={likeCallback}>
+                            {reactions.viewerHasReacted ?
+                                <Svg className="gt-ico-heart" name="heart_on" text={reactionTotalCount} /> :
+                                <Svg className="gt-ico-heart" name="heart" text={reactionTotalCount} />
+                            }
+                        </a>
                     }
 
                     {enableEdit ?

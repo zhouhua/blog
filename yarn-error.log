@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn run lint --fix
+  /usr/local/bin/node /usr/local/bin/yarn build
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
@@ -12133,7 +12133,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: sh
-  Arguments: -c ./node_modules/.bin/eslint --cache --ext .js,.jsx --ignore-pattern public . --fix
+  Arguments: -c gatsby build
   Directory: /Users/zhouhua/work/playground/blog
   Output:
   

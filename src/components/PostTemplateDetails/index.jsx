@@ -2,9 +2,7 @@ import React from 'react';
 import Link from 'gatsby-link';
 import moment from 'moment';
 // import 'gitalk/dist/gitalk.css';
-if (window) {
-    const Gitalk = require('../Comment/gitalk');
-}
+import Gitalk from '../Comment/gitalk';
 import './style.scss';
 
 class PostTemplateDetails extends React.Component {
@@ -33,7 +31,7 @@ class PostTemplateDetails extends React.Component {
             </div>
         );
 
-        const commentsBlock = window ? (
+        const commentsBlock = typeof window !== 'undefined' ? (
             <Gitalk options={{
                 clientID: 'aa19479305bd5ae2cc05',
                 clientSecret: '5514529cafdd958f72e2119eec0ff0fa876963ab',
