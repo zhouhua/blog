@@ -2,7 +2,9 @@ import React from 'react';
 import Link from 'gatsby-link';
 import moment from 'moment';
 // import 'gitalk/dist/gitalk.css';
-import Gitalk from '../Comment/gitalk';
+if (window) {
+    import Gitalk from '../Comment/gitalk';
+}
 import './style.scss';
 
 class PostTemplateDetails extends React.Component {
