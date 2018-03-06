@@ -1,8 +1,8 @@
 import React from 'react';
 import Link from 'gatsby-link';
 import moment from 'moment';
-import 'gitalk/dist/gitalk.css';
-// import gitalk from 'gitalk';
+// import 'gitalk/dist/gitalk.css';
+import Gitalk from '../Comment/gitalk';
 import './style.scss';
 
 class PostTemplateDetails extends React.Component {
@@ -31,25 +31,17 @@ class PostTemplateDetails extends React.Component {
             </div>
         );
 
-        const commentsBlock = (
-            <div>
-                <div id="gitalk-container" />
-                <script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js" />
-                <script dangerouslySetInnerHTML={{
-                    __html: `var gitalk = new Gitalk({
-                        clientID: 'aa19479305bd5ae2cc05',
-                        clientSecret: '5514529cafdd958f72e2119eec0ff0fa876963ab',
-                        repo: 'blog-comment',
-                        owner: 'zhouhua',
-                        admin: ['zhouhua'],
-                        id: window.location.pathname, // Ensure uniqueness and length less than 50
-                        distractionFreeMode: false // Facebook-like distraction free mode
-                    });
-                    gitalk.render('gitalk-container');`
-                }}
-                />
-            </div>
-        );
+        const commentsBlock = window ? (
+            <Gitalk options={{
+                clientID: 'aa19479305bd5ae2cc05',
+                clientSecret: '5514529cafdd958f72e2119eec0ff0fa876963ab',
+                repo: 'blog-comment',
+                owner: 'zhouhua',
+                admin: ['zhouhua'],
+                id: window.location.pathname, // Ensure uniqueness and length less than 50
+                distractionFreeMode: false // Facebook-like distraction free mode
+            }} />
+        ) : null;
 
         return (
             <div>
