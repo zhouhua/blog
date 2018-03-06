@@ -3,7 +3,7 @@ import Link from 'gatsby-link';
 import moment from 'moment';
 // import 'gitalk/dist/gitalk.css';
 if (window) {
-    import Gitalk from '../Comment/gitalk';
+    const Gitalk = require('../Comment/gitalk');
 }
 import './style.scss';
 
