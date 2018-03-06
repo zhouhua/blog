@@ -39,7 +39,7 @@ class PostTemplateDetails extends React.Component {
                     __html: `var gitalk = new Gitalk({
                         clientID: 'aa19479305bd5ae2cc05',
                         clientSecret: '5514529cafdd958f72e2119eec0ff0fa876963ab',
-                        repo: 'blog-common',
+                        repo: 'blog-comment',
                         owner: 'zhouhua',
                         admin: ['zhouhua'],
                         id: window.location.pathname, // Ensure uniqueness and length less than 50
