@@ -214,10 +214,10 @@ class GitalkComponent extends Component {
     }
     createIssue() {
         const {
-            owner, repo, title, body, id, labels, url
+            owner, repo, body, id, labels, url
         } = this.options;
         return axiosGithub.post(`/repos/${owner}/${repo}/issues`, {
-            title,
+            title: document.title,
             labels: labels.concat(id),
             body: body || `${url} \n\n ${
                 getMetaContent('description') ||
