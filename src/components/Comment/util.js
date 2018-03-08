@@ -3,7 +3,6 @@ import axios from 'axios';
 export const queryParse = search => {
   if (!search) {
     search = window.location.search;
-    return {};
   }
   if (!search) {
     return {};
