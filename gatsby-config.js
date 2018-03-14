@@ -168,7 +168,7 @@ module.exports = {
         }, {
             resolve: 'gatsby-plugin-favicon',
             options: {
-                logo: './src/pages/photo.jpg',
+                logo: './src/assets/images/logo',
                 injectHTML: true,
                 icons: {
                     android: true,
