@@ -1,6 +1,5 @@
 @import "../../assets/scss/variables";
 @import "../../assets/scss/mixins";
-
 *,
 *:before,
 *:after {
@@ -41,9 +40,6 @@
                 }
             }
         }
-        & a {
-            text-decoration: underline;
-        }
         & .gatsby-highlight {
             max-width: $layout-post-single-width;
             margin-left: 15px;
@@ -63,11 +59,6 @@
         @include line-height(1);
         @include margin-top(1);
         @include margin-bottom(2);
-        &-text {
-            & a {
-                text-decoration: underline;
-            }
-        }
     }
     &__date {
         max-width: $layout-post-single-width;
@@ -157,7 +148,7 @@
             @include margin-bottom(1.125);
             & p {
                 font-size: $typographic-base-font-size * 1.125;
-                @include line-height(1.125);
+                @include line-height(1.5);
                 @include margin-bottom(1.125);
             }
         }

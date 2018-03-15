@@ -1,10 +1,8 @@
 @charset "UTF-8";
-
 @import "variables";
 @import "mixins";
 @import "base";
 @import "pages";
-
 .post-single__body {
     .gatsby-highlight-code-line {
         background-color: #444;
@@ -24,5 +22,64 @@
     table {
         margin-bottom: 1em;
         width: 100%;
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        &:hover {
+            .anchor {
+                opacity: .9;
+            }
+        }
+        .anchor {
+            opacity: 0;
+            margin-left: -1em;
+            transition: opacity .5s ease-in-out;
+            color: inherit!important;
+            width: 1em;
+            svg {
+                visibility: true;
+                fill: currentColor;
+                transform: scale(1.4);
+            }
+            &:after {
+                display: none;
+            }
+        }
+    }
+}
+
+.post-single__body,
+.post {
+    a {
+        color: $typographic-link-p-font-color;
+        text-decoration: none;
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+        &:hover,
+        &:focus,
+        &:active {
+            color: $typographic-link-p-font-color;
+        }
+        &:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: $typographic-link-p-font-color;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .32s ease-in-out; // transition-delay: .1s;
+        }
+        &:hover:after {
+            transform: scaleX(1);
+            transition-delay: 0s;
+        }
     }
 }

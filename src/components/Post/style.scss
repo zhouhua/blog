@@ -1,6 +1,5 @@
 @import "../../assets/scss/variables";
 @import "../../assets/scss/mixins";
-
 .post {
     @include margin-bottom(1.25);
     &:last-child {
@@ -12,17 +11,19 @@
         @include margin-top(0);
         @include margin-bottom(.5);
         &-link {
-            color: $color-base;
+            color: $color-highlight !important;
+            &:after {
+                background-color: $color-highlight !important;
+            }
             &:hover,
             &:focus {
-                color: $color-base;
-                border-bottom: 1px solid $color-base;
+                color: $color-highlight !important;
             }
         }
     }
     &__description {
         font-size: $typographic-base-font-size;
-        @include line-height(1);
+        @include line-height(1.2);
         @include margin-bottom(.75);
     }
     &__meta {
@@ -38,12 +39,15 @@
         &-category {
             &-link {
                 font-size: $typographic-small-font-size;
-                color: $color-secondary;
+                color: $color-secondary !important;
                 font-weight: 500;
                 text-transform: uppercase;
+                &:after {
+                    background-color: $color-secondary !important;
+                }
                 &:hover,
                 &:focus {
-                    color: $color-primary;
+                    color: $color-secondary !important;
                 }
             }
         }
@@ -51,10 +55,5 @@
     &__readmore {
         font-size: $typographic-base-font-size;
         color: $color-primary;
-        &:hover,
-        &:focus {
-            color: $color-primary;
-            border-bottom: 1px solid $color-primary;
-        }
     }
 }
