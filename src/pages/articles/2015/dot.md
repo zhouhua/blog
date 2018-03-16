@@ -23,3 +23,19 @@ date: 2015-05-07 23:57:29
 再多延伸一点点，对于**现代浏览器**，可以直接用 `[^]` 来匹配任意字符的。
 
 例子程序不想写了，有兴趣的可以自己试验一下，分别用 `/.*/g`、`/^.*$/g`、`/.*/gm`、`/^.*$/gm` 来匹配一下 `"abc\nedf"`，其中道理不言自明。
+
+---
+
+> 2018年3月16日补充：
+
+感谢 [Will_Liu](https://juejin.im/user/5881a5b91b69e6005909d062) 提醒，ECMAScript中正则增加 dotAll（`\s`） 的标识的提案已经在 stage 4 了。详情请参考：[proposal-regexp-dotall-flag](https://github.com/tc39/proposal-regexp-dotall-flag)。
+
+如果使用 babel，可以添加 [@babel/plugin-transform-dotall-regex](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-dotall-regex) 开启这个特性。
+
+示例 .babelrc：
+
+```json
+{
+  "plugins": ["@babel/plugin-transform-dotall-regex"]
+}
+```
