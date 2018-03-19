@@ -12,10 +12,17 @@ $color-gray: lighten($color-base, 40%);
 $color-gray-border: lighten($color-base, 77%);
 $color-gray-bg: lighten($color-base, 79%);
 // Typographic
-$typographic-font-family: "Roboto",
-"Helvetica Neue",
-"Helvetica",
-"Arial",
+$typographic-font-family: Helvetica,
+Tahoma,
+Arial,
+"Microsoft YaHei",
+"微软雅黑",
+SimSun,
+"宋体",
+STXihei,
+"华文细黑",
+Heiti,
+"黑体",
 sans-serif;
 $typographic-root-font-size: 100;
 $typographic-base-font-size: 16px;

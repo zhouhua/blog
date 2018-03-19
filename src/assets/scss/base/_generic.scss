@@ -123,6 +123,15 @@ p {
     @include margin-bottom(1);
 }
 
+code {
+    background: #eee;
+    padding-left: 4px;
+    padding-right: 4px;
+    text-shadow: 1px 1px lighten($color-highlight, 50%);
+    border-radius: 4px;
+    color: $color-highlight;
+}
+
 blockquote {
     padding: 1.125em 2.566em;
     margin-bottom: -0.5em;

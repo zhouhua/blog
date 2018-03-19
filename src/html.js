@@ -32,16 +32,18 @@ module.exports = class HTML extends React.Component {
                     />
                     {this.props.headComponents}
                     {css}
-                    <script dangerouslySetInnerHTML={{
-                        __html: `var _hmt = _hmt || [];
+                    {process.env.NODE_ENV === 'production' &&
+                        (<script dangerouslySetInnerHTML={{
+                            __html: `var _hmt = _hmt || [];
                         (function() {
                         var hm = document.createElement("script");
                         hm.src = "https://hm.baidu.com/hm.js?681b6a0273ee13c3711590262c9b86b7";
                         var s = document.getElementsByTagName("script")[0]; 
                         s.parentNode.insertBefore(hm, s);
                         })();`
-                    }}
-                    />
+                        }}
+                        />)
+                    }
 
                 </head>
                 <body {...this.props.bodyAttributes}>
@@ -52,8 +54,10 @@ module.exports = class HTML extends React.Component {
                         dangerouslySetInnerHTML={{ __html: this.props.body }}
                     />
                     {this.props.postBodyComponents}
-                    <script dangerouslySetInnerHTML={{
-                        __html: `(function(){
+
+                    {process.env.NODE_ENV === 'production' &&
+                        (<script dangerouslySetInnerHTML={{
+                            __html: `(function(){
                             var bp = document.createElement('script');
                             var curProtocol = window.location.protocol.split(':')[0];
                             if (curProtocol === 'https'){
@@ -65,8 +69,9 @@ module.exports = class HTML extends React.Component {
                             var s = document.getElementsByTagName("script")[0];
                             s.parentNode.insertBefore(bp, s);
                         })();`
-                    }}
-                    />
+                        }}
+                        />)
+                    }
                 </body>
             </html>
         );

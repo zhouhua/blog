@@ -46,12 +46,12 @@ class PostTemplateDetails extends React.Component {
         return (
             <div>
                 {homeBlock}
-                <div className="post-single">
+                <div className="post-single box">
                     <div className="post-single__inner">
                         <h1 className="post-single__title">{post.frontmatter.title}</h1>
                         <div className="post-single__body" dangerouslySetInnerHTML={{ __html: post.html }} />
                         <div className="post-single__date">
-                            <em>Published {moment(post.frontmatter.date).format('D MMM YYYY')}</em>
+                            <em>发布于{moment(post.frontmatter.date).format('YYYY年M月D日')}</em>
                         </div>
                     </div>
                     <div className="post-single__footer">
