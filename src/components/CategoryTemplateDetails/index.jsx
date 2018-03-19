@@ -11,7 +11,7 @@ class CategoryTemplateDetails extends React.Component {
         });
 
         return (
-            <div className="content box">
+            <div className="content gatsby-box">
                 <div className="content__inner">
                     <div className="page">
                         <h1 className="page__title">

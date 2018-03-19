@@ -46,7 +46,7 @@ class PostTemplateDetails extends React.Component {
         return (
             <div>
                 {homeBlock}
-                <div className="post-single box">
+                <div className="post-single gatsby-box">
                     <div className="post-single__inner">
                         <h1 className="post-single__title">{post.frontmatter.title}</h1>
                         <div className="post-single__body" dangerouslySetInnerHTML={{ __html: post.html }} />

@@ -12,6 +12,7 @@
         padding-right: 1em;
         padding-left: 0.75em;
         border-left: 0.25em solid #66d9ef;
+        max-width: unset;
     }
     .captain {
         margin: -1rem 0 1.625rem 0;
@@ -84,6 +85,21 @@
     }
 }
 
-.box {
+.gatsby-box {
     background: rgba(255, 255, 255, 0.8);
+}
+
+.gatsby-resp-image-link {
+    &:after {
+        content: none !important;
+    }
+    transition: all 400ms;
+    box-shadow: 0 1px 1.5px rgba(0, 0, 0, 0.12),
+    0 1px 1px rgba(0, 0, 0, 0.24);
+    ;
+    &:hover {
+        transform: translate3d(-2px, -2px, 0);
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.19), 0 6px 3px rgba(0, 0, 0, 0.23);
+        ;
+    }
 }

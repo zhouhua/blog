@@ -6,7 +6,7 @@ class NotFoundRoute extends React.Component {
         return (
             <div>
                 <Sidebar {...this.props} />
-                <div className="content box">
+                <div className="content gatsby-box">
                     <div className="content__inner">
                         <div className="page">
                             <h1 className="page__title">NOT FOUND</h1>

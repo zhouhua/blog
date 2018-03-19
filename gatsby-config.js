@@ -110,8 +110,9 @@ module.exports = {
                     },
                     'gatsby-remark-prismjs',
                     'gatsby-remark-copy-linked-files',
-                    'gatsby-remark-smartypants',
+                    // 'gatsby-remark-smartypants',
                     'gatsby-remark-katex',
+                    'gatsby-remark-images',
                     'gatsby-remark-autolink-headers'
                 ]
             }
@@ -180,11 +181,12 @@ module.exports = {
                 }
             }
         },
-        'gatsby-plugin-offline',
+        // 'gatsby-plugin-offline',
         'gatsby-plugin-catch-links',
         'gatsby-plugin-react-next',
         'gatsby-plugin-react-helmet',
         'gatsby-plugin-postcss-sass',
-        'gatsby-plugin-stylus'
+        'gatsby-plugin-stylus',
+        'gatsby-plugin-nprogress'
     ]
 };

@@ -19,7 +19,7 @@ class IndexRoute extends React.Component {
           <meta name="description" content={subtitle} />
         </Helmet>
         <Sidebar {...this.props} />
-        <div className="content box">
+        <div className="content gatsby-box">
           <div className="content__inner">
             {items}
           </div>

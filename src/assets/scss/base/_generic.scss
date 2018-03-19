@@ -29,6 +29,7 @@ h6 {
     font-family: $typographic-font-family;
     font-weight: 500;
     color: $color-highlight;
+    font-weight: bold;
 }
 
 h1 {
@@ -134,10 +135,10 @@ code {
 
 blockquote {
     padding: 1.125em 2.566em;
-    margin-bottom: -0.5em;
+    margin: 0 0 -1.5em 0;
     font-style: italic;
-    position: relative;
-    color: #673ab7;
+    position: relative; // color: #673ab7;
+    color: darken($color-secondary, 25%);
     &:before {
         content: "\201C";
         font-size: 400%;
