@@ -6,7 +6,6 @@ tags:
   - 策略模式
   - 表单验证
   - 设计模式
-id: 407
 category: 技术
 layout: post
 date: 2015-04-15 17:21:57

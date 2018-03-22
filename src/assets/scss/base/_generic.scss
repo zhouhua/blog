@@ -122,7 +122,8 @@ ul {
 p {
     @include line-height(1.5);
     @include margin-bottom(1);
-    code {
+    code,
+    code[class*=language-] {
         background: #eee;
         padding-left: 4px;
         padding-right: 4px;

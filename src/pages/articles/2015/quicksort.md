@@ -11,7 +11,6 @@ tags:
   - 数组
   - 算法
   - 选择排序
-id: 473
 category: 技术
 layout: post
 date: 2015-06-18 12:08:03
