@@ -67,7 +67,7 @@ export const hasClassInParent = (element, ...className) => {
   /* istanbul ignore next */
   const classes = element.className.split(' ');
   /* istanbul ignore next */
-  className.forEach((c, i) => {
+  className.forEach(c => {
     /* istanbul ignore next */
     yes = yes || (classes.indexOf(c) >= 0);
   });

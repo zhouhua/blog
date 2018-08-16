@@ -4,18 +4,18 @@ import Sidebar from '../components/Sidebar';
 import TagTemplateDetails from '../components/TagTemplateDetails';
 
 class TagTemplate extends React.Component {
-    render() {
-        const { title } = this.props.data.site.siteMetadata;
-        const { tag } = this.props.pathContext;
+  render() {
+    const { title } = this.props.data.site.siteMetadata;
+    const { tag } = this.props.pathContext;
 
-        return (
-            <div>
-                <Helmet title={`All Posts tagged as "${tag}" - ${title}`} />
-                <Sidebar {...this.props} />
-                <TagTemplateDetails {...this.props} />
-            </div>
-        );
-    }
+    return (
+      <div>
+        <Helmet title={`All Posts tagged as "${tag}" - ${title}`} />
+        <Sidebar {...this.props} />
+        <TagTemplateDetails {...this.props} />
+      </div>
+    );
+  }
 }
 
 export default TagTemplate;

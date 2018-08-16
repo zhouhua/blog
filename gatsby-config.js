@@ -36,17 +36,15 @@ module.exports = {
         {
             resolve: 'gatsby-plugin-feed',
             options: {
-                query: `
-          {
-            site {
-              siteMetadata {
-                url
-                title
-                subtitle
-              }
-            }
-          }
-        `,
+                query: `{
+                    site {
+                        siteMetadata {
+                            url
+                            title
+                            subtitle
+                        }
+                    }
+                }`,
                 feeds: [
                     {
                         serialize: ({ query: { site, allMarkdownRemark } }) => (

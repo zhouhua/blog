@@ -39,7 +39,7 @@
             opacity: 0;
             margin-left: -1em;
             transition: opacity .5s ease-in-out;
-            color: inherit!important;
+            color: inherit !important;
             width: 1em;
             svg {
                 visibility: true;
@@ -75,11 +75,12 @@
             height: 2px;
             background-color: $typographic-link-p-font-color;
             transform: scaleX(0);
-            transform-origin: left;
+            transform-origin: bottom right;
             transition: transform .32s ease-in-out; // transition-delay: .1s;
         }
         &:hover:after {
             transform: scaleX(1);
+            transform-origin: bottom left;
             transition-delay: 0s;
         }
     }

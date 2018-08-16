@@ -7,18 +7,18 @@ import FR from './fr.json';
 import RU from './ru.json';
 
 const i18nMap = {
-    'zh': ZHCN,
-    'zh-CN': ZHCN,
-    'zh-TW': ZHTW,
-    'en': EN,
-    'es-ES': ES,
-    'fr': FR,
-    'ru': RU
+  'zh': ZHCN,
+  'zh-CN': ZHCN,
+  'zh-TW': ZHTW,
+  'en': EN,
+  'es-ES': ES,
+  'fr': FR,
+  'ru': RU
 };
 
 export default function (language) {
-    return new Polyglot({
-        phrases: i18nMap[language] || i18nMap.en,
-        locale: language
-    });
+  return new Polyglot({
+    phrases: i18nMap[language] || i18nMap.en,
+    locale: language
+  });
 }
