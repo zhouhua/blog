@@ -1,0 +1,32 @@
+.BioAvatar {
+  background: rgba(0, 0, 0, 0.25);
+  margin: 10px 26px 10px 10px;
+  &::after {
+    @apply absolute;
+    content: '';
+    left: -5px;
+    top: -5px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    transition: border 0.25s var(--ease-in-out-quad);
+  }
+}
+:global(.dark) .BioAvatar::after {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+.RoundedImage {
+  border-radius: 50%;
+}
+.BioAvatarInner {
+  background: rgba(0, 0, 0, 0.25);
+}
+.BioText {
+  max-width: 430px;
+  line-height: 1.45;
+  a {
+    @apply text-grey underline dark:text-dark-grey;
+    transition: color 0.25s var(--ease-in-out-quad);
+  }
+}

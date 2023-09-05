@@ -1,0 +1,21 @@
+.Gradient {
+  @apply pointer-events-none absolute bottom-0 left-0 z-0 h-[590px] w-full;
+  @apply bg-gradient-to-b from-gradientFrom to-gradientTo dark:from-dark-gradientFrom dark:to-dark-gradientTo;
+  transition:
+    background 0.25s var(--ease-in-out-quad),
+    color 0.25s var(--ease-in-out-quad);
+}
+
+.FooterNext {
+  @apply relative mb-[100px] font-normal text-primary opacity-25 dark:text-dark-primary md:pb-[60px];
+  transition:
+    background 0.25s var(--ease-in-out-quad),
+    color 0.25s var(--ease-in-out-quad);
+  &::after {
+    @apply absolute left-40 right-0 top-[11px] h-px content-[''];
+    @apply bg-grey dark:bg-dark-grey;
+    transition:
+      background 0.25s var(--ease-in-out-quad),
+      color 0.25s var(--ease-in-out-quad);
+  }
+}

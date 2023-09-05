@@ -1,0 +1,4 @@
+.Trackline {
+  height: calc(88vh - 40px);
+  max-height: 425px;
+}

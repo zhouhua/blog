@@ -1,0 +1,121 @@
+.Hero {
+  @media (max-width: theme(screens.sm.max)) {
+    &::before {
+      @apply absolute left-0 top-0 h-5 w-full bg-primary dark:bg-dark-primary;
+      min-width: 480px;
+      content: '';
+      transition:
+        background 0.25s var(--ease-in-out-quad),
+        color 0.25s var(--ease-in-out-quad);
+    }
+    &::after {
+      @apply absolute left-0 top-2.5 h-2.5 w-full bg-background dark:bg-dark-background;
+      content: '';
+      min-width: 480px;
+      border-top-left-radius: 25px;
+      border-top-right-radius: 25px;
+      transition:
+        background 0.25s var(--ease-in-out-quad),
+        color 0.25s var(--ease-in-out-quad);
+    }
+  }
+}
+.Header {
+  margin: 100px auto 120px;
+  min-width: 480px;
+  padding-left: 68px;
+  max-width: 749px;
+  @media (max-width: theme(screens.lg.max)) {
+    padding-left: 53px;
+    max-width: 560px;
+    margin: 100px auto 70px;
+  }
+  @media (max-width: theme(screens.md.max)) {
+    padding-left: 0;
+    margin: 100px auto 70px;
+    max-width: 480px;
+  }
+  @media (max-width: theme(screens.sm.max)) {
+    margin: 170px auto 180px;
+    padding: 0 40px;
+  }
+  @media screen and (max-height: 700px) {
+    margin: 100px auto;
+  }
+}
+.HeroHeading {
+  @apply font-sans font-bold text-primary dark:text-dark-primary;
+  @apply break-words text-[48px] leading-[1.32];
+  @apply md:text-[38px] md:leading-[1.2];
+  @apply sm:text-[36px] sm:leading-[1.3];
+  @apply mb-[25px] sm:mb-5;
+  transition:
+    background 0.25s var(--ease-in-out-quad),
+    color 0.25s var(--ease-in-out-quad);
+}
+.HeroSubtitle {
+  @media (max-width: theme(screens.sm.max)) {
+    font-size: 14px;
+    flex-direction: column;
+    strong {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+  }
+}
+.HeroImage {
+  max-width: 944px;
+  box-shadow:
+    0 30px 60px -10px rgba(0, 0, 0, 0.2),
+    0 18px 36px -18px rgba(0, 0, 0, 0.22);
+  @media (max-width: theme(screens.sm.max)) {
+    width: calc(100vw - 40px);
+    height: 220px;
+    & > div {
+      height: 220px;
+    }
+  }
+}
+.AuthorAvatar {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  margin-right: 14px;
+  .gatsby-image-wrapper > div {
+    padding-bottom: 100% !important;
+  }
+}
+.RoundedImage {
+  border-radius: 50%;
+}
+.AuthorLink {
+  color: inherit;
+  strong {
+    transition: color 0.25s var(--ease-in-out-quad);
+  }
+  &:hover strong {
+    @apply text-primary dark:text-dark-primary;
+    transition:
+      background 0.25s var(--ease-in-out-quad),
+      color 0.25s var(--ease-in-out-quad);
+  }
+}
+.AsideContainer {
+  max-width: 1024px;
+  @media (max-width: theme(screens.lg.max)) {
+    display: none;
+  }
+}
+.NotOverlapContainer {
+  user-select: initial;
+  pointer-events: initial;
+  opacity: 1;
+  transition: opacity 0.25s;
+}
+.OverlapContainer {
+  user-select: none;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
