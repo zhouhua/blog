@@ -197,7 +197,7 @@ const createPages: GatsbyNode['createPages'] = async (
    */
   log('Creating', 'article posts');
   const tagsMap = new Map<string, { slug: string; articles: Queries.MarkdownRemark[] }>();
-  articles.forEach((article, index) => {
+  articlesPublished.forEach((article, index) => {
     /**
      * We need a way to find the next artiles to suggest at the bottom of the articles page.
      * To accomplish this there is some special logic surrounding what to show next.
