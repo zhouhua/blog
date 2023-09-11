@@ -64,6 +64,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
+    "react-hydration-provider": "^2.0.0",
     "react-instantsearch": "^7.0.2",
     "react-tooltip": "^5.21.3",
     "react-use": "^17.4.0",

@@ -149,6 +149,9 @@ dependencies:
   react-helmet:
     specifier: ^6.1.0
     version: 6.1.0(react@18.2.0)
+  react-hydration-provider:
+    specifier: ^2.0.0
+    version: 2.0.0(react@18.2.0)
   react-instantsearch:
     specifier: ^7.0.2
     version: 7.0.2(algoliasearch@4.19.1)(react-dom@18.2.0)(react@18.2.0)
@@ -12908,6 +12911,15 @@ packages:
       react: 18.2.0
       react-fast-compare: 3.2.2
       react-side-effect: 2.1.2(react@18.2.0)
+    dev: false
+
+  /react-hydration-provider@2.0.0(react@18.2.0):
+    resolution: {integrity: sha512-Jgd5lu1Fmefks9MNnh+eJ+REbuz54qoVvB25a81idGCaPTDqTqMyj4fqEH7Jroro3Y4x4+e9hBgzt+nfUOyTow==}
+    engines: {node: '>=16.0.0'}
+    peerDependencies:
+      react: '>=16'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-instantsearch-core@7.0.2(algoliasearch@4.19.1)(react@18.2.0):
