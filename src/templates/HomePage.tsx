@@ -1,5 +1,5 @@
 import { Link, type HeadFC, type PageProps } from 'gatsby';
-import { useMemo, type FC } from 'react';
+import { useMemo, type FC, Suspense } from 'react';
 import Layout from '@components/Layout';
 import SEO from '@components/SEO';
 import Section from '@components/Section';
@@ -37,21 +37,23 @@ const Index: FC<PageProps<object, PageContentType>> = ({
     <Layout>
       <SEO pathname={location.pathname} isBlogPost={false} title={title} />
       <ArticlesHero showLayout={false} />
-      <Section narrow>
-        <h3 className={clsx(styles.lineTitle, 'mt-20')}>精选文章</h3>
-        {randomPostsPairs.map((ap, index) => {
-          const isEven = index % 2 !== 0;
-          return (
-            <ArticlePair
-              articles={ap}
-              gridLayout="tiles"
-              reverse={isEven}
-              key={ap[0].id}
-              showAllLink={index === randomPostsPairs.length - 1}
-            />
-          );
-        })}
-      </Section>
+      <Suspense>
+        <Section narrow>
+          <h3 className={clsx(styles.lineTitle, 'mt-20')}>精选文章</h3>
+          {randomPostsPairs.map((ap, index) => {
+            const isEven = index % 2 !== 0;
+            return (
+              <ArticlePair
+                articles={ap}
+                gridLayout="tiles"
+                reverse={isEven}
+                key={ap[0].id}
+                showAllLink={index === randomPostsPairs.length - 1}
+              />
+            );
+          })}
+        </Section>
+      </Suspense>
       <Section narrow>
         <h3 className={clsx(styles.lineTitle, 'mt-20')}>最新随笔</h3>
         <ul className="relative z-10 columns-2 gap-x-6 sm:columns-1">
