@@ -1,4 +1,3 @@
-import React from 'react';
 import type { FC } from 'react';
 import type { PageProps } from 'gatsby';
 import Section from '@components/Section';
@@ -19,7 +18,6 @@ const ArticlesPage: FC<PageProps> = ({ location, pageContext }) => {
         {/* <AuthorHero author={author} /> */}
         {/* <AuthorArticles articles={articles} /> */}
       </Section>
-      <div className={styles.Gradient} />
     </Layout>
   );
 };

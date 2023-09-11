@@ -1,8 +1,9 @@
-import React, { useRef, useEffect, useState } from 'react';
+import type { FC } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import * as styles from './index.module.css';
 
-const ImagePlaceholder: React.FC<{}> = props => {
+const ImagePlaceholder: FC = props => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 

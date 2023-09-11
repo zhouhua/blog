@@ -1,5 +1,5 @@
 import type { FC, MouseEvent } from 'react';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { bindKey, unbindKey } from '@rwh/keystrokes';
 import clsx from 'clsx';

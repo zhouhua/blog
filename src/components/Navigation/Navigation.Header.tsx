@@ -1,5 +1,4 @@
 import type { FC, MouseEvent } from 'react';
-import React from 'react';
 import { Link } from 'gatsby';
 import clsx from 'clsx';
 import useColorMode from '@hooks/useColorMode';
@@ -83,12 +82,13 @@ const NavigationHeader: FC = () => {
             'flex max-w-2xl grow-[2] justify-around px-10 sm:px-4 md:px-8'
           )}
         >
-          {menu.map(({ name, path }) => (
+          {menu.map(({ name, path, icon }) => (
             <Link
-              className="colorModeTransition px-4 py-2 text-primary hover:underline dark:text-dark-primary md:px-2"
+              className="colorModeTransition px-4 py-2 text-primary underline-offset-4 hover:underline dark:text-dark-primary md:px-2"
               key={path}
               to={path}
             >
+              <i className={clsx('fa-solid', `fa-${icon}`, 'mr-2 h-4 w-4 opacity-60')} />
               {name}
             </Link>
           ))}

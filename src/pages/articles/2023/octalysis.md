@@ -1,10 +1,12 @@
 ---
 title: Octalysis 游戏化框架理论
 tags:
-  - 游戏化 产品
+  - 游戏化
+  - 产品思维
 category: 产品
 hero: ./octalysis.jpg
 layout: post
+featured: true
 date: 2023-04-07 10:00:00
 ---
 

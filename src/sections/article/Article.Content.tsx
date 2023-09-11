@@ -1,5 +1,4 @@
 import type { FC } from 'react';
-import React from 'react';
 import clsx from 'clsx';
 import InnerHTML from 'dangerously-set-html-content';
 import mediumZoom from 'medium-zoom';
@@ -12,7 +11,7 @@ const ArticleContent: FC<{ article: IArticle }> = ({ article }) => {
   const [colorMode] = useColorMode();
   useMount(() => {
     mediumZoom('article picture img', {
-      background: colorMode === 'dark' ? '#111216' : '#fafafa'
+      background: colorMode === 'dark' ? 'rgba(17,18,22,0.1)' : 'rgba(250,250,250,0.1)'
     });
   });
   return (

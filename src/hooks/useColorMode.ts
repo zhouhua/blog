@@ -8,6 +8,11 @@ let useColorMode: UseColorModeType = () => ['light', () => undefined];
 const isBrowser = typeof window !== 'undefined';
 
 if (isBrowser) {
+  const $html = document.querySelector('html')!;
+  const changeHTMLBb = (color: ColorMode) => {
+    const bg: Record<ColorMode, string> = { light: '#fafafa', dark: '#111216' };
+    $html.style.background = bg[color];
+  };
   const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
   const storeKey = 'colorMode';
 
@@ -21,6 +26,7 @@ if (isBrowser) {
     } else {
       document.body.classList.remove('dark');
     }
+    changeHTMLBb(init);
     return init;
   };
 
@@ -36,6 +42,7 @@ if (isBrowser) {
       } else {
         document.body.classList.remove('dark');
       }
+      changeHTMLBb(newColorMode);
       localStorage.setItem(storeKey, newColorMode);
     }
 

@@ -1,6 +1,6 @@
 import { Link, navigate } from 'gatsby';
 import type { FC } from 'react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { bindKey, unbindKey } from '@rwh/keystrokes';
 import Empty from './Empty';
@@ -82,13 +82,16 @@ const Recent: FC<{ hide: () => void }> = ({ hide }) => {
                 key={`${index}`}
                 className={clsx(
                   styles.recentItem,
-                  'mx-6 mt-4 flex max-w-full items-center rounded-lg bg-card p-3 dark:bg-dark-card',
-                  'flex justify-between ',
+                  'mx-6 mt-4 flex h-16 max-w-full items-center justify-between rounded-lg bg-card dark:bg-dark-card',
                   { [styles.selected]: index === selectIndex }
                 )}
                 onMouseEnter={() => setSelectIndex(index)}
               >
-                <Link to={recent.slug} className="block h-6 text-ellipsis" onClick={() => hide()}>
+                <Link
+                  to={recent.slug}
+                  className="flex h-16 grow-[2] items-center text-ellipsis p-3"
+                  onClick={() => hide()}
+                >
                   <span
                     className={clsx(
                       'mr-4 inline-block h-6 rounded-full bg-background px-2 text-[12px] leading-6 dark:bg-dark-background',
@@ -101,10 +104,10 @@ const Recent: FC<{ hide: () => void }> = ({ hide }) => {
                   {recent.title}
                 </Link>
                 <div
-                  className="ml-4 h-10 w-10 p-2 text-center leading-6 opacity-60 hover:opacity-100"
+                  className="ml-4 mr-3 h-10 w-10 cursor-pointer p-2 text-center leading-6 opacity-60 hover:opacity-100"
                   onClick={() => removeRecent(index)}
                 >
-                  <i className="fa-solid fa-times" />
+                  <i className="fa-solid fa-trash-can" />
                 </div>
               </li>
             ))}

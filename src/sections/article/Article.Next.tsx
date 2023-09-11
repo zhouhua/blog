@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 import ArticlePair from '../articles/Articles.Pair';
 import type { IArticle } from '../../types';
 
@@ -6,7 +6,7 @@ interface ArticlesNextProps {
   articles: IArticle[];
 }
 
-const ArticlesNext: React.FC<ArticlesNextProps> = ({ articles }) => {
+const ArticlesNext: FC<ArticlesNextProps> = ({ articles }) => {
   if (!articles) {
     return null;
   }

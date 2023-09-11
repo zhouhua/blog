@@ -1,6 +1,6 @@
-import * as React from 'react';
 import type { HeadFC, PageProps } from 'gatsby';
 import { Link } from 'gatsby';
+import type { FC } from 'react';
 
 const pageStyles = {
   color: '#232129',
@@ -22,7 +22,7 @@ const codeStyles = {
   borderRadius: 4
 };
 
-const NotFoundPage: React.FC<PageProps> = () => (
+const NotFoundPage: FC<PageProps> = () => (
   <main style={pageStyles}>
     <h1 style={headingStyles}>Page not found</h1>
     <p style={paragraphStyles}>
@@ -31,16 +31,13 @@ const NotFoundPage: React.FC<PageProps> = () => (
       {process.env.NODE_ENV === 'development' ? (
         <>
           <br />
-          Try creating a page in
-          {' '}
-          <code style={codeStyles}>src/pages/</code>
+          Try creating a page in <code style={codeStyles}>src/pages/</code>
           .
           <br />
         </>
       ) : null}
       <br />
-      <Link to="/">Go home</Link>
-      .
+      <Link to="/">Go home</Link>.
     </p>
   </main>
 );

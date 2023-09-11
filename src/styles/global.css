@@ -19,6 +19,7 @@
 
 body {
   overscroll-behavior-x: none;
+  text-align: justify;
 }
 
 .colorModeTransition {
@@ -92,7 +93,6 @@ button {
 }
 
 table {
-  border-collapse: separate;
   border-spacing: 0;
 }
 

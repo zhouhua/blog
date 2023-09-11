@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 import styled from '@emotion/styled';
 import mediaqueries from '@styles/media';
 import Image from '@components/Image';
@@ -84,7 +84,7 @@ const Social = styled.div`
   `}
 `;
 
-const AuthorHero: React.FC<AuthorHeroProps> = ({ author }) => (
+const AuthorHero: FC<AuthorHeroProps> = ({ author }) => (
   <Hero>
     <HeroImage>
       <RoundedImage src={author.avatar.large} />

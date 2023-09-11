@@ -11,6 +11,7 @@ const useSiteMetadata = () => {
           menu {
             name
             path
+            icon
           }
         }
       }

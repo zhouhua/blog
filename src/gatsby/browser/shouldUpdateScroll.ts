@@ -5,12 +5,13 @@ const shouldUpdateScroll: GatsbyBrowser['shouldUpdateScroll'] = ({
   prevRouterProps,
   getSavedScrollPosition
 }) => {
-  const currentPosition = getSavedScrollPosition(routerProps.location, routerProps.location.key);
-  console.log(currentPosition);
+  const currentPosition = getSavedScrollPosition(routerProps.location);
   const topOfPage: [number, number] = [0, 0];
-
+  // @ts-ignore
   if (routerProps.location.action === 'POP' && currentPosition) {
-    window.scrollTo(...currentPosition);
+    setTimeout(() => {
+      window.scrollTo(...currentPosition);
+    }, 1000);
   } else {
     const hash = window.decodeURIComponent(routerProps.location.hash);
     if (hash) {
@@ -23,7 +24,7 @@ const shouldUpdateScroll: GatsbyBrowser['shouldUpdateScroll'] = ({
         } catch (e) {
           console.error(e);
         }
-      }, 200);
+      }, 1000);
     } else {
       window.scrollTo(...topOfPage);
     }

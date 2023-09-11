@@ -24,6 +24,7 @@ const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] = ({ ac
     type SiteSiteMetadataMenu {
       name: String!
       path: String!
+      icon: String!
     }
     `,
     `

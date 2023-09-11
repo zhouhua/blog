@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 import styled from '@emotion/styled';
 import mediaqueries from '@styles/media';
 import type { IArticle } from '../../types';
@@ -29,7 +29,7 @@ const AuthorArticlesContainer = styled.div`
   `}
 `;
 
-const AuthorArticles: React.FC<AuthorArticlesProps> = ({ articles }) => (
+const AuthorArticles: FC<AuthorArticlesProps> = ({ articles }) => (
   <AuthorArticlesContainer>
     <ArticlesList articles={articles} alwaysShowAllDetails />
   </AuthorArticlesContainer>

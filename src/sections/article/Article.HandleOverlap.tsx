@@ -1,5 +1,5 @@
-import type { PropsWithChildren } from 'react';
-import React, { useEffect, useRef, useState } from 'react';
+import type { FC, PropsWithChildren } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import throttle from 'lodash/throttle';
 import clsx from 'clsx';
 import * as styles from './index.module.css';
@@ -14,7 +14,7 @@ import * as styles from './index.module.css';
  * and decides wether or not they're overlapping (with some buffer). If they are overlapping
  * we want to hide the top element.
  */
-const HandleOverlap: React.FC<PropsWithChildren> = ({ children }) => {
+const HandleOverlap: FC<PropsWithChildren> = ({ children }) => {
   const asideRef = useRef<HTMLDivElement>(null);
   const [isOverlapping, setIsOverlapping] = useState(false);
 

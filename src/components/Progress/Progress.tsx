@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import type { FC } from 'react';
+import { useEffect, useState } from 'react';
 import throttle from 'lodash/throttle';
 import clsx from 'clsx';
 import { clamp } from '@utils';
@@ -8,7 +9,7 @@ export interface IProgress {
   contentHeight: number;
 }
 
-const Progress: React.FC<IProgress> = ({ contentHeight }) => {
+const Progress: FC<IProgress> = ({ contentHeight }) => {
   const [progress, setProgress] = useState<number>(0);
 
   useEffect(() => {

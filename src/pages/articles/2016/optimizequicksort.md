@@ -9,6 +9,7 @@ id: 532
 hero: ./optimizequicksort.jpg
 category: 技术
 layout: post
+featured: true
 date: 2016-01-11 10:51:24
 ---
 

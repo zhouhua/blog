@@ -13,6 +13,7 @@ id: 437
 hero: ./trap.jpg
 category: 技术
 layout: post
+featured: true
 date: 2015-06-02 00:52:15
 ---
 

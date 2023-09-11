@@ -14,6 +14,7 @@ tags:
 category: 技术
 hero: ./quicksort.jpg
 layout: post
+featured: true
 date: 2015-06-18 12:08:03
 ---
 

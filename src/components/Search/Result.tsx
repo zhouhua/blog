@@ -1,6 +1,6 @@
 import { Link, navigate } from 'gatsby';
 import type { FC } from 'react';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Hit } from 'instantsearch.js';
 import { once } from 'lodash';
 import { Highlight, Snippet, useInfiniteHits, useStats } from 'react-instantsearch';
@@ -45,7 +45,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
   function addHistory(hit: Hit) {
     let { title } = hit;
     if (hit.layout === 'journal') {
-      title = `随笔 - ${hit.slug.split('#').pop()}`;
+      title = `随笔 🗓️ ${hit.slug.split('#').pop()}`;
     }
     addRecent({
       title,
@@ -163,7 +163,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                   <div onClick={once(() => addHistory(hit))}>
                     <AnchorLink to={hit.slug as string} className="block grow-[2] cursor-pointer">
                       <h2 className="mb-1 inline-block h-6 rounded-full bg-background px-2 text-[12px] leading-6 dark:bg-dark-background">
-                        随笔 - {(hit.slug as string).split('#').pop()}
+                        随笔 🗓️ {(hit.slug as string).split('#').pop()}
                       </h2>
                       <p className="overflow-ellipsis text-[14px] leading-6">
                         <Snippet attribute="excerpt" hit={hit} />

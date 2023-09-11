@@ -1,10 +1,9 @@
-import type { ImgHTMLAttributes } from 'react';
-import React from 'react';
+import type { FC, ImgHTMLAttributes } from 'react';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import type { FileNode } from 'gatsby-plugin-image/dist/src/components/hooks';
 import type { IImg } from '../../types';
 
-const Image: React.FC<IImg> = ({ src, ...props }) => {
+const Image: FC<IImg> = ({ src, ...props }) => {
   // TODO : Find where you have src null returns
   if (!src) {
     return null;

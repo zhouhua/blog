@@ -1,13 +1,10 @@
-import React from 'react';
 import type { FC } from 'react';
 import type { PageProps } from 'gatsby';
-import clsx from 'clsx';
 import Section from '@components/Section';
 import SEO from '@components/SEO';
 import Layout from '@components/Layout';
 import useSiteMetadata from '@hooks/useSiteMetaData';
 import type { IArticle } from '../types/index';
-import * as styles from './index.module.css';
 import ArticlesHero from '../sections/articles/Articles.Hero';
 import ArticlesList from '../sections/articles/Articles.List';
 
@@ -19,11 +16,10 @@ const ArticlesPage: FC<PageProps<object, { articles: IArticle[]; tag?: string }>
   return (
     <Layout>
       <SEO pathname={location.pathname} isBlogPost={false} title={title} />
-      <ArticlesHero tag={pageContext.tag} showLayout />
+      <ArticlesHero tag={pageContext.tag} showLayout title={`${title} - 所有文章`} />
       <Section narrow>
         <ArticlesList articles={pageContext.articles} />
       </Section>
-      <div className={clsx(styles.Gradient, 'colorModeTransition')} />
     </Layout>
   );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 import { Link } from 'gatsby';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
@@ -25,6 +25,7 @@ interface ArticlesPairProps {
   articles: IArticle[];
   gridLayout: GridLayout;
   reverse: boolean;
+  showAllLink?: boolean;
 }
 
 interface ArticlesPairItemProps {
@@ -33,7 +34,7 @@ interface ArticlesPairItemProps {
   gridLayout: GridLayout;
 }
 
-const ListItem: React.FC<ArticlesPairItemProps> = ({ article, narrow, gridLayout }) => {
+const ListItem: FC<ArticlesPairItemProps> = ({ article, narrow, gridLayout }) => {
   if (!article) {
     return null;
   }
@@ -86,7 +87,7 @@ const ListItem: React.FC<ArticlesPairItemProps> = ({ article, narrow, gridLayout
             {article.excerpt}
           </p>
           <div className="colorModeTransition text-base text-grey opacity-60 dark:text-dark-grey sm:max-w-full sm:px-5 sm:pb-[30px] sm:pt-0">
-            {dayjs(article.frontmatter?.date).fromNow()} · {article.wordCount.words} 个字 ·{' '}
+            {dayjs(article.frontmatter?.date).fromNow()} · {article.wordCount!.words} 个字 ·{' '}
             {article.timeToRead} 分钟读完
           </div>
         </div>
@@ -95,7 +96,12 @@ const ListItem: React.FC<ArticlesPairItemProps> = ({ article, narrow, gridLayout
   );
 };
 
-const ArticlesPair: React.FC<ArticlesPairProps> = ({ articles, reverse, gridLayout }) => {
+const ArticlesPair: FC<ArticlesPairProps> = ({
+  articles,
+  reverse,
+  gridLayout,
+  showAllLink = false
+}) => {
   if (!articles) {
     return null;
   }
@@ -117,6 +123,20 @@ const ArticlesPair: React.FC<ArticlesPairProps> = ({ articles, reverse, gridLayo
           narrow={i % 2 ? reverse : !reverse}
         />
       ))}
+      {articles.length === 1 && showAllLink && (
+        <Link
+          className={clsx(
+            styles.moreLink,
+            'flex items-center justify-center text-primary dark:text-dark-primary',
+            'border border-solid border-grey/50 dark:border-dark-grey/50',
+            'sm:mb-20 sm:h-28 sm:border-0 sm:bg-card sm:dark:bg-dark-card'
+          )}
+          to="/articles"
+        >
+          查看所有文章
+          <i className="fa-solid fa-angles-right ml-4" />
+        </Link>
+      )}
     </div>
   );
 };

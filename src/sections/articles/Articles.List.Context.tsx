@@ -1,5 +1,5 @@
-import type { PropsWithChildren } from 'react';
-import React, { createContext, useMemo, useState } from 'react';
+import type { FC, PropsWithChildren } from 'react';
+import { createContext, useMemo, useState } from 'react';
 
 export type GridLayout = 'tiles' | 'rows';
 
@@ -15,7 +15,7 @@ export const GridLayoutContext = createContext<GridLayoutContextType>({
   hasSetGridLayout: false
 });
 
-const GridLayoutProvider: React.FC<PropsWithChildren> = ({ children }) => {
+const GridLayoutProvider: FC<PropsWithChildren> = ({ children }) => {
   const initialLayout: GridLayout = 'tiles';
 
   const [gridLayout, setGridLayout] = useState<GridLayout>(initialLayout);

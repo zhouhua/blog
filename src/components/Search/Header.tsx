@@ -1,5 +1,5 @@
-import type { FC } from 'react';
-import React, { useRef, useState } from 'react';
+import type { ChangeEvent, FC, FormEvent } from 'react';
+import { useRef, useState } from 'react';
 import { useInstantSearch, useSearchBox } from 'react-instantsearch';
 import clsx from 'clsx';
 import { throttle } from 'lodash';
@@ -21,11 +21,11 @@ const Header: FC<{ hide: () => void }> = ({ hide }) => {
     setInputValue(newQuery);
     refine(newQuery);
   }
-  function onChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function onChange(event: ChangeEvent<HTMLInputElement>) {
     setQuery(event.currentTarget.value);
   }
 
-  function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     event.stopPropagation();
     if (inputRef.current) {

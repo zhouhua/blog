@@ -40,6 +40,9 @@ function pageToAlgoliaRecord({
   if (data.contentDigest) {
     Object.assign(data, { internal: { contentDigest: data.contentDigest } });
   }
+  if (data.layout === 'journal') {
+    data.title = `随笔 🗓️ ${data.slug.split('#journal').pop()}`;
+  }
 
   return data;
 }

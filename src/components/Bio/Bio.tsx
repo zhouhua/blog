@@ -1,18 +1,12 @@
-import React from 'react';
-import { Link } from 'gatsby';
+import type { FC } from 'react';
 import clsx from 'clsx';
 import Image from '@components/Image';
 import type { IAuthor } from '../../types';
 import * as styles from './index.module.css';
 
-const Bio: React.FC<{ author: IAuthor }> = ({ author }) => (
-  <div className="relative -left-2.5 flex items-center">
-    <Link
-      className={clsx(styles.BioAvatar, styles.RoundedImage, 'relative block h-10 w-10')}
-      to={author.authorsPage}
-      data-a11y="false"
-      aria-label="Author's bio"
-    >
+const Bio: FC<{ author: IAuthor; hideText?: boolean }> = ({ author, hideText = false }) => (
+  <div className={clsx('relative -left-2.5 flex items-center')}>
+    <div className={clsx(styles.BioAvatar, styles.RoundedImage, 'relative block h-10 w-10')}>
       <div
         className={clsx(
           styles.BioAvatarInner,
@@ -22,11 +16,17 @@ const Bio: React.FC<{ author: IAuthor }> = ({ author }) => (
       >
         <Image className={styles.RoundedImage} src={author.avatar!} alt="作者头像" />
       </div>
-    </Link>
-    <p
-      className={clsx(styles.BioText, 'colorModeTransition text-sm text-grey dark:text-dark-grey')}
-      dangerouslySetInnerHTML={{ __html: author.bio! }}
-    />
+    </div>
+    {!hideText && (
+      <p
+        className={clsx(
+          styles.BioText,
+          'colorModeTransition text-sm text-grey dark:text-dark-grey'
+        )}
+      >
+        {author.bio}
+      </p>
+    )}
   </div>
 );
 

@@ -1,4 +1,5 @@
-import React, { useContext, useEffect } from 'react';
+import type { FC } from 'react';
+import { useContext, useEffect } from 'react';
 import clsx from 'clsx';
 import type { IArticle } from '../../types';
 import { GridLayoutContext } from './Articles.List.Context';
@@ -24,10 +25,7 @@ interface ArticlesListProps {
   alwaysShowAllDetails?: boolean;
 }
 
-const ArticlesList: React.FC<ArticlesListProps> = ({ articles, alwaysShowAllDetails }) => {
-  if (!articles) {
-    return null;
-  }
+const ArticlesList: FC<ArticlesListProps> = ({ articles, alwaysShowAllDetails }) => {
   const { gridLayout = 'tiles', hasSetGridLayout, getGridLayout } = useContext(GridLayoutContext);
 
   /**

@@ -1,13 +1,5 @@
-.Gradient {
-  @apply pointer-events-none absolute bottom-0 left-0 z-0 h-[590px] w-full;
-  @apply bg-gradient-to-b from-gradientFrom to-gradientTo dark:from-dark-gradientFrom dark:to-dark-gradientTo;
-  transition:
-    background 0.25s var(--ease-in-out-quad),
-    color 0.25s var(--ease-in-out-quad);
-}
-
-.FooterNext {
-  @apply relative mb-[100px] font-normal text-primary opacity-25 dark:text-dark-primary md:pb-[60px];
+.lineTitle {
+  @apply relative pb-20 font-normal text-primary opacity-25 dark:text-dark-primary md:pb-[60px];
   transition:
     background 0.25s var(--ease-in-out-quad),
     color 0.25s var(--ease-in-out-quad);
@@ -18,4 +10,18 @@
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
   }
+}
+
+.journalCard {
+  @apply pt-0 !important;
+}
+
+.fade::after {
+  @apply absolute bottom-0 left-0 right-0 h-12;
+  content: '';
+  background: linear-gradient(180deg, theme(colors.card/0) 0%, theme(colors.card) 95%);
+}
+
+:global(.dark) .fade::after {
+  background: linear-gradient(180deg, theme(colors.dark.card/0) 0%, theme(colors.dark.card) 95%);
 }

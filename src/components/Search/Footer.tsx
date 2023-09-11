@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { PoweredBy, useStats } from 'react-instantsearch';
 import useColorMode from '@hooks/useColorMode';
 import { Kbd } from '@components/Keyboard';

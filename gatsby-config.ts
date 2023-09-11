@@ -15,10 +15,10 @@ const config: GatsbyConfig = {
       maxWidth: 800
     },
     menu: [
-      { name: '文章', path: '/articles' },
-      { name: '随笔', path: '/journals' },
-      { name: '照片', path: '/photos' },
-      { name: '关于我', path: '/about' }
+      { name: '文章', path: '/articles', icon: 'pen-fancy' },
+      { name: '随笔', path: '/journals', icon: 'message' },
+      // { name: '照片', path: '/photos' },
+      { name: '关于我', path: '/about', icon: 'address-card' }
     ]
   },
   // If you use VSCode you can also use the GraphQL plugin
@@ -34,6 +34,12 @@ const config: GatsbyConfig = {
     'gatsby-transformer-sharp',
     'gatsby-transformer-yaml',
     'gatsby-plugin-pnpm',
+    // {
+    //   resolve: 'gatsby-plugin-transition-link',
+    //   options: {
+    //     layout: require.resolve('./src/components/Layout/Layout.tsx')
+    //   }
+    // },
     {
       resolve: 'gatsby-plugin-anchor-links',
       options: {
@@ -69,42 +75,14 @@ const config: GatsbyConfig = {
           {
             resolve: 'gatsby-remark-images',
             options: {
-              maxWidth: 800,
+              maxWidth: 650,
               linkImagesToOriginal: false,
               quality: 80,
-              withWebp: true
+              withWebp: true,
+              srcSetBreakpoints: [200, 360, 500, 650, 1300, 2600]
             }
-          },
-          {
-            resolve: 'gatsby-remark-responsive-iframe',
-            options: { wrapperStyle: 'margin-bottom: 1.0725rem' }
-          },
-          // {
-          //   resolve: '@raae/gatsby-remark-oembed',
-          //   options: { providers: { include: ['Instagram'] } }
-          // },
-          {
-            resolve: 'gatsby-remark-embed-video',
-            options: {
-              width: 680,
-              ratio: 1.77, // Optional: Defaults to 16/9 = 1.77
-              height: 400, // Optional: Overrides optional.ratio
-              related: false,
-              noIframeBorder: true, // Optional: Disable insertion of <style> border: 0
-              urlOverrides: [
-                {
-                  id: 'youtube',
-                  embedURL: (videoId: string) => `https://www.youtube-nocookie.com/embed/${videoId}`
-                }
-              ]
-            }
-          },
-          {
-            resolve: 'gatsby-remark-responsive-iframe',
-            options: { wrapperStyle: 'margin-bottom: 1.0725rem' }
           },
           { resolve: 'gatsby-remark-numbered-footnotes' },
-          { resolve: 'gatsby-remark-smartypants' },
           {
             resolve: 'gatsby-remark-external-links',
             options: {
@@ -120,7 +98,6 @@ const config: GatsbyConfig = {
             }
           },
           'gatsby-remark-copy-linked-files',
-          // 'gatsby-remark-smartypants',
           'gatsby-remark-katex'
           // 'gatsby-remark-autolink-headers'
         ]
@@ -143,7 +120,6 @@ const config: GatsbyConfig = {
     {
       resolve: 'gatsby-plugin-webpack-bundle-analyser-v2',
       options: {
-        devMode: true,
         openAnalyzer: false,
         analyzerMode: 'server',
         analyzerPort: '8888',

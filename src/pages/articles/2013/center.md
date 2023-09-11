@@ -81,6 +81,7 @@ layout: post
 .parent {
     width: 100%;
     position: relative;
+    height: 68px;
 }
 .child {
     position: absolute;
@@ -96,15 +97,17 @@ layout: post
 </div>
 ```
 
-<div class="parent" style="height: 30px; position: relative;"><div class="child" style="width: 100px; position: absolute; left: 50%; margin-left: -50px;">我要居中</div></div>
+<div class="parent" style="height: 68px; position: relative;"><div class="child" style="width: 100px; position: absolute; left: 50%; margin-left: -50px;">我要居中</div></div>
 
 想必大家从我之前的说明里已经能看到这个方法的一点弊端了。对！这个方法要求我们必须先知道元素的宽度。对于动态的元素，如果我们无法事先得知元素的宽度，那么纯 CSS 无法解决这个问题，只能借助 javascript 获取宽度值后再更改 `margin-left` 的属性值。
 
 <style>
 .parent {
     width: 100%;
-    margin: 20px;
+    max-width: 480px;
+    margin: 20px auto 56px;
     background: #ccc;
+    padding: 20px;
 }
 .child {
     text-align: center;

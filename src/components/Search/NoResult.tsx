@@ -1,5 +1,4 @@
 import type { FC } from 'react';
-import React from 'react';
 import { useStats } from 'react-instantsearch';
 
 const NoResult: FC = () => {

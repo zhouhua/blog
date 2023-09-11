@@ -3,7 +3,7 @@ import path from 'path';
 import type { GatsbyNode } from 'gatsby';
 import { config } from 'dotenv';
 import { load } from 'cheerio';
-import { words } from 'lodash';
+import { take, words } from 'lodash';
 
 config();
 
@@ -15,7 +15,8 @@ const templates = {
   articles: path.resolve(templatesDirectory, 'articles.template.tsx'),
   article: path.resolve(templatesDirectory, 'article.template.tsx'),
   author: path.resolve(templatesDirectory, 'author.template.tsx'),
-  journals: path.resolve(templatesDirectory, 'journals.template.tsx')
+  journals: path.resolve(templatesDirectory, 'journals.template.tsx'),
+  homepage: path.resolve(templatesDirectory, 'HomePage.tsx')
 };
 
 const createPages: GatsbyNode['createPages'] = async (
@@ -69,6 +70,7 @@ const createPages: GatsbyNode['createPages'] = async (
                 draft
                 tags
                 layout
+                featured
                 hero {
                   childImageSharp {
                     gatsbyImageData(
@@ -155,17 +157,19 @@ const createPages: GatsbyNode['createPages'] = async (
     throw new Error('You must have at least one Author and Post. ');
   }
 
-  const liteArticleList = articlesPublished.map(article => {
-    const liteArticle = { ...article };
-    liteArticle.html = '';
-    return liteArticle;
-  });
+  function simplifyArticleList(list: Queries.MarkdownRemark[]) {
+    return list.map(item => {
+      const copy = { ...item };
+      copy.html = '';
+      return copy;
+    });
+  }
 
   createPage({
     path: '/articles',
     component: templates.articles,
     context: {
-      articles: liteArticleList,
+      articles: simplifyArticleList(articlesPublished),
       authors: authors[0],
       basePath,
       permalink: '/articles',
@@ -238,6 +242,38 @@ const createPages: GatsbyNode['createPages'] = async (
       }
     });
   });
+  log('Creating', 'journal pages');
+  journals.forEach(article => {
+    const slug = article.fields.slug.replace(/.+?#/, '/');
+    const title = `随笔 🗓️ ${article.fields.slug.split('#journal').pop()}`;
+    // @ts-ignore
+    article.frontmatter.title = title;
+    createPage({
+      path: slug,
+      component: templates.article,
+      context: {
+        article,
+        author: authors[0],
+        basePath,
+        permalink: `${
+          ((data as any).site.siteMetadata as Queries.SiteSiteMetadata).siteUrl
+        }${slug}/`,
+        slug,
+        id: article.id,
+        title
+      }
+    });
+
+    // 处理 tag 列表
+    article.frontmatter.tags?.forEach((tag, i) => {
+      const cache = tagsMap.get(tag);
+      if (!cache) {
+        tagsMap.set(tag, { slug: article.fields.tagSlugs![i], articles: [article] });
+      } else {
+        cache.articles.push(article);
+      }
+    });
+  });
   tagsMap.forEach(({ slug, articles: list }, tag) => {
     createPage({
       path: slug,
@@ -251,6 +287,38 @@ const createPages: GatsbyNode['createPages'] = async (
         slug
       }
     });
+  });
+
+  // make homepage
+  const articleNumber = articlesPublished.length;
+  const journalNumber = journals.length;
+  const articleWordCount = articlesPublished.reduce(
+    (prev, article) => prev + (article.wordCount?.words || 0),
+    0
+  );
+  const journalWordCount = journals.reduce(
+    (prev, journal) => prev + (journal.wordCount?.words || 0),
+    0
+  );
+  const totalWordCount = articleWordCount + journalWordCount;
+  const featuredArticles = simplifyArticleList(
+    articlesPublished.filter(article => article.frontmatter.featured)
+  );
+  const newestJournals = take(journals, 3);
+  createPage({
+    path: '/',
+    component: templates.homepage,
+    context: {
+      authors: authors[0],
+      totalWordCount,
+      articleNumber,
+      journalNumber,
+      basePath,
+      featuredArticles,
+      newestJournals,
+      permalink: '/',
+      slug: '/'
+    }
   });
 };
 

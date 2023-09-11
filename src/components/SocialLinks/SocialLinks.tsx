@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 import styled from '@emotion/styled';
 import mediaqueries from '@styles/media';
 import Icons from '@icons';
@@ -91,7 +91,7 @@ const getHostname = (url: string) =>
 
 const getServicename = (url: string) => url.toLowerCase().split(':')[0];
 
-const SocialLinks: React.FC<SocialLinksProps> = ({ links, fill = '#73737D' }) => {
+const SocialLinks: FC<SocialLinksProps> = ({ links, fill = '#73737D' }) => {
   if (!links) {
     return null;
   }

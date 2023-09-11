@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React from 'react';
+import type { FC } from 'react';
 import SEO from '@components/SEO';
 import useSiteMetadata from '@hooks/useSiteMetaData';
 import type { IArticle, IAuthor } from '../../types';
@@ -11,7 +11,7 @@ interface ArticleSEOProps {
   imagelocation?: string;
 }
 
-const ArticleSEO: React.FC<ArticleSEOProps> = ({ article, author, location, imagelocation }) => {
+const ArticleSEO: FC<ArticleSEOProps> = ({ article, author, location, imagelocation }) => {
   const { siteUrl } = useSiteMetadata();
 
   imagelocation = `${

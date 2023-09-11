@@ -1,5 +1,5 @@
-import type { PropsWithChildren, ReactElement } from 'react';
-import React, { useState, useRef, useEffect, Children, cloneElement } from 'react';
+import type { FC, PropsWithChildren, ReactElement } from 'react';
+import { useState, useRef, useEffect, Children, cloneElement } from 'react';
 import throttle from 'lodash/throttle';
 import clsx from 'clsx';
 import { clamp } from '@utils';
@@ -25,7 +25,7 @@ interface AsideProps {
  *                  |  content  |
  *
  */
-const Aside: React.FC<PropsWithChildren & AsideProps> = ({ contentHeight, children }) => {
+const Aside: FC<PropsWithChildren & AsideProps> = ({ contentHeight, children }) => {
   const progressRef = useRef<HTMLDivElement>(null);
 
   const [progress, setProgress] = useState<number>(0);

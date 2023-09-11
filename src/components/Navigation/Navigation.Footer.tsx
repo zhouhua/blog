@@ -1,10 +1,9 @@
-import React from 'react';
-import { graphql, useStaticQuery } from 'gatsby';
+import type { FC } from 'react';
 import clsx from 'clsx';
 import Section from '@components/Section';
 import useSiteMetadata from '@hooks/useSiteMetaData';
 
-const Footer: React.FC<{}> = () => {
+const Footer: FC = () => {
   const { title } = useSiteMetadata();
 
   return (

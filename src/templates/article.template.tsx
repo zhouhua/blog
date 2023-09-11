@@ -1,11 +1,13 @@
 import type { FC } from 'react';
-import React, { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { throttle } from 'lodash';
 import type { PageProps } from 'gatsby';
+import Giscus from '@giscus/react';
 import Layout from '@components/Layout';
 import Progress from '@components/Progress';
 import Section from '@components/Section';
 import { debounce } from '@utils';
+import useColorMode from '@hooks/useColorMode';
 import ArticleAside from '../sections/article/Article.Aside';
 import type { IArticle, IAuthor } from '../types/index';
 import ArticleHero from '../sections/article/Article.Hero';
@@ -23,11 +25,11 @@ const Article: FC<PageProps<object, { article: IArticle; author: IAuthor; next: 
   const [hasCalculated, setHasCalculated] = useState<boolean>(false);
   const [contentHeight, setContentHeight] = useState<number>(0);
   const { article, author, next } = pageContext;
+  const [colorMode] = useColorMode();
 
   useEffect(() => {
     const calculateBodySize = throttle(() => {
       const contentSection = contentSectionRef.current;
-
       if (!contentSection) {
         return;
       }
@@ -66,16 +68,37 @@ const Article: FC<PageProps<object, { article: IArticle; author: IAuthor; next: 
     <Layout>
       <ArticleSEO article={article} author={author} location={location} />
       <ArticleHero article={article} author={author} />
-      <ArticleAside contentHeight={contentHeight}>
-        <Progress contentHeight={contentHeight} />
-      </ArticleAside>
+      {!!article.frontmatter.hero && (
+        <ArticleAside contentHeight={contentHeight}>
+          <Progress contentHeight={contentHeight} />
+        </ArticleAside>
+      )}
       <article className="relative" ref={contentSectionRef}>
         <ArticleContent article={article} />
       </article>
+      <Section
+        narrow
+        className="mb-32 mt-10 border-t border-solid border-horizontalRule pt-10 dark:border-dark-horizontalRule"
+      >
+        <Giscus
+          repo="zhouhua/blog-comment"
+          repoId="MDEwOlJlcG9zaXRvcnkxMjQwOTQzNzk="
+          category="Announcements"
+          categoryId="DIC_kwDOB2WHq84CZHl_"
+          mapping="title"
+          strict="0"
+          reactionsEnabled="1"
+          emitMetadata="0"
+          inputPosition="top"
+          theme={`${colorMode}_protanopia`}
+          lang="zh-CN"
+          loading="lazy"
+        />
+      </Section>
       <ArticleFooter />
-      {next.length > 0 && (
+      {(next || []).length > 0 && (
         <Section className="block" narrow>
-          <h3 className={styles.FooterNext}>看看其他的文章</h3>
+          <h3 className={styles.lineTitle}>看看其他的文章</h3>
           <ArticlesNext articles={next} />
           <div className="mb-[65px]" />
         </Section>

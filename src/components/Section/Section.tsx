@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 import type { FC, PropsWithChildren } from 'react';
-import React from 'react';
 
 const Section: FC<PropsWithChildren & { narrow: boolean; className?: string }> = ({
   narrow,

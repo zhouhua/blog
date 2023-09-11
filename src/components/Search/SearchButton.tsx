@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { bindKeyCombo, unbindKeyCombo } from '@rwh/keystrokes';
 import { Kbd } from '@components/Keyboard';
 import { UAParser } from 'ua-parser-js';

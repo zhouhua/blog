@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 import type { FC, PropsWithChildren, HTMLAttributes } from 'react';
-import React from 'react';
 
 const Kbd: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({
   children,

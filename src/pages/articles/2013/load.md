@@ -11,6 +11,7 @@ category: 技术
 hero: ./load.jpg
 layout: post
 date: 2013-07-27 22:20:13
+featured: true
 draft: false
 ---
 

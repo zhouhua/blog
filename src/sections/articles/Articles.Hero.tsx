@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import type { FC } from 'react';
 import { Link, graphql, useStaticQuery } from 'gatsby';
 import clsx from 'clsx';
@@ -14,6 +14,7 @@ const authorQuery = graphql`
       edges {
         node {
           siteMetadata {
+            subtitle
             hero {
               heading
               maxWidth
@@ -49,11 +50,15 @@ const authorQuery = graphql`
   }
 `;
 
-const ArticlesHero: FC<{ tag?: string; showLayout?: boolean }> = ({ tag, showLayout = false }) => {
+const ArticlesHero: FC<{ tag?: string; showLayout?: boolean; title?: string }> = ({
+  tag,
+  showLayout = false,
+  title
+}) => {
   const { gridLayout = 'tiles', hasSetGridLayout, setGridLayout } = useContext(GridLayoutContext);
 
   const results = useStaticQuery(authorQuery);
-  const { hero } = results.site.edges[0].node.siteMetadata;
+  const { hero, subtitle } = results.site.edges[0].node.siteMetadata;
   const author: Queries.AuthorsYaml = results.author.edges[0].node;
   const tilesIsActive = hasSetGridLayout && gridLayout === 'tiles';
 
@@ -91,17 +96,22 @@ const ArticlesHero: FC<{ tag?: string; showLayout?: boolean }> = ({ tag, showLay
         </div>
       ) : (
         <div
-          className="mx-0 my-[100px] sm:w-full md:w-4/5"
+          className={clsx(
+            'mx-0 my-[100px] sm:w-full md:w-4/5',
+            'text-primary dark:text-dark-primary'
+          )}
           style={{ maxWidth: `${hero.maxWidth}px` }}
         >
           <h1
             className={clsx(
               styles.HeroHeading,
               'colorModeTransition text-[52px] font-semibold not-italic leading-[1.15]',
-              'text-primary dark:text-dark-primary sm:text-[32px] md:text-[38px]'
+              'mb-10 sm:text-[32px] md:text-[38px]'
             )}
-            dangerouslySetInnerHTML={{ __html: hero.heading }}
-          />
+          >
+            {title || hero.heading}
+          </h1>
+          {!title && <p>{subtitle}</p>}
         </div>
       )}
       <div className="mb-[100px] flex items-center justify-between sm:hidden md:mb-20">

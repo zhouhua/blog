@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Icon } from '../.../types';
 
 const LinkedinIcon: Icon = ({ fill = 'white', ...props }) => (
