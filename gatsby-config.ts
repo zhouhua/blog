@@ -24,7 +24,7 @@ const config: GatsbyConfig = {
   // If you use VSCode you can also use the GraphQL plugin
   // Learn more at: https://gatsby.dev/graphql-typegen
   graphqlTypegen: true,
-  trailingSlash: 'ignore',
+  trailingSlash: 'always',
   jsxRuntime: 'automatic',
   plugins: [
     'gatsby-plugin-postcss',
@@ -34,6 +34,7 @@ const config: GatsbyConfig = {
     'gatsby-transformer-sharp',
     'gatsby-transformer-yaml',
     'gatsby-plugin-pnpm',
+    'gatsby-plugin-netlify',
     // {
     //   resolve: 'gatsby-plugin-transition-link',
     //   options: {
