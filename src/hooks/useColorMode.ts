@@ -5,7 +5,10 @@ type UseColorModeType = () => [ColorMode, (colorMode: ColorMode) => void];
 
 const storeKey = 'colorMode';
 
-const setup = () => (localStorage.getItem(storeKey) || 'light') as ColorMode;
+const setup = () =>
+  typeof window === 'undefined'
+    ? 'light'
+    : ((localStorage.getItem(storeKey) || 'light') as ColorMode);
 
 const useGlobalColorMode = createGlobalState<ColorMode>(setup());
 

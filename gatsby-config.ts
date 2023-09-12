@@ -26,6 +26,9 @@ const config: GatsbyConfig = {
   graphqlTypegen: true,
   trailingSlash: 'always',
   jsxRuntime: 'automatic',
+  flags: {
+    DEV_SSR: true
+  },
   plugins: [
     'gatsby-plugin-postcss',
     'gatsby-plugin-image',

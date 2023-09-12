@@ -1,4 +1,4 @@
-import type { FC, MouseEvent } from 'react';
+import { useState, type FC, type MouseEvent, useEffect } from 'react';
 import { Link } from 'gatsby';
 import clsx from 'clsx';
 import useColorMode from '@hooks/useColorMode';
@@ -10,13 +10,17 @@ import { SearchButton } from '../Search';
 
 const DarkModeToggle: FC = () => {
   const [colorMode, setColorMode] = useColorMode();
-  const isDark = colorMode === 'dark';
+  const [isDark, setIsDark] = useState<boolean>(false);
 
   function toggleColorMode(event: MouseEvent) {
     event.preventDefault();
     const newColorMode: ColorMode = isDark ? 'light' : 'dark';
     setColorMode(newColorMode);
   }
+
+  useEffect(() => {
+    setIsDark(colorMode === 'dark');
+  }, [colorMode]);
 
   return (
     <button
@@ -54,7 +58,10 @@ const NavigationHeader: FC = () => {
   const { menu } = useSiteMetadata();
 
   const [colorMode] = useColorMode();
-  const fill = colorMode === 'dark' ? '#fff' : '#000';
+  const [fill, setFill] = useState<string>('#000');
+  useEffect(() => {
+    setFill(colorMode === 'dark' ? '#fff' : '#000');
+  }, [colorMode]);
 
   return (
     <Section narrow>

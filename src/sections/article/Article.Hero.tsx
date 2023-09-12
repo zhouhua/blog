@@ -1,8 +1,9 @@
-import type { FC } from 'react';
+import { useState, type FC, useEffect } from 'react';
 import dayjs from 'dayjs';
 import clsx from 'clsx';
 import Image from '@components/Image';
 import { Link } from 'gatsby';
+import type { VariantType } from 'react-tooltip';
 import { Tooltip } from 'react-tooltip';
 import useColorMode from '@hooks/useColorMode';
 import type { IArticle, IAuthor } from '../../types';
@@ -16,6 +17,10 @@ interface ArticleHeroProps {
 
 const ArticleHero: FC<ArticleHeroProps> = ({ article, author }) => {
   const [colorMode] = useColorMode();
+  const [tooltipTheme, setTooltipTheme] = useState<VariantType>('dark');
+  useEffect(() => {
+    setTooltipTheme(colorMode === 'dark' ? 'light' : 'dark');
+  }, [colorMode]);
   return (
     <div className={styles.Hero}>
       <header className={clsx(styles.Header, 'relative z-10')}>
@@ -35,7 +40,7 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, author }) => {
                 data-tooltip-place="bottom"
                 data-tooltip-delay-hide={1000}
                 data-tooltip-delay-show={200}
-                data-tooltip-variant={colorMode === 'dark' ? 'light' : 'dark'}
+                data-tooltip-variant={tooltipTheme}
               >
                 {dayjs(article.frontmatter.date).fromNow()}
               </span>{' '}
