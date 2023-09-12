@@ -47,7 +47,7 @@ const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({ actions, g
             ...(use as IUse).options,
             modules: {
               ...others,
-              localIdentName: '[local]--[hash:base64]',
+              localIdentName: '[local]--[hash:base64:5]',
               getLocalIdent(ctx: any, localIdentName: string, localName: string, ...args: any[]) {
                 if (localName === 'dark') {
                   return (getLocalIdent || defaultGetLocalIdent)(
@@ -59,7 +59,7 @@ const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({ actions, g
                 }
                 return (getLocalIdent || defaultGetLocalIdent)(
                   ctx,
-                  `${localName}--[hash:base64]`,
+                  `${localName}--[hash:base64:5]`,
                   localName,
                   ...args
                 );
