@@ -5,25 +5,23 @@ import { Kbd } from '@components/Keyboard';
 import { UAParser } from 'ua-parser-js';
 import clsx from 'clsx';
 import SearchPanel from './Panel';
-import { HydrationProvider, useHydrated } from 'react-hydration-provider';
-
-const parser = new UAParser();
-export const isMac = parser.getOS().name === 'Mac OS';
-
-export const searchKeyCombo = isMac ? 'Meta > k' : 'Control > k';
 
 const SearchButton: FC = () => {
   const [showSearchPanel, setShowSearchPanel] = useState<boolean>(false);
+  const [isMac, setIsMac] = useState<boolean>(true);
   useEffect(() => {
+    const parser = new UAParser();
+    const isMacInner = parser.getOS().name === 'Mac OS';
+    setIsMac(isMacInner);
+    const searchKeyCombo = isMacInner ? 'Meta > k' : 'Control > k';
     const hotkeyHandler = {
       onPressed: () => setShowSearchPanel(true)
     };
     bindKeyCombo(searchKeyCombo, hotkeyHandler);
     return () => unbindKeyCombo(searchKeyCombo, hotkeyHandler);
   }, []);
-  const hydrated = useHydrated();
   return (
-    <HydrationProvider>
+    <>
       <div
         className={clsx(
           'colorModeTransition',
@@ -40,12 +38,12 @@ const SearchButton: FC = () => {
           <span className="sm:hidden"> 搜索</span>
         </span>
         <span className="sm:hidden">
-          <Kbd>{isMac && hydrated ? '⌘' : 'ctrl'}</Kbd>
+          <Kbd>{isMac ? '⌘' : 'ctrl'}</Kbd>
           <Kbd>k</Kbd>
         </span>
       </div>
       <SearchPanel show={showSearchPanel} hide={() => setShowSearchPanel(false)} />
-    </HydrationProvider>
+    </>
   );
 };
 export default SearchButton;

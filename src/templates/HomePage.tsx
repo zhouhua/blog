@@ -1,11 +1,12 @@
-import { Link, type HeadFC, type PageProps } from 'gatsby';
-import { useMemo, type FC } from 'react';
+import { Link, navigate } from 'gatsby';
+import type { HeadFC, PageProps } from 'gatsby';
+import type { FC } from 'react';
+import { useEffect, useState } from 'react';
 import Layout from '@components/Layout';
 import SEO from '@components/SEO';
 import Section from '@components/Section';
 import clsx from 'clsx';
 import useSiteMetadata from '@hooks/useSiteMetaData';
-import { HydrationProvider, useHydrated } from 'react-hydration-provider';
 import { sampleSize } from 'lodash';
 import ArticlesHero from '../sections/articles/Articles.Hero';
 import * as styles from './index.module.css';
@@ -26,16 +27,15 @@ const Index: FC<PageProps<object, PageContentType>> = ({
   pageContext: { articleNumber, journalNumber, totalWordCount, featuredArticles, newestJournals }
 }) => {
   const { title } = useSiteMetadata();
-  const hydrated = useHydrated();
-  const randomPostsPairs = useMemo(() => {
-    if (!hydrated) return [];
+  const [randomPostsPairs, setPairList] = useState<[IArticle, IArticle][]>([]);
+  useEffect(() => {
     const sampledList = sampleSize(featuredArticles, 5);
     const pairs: [IArticle, IArticle][] = [];
     while (sampledList.length) {
       pairs.push(sampledList.splice(0, 2) as [IArticle, IArticle]);
     }
-    return pairs;
-  }, [featuredArticles, hydrated]);
+    setPairList(pairs);
+  }, [featuredArticles]);
   return (
     <Layout>
       <SEO pathname={location.pathname} isBlogPost={false} title={title} />
@@ -59,27 +59,27 @@ const Index: FC<PageProps<object, PageContentType>> = ({
         <h3 className={clsx(styles.lineTitle, 'mt-20')}>最新随笔</h3>
         <ul className="relative z-10 columns-2 gap-x-6 sm:columns-1">
           {newestJournals.map(journal => (
-            <Link to={journal.fields.slug} key={journal.fields.slug}>
-              <li
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+            <li
+              className={clsx(
+                articleStyles.ArticleBody,
+                styles.journalCard,
+                'relative z-10 justify-center',
+                'prose prose-stone max-w-none dark:prose-invert',
+                'prose-code:before:content-[unset] prose-code:after:content-[unset]',
+                'colorModeTransition break-inside-avoid-column'
+              )}
+              onClick={() => navigate(journal.fields.slug)}
+            >
+              <article
                 className={clsx(
-                  articleStyles.ArticleBody,
-                  styles.journalCard,
-                  'relative z-10 justify-center',
-                  'prose prose-stone max-w-none dark:prose-invert',
-                  'prose-code:before:content-[unset] prose-code:after:content-[unset]',
-                  'colorModeTransition break-inside-avoid-column'
+                  styles.fade,
+                  'relative rounded-2xl bg-card px-10 pb-2 pt-12 dark:bg-card/10 sm:pt-8 md:px-8',
+                  'colorModeTransition  max-h-[640px]  overflow-hidden'
                 )}
-              >
-                <article
-                  className={clsx(
-                    styles.fade,
-                    'relative rounded-2xl bg-card px-10 pb-2 pt-12 dark:bg-card/10 sm:pt-8 md:px-8',
-                    'colorModeTransition  max-h-[640px]  overflow-hidden'
-                  )}
-                  dangerouslySetInnerHTML={{ __html: journal.html! }}
-                />
-              </li>
-            </Link>
+                dangerouslySetInnerHTML={{ __html: journal.html! }}
+              />
+            </li>
           ))}
           <li
             className={clsx(

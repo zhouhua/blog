@@ -34,6 +34,7 @@ module.exports = {
     'quotes': ['error', 'single'],
     'semi': ['error', 'always'],
     'global-require': 0,
+    'import/order': 2,
     'react/jsx-filename-extension': ['error', { extensions: ['.tsx', '.jsx'] }],
     'no-unused-expressions': [
       'error',
