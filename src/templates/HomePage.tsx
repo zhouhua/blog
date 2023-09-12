@@ -69,6 +69,7 @@ const Index: FC<PageProps<object, PageContentType>> = ({
                 'prose-code:before:content-[unset] prose-code:after:content-[unset]',
                 'colorModeTransition break-inside-avoid-column'
               )}
+              key={journal.fields.slug}
               onClick={() => navigate(journal.fields.slug)}
             >
               <article

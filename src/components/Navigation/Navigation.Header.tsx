@@ -8,7 +8,7 @@ import useSiteMetadata from '@hooks/useSiteMetaData';
 import * as styles from './index.module.css';
 import { SearchButton } from '../Search';
 
-const DarkModeToggle: FC<{}> = () => {
+const DarkModeToggle: FC = () => {
   const [colorMode, setColorMode] = useColorMode();
   const isDark = colorMode === 'dark';
 

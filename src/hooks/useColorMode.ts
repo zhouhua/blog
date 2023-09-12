@@ -1,60 +1,63 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { createGlobalState } from 'react-use';
 
 type UseColorModeType = () => [ColorMode, (colorMode: ColorMode) => void];
-// eslint-disable-next-line import/no-mutable-exports
-let useColorMode: UseColorModeType = () => ['light', () => undefined];
 
-const isBrowser = typeof window !== 'undefined';
+const storeKey = 'colorMode';
 
-if (isBrowser) {
-  const $html = document.querySelector('html')!;
-  const changeHTMLBb = (color: ColorMode) => {
-    const bg: Record<ColorMode, string> = { light: '#fafafa', dark: '#111216' };
-    $html.style.background = bg[color];
-  };
-  const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-  const storeKey = 'colorMode';
+const setup = () => (localStorage.getItem(storeKey) || 'light') as ColorMode;
 
-  const setup = () => {
-    let init = localStorage.getItem(storeKey) as ColorMode | null;
-    if (!init) {
-      init = darkModeQuery.matches ? 'dark' : 'light';
-    }
-    if (init === 'dark') {
-      document.body.classList.add('dark');
-    } else {
-      document.body.classList.remove('dark');
-    }
-    changeHTMLBb(init);
-    return init;
-  };
+const useGlobalColorMode = createGlobalState<ColorMode>(setup());
 
-  const useGlobalColorMode = createGlobalState<ColorMode>(setup());
+const useColorMode: UseColorModeType = () => {
+  const [colorMode, setColorMode] = useGlobalColorMode();
+  const $html = useRef<HTMLHtmlElement | null>(null);
 
-  useColorMode = () => {
-    const [colorMode, setColorMode] = useGlobalColorMode();
+  const changeHTMLBg = useCallback(
+    (color: ColorMode) => {
+      if ($html.current) {
+        const bg: Record<ColorMode, string> = { light: '#fafafa', dark: '#111216' };
+        $html.current.style.background = bg[color];
+      }
+    },
+    [$html.current]
+  );
 
-    function changeColorMode(newColorMode: ColorMode) {
-      setColorMode(newColorMode);
+  const applyChange = useCallback(
+    (newColorMode: ColorMode) => {
       if (newColorMode === 'dark') {
         document.body.classList.add('dark');
       } else {
         document.body.classList.remove('dark');
       }
-      changeHTMLBb(newColorMode);
+      changeHTMLBg(newColorMode);
       localStorage.setItem(storeKey, newColorMode);
+    },
+    [changeHTMLBg]
+  );
+
+  const changeColorMode = useCallback(
+    (newColorMode: ColorMode) => {
+      setColorMode(newColorMode);
+      applyChange(newColorMode);
+    },
+    [applyChange, setColorMode]
+  );
+
+  useEffect(() => {
+    $html.current = document.querySelector('html')!;
+    const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    function colorModeChangeHandler(e: MediaQueryListEvent) {
+      changeColorMode(e.matches ? 'dark' : 'light');
     }
+    darkModeQuery.addEventListener('change', colorModeChangeHandler);
+  }, [changeColorMode]);
 
-    useEffect(() => {
-      function colorModeChangeHandler(e: MediaQueryListEvent) {
-        changeColorMode(e.matches ? 'dark' : 'light');
-      }
-      darkModeQuery.addEventListener('change', colorModeChangeHandler);
-    }, []);
+  useEffect(() => {
+    applyChange(colorMode);
+  }, []);
 
-    return [colorMode, changeColorMode];
-  };
-}
+  return [colorMode, changeColorMode];
+};
 
 export default useColorMode;
