@@ -3,6 +3,8 @@ import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { bindKey, unbindKey } from '@rwh/keystrokes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHashtag, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import Empty from './Empty';
 import * as styles from './index.module.css';
 import useRecentList from './useRecentList';
@@ -98,7 +100,7 @@ const Recent: FC<{ hide: () => void }> = ({ hide }) => {
                       styles.query
                     )}
                   >
-                    <i className="fa-solid fa-hashtag mr-2 inline-block " />
+                    <FontAwesomeIcon icon={faHashtag} className="mr-2" />
                     {recent.query}
                   </span>
                   {recent.title}
@@ -107,7 +109,7 @@ const Recent: FC<{ hide: () => void }> = ({ hide }) => {
                   className="ml-4 mr-3 h-10 w-10 cursor-pointer p-2 text-center leading-6 opacity-60 hover:opacity-100"
                   onClick={() => removeRecent(index)}
                 >
-                  <i className="fa-solid fa-trash-can" />
+                  <FontAwesomeIcon icon={faTrashCan} />
                 </div>
               </li>
             ))}

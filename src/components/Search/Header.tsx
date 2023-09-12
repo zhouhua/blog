@@ -2,6 +2,8 @@ import type { ChangeEvent, FC, FormEvent } from 'react';
 import { useRef, useState } from 'react';
 import { useInstantSearch, useSearchBox } from 'react-instantsearch';
 import clsx from 'clsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { throttle } from 'lodash';
 
 function beforeQuery(query: string, search: (value: string) => void) {
@@ -67,7 +69,7 @@ const Header: FC<{ hide: () => void }> = ({ hide }) => {
         />
       </form>
       <button className="p-4 text-center opacity-60 hover:opacity-100" onClick={hide} type="button">
-        <i className="fa-solid fa-xmark text-2xl" />
+        <FontAwesomeIcon icon={faXmark} size="xl" />
       </button>
     </header>
   );

@@ -8,12 +8,14 @@ import clsx from 'clsx';
 import { bindKey, unbindKey } from '@rwh/keystrokes';
 import scrollIntoView from 'scroll-into-view-if-needed';
 import { AnchorLink } from 'gatsby-plugin-anchor-links';
+import { faAngleRight, faFileLines, faPenNib } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as styles from './index.module.css';
 import NoResult from './NoResult';
 import Recent from './Recent';
 import useRecentList from './useRecentList';
 
-const icons = { post: 'fa-file-lines', journal: 'fa-pen-nib' };
+const icons = { post: faFileLines, journal: faPenNib };
 
 const Result: FC<{ hide: () => void }> = ({ hide }) => {
   const { hits, isLastPage, showMore } = useInfiniteHits();
@@ -143,7 +145,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                     'mr-4 h-6 w-6 text-center text-[14px]'
                   )}
                 >
-                  <i className={clsx('fa-solid', icons[hit.layout as 'post' | 'journal'])} />
+                  <FontAwesomeIcon icon={icons[hit.layout as 'post' | 'journal']} />
                 </div>
                 {hit.layout === 'post' && (
                   <Link
@@ -172,7 +174,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                   </div>
                 )}
                 <div className="ml-4 h-6 w-6">
-                  <i className="fa-solid fa-angle-right" />
+                  <FontAwesomeIcon icon={faAngleRight} className="mr-2" />
                 </div>
               </li>
             ))}

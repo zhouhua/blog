@@ -5,6 +5,8 @@ import clsx from 'clsx';
 import Section from '@components/Section';
 import Bio from '@components/Bio';
 import Icons from '@icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleRight, faHashtag } from '@fortawesome/free-solid-svg-icons';
 import { GridLayoutContext } from './Articles.List.Context';
 import * as styles from './index.module.css';
 
@@ -82,7 +84,10 @@ const ArticlesHero: FC<{ tag?: string; showLayout?: boolean; title?: string }> =
           >
             关于
             <small>
-              <i className="fa-solid fa-hashtag ml-2 mr-1 text-accent opacity-70 dark:text-dark-accent" />
+              <FontAwesomeIcon
+                icon={faHashtag}
+                className="ml-2 mr-1 text-accent opacity-70 dark:text-dark-accent"
+              />
             </small>
             {tag} 的文章：
           </h1>
@@ -90,7 +95,7 @@ const ArticlesHero: FC<{ tag?: string; showLayout?: boolean; title?: string }> =
             to="/articles"
             className="hover:text-accent hover:underline hover:underline-offset-4 dark:hover:text-dark-accent sm:hidden"
           >
-            <i className="fa-solid fa-angle-right mr-2" />
+            <FontAwesomeIcon icon={faAngleRight} className="mr-2" />
             所有文章
           </Link>
         </div>

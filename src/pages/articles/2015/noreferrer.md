@@ -14,6 +14,12 @@ date: 2015-03-31 17:47:49
 
 ## 背景
 
+<style>
+  .scale {
+    font-size: 2em;
+  }
+</style>
+
 在一个页面 A 中，点击一个链接，浏览器会跳转到页面 B。那么如何描述 A 和 B 的关系呢？我们把 A 定义为 B 的 refer/referrer/referer（由于历史的原因，你看到上面这几个词都可以认为是同一个意思，下面统一描述为 referrer）。通俗地说，A 是 B 的来源页面/引荐页面。从技术实现上，你从浏览器起发出的任何请求（不准确，先这么理解吧），例如打开新页面、请求静态资源、ajax、请求后端 api 等等，都会在请求头部添加 `Referer` 字段。也许你会发现这个词拼错了，少了个 r，但你不可以把它当成错误，虽然最初确实是个错误，但由于在它成为 http 事实标准前，没有人去纠正这个错误，于是就形成了现在局面。看看具体的例子，在百度上搜索 QQ，然后打开腾讯的页面，我们看看它的请求头是什么样的：
 
 ![20150330201952](./noreferrer/20150330201952.png)</p>
@@ -76,10 +82,10 @@ window.open('javascript:window.name;', '<script>location.replace("' + url + '")<
 <td style="text-align: center; vertical-align: middle;"><strong>≤ IE9</strong></td>
 </tr>
 <tr>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-check fa-2x"></i></td>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-question fa-2x"></i></td>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-question fa-2x"></i></td>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-xmark fa-2x"></i></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">✅</span></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">？</span></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">？</span></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">❌</span></td>
 </tr>
 </tbody>
 </table>
@@ -107,9 +113,9 @@ window.open(
 <td style="text-align: center; vertical-align: middle;"><strong>IE</strong></td>
 </tr>
 <tr>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-check fa-2x"></i></td>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-question fa-2x"></i></td>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-xmark fa-2x"></i></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">✅</span></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">？</span></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">❌</span></td>
 </tr>
 </tbody>
 </table>
@@ -133,9 +139,9 @@ window.open('javascript:location.replace("' + url + '")');
 <td style="text-align: center; vertical-align: middle;"><strong>IE</strong></td>
 </tr>
 <tr>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-check fa-2x"></i></td>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-question fa-2x"></i></td>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-question fa-2x"></i></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">✅</span></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">？</span></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">？</span></td>
 </tr>
 </tbody>
 </table>
@@ -163,9 +169,9 @@ window.open(
 <td style="text-align: center; vertical-align: middle;"><strong>IE</strong></td>
 </tr>
 <tr>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-check fa-2x"></i></td>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-check fa-2x"></i></td>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-xmark fa-2x"></i></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">✅</span></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">✅</span></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">❌</span></td>
 </tr>
 </tbody>
 </table>
@@ -197,9 +203,9 @@ doc.close();
 <td style="text-align: center; vertical-align: middle;"><strong>IE</strong></td>
 </tr>
 <tr>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-question fa-2x"></i></td>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-check fa-2x"></i></td>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-check fa-2x"></i></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">？</span></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">✅</span></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">✅</span></td>
 </tr>
 </tbody>
 </table>
@@ -243,9 +249,9 @@ window.open('bridge.html?url=' + encodeUri(url));
 <td style="text-align: center; vertical-align: middle;"><strong>IE</strong></td>
 </tr>
 <tr>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-check fa-2x"></i></td>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-check fa-2x"></i></td>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-check fa-2x"></i></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">✅</span></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">✅</span></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">✅</span></td>
 </tr>
 </tbody>
 </table>
@@ -270,9 +276,9 @@ window.open('bridge.html?url=' + encodeUri(url));
 <td style="text-align: center; vertical-align: middle;"><strong>IE</strong></td>
 </tr>
 <tr>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-check fa-2x"></i></td>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-check fa-2x"></i></td>
-<td style="text-align: center; vertical-align: middle;"><i class="fa-solid fa-circle-xmark fa-2x"></i></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">✅</span></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">✅</span></td>
+<td style="text-align: center; vertical-align: middle;"><span class="scale">❌</span></td>
 </tr>
 </tbody>
 </table>

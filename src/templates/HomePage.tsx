@@ -8,6 +8,8 @@ import Section from '@components/Section';
 import clsx from 'clsx';
 import useSiteMetadata from '@hooks/useSiteMetaData';
 import { sampleSize } from 'lodash';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import ArticlesHero from '../sections/articles/Articles.Hero';
 import * as styles from './index.module.css';
 import type { IArticle } from '../types/index';
@@ -96,7 +98,7 @@ const Index: FC<PageProps<object, PageContentType>> = ({
               )}
               to="/journals"
             >
-              查看更多随笔 <i className="fa-solid fa-angles-right ml-4" />
+              查看更多随笔 <FontAwesomeIcon icon={faAnglesRight} className="ml-4" />
             </Link>
           </li>
         </ul>

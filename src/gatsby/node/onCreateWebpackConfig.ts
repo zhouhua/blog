@@ -1,7 +1,7 @@
 import path from 'path';
 import type { GatsbyNode } from 'gatsby';
 import type { Configuration, RuleSetRule } from 'webpack';
-// eslint-disable-next-line import/no-extraneous-dependencies
+// @ts-ignore
 import { defaultGetLocalIdent } from 'css-loader';
 
 interface IUse {

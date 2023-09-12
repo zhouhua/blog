@@ -4,11 +4,19 @@ import { PoweredBy, useStats } from 'react-instantsearch';
 import useColorMode from '@hooks/useColorMode';
 import { Kbd } from '@components/Keyboard';
 import clsx from 'clsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faArrowDown,
+  faArrowUp,
+  faArrowTurnDown,
+  faDeleteLeft,
+  faTurnDown
+} from '@fortawesome/free-solid-svg-icons';
 import useRecentList from './useRecentList';
 
 const hotKeys = [
   {
-    keys: [<i className="fa-solid fa-arrow-turn-down fa-rotate-90" />],
+    keys: [<FontAwesomeIcon icon={faTurnDown} rotation={90} />],
     text: '选择',
     showIn: {
       search: true,
@@ -17,7 +25,7 @@ const hotKeys = [
     }
   },
   {
-    keys: [<i className="fa-solid fa-arrow-up" />, <i className="fa-solid fa-arrow-down" />],
+    keys: [<FontAwesomeIcon icon={faArrowUp} />, <FontAwesomeIcon icon={faArrowDown} />],
     text: '切换',
     showIn: {
       search: true,
@@ -26,7 +34,7 @@ const hotKeys = [
     }
   },
   {
-    keys: [<i className="fa-solid fa-delete-left" />],
+    keys: [<FontAwesomeIcon icon={faDeleteLeft} />],
     text: '删除',
     showIn: {
       search: false,

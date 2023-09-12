@@ -4,6 +4,8 @@ import { bindKeyCombo, unbindKeyCombo } from '@rwh/keystrokes';
 import { Kbd } from '@components/Keyboard';
 import { UAParser } from 'ua-parser-js';
 import clsx from 'clsx';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SearchPanel from './Panel';
 
 const SearchButton: FC = () => {
@@ -34,7 +36,7 @@ const SearchButton: FC = () => {
         onClick={() => setShowSearchPanel(true)}
       >
         <span>
-          <i className="fa-solid fa-magnifying-glass" />
+          <FontAwesomeIcon icon={faMagnifyingGlass} />
           <span className="sm:hidden"> 搜索</span>
         </span>
         <span className="sm:hidden">

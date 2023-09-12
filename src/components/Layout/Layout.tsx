@@ -1,7 +1,6 @@
 import type { FC, PropsWithChildren } from 'react';
 import NavigationFooter from '@components/Navigation/Navigation.Footer';
 import NavigationHeader from '@components/Navigation/Navigation.Header';
-import { Script } from 'gatsby';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
 import * as styles from './index.module.css';
@@ -13,9 +12,6 @@ import ArticlesContextProvider from '../../sections/articles/Articles.List.Conte
  */
 const Layout: FC<PropsWithChildren> = ({ children }) => (
   <ArticlesContextProvider>
-    <Script src="/fontawesome-free-6.4.2/js/fontawesome.min.js" />
-    <Script src="/fontawesome-free-6.4.2/js/brands.min.js" />
-    <Script src="/fontawesome-free-6.4.2/js/solid.min.js" />
     <div className="colorModeTransition relative min-h-screen min-w-[480px] overflow-x-auto bg-background dark:bg-dark-background">
       <NavigationHeader />
       <motion.main

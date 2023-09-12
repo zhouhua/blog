@@ -3,6 +3,8 @@ import { Link } from 'gatsby';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import Image from '@components/Image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import type { IArticle } from '../../types';
 import * as styles from './index.module.css';
 import type { GridLayout } from './Articles.List.Context';
@@ -80,8 +82,7 @@ const ListItem: FC<ArticlesPairItemProps> = ({ article, narrow, gridLayout }) =>
               'colorModeTransition sm:mb-5 sm:max-w-full sm:px-5 sm:py-0'
             )}
             style={{
-              display: `${hasOverflow && gridLayout === 'tiles' ? 'none' : 'box'}`,
-              maxWidth: `${narrow ? '415px' : '515px'}`
+              display: `${hasOverflow && gridLayout === 'tiles' ? 'none' : 'box'}`
             }}
           >
             {article.excerpt}
@@ -134,7 +135,7 @@ const ArticlesPair: FC<ArticlesPairProps> = ({
           to="/articles"
         >
           查看所有文章
-          <i className="fa-solid fa-angles-right ml-4" />
+          <FontAwesomeIcon icon={faAnglesRight} className="ml-4" />
         </Link>
       )}
     </div>

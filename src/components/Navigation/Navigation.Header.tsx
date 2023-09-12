@@ -5,8 +5,18 @@ import useColorMode from '@hooks/useColorMode';
 import Section from '@components/Section';
 import Logo from '@components/Logo';
 import useSiteMetadata from '@hooks/useSiteMetaData';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faPenFancy, faMessage, faAddressCard } from '@fortawesome/free-solid-svg-icons';
+
 import * as styles from './index.module.css';
 import { SearchButton } from '../Search';
+
+const iconMap: Record<string, IconDefinition> = {
+  'pen-fancy': faPenFancy,
+  'message': faMessage,
+  'address-card': faAddressCard
+};
 
 const DarkModeToggle: FC = () => {
   const [colorMode, setColorMode] = useColorMode();
@@ -95,7 +105,7 @@ const NavigationHeader: FC = () => {
               key={path}
               to={path}
             >
-              <i className={clsx('fa-solid', `fa-${icon}`, 'mr-2 h-4 w-4 opacity-60')} />
+              <FontAwesomeIcon icon={iconMap[icon]!} className="mr-2 h-4 w-4 opacity-60" />
               {name}
             </Link>
           ))}
