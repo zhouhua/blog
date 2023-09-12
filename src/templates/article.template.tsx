@@ -78,7 +78,7 @@ const Article: FC<PageProps<object, { article: IArticle; author: IAuthor; next: 
       </article>
       <Section
         narrow
-        className="mb-32 mt-10 border-t border-solid border-horizontalRule pt-10 dark:border-dark-horizontalRule"
+        className="relative z-10 mb-32 mt-10 border-t border-solid border-horizontalRule pt-10 dark:border-dark-horizontalRule"
       >
         <Giscus
           repo="zhouhua/blog-comment"
