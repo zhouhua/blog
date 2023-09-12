@@ -3,9 +3,37 @@ import path from 'path';
 import type { GatsbyNode } from 'gatsby';
 import { config } from 'dotenv';
 import { load } from 'cheerio';
-import { take, words } from 'lodash';
+import { pick, take, words } from 'lodash';
 
 config();
+
+function simplifyList(list: Queries.MarkdownRemark[]): Queries.MarkdownRemark[] {
+  return list.map<Queries.MarkdownRemark>(
+    item =>
+      pick(item, [
+        'fields.slug',
+        'frontmatter.title',
+        'frontmatter.date',
+        'frontmatter.hero',
+        'timeToRead',
+        'wordCount.words',
+        'excerpt'
+      ]) as Queries.MarkdownRemark
+  );
+}
+function simplifyArticle(item: Queries.MarkdownRemark): Queries.MarkdownRemark {
+  return pick(item, [
+    'fields.slug',
+    'fields.tagSlugs',
+    'frontmatter.title',
+    'frontmatter.date',
+    'frontmatter.tag',
+    'frontmatter.hero',
+    'timeToRead',
+    'wordCount.words',
+    'html'
+  ]) as Queries.MarkdownRemark;
+}
 
 const log = (message: string, section: string) =>
   console.log(`\n\u001B[36m${message} \u001B[4m${section}\u001B[0m\u001B[0m\n`);
@@ -157,19 +185,11 @@ const createPages: GatsbyNode['createPages'] = async (
     throw new Error('You must have at least one Author and Post. ');
   }
 
-  function simplifyArticleList(list: Queries.MarkdownRemark[]) {
-    return list.map(item => {
-      const copy = { ...item };
-      copy.html = '';
-      return copy;
-    });
-  }
-
   createPage({
     path: '/articles',
     component: templates.articles,
     context: {
-      articles: simplifyArticleList(articlesPublished),
+      articles: simplifyList(articlesPublished),
       authors: authors[0],
       basePath,
       permalink: '/articles',
@@ -183,7 +203,7 @@ const createPages: GatsbyNode['createPages'] = async (
     path: '/journals',
     component: templates.journals,
     context: {
-      articles: journals,
+      articles: journals.map(simplifyArticle),
       authors: authors[0],
       basePath,
       permalink: '/journals',
@@ -219,7 +239,7 @@ const createPages: GatsbyNode['createPages'] = async (
       path: article.fields.slug,
       component: templates.article,
       context: {
-        article,
+        article: simplifyArticle(article),
         author: authors[0],
         basePath,
         permalink: `${((data as any).site.siteMetadata as Queries.SiteSiteMetadata).siteUrl}${
@@ -252,7 +272,7 @@ const createPages: GatsbyNode['createPages'] = async (
       path: slug,
       component: templates.article,
       context: {
-        article,
+        article: simplifyArticle(article),
         author: authors[0],
         basePath,
         permalink: `${
@@ -279,7 +299,7 @@ const createPages: GatsbyNode['createPages'] = async (
       path: slug,
       component: templates.articles,
       context: {
-        articles: list,
+        articles: simplifyList(list),
         authors: authors[0],
         tag,
         basePath,
@@ -301,10 +321,10 @@ const createPages: GatsbyNode['createPages'] = async (
     0
   );
   const totalWordCount = articleWordCount + journalWordCount;
-  const featuredArticles = simplifyArticleList(
+  const featuredArticles = simplifyList(
     articlesPublished.filter(article => article.frontmatter.featured)
   );
-  const newestJournals = take(journals, 3);
+  const newestJournals = take(journals, 5).map(simplifyArticle);
   createPage({
     path: '/',
     component: templates.homepage,

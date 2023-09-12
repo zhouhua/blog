@@ -49,7 +49,7 @@ const Index: FC<PageProps<object, PageContentType>> = ({
               articles={ap}
               gridLayout="tiles"
               reverse={isEven}
-              key={ap[0].id}
+              key={ap[0].fields.slug}
               showAllLink={index === randomPostsPairs.length - 1}
             />
           );

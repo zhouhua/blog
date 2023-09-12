@@ -56,7 +56,12 @@ const ArticlesList: FC<ArticlesListProps> = ({ articles, alwaysShowAllDetails })
         const isEven = index % 2 !== 0;
 
         return (
-          <ArticlePair articles={ap} gridLayout={gridLayout} reverse={isEven} key={ap[0].id} />
+          <ArticlePair
+            articles={ap}
+            gridLayout={gridLayout}
+            reverse={isEven}
+            key={ap[0].fields.slug}
+          />
         );
       })}
     </div>

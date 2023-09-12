@@ -2,6 +2,6 @@ import type { GatsbySSR } from 'gatsby';
 import InitColorMode from './InitColorMode';
 
 const onRenderBody: GatsbySSR['onRenderBody'] = ({ setPreBodyComponents }) => {
-  setPreBodyComponents([<InitColorMode />]);
+  setPreBodyComponents([<InitColorMode key="initCodeMode" />]);
 };
 export default onRenderBody;
