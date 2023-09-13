@@ -1,6 +1,6 @@
 .note.note.note {
   @apply my-0 py-8 pl-52;
-  @apply sm:pl-8 md:pl-24 lg:pl-40;
+  @apply sm:pl-8 sm:pr-0 md:pl-24 lg:pl-40;
   &::before {
     @apply absolute block h-full w-1 bg-accent dark:bg-dark-accent;
     @apply left-28 sm:left-1 sm:ml-px sm:w-0.5 md:left-16 lg:left-20;

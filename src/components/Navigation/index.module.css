@@ -19,14 +19,14 @@
   transition-duration: 400ms;
 }
 .IconWrapper {
-  @apply relative flex w-10 items-center justify-center opacity-50 hover:opacity-100;
-  @apply md:ml-[10px] md:inline-flex md:scale-[0.708] hover:md:opacity-50;
+  @apply relative ml-7 flex w-10 items-center justify-center opacity-50 hover:opacity-100;
+  @apply md:ml-[10px] md:inline-flex hover:md:opacity-50;
+  @apply sm:ml-2 sm:inline-flex hover:sm:opacity-50;
   font-size: 24px;
   border-radius: 5px;
   width: 40px;
   height: 25px;
   transition: opacity 0.3s ease;
-  margin-left: 30px;
   svg {
     path {
       @apply fill-primary dark:fill-dark-primary;

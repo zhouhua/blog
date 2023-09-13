@@ -10,7 +10,7 @@ const Footer: FC = () => {
     <>
       <div
         className={clsx(
-          'pointer-events-none absolute bottom-0 left-0 z-0 h-[590px] w-full min-w-[480px]',
+          'pointer-events-none absolute bottom-0 left-0 z-0 h-[590px] w-full min-w-[360px]',
           'bg-gradient-to-b from-gradientFrom to-gradientTo dark:from-dark-gradientFrom dark:to-dark-gradientTo',
           'colorModeTransition'
         )}

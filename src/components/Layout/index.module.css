@@ -5,3 +5,26 @@
     background 0.25s var(--ease-in-out-quad),
     color 0.25s var(--ease-in-out-quad);
 }
+
+.cardView {
+  @media (max-width: theme(screens.sm.max)) {
+    &::before {
+      @apply absolute left-0 top-0 h-5 w-full bg-primary dark:bg-dark-primary;
+      min-width: 360px;
+      content: '';
+      transition:
+        background 0.25s var(--ease-in-out-quad),
+        color 0.25s var(--ease-in-out-quad);
+    }
+    &::after {
+      @apply absolute left-0 top-2.5 h-2.5 w-full bg-background dark:bg-dark-background;
+      content: '';
+      min-width: 360px;
+      border-top-left-radius: 25px;
+      border-top-right-radius: 25px;
+      transition:
+        background 0.25s var(--ease-in-out-quad),
+        color 0.25s var(--ease-in-out-quad);
+    }
+  }
+}

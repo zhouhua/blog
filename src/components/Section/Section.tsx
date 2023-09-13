@@ -8,7 +8,7 @@ const Section: FC<PropsWithChildren & { narrow: boolean; className?: string }> =
 }) => (
   <section
     className={clsx(
-      'mx-auto my-0 w-full min-w-[480px] max-w-[1220px] px-10 py-0',
+      'mx-auto my-0 w-full min-w-[360px] max-w-[1220px] px-10 py-0',
       {
         'sm:px-5': narrow
       },

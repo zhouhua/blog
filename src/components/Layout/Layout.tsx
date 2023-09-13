@@ -10,9 +10,17 @@ import ArticlesContextProvider from '../../sections/articles/Articles.List.Conte
  * and the main structure of each page. Within Layout we have the <Container />
  * which hides a lot of the mess we need to create our Desktop and Mobile experiences.
  */
-const Layout: FC<PropsWithChildren> = ({ children }) => (
+const Layout: FC<PropsWithChildren & { isDetailPage?: boolean }> = ({
+  children,
+  isDetailPage = false
+}) => (
   <ArticlesContextProvider>
-    <div className="colorModeTransition relative min-h-screen min-w-[480px] overflow-x-auto bg-background dark:bg-dark-background">
+    <div
+      className={clsx(
+        'colorModeTransition relative min-h-screen min-w-[360px] overflow-x-auto bg-background dark:bg-dark-background',
+        { [styles.cardView]: isDetailPage }
+      )}
+    >
       <NavigationHeader />
       <motion.main
         initial={{ opacity: 0, x: -200 }}

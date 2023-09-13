@@ -79,7 +79,7 @@ const NavigationHeader: FC = () => {
       <div
         className={clsx(
           styles.NavContainer,
-          'relative z-20 flex items-end justify-between pt-16 sm:pt-10'
+          'relative z-20 flex items-end justify-between pt-16 sm:items-center sm:pt-10'
         )}
       >
         <Link
@@ -91,31 +91,43 @@ const NavigationHeader: FC = () => {
         >
           <Logo
             fill={fill}
-            className={clsx('h-20 w-20 opacity-100 sm:h-8 sm:w-8', styles.logoSvg)}
+            className={clsx(
+              'absolute h-20 w-20 opacity-100 sm:hidden md:h-10 md:w-10',
+              styles.logoSvg
+            )}
           />
           <StaticImage
             src="../../images/logo.png"
-            height={512}
+            height={256}
             alt="logo"
-            className={clsx('relative -left-20 h-20 w-20 opacity-0', styles.logoPng)}
-            layout="fullWidth"
+            className={clsx(
+              'h-20 w-20 opacity-0 sm:h-6 sm:w-6 sm:opacity-100 md:h-10 md:w-10',
+              styles.logoPng
+            )}
+            layout="constrained"
             objectFit="contain"
           />
         </Link>
         <div
           className={clsx(
             styles.menu,
-            'flex max-w-2xl grow-[2] justify-around px-10 sm:px-4 md:px-8'
+            'flex max-w-2xl grow-[2] justify-around px-10 sm:px-2 md:px-8'
           )}
         >
           {menu.map(({ name, path, icon }) => (
             <Link
-              className="colorModeTransition px-4 py-2 text-primary underline-offset-4 hover:underline dark:text-dark-primary md:px-2"
+              className={clsx(
+                'colorModeTransition px-4 py-2 text-primary underline-offset-4 hover:underline dark:text-dark-primary sm:px-2 md:px-2',
+                'sm:flex sm:flex-col'
+              )}
               key={path}
               to={path}
             >
-              <FontAwesomeIcon icon={iconMap[icon]!} className="mr-2 h-4 w-4 opacity-60" />
-              {name}
+              <FontAwesomeIcon
+                icon={iconMap[icon]!}
+                className="mr-2 h-4 w-4 opacity-60 sm:mb-2 sm:mr-0 sm:h-6 sm:w-6"
+              />
+              <span className="sm:text-xs">{name}</span>
             </Link>
           ))}
         </div>

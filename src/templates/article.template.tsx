@@ -65,7 +65,7 @@ const Article: FC<PageProps<object, { article: IArticle; author: IAuthor; next: 
   }, []);
 
   return (
-    <Layout>
+    <Layout isDetailPage>
       <ArticleSEO article={article} author={author} location={location} />
       <ArticleHero article={article} author={author} />
       {!!article.frontmatter.hero && (

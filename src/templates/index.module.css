@@ -13,7 +13,7 @@
 }
 
 .journalCard {
-  @apply pt-0 !important;
+  @apply px-0 pt-0 !important;
 }
 
 .fade::after {

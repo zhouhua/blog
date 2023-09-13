@@ -90,7 +90,7 @@ const JounalsList: FC<{ articles: IArticle[] }> = ({ articles }) => {
                 </Link>
                 <article
                   className={clsx(
-                    'relative rounded-2xl bg-card px-10 pb-2 pt-12 dark:bg-card/10 sm:pt-8 md:px-8',
+                    'relative rounded-2xl bg-card px-10 pb-2 pt-12 dark:bg-card/10 sm:px-4 sm:pt-8 md:px-8',
                     'colorModeTransition',
                     styles.noteContent
                   )}

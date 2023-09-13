@@ -27,13 +27,20 @@ const config: GatsbyConfig = {
   trailingSlash: 'always',
   jsxRuntime: 'automatic',
   flags: {
-    DEV_SSR: true
+    DEV_SSR: true,
+    // eslint-disable-next-line id-length
+    GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY: true
   },
   plugins: [
     'gatsby-plugin-postcss',
     'gatsby-plugin-image',
     'gatsby-plugin-sitemap',
-    'gatsby-plugin-sharp',
+    {
+      resolve: 'gatsby-plugin-sharp',
+      options: {
+        failOn: 'none'
+      }
+    },
     'gatsby-transformer-sharp',
     'gatsby-transformer-yaml',
     'gatsby-plugin-pnpm',

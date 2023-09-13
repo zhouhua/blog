@@ -23,7 +23,7 @@ const ArticleAuthors: FC<AuthorsProps> = ({ author }) => (
       <Image className={styles.RoundedImage} src={author.avatar!} alt="作者头像" />
     </div>
     <strong>{author.name}</strong>
-    <span className="sm:hidden">，&nbsp;</span>
+    <span>，&nbsp;</span>
   </Link>
 );
 

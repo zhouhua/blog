@@ -85,8 +85,8 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, author }) => {
         <div
           className={clsx(
             styles.HeroImage,
-            'relative z-[1] mx-auto my-0 w-full overflow-hidden',
-            'sm sm:max-w-full'
+            'relative z-[1] mx-auto my-0 w-full overflow-hidden text-center',
+            'sm:max-w-full'
           )}
           id="ArticleImage__Hero"
         >

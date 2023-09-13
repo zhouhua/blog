@@ -1,7 +1,7 @@
 .ArticleBody {
-  @apply sm:py-[60px];
   padding: 120px 0 35px;
   transition: background 0.2s linear;
+  @apply sm:px-5 sm:py-14;
 }
 :global(.prose) {
   &.ArticleBody {
@@ -151,14 +151,14 @@
     ul,
     dl,
     ol {
+      padding: 15px 0 30px 30px;
       @apply relative mx-auto my-0 w-full list-none text-lg text-articleText dark:text-dark-articleText;
       @apply max-w-[680px] sm:max-w-[486px] sm:pl-5 md:max-w-[507px];
       transition:
         background 0.25s var(--ease-in-out-quad),
         color 0.25s var(--ease-in-out-quad);
-      padding: 15px 0 30px 30px;
       & > li {
-        @apply relative pb-[15px] sm:pl-[30px];
+        @apply relative pb-3 sm:pl-2;
         p {
           @apply sm:p-0;
         }

@@ -52,7 +52,7 @@ const Index: FC<PageProps> = ({ location }) => {
           <div
             className={clsx(
               styles.cardShadow,
-              'absolute -top-5 left-1/2 z-[9] ml-[-18px] h-10 w-10 -translate-x-1/2 rounded-full'
+              'absolute -top-5 left-1/2 z-[9] ml-[-18px] h-10 w-10 -translate-x-1/2 rounded-full sm:hidden'
             )}
           />
           <div
@@ -62,19 +62,21 @@ const Index: FC<PageProps> = ({ location }) => {
               styles.card
             )}
           >
-            <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
+            <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 sm:top-24 sm:-translate-x-32">
               <Bio author={author} hideText />
             </div>
-            <article className={clsx('flex items-center justify-between px-8 py-6')}>
-              <div className="flex h-80 flex-col justify-between leading-10">
-                <div className="text-primary dark:text-dark-primary">
+            <article
+              className={clsx('flex items-center justify-between px-8 py-6 sm:flex-col sm:px-6')}
+            >
+              <div className="flex h-80 flex-col justify-between leading-10 sm:justify-around">
+                <div className="text-primary dark:text-dark-primary sm:ml-16">
                   <h2 className="mb-4 mt-6 text-4xl">{author.name}</h2>
                   <a href="mailto:zhou--hua@163.com">
                     <FontAwesomeIcon icon={faEnvelope} className="mr-3" />
                     zhou--hua@163.com
                   </a>
                 </div>
-                <div className="font-serif text-sm leading-6 text-secondary dark:text-dark-secondary">
+                <div className="font-serif text-sm leading-6 text-secondary dark:text-dark-secondary sm:text-center">
                   想成为⼀个有趣的⼈。
                   <br />
                   爱⾜球，爱桌游，
@@ -87,7 +89,7 @@ const Index: FC<PageProps> = ({ location }) => {
                 </div>
               </div>
               <StaticImage
-                className="rounded-lg"
+                className="rounded-lg sm:my-8"
                 src="../../images/weixin.jpeg"
                 alt="微信二维码"
                 height={320}
