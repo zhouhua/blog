@@ -9,14 +9,13 @@ import {
   faArrowDown,
   faArrowUp,
   faArrowTurnDown,
-  faDeleteLeft,
-  faTurnDown
+  faDeleteLeft
 } from '@fortawesome/free-solid-svg-icons';
 import useRecentList from './useRecentList';
 
 const hotKeys = [
   {
-    keys: [<FontAwesomeIcon icon={faTurnDown} rotation={90} />],
+    keys: [<FontAwesomeIcon icon={faArrowTurnDown} rotation={90} />],
     text: '选择',
     showIn: {
       search: true,

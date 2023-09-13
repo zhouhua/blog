@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { faPenFancy, faMessage, faAddressCard } from '@fortawesome/free-solid-svg-icons';
 
+import { StaticImage } from 'gatsby-plugin-image';
 import * as styles from './index.module.css';
 import { SearchButton } from '../Search';
 
@@ -78,7 +79,7 @@ const NavigationHeader: FC = () => {
       <div
         className={clsx(
           styles.NavContainer,
-          'relative z-20 flex justify-between pt-[100px] sm:pt-[50px]'
+          'relative z-20 flex items-end justify-between pt-16 sm:pt-10'
         )}
       >
         <Link
@@ -88,10 +89,18 @@ const NavigationHeader: FC = () => {
           title="导航回首页"
           aria-label="导航回首页"
         >
-          <Logo fill={fill} />
-          <div className="invisible absolute inline-block h-0 w-0 overflow-hidden opacity-0">
-            导航回首页
-          </div>
+          <Logo
+            fill={fill}
+            className={clsx('h-20 w-20 opacity-100 sm:h-8 sm:w-8', styles.logoSvg)}
+          />
+          <StaticImage
+            src="../../images/logo.png"
+            height={512}
+            alt="logo"
+            className={clsx('relative -left-20 h-20 w-20 opacity-0', styles.logoPng)}
+            layout="fullWidth"
+            objectFit="contain"
+          />
         </Link>
         <div
           className={clsx(

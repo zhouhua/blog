@@ -20,6 +20,7 @@ export interface IProgress {
 
 export type Icon = FC<{
   fill: string;
+  className?: string;
 }>;
 
 export interface IImg

@@ -1,9 +1,9 @@
+import clsx from 'clsx';
 import type { Icon } from '../../types';
 
-const Logo: Icon = ({ fill = 'white' }) => (
+const Logo: Icon = ({ fill = 'white', className }) => (
   <svg
-    width="24"
-    height="24"
+    className={clsx(className)}
     viewBox="-47.08249496981891 0 94.16498993963782 100"
     xmlns="http://www.w3.org/2000/svg"
     version="1.1"

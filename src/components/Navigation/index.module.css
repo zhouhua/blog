@@ -1,12 +1,3 @@
-.BackArrowIconContainer {
-  transition: 0.2s transform var(--ease-out-quad);
-  animation: fadein 0.3s linear forwards;
-}
-@keyframes fadein {
-  to {
-    @apply opacity-100;
-  }
-}
 .NavContainer {
   @media screen and (max-height: 800px) {
     padding-top: 50px;
@@ -14,10 +5,18 @@
 }
 .LogoLink {
   &:hover {
-    .BackArrowIconContainer {
-      transform: translateX(-3px);
+    .logoSvg {
+      @apply opacity-0;
+    }
+    .logoPng {
+      @apply opacity-100;
     }
   }
+}
+.logoPng,
+.logoSvg {
+  @apply transition-opacity;
+  transition-duration: 400ms;
 }
 .IconWrapper {
   @apply relative flex w-10 items-center justify-center opacity-50 hover:opacity-100;
