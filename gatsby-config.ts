@@ -109,7 +109,7 @@ const config: GatsbyConfig = {
             }
           },
           'gatsby-remark-copy-linked-files',
-          'gatsby-remark-katex'
+          { resolve: 'gatsby-remark-katex', options: { output: 'html' } }
           // 'gatsby-remark-autolink-headers'
         ]
       }

@@ -120,9 +120,10 @@ img.Image__Zoom ~ div {
 
 .article-columns {
   @apply w-full text-lg leading-[1.756] text-articleText dark:text-dark-articleText;
-  @apply mx-auto sm:px-5 sm:py-0;
+  @apply mx-auto sm:px-0 sm:py-0;
   @apply max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
   @apply grid items-center gap-x-5;
+  @apply sm:flex sm:flex-col;
   > * {
     @apply max-w-full;
   }
@@ -134,4 +135,23 @@ img.Image__Zoom ~ div {
   height: 1em;
   overflow: visible;
   vertical-align: -0.125em;
+}
+
+.math-display {
+  overflow: auto;
+}
+
+.katex-display > .katex {
+  white-space: normal !important;
+}
+/* Add space between broken lines: */
+.katex-display .base {
+  margin: 0 !important;
+}
+.katex-display .newline {
+  margin: 0.75em 0 !important;
+}
+/* Compensate by reducing space around display math */
+.katex-display {
+  margin: 0.5em 0 !important;
 }

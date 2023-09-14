@@ -42,8 +42,8 @@ const Panel: FC<{ show: boolean; hide: () => void }> = ({ show, hide }) => {
       <div
         className={clsx(
           styles.mask,
-          'fixed left-0 top-0 z-50 h-screen w-screen bg-dark-background/20 backdrop-blur dark:bg-background/20',
-          'p-[10vh] text-secondary dark:text-dark-secondary sm:p-6'
+          'fixed left-0 top-0 z-50 h-screen w-screen min-w-[360px] bg-dark-background/20 backdrop-blur dark:bg-background/20',
+          'px-[10vw] py-[10vh] text-secondary dark:text-dark-secondary sm:px-[2vw] sm:py-[5vh] md:px-[5vw]'
         )}
         onClick={hide}
       >

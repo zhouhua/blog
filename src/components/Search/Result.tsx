@@ -128,7 +128,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                 key={hit.objectID}
                 className={clsx(
                   styles.resultItem,
-                  'mx-6 mt-2 flex max-w-full items-center rounded-lg bg-card p-3 dark:bg-dark-card',
+                  'relative mx-6 mt-2 items-center overflow-hidden rounded-lg bg-card p-4 dark:bg-dark-card sm:mx-2.5',
                   { [styles.selected]: index === selectIndex }
                 )}
                 onMouseEnter={() => setSelectIndex(index)}
@@ -142,7 +142,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                   className={clsx(
                     styles.icon,
                     'rounded border border-solid border-grey/50 dark:border-dark-grey/50',
-                    'mr-4 h-6 w-6 text-center text-[14px]'
+                    'absolute left-4 top-1/2 h-6 w-6 shrink-0 -translate-y-1/2 text-center text-[14px]'
                   )}
                 >
                   <FontAwesomeIcon icon={icons[hit.layout as 'post' | 'journal']} />
@@ -150,31 +150,44 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                 {hit.layout === 'post' && (
                   <Link
                     to={hit.slug as string}
-                    className="block grow-[2] cursor-pointer"
+                    className="block cursor-pointer px-10 sm:px-8"
                     onClick={once(() => addHistory(hit))}
                   >
-                    <h2 className="mb-1 inline-block h-6 rounded-full bg-background px-2 text-[12px] leading-6 dark:bg-dark-background">
-                      <Highlight attribute="title" hit={hit} />
+                    <h2
+                      className={clsx(
+                        'mb-1 inline-block h-6 max-w-[90%] rounded-full bg-accent px-2 text-xs leading-6 dark:bg-dark-accent',
+                        'overflow-hidden overflow-ellipsis whitespace-nowrap text-background dark:text-dark-background'
+                      )}
+                    >
+                      <Highlight className="max-w-full" attribute="title" hit={hit} />
                     </h2>
-                    <p className="overflow-ellipsis text-[14px] leading-6">
+                    <p className="line-clamp-2 overflow-ellipsis whitespace-normal text-sm leading-6">
                       <Snippet attribute="excerpt" hit={hit} />
                     </p>
                   </Link>
                 )}
                 {hit.layout === 'journal' && (
                   <div onClick={once(() => addHistory(hit))}>
-                    <AnchorLink to={hit.slug as string} className="block grow-[2] cursor-pointer">
-                      <h2 className="mb-1 inline-block h-6 rounded-full bg-background px-2 text-[12px] leading-6 dark:bg-dark-background">
+                    <AnchorLink
+                      to={hit.slug as string}
+                      className="block cursor-pointer px-10 sm:px-8"
+                    >
+                      <h2
+                        className={clsx(
+                          'mb-1 inline-block h-6 max-w-[90%] rounded-full bg-accent px-2 text-xs leading-6 dark:bg-dark-accent',
+                          'overflow-hidden overflow-ellipsis whitespace-nowrap text-background dark:text-dark-background'
+                        )}
+                      >
                         随笔 🗓️ {(hit.slug as string).split('#').pop()}
                       </h2>
-                      <p className="overflow-ellipsis text-[14px] leading-6">
+                      <p className="line-clamp-2 overflow-ellipsis whitespace-normal text-sm leading-6">
                         <Snippet attribute="excerpt" hit={hit} />
                       </p>
                     </AnchorLink>
                   </div>
                 )}
-                <div className="ml-4 h-6 w-6">
-                  <FontAwesomeIcon icon={faAngleRight} className="mr-2" />
+                <div className="absolute right-3 top-1/2 h-6 w-6 -translate-y-1/2 text-center">
+                  <FontAwesomeIcon icon={faAngleRight} />
                 </div>
               </li>
             ))}

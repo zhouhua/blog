@@ -84,24 +84,27 @@
     }
     h4,
     h5 {
-      @apply break-words text-lg leading-[1.45];
+      @apply break-words text-xl leading-[1.75];
       @apply sm:text-base;
     }
     h6 {
-      @apply break-words text-base leading-[1.45];
+      @apply break-words text-base leading-[1.6];
       @apply sm:text-sm;
     }
     h1,
     h1 *,
     h2,
     h2 * {
-      margin: 25px auto 35px;
-      @media (max-width: theme(screens.sm.max)) {
-        margin: 30px auto 35px;
-      }
+      margin: 30px auto 40px;
     }
     h3,
     h3 * {
+      margin: 25px auto;
+    }
+    h4,
+    h4 *,
+    h5,
+    h5 * {
       margin: 20px auto 10px;
     }
     h1,
@@ -110,14 +113,7 @@
     h4,
     h5,
     h6 {
-      @apply w-full max-w-[680px];
-      @media (max-width: theme(screens.md.max)) {
-        max-width: 507px;
-      }
-      @media (max-width: theme(screens.sm.max)) {
-        max-width: 486px;
-        padding: 0 20px;
-      }
+      @apply w-full max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
     }
   }
   &.ArticleBody {
@@ -203,7 +199,7 @@
     :global(.math-display) {
       @apply w-full text-lg leading-[1.756] text-articleText dark:text-dark-articleText;
       @apply max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
-      @apply mx-auto mb-[35px] mt-0 sm:mb-[25px] sm:py-0;
+      @apply mx-auto mb-[35px] mt-0 sm:mb-[25px] sm:py-0 sm:text-base sm:leading-7;
       transition:
         background 0.25s var(--ease-in-out-quad),
         color 0.25s var(--ease-in-out-quad);
@@ -449,13 +445,16 @@
       h4,
       h5,
       h6 {
-        @apply -ml-9;
+        @apply relative;
         :global(.callout-icon) {
-          @apply inline-block w-8 text-center;
+          @apply absolute -left-9 top-0 mt-0 inline-block w-8 text-center;
         }
       }
       > *:last-child {
         @apply mb-0 pb-0;
+      }
+      > *:first-child {
+        @apply mt-0 pt-0;
       }
     }
   }

@@ -31,7 +31,7 @@ const SearchButton: FC = () => {
           'rounded-full border border-solid border-grey dark:border-dark-grey',
           'bg-card text-grey dark:bg-dark-card dark:text-dark-grey',
           'hover:text-primary hover:dark:text-dark-primary',
-          'sm:w-10 sm:border-0 sm:bg-opacity-0 sm:p-2 sm:text-2xl sm:opacity-50 sm:hover:opacity-100'
+          'sm:w-10 sm:border-0 sm:bg-opacity-0 sm:p-2 sm:text-2xl sm:text-primary sm:opacity-50 sm:dark:text-dark-primary'
         )}
         onClick={() => setShowSearchPanel(true)}
       >

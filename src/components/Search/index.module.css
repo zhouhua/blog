@@ -14,6 +14,9 @@
     @apply font-semibold text-accent underline underline-offset-2 dark:text-dark-accent;
     background: none;
   }
+  h2 mark {
+    @apply text-background dark:text-dark-background;
+  }
 }
 
 .selected.recentItem,
@@ -31,9 +34,9 @@
     @apply text-background dark:text-dark-background;
   }
   h2 {
-    @apply text-primary dark:text-dark-primary;
+    @apply bg-background text-primary dark:bg-dark-background dark:text-dark-primary;
     mark {
-      @apply text-accent dark:text-dark-accent;
+      @apply text-primary dark:text-dark-primary;
     }
   }
   .icon {

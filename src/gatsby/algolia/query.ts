@@ -53,7 +53,7 @@ const queries = [
     transformer: ({ data }: { data: Queries.Query }) =>
       data.allMarkdownRemark.edges.map(pageToAlgoliaRecord),
     indexName,
-    settings: { attributesToSnippet: ['excerpt:20'] }
+    settings: { attributesToSnippet: ['excerpt:40'] }
   }
 ];
 export default queries;

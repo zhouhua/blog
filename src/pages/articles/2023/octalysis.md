@@ -151,6 +151,7 @@ Octalysis 引入了“核心驱动力”的概念来归纳人们的行为动机�
 ![Untitled](./octalysis/Untitled12.png)
 
 <div class="callout">
+
 ##### <span class="callout-icon">🗒️</span>极端的反面例子
 
 1995 - DC - 《沙漠巴士》
@@ -159,6 +160,7 @@ Octalysis 引入了“核心驱动力”的概念来归纳人们的行为动机�
 </div>
 
 <div class="callout">
+
 ##### <span class="callout-icon">💊</span>成就感的获得不仅仅来源于看到了某个目标的进展，更在于这个过程中的挑战。
 
 </div>

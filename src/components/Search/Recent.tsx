@@ -84,7 +84,7 @@ const Recent: FC<{ hide: () => void }> = ({ hide }) => {
                 key={`${index}`}
                 className={clsx(
                   styles.recentItem,
-                  'mx-6 mt-4 flex h-16 max-w-full items-center justify-between rounded-lg bg-card dark:bg-dark-card',
+                  'mx-6 mt-4 flex h-16 max-w-full items-center justify-between rounded-lg bg-card dark:bg-dark-card sm:mx-2.5',
                   { [styles.selected]: index === selectIndex }
                 )}
                 onMouseEnter={() => setSelectIndex(index)}
@@ -96,14 +96,17 @@ const Recent: FC<{ hide: () => void }> = ({ hide }) => {
                 >
                   <span
                     className={clsx(
-                      'mr-4 inline-block h-6 rounded-full bg-background px-2 text-[12px] leading-6 dark:bg-dark-background',
+                      'mr-4 inline-block h-6 rounded-full bg-accent px-2 text-[12px] leading-6 dark:bg-dark-accent',
+                      ' max-w-[45%] shrink-0 grow-0 overflow-hidden overflow-ellipsis whitespace-nowrap text-background dark:text-dark-background',
                       styles.query
                     )}
                   >
                     <FontAwesomeIcon icon={faHashtag} className="mr-2" />
                     {recent.query}
                   </span>
-                  {recent.title}
+                  <span className="line-clamp-2 text-ellipsis whitespace-normal text-sm leading-6">
+                    {recent.title}
+                  </span>
                 </Link>
                 <div
                   className="ml-4 mr-3 h-10 w-10 cursor-pointer p-2 text-center leading-6 opacity-60 hover:opacity-100"

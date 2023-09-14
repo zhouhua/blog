@@ -116,7 +116,7 @@ const ArticlesHero: FC<{ tag?: string; showLayout?: boolean; title?: string }> =
           >
             {title || hero.heading}
           </h1>
-          {!title && <p>{subtitle}</p>}
+          {!title && <p className="colorModeTransition">{subtitle}</p>}
         </div>
       )}
       <div className="mb-[100px] flex items-center justify-between sm:hidden md:mb-20">

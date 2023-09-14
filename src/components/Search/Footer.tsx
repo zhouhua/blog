@@ -77,19 +77,19 @@ const Footer: FC = () => {
       <PoweredBy
         theme={colorMode}
         classNames={{
-          logo: 'h-[18px] mt-[3px]'
+          logo: 'h-[18px] mt-[3px] sm:h-3 md:h-4'
         }}
       />
-      <div className="flex text-sm ">
+      <div className="flex text-sm sm:hidden">
         {hotKeys.map(
           ({ keys, text }, i) =>
             showMap[i] && (
-              <div key={text} className="mr-4">
+              <div key={text} className="mr-4 md:mr-2">
                 {keys.map((key, index) => (
                   // eslint-disable-next-line react/no-array-index-key
                   <Kbd key={index}>{key}</Kbd>
                 ))}{' '}
-                {text}
+                <span className="md:text-xs">{text}</span>
               </div>
             )
         )}
