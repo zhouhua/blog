@@ -80,20 +80,22 @@ const Article: FC<PageProps<object, { article: IArticle; author: IAuthor; next: 
         narrow
         className="relative z-10 mb-32 mt-10 border-t border-solid border-horizontalRule pt-10 dark:border-dark-horizontalRule"
       >
-        <Giscus
-          repo="zhouhua/blog-comment"
-          repoId="MDEwOlJlcG9zaXRvcnkxMjQwOTQzNzk="
-          category="Announcements"
-          categoryId="DIC_kwDOB2WHq84CZHl_"
-          mapping="title"
-          strict="0"
-          reactionsEnabled="1"
-          emitMetadata="0"
-          inputPosition="top"
-          theme={`${colorMode}_protanopia`}
-          lang="zh-CN"
-          loading="lazy"
-        />
+        <div className="mx-auto max-w-[680px]">
+          <Giscus
+            repo="zhouhua/blog-comment"
+            repoId="MDEwOlJlcG9zaXRvcnkxMjQwOTQzNzk="
+            category="Announcements"
+            categoryId="DIC_kwDOB2WHq84CZHl_"
+            mapping="title"
+            strict="0"
+            reactionsEnabled="1"
+            emitMetadata="0"
+            inputPosition="top"
+            theme={`${colorMode}_protanopia`}
+            lang="zh-CN"
+            loading="lazy"
+          />
+        </div>
       </Section>
       <ArticleFooter />
       {(next || []).length > 0 && (

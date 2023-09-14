@@ -1,7 +1,7 @@
 ---
 title: 成本与幸存者偏差
 layout: post
-tag:
+tags:
   - 幸存者偏差
   - 损失
   - 成本

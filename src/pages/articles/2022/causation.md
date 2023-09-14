@@ -1,6 +1,6 @@
 ---
 title: 因果谜思
-tag:
+tags:
   - 因果
 category: 思维方式
 layout: post

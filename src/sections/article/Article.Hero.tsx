@@ -86,7 +86,7 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, author }) => {
           className={clsx(
             styles.HeroImage,
             'relative z-[1] mx-auto my-0 w-full overflow-hidden text-center',
-            'sm:max-w-full'
+            'aspect-video sm:max-w-full md:max-w-full'
           )}
           id="ArticleImage__Hero"
         >

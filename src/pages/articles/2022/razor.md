@@ -1,6 +1,6 @@
 ---
 title: 汉隆剃刀
-tag:
+tags:
   - 汉隆剃刀
   - 思维方式
 layout: post

@@ -1,6 +1,6 @@
 ---
 title: 依赖注入与插件系统
-tag:
+tags:
   - 依赖注入
   - 插件系统
 category: 技术

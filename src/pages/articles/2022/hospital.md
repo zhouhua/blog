@@ -1,6 +1,6 @@
 ---
 title: 为什么看病难？
-tag:
+tags:
   - 医疗
   - 思维方式
 category: 其他

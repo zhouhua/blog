@@ -1,6 +1,6 @@
 ---
 title: 谈谈脱口秀大会第五季
-tag:
+tags:
   - 脱口秀
 category: 其他
 layout: post

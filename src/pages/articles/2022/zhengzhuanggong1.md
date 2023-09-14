@@ -1,6 +1,6 @@
 ---
 title: 郑庄公的性格分析（上）
-tag:
+tags:
   - 历史
   - 郑庄公
 category: 历史

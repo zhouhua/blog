@@ -1,6 +1,6 @@
 ---
 title: 工具软件的 block 化趋势
-tag:
+tags:
   - block
   - 飞书
   - notion

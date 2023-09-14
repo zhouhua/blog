@@ -1,6 +1,6 @@
 ---
 title: “从列表页到详情页”的传统交互逻辑正在消亡
-tag:
+tags:
   - 产品思维
 category: 产品
 layout: post

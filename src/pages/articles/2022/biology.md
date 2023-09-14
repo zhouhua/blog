@@ -1,6 +1,6 @@
 ---
 title: 生物学带给我的思想冲击
-tag:
+tags:
   - 生物学
 category: 成长
 layout: post
