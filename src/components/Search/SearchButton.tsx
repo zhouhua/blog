@@ -28,10 +28,9 @@ const SearchButton: FC = () => {
         className={clsx(
           'colorModeTransition',
           'flex h-10 w-40 cursor-pointer items-center justify-between px-3 text-sm',
-          'rounded-full border border-solid border-grey dark:border-dark-grey',
-          'bg-card text-grey dark:bg-dark-card dark:text-dark-grey',
-          'hover:text-primary hover:dark:text-dark-primary',
-          'sm:w-10 sm:border-0 sm:bg-opacity-0 sm:p-2 sm:text-2xl sm:text-primary sm:opacity-50 sm:dark:text-dark-primary'
+          'border-palette-gray rounded-full border border-solid',
+          'bg-palette-bg text-palette-gray hover:text-palette-primary',
+          'sm:text-palette-primary sm:w-10 sm:border-0 sm:bg-opacity-0 sm:p-2 sm:text-2xl sm:opacity-50'
         )}
         onClick={() => setShowSearchPanel(true)}
       >

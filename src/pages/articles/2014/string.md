@@ -32,6 +32,10 @@ date: 2014-12-16 22:26:51
 首先是最原始的做法，主串左侧开始，逐个对比，如果不相同，则主串起始点向后移一位，重复，直到找到。
 
 <style>
+.table-figure {
+  max-width: 100vw;
+  overflow-x: auto;
+}
 .table-figure table{
   margin: 0 auto 40px auto;
   color: #777;
@@ -42,7 +46,7 @@ date: 2014-12-16 22:26:51
   text-align: center;
 }
 </style>
-<div class="not-prose no-style table-figure">
+<div class="no-style table-figure">
 <table border="0" summary="search" cellspacing="0" cellpadding="5">
 <caption align="left">第一次尝试</caption>
 <tbody>
@@ -396,7 +400,7 @@ function basicSearchLoop(mainStr, str) {
 
 KMP 算是字符串搜索算法里的明星。不过本文重点不是介绍算法历史，有兴趣的可以移步百度百科（[KMP 算法](http://baike.baidu.com/view/659777.htm 'KMP 算法')）。这里一样先看一个例子：
 
-<div class="not-prose no-style table-figure">
+<div class="no-style table-figure">
 <table border="0" summary="search" cellspacing="0" cellpadding="5">
 <caption align="left">第一次尝试</caption>
 <tbody>
@@ -450,7 +454,7 @@ KMP 算是字符串搜索算法里的明星。不过本文重点不是介绍算�
 
 移动步数：4 ($i-kmpNext[i] = 3 - (-1)$)
 
-<div class="not-prose no-style table-figure">
+<div class="no-style table-figure">
 <table border="0" summary="search" cellspacing="0" cellpadding="5">
 <caption align="left">第二次尝试</caption>
 <tbody>
@@ -503,7 +507,7 @@ KMP 算是字符串搜索算法里的明星。不过本文重点不是介绍算�
 
 移动步数：1 ($i-kmpNext[i]=0-(-1)$)
 
-<div class="not-prose no-style table-figure">
+<div class="no-style table-figure">
 <table border="0" summary="search" cellspacing="0" cellpadding="5">
 <caption align="left">第三次尝试</caption>
 <tbody>
@@ -574,7 +578,7 @@ KMP 算是字符串搜索算法里的明星。不过本文重点不是介绍算�
 
 我们看下面的例子（编号从 1 开始编）：
 
-<div class="not-prose no-style table-figure">
+<div class="no-style table-figure">
 <table border="0" summary="search" cellspacing="0" cellpadding="5">
 <tbody>
 <tr>
@@ -756,7 +760,7 @@ function KMPSearchLoop(mainStr, str) {
 
 Horspool 算法在做匹配的时候，创造性地从右向左匹配，对后来其他算法有很深的影响。还是那句话，本文会讲很多算法上的东西，但本文重点不是算法，下面还是会过一下 Horspool 算法的搜索过程，如果难以理解，还是参考其他更详细的资料。依然是示例（[http://igm.univ-mlv.fr/~lecroq/string/examples/exp18.html](http://igm.univ-mlv.fr/~lecroq/string/examples/exp18.html 'Horspool 算法')）：
 
-<div class="not-prose no-style table-figure">
+<div class="no-style table-figure">
 <table border="0" summary="search" cellspacing="0" cellpadding="5">
 <caption align="left">第一次尝试</caption>
 <tbody>
@@ -808,7 +812,7 @@ Horspool 算法在做匹配的时候，创造性地从右向左匹配，对后�
 
 移动步数：1 (Horspool[A])
 
-<div class="not-prose no-style table-figure">
+<div class="no-style table-figure">
 <table border="0" summary="search" cellspacing="0" cellpadding="5">
 <caption align="left">第二次尝试</caption>
 <tbody>
@@ -864,7 +868,7 @@ Horspool 算法在做匹配的时候，创造性地从右向左匹配，对后�
 
 移动步数：2 (Horspool[G])
 
-<div class="not-prose no-style table-figure">
+<div class="no-style table-figure">
 <table border="0" summary="search" cellspacing="0" cellpadding="5">
 <caption align="left">第三次尝试</caption>
 <tbody>
@@ -922,7 +926,7 @@ Horspool 算法在做匹配的时候，创造性地从右向左匹配，对后�
 
 移动步数：2 (Horspool[G])
 
-<div class="not-prose no-style table-figure">
+<div class="no-style table-figure">
 <table border="0" summary="search" cellspacing="0" cellpadding="5">
 <caption align="left">第四次尝试</caption>
 <tbody>

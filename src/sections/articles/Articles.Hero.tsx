@@ -79,21 +79,21 @@ const ArticlesHero: FC<{ tag?: string; showLayout?: boolean; title?: string }> =
             className={clsx(
               styles.HeroHeading,
               'colorModeTransition text-[36px] font-semibold not-italic leading-[1.15]',
-              'text-primary dark:text-dark-primary sm:text-[24px] md:text-[30px]'
+              'text-palette-primary sm:text-[24px] md:text-[30px]'
             )}
           >
             关于
             <small>
               <FontAwesomeIcon
                 icon={faHashtag}
-                className="ml-2 mr-1 text-accent opacity-70 dark:text-dark-accent"
+                className="text-palette-accent ml-2 mr-1 opacity-70"
               />
             </small>
             {tag} 的文章：
           </h1>
           <Link
             to="/articles"
-            className="hover:text-accent hover:underline hover:underline-offset-4 dark:hover:text-dark-accent sm:hidden"
+            className="hover:text-palette-accent hover:underline hover:underline-offset-4 sm:hidden"
           >
             <FontAwesomeIcon icon={faAngleRight} className="mr-2" />
             所有文章
@@ -101,10 +101,7 @@ const ArticlesHero: FC<{ tag?: string; showLayout?: boolean; title?: string }> =
         </div>
       ) : (
         <div
-          className={clsx(
-            'mx-0 my-[100px] sm:w-full md:w-4/5',
-            'text-primary dark:text-dark-primary'
-          )}
+          className={clsx('text-palette-primary mx-0 my-[100px] sm:w-full md:w-4/5')}
           style={{ maxWidth: `${hero.maxWidth}px` }}
         >
           <h1

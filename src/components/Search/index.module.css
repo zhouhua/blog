@@ -11,35 +11,49 @@
 }
 .resultItem {
   mark {
-    @apply font-semibold text-accent underline underline-offset-2 dark:text-dark-accent;
+    @apply text-palette-accent px-0.5 font-semibold underline underline-offset-2;
     background: none;
-  }
-  h2 mark {
-    @apply text-background dark:text-dark-background;
+    transition:
+      background 0.25s var(--ease-in-out-quad),
+      border 0.25s var(--ease-in-out-quad),
+      color 0.25s var(--ease-in-out-quad);
   }
 }
 
 .selected.recentItem,
 .selected.resultItem {
-  @apply bg-accent text-background dark:bg-dark-accent dark:text-dark-background;
+  @apply bg-palette-accent text-palette-bg;
+  transition:
+    background 0.25s var(--ease-in-out-quad),
+    border 0.25s var(--ease-in-out-quad),
+    color 0.25s var(--ease-in-out-quad);
 }
 .selected.recentItem {
+  @apply text-palette-card;
   .query {
-    @apply bg-card text-primary dark:bg-dark-card dark:text-dark-primary;
+    @apply bg-palette-bg text-palette-primary;
+    transition:
+      background 0.25s var(--ease-in-out-quad),
+      border 0.25s var(--ease-in-out-quad),
+      color 0.25s var(--ease-in-out-quad);
   }
 }
 
 .selected.resultItem {
   mark {
-    @apply text-background dark:text-dark-background;
+    @apply text-palette-bg;
   }
   h2 {
-    @apply bg-background text-primary dark:bg-dark-background dark:text-dark-primary;
+    @apply bg-palette-bg text-palette-primary;
     mark {
-      @apply text-primary dark:text-dark-primary;
+      @apply text-palette-accent;
     }
   }
   .icon {
-    @apply border-dark-secondary/80 dark:border-secondary/80;
+    @apply border-palette-bgAlt;
+    transition:
+      background 0.25s var(--ease-in-out-quad),
+      border 0.25s var(--ease-in-out-quad),
+      color 0.25s var(--ease-in-out-quad);
   }
 }

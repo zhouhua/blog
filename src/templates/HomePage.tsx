@@ -66,9 +66,7 @@ const Index: FC<PageProps<object, PageContentType>> = ({
               className={clsx(
                 articleStyles.ArticleBody,
                 styles.journalCard,
-                'relative z-10 justify-center',
-                'prose prose-stone max-w-none dark:prose-invert',
-                'prose-code:before:content-[unset] prose-code:after:content-[unset]',
+                'relative z-10 max-w-none justify-center',
                 'colorModeTransition break-inside-avoid-column'
               )}
               key={journal.fields.slug}
@@ -77,7 +75,7 @@ const Index: FC<PageProps<object, PageContentType>> = ({
               <article
                 className={clsx(
                   styles.fade,
-                  'relative rounded-2xl bg-card px-10 pb-2 pt-12 dark:bg-card/10 sm:pt-8 md:px-8',
+                  'bg-palette-card relative rounded-2xl px-10 pb-2 pt-12 sm:pt-8 md:px-8',
                   'colorModeTransition  max-h-[640px]  overflow-hidden'
                 )}
                 dangerouslySetInnerHTML={{ __html: journal.html! }}
@@ -85,15 +83,12 @@ const Index: FC<PageProps<object, PageContentType>> = ({
             </li>
           ))}
           <li
-            className={clsx(
-              'text-primary dark:text-dark-primary',
-              'colorModeTransition break-inside-avoid-column'
-            )}
+            className={clsx('text-palette-primary colorModeTransition break-inside-avoid-column')}
           >
             <Link
               className={clsx(
                 styles.journalCard,
-                'flex h-32 w-full items-center justify-center rounded-2xl bg-card dark:bg-card/10',
+                'bg-palette-card flex h-32 w-full items-center justify-center rounded-2xl',
                 'colorModeTransition  max-h-[640px]  overflow-hidden'
               )}
               to="/journals"
@@ -104,7 +99,7 @@ const Index: FC<PageProps<object, PageContentType>> = ({
         </ul>
       </Section>
       <Section narrow>
-        <div className="relative z-10 py-20 text-right text-secondary dark:text-dark-secondary">
+        <div className="text-palette-secondary relative z-10 py-20 text-right">
           这里收集了 {articleNumber} 篇文章和 {journalNumber} 篇小随笔，合计{' '}
           {(totalWordCount / 10000).toFixed(2)} 万字
         </div>

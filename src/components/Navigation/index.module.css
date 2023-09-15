@@ -29,7 +29,7 @@
   transition: opacity 0.3s ease;
   svg {
     path {
-      @apply fill-primary dark:fill-dark-primary;
+      @apply fill-palette-primary;
       transition: fill 0.25s var(--ease-in-out-quad);
     }
   }
@@ -38,7 +38,7 @@
   border-radius: 50%;
   transition: all 0.45s ease;
   &::before {
-    @apply absolute border-[2px] border-solid border-primary dark:border-dark-primary;
+    @apply border-palette-primary absolute border-[2px] border-solid;
     @apply opacity-100 dark:opacity-0;
     transform: translate(0, 0);
     content: '';
@@ -56,31 +56,20 @@
     border-radius: 50%;
     margin: -4px 0 0 -4px;
     box-shadow:
-      0 -23px 0 theme(colors.primary),
-      0 23px 0 theme(colors.primary),
-      23px 0 0 theme(colors.primary),
-      -23px 0 0 theme(colors.primary),
-      15px 15px 0 theme(colors.primary),
-      -15px 15px 0 theme(colors.primary),
-      15px -15px 0 theme(colors.primary),
-      -15px -15px 0 theme(colors.primary);
+      0 -23px 0 theme(colors.palette.primary),
+      0 23px 0 theme(colors.palette.primary),
+      23px 0 0 theme(colors.palette.primary),
+      -23px 0 0 theme(colors.palette.primary),
+      15px 15px 0 theme(colors.palette.primary),
+      -15px 15px 0 theme(colors.palette.primary),
+      15px -15px 0 theme(colors.palette.primary),
+      -15px -15px 0 theme(colors.palette.primary);
     transition: all 0.35s ease;
   }
 }
 :global(.dark) .MoonOrSun {
   &:before {
     transform: translate(14px, -14px);
-  }
-  &::after {
-    box-shadow:
-      0 -23px 0 theme(colors.dark.primary),
-      0 23px 0 theme(colors.dark.primary),
-      23px 0 0 theme(colors.dark.primary),
-      -23px 0 0 theme(colors.dark.primary),
-      15px 15px 0 theme(colors.dark.primary),
-      -15px 15px 0 theme(colors.dark.primary),
-      15px -15px 0 theme(colors.dark.primary),
-      -15px -15px 0 theme(colors.dark.primary);
   }
 }
 .MoonMask {

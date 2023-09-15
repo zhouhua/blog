@@ -19,7 +19,7 @@ const useColorMode: UseColorModeType = () => {
   const changeHTMLBg = useCallback(
     (color: ColorMode) => {
       if ($html.current) {
-        const bg: Record<ColorMode, string> = { light: '#fafafa', dark: '#111216' };
+        const bg: Record<ColorMode, string> = { light: '#f1f2f6', dark: '#2f3542' };
         $html.current.style.background = bg[color];
       }
     },

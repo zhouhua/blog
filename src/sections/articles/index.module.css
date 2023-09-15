@@ -65,7 +65,7 @@
 }
 @media (max-width: theme(screens.sm.max)) {
   .listItemRow {
-    @apply bg-card dark:bg-dark-card;
+    @apply bg-palette-card;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -83,7 +83,7 @@
 }
 @media (max-width: theme(screens.sm.max)) {
   .listItemTile {
-    @apply bg-card dark:bg-dark-card;
+    @apply bg-palette-card;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -122,7 +122,7 @@
   }
 }
 .Title {
-  @apply font-sans font-bold text-primary dark:text-dark-primary;
+  @apply text-palette-primary font-sans font-bold;
   @apply leading-[1.33];
   @apply md:text-[21px];
   @apply sm:text-2xl sm:leading-[1.45];
@@ -146,7 +146,7 @@
   }
   &:hover h2,
   &:focus h2 {
-    @apply text-accent dark:text-dark-accent;
+    @apply text-palette-accent;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -163,7 +163,7 @@
 }
 .HeroHeading {
   a {
-    @apply text-accent dark:text-accent;
+    @apply text-palette-accent;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -171,7 +171,7 @@
 }
 .GridButton {
   @apply relative flex h-9 w-9 items-center justify-center;
-  @apply hover:bg-hover dark:hover:bg-dark-hover;
+  @apply hover:bg-palette-bgAlt/70;
   border-radius: 50%;
   background: transparent;
   transition: background 0.25s;
@@ -179,7 +179,7 @@
     opacity: 0.25;
     transition: opacity 0.2s;
     path {
-      @apply fill-primary dark:fill-dark-primary;
+      @apply fill-palette-primary;
       transition: fill 0.25s var(--ease-in-out-quad);
     }
   }

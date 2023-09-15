@@ -34,12 +34,12 @@ const Progress: FC<IProgress> = ({ contentHeight }) => {
       <div
         className={clsx(
           styles.Trackline,
-          'colorModeTransition relative flex w-px flex-col overflow-hidden bg-track opacity-60 dark:bg-dark-track'
+          'colorModeTransition bg-palette-bgAlt relative flex w-px flex-col overflow-hidden opacity-60'
         )}
         aria-hidden="true"
       >
         <div
-          className="colorModeTransition absolute -top-full left-0 h-full w-px bg-progress dark:bg-dark-progress"
+          className="colorModeTransition bg-palette-secondary absolute -top-full left-0 h-full w-px"
           style={{ transform: `translateY(${progress}%)` }}
         />
       </div>

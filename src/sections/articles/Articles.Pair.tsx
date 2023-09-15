@@ -78,7 +78,7 @@ const ListItem: FC<ArticlesPairItemProps> = ({ article, narrow, gridLayout }) =>
             className={clsx(
               styles.Excerpt,
               styles.limitToTwoLines,
-              'mb-2.5 font-serif text-base text-grey dark:text-dark-grey',
+              'text-palette-gray mb-2.5 font-serif text-base',
               'colorModeTransition sm:mb-5 sm:max-w-full sm:px-5 sm:py-0'
             )}
             style={{
@@ -87,7 +87,7 @@ const ListItem: FC<ArticlesPairItemProps> = ({ article, narrow, gridLayout }) =>
           >
             {article.excerpt}
           </p>
-          <div className="colorModeTransition text-base text-grey opacity-60 dark:text-dark-grey sm:max-w-full sm:px-5 sm:pb-[30px] sm:pt-0">
+          <div className="colorModeTransition text-palette-gray text-base opacity-60 sm:max-w-full sm:px-5 sm:pb-[30px] sm:pt-0">
             {dayjs(article.frontmatter?.date).fromNow()} · {article.wordCount!.words} 个字 ·{' '}
             {article.timeToRead} 分钟读完
           </div>
@@ -128,9 +128,9 @@ const ArticlesPair: FC<ArticlesPairProps> = ({
         <Link
           className={clsx(
             styles.moreLink,
-            'flex items-center justify-center text-primary dark:text-dark-primary',
-            'border border-solid border-grey/50 dark:border-dark-grey/50',
-            'sm:mb-20 sm:h-28 sm:border-0 sm:bg-card sm:dark:bg-dark-card'
+            'text-palette-primary flex items-center justify-center',
+            'border-palette-bgAlt border border-solid',
+            'sm:bg-palette-card sm:mb-20 sm:h-28 sm:border-0'
           )}
           to="/articles"
         >

@@ -26,7 +26,7 @@
   max-width: 430px;
   line-height: 1.45;
   a {
-    @apply text-grey underline dark:text-dark-grey;
+    @apply text-palette-gray underline;
     transition: color 0.25s var(--ease-in-out-quad);
   }
 }

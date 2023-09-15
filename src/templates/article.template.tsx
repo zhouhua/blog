@@ -78,7 +78,7 @@ const Article: FC<PageProps<object, { article: IArticle; author: IAuthor; next: 
       </article>
       <Section
         narrow
-        className="relative z-10 mb-32 mt-10 border-t border-solid border-horizontalRule pt-10 dark:border-dark-horizontalRule"
+        className="border-palette-bgAlt relative z-10 mb-32 mt-10 border-t border-solid"
       >
         <div className="mx-auto max-w-[680px]">
           <Giscus

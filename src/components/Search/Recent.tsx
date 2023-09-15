@@ -84,7 +84,7 @@ const Recent: FC<{ hide: () => void }> = ({ hide }) => {
                 key={`${index}`}
                 className={clsx(
                   styles.recentItem,
-                  'mx-6 mt-4 flex h-16 max-w-full items-center justify-between rounded-lg bg-card dark:bg-dark-card sm:mx-2.5',
+                  'bg-palette-bg colorModeTransition mx-6 mt-4 flex h-16 max-w-full items-center justify-between rounded-lg sm:mx-2.5',
                   { [styles.selected]: index === selectIndex }
                 )}
                 onMouseEnter={() => setSelectIndex(index)}
@@ -96,8 +96,8 @@ const Recent: FC<{ hide: () => void }> = ({ hide }) => {
                 >
                   <span
                     className={clsx(
-                      'mr-4 inline-block h-6 rounded-full bg-accent px-2 text-[12px] leading-6 dark:bg-dark-accent',
-                      ' max-w-[45%] shrink-0 grow-0 overflow-hidden overflow-ellipsis whitespace-nowrap text-background dark:text-dark-background',
+                      'bg-palette-card colorModeTransition mr-4 inline-block h-6 rounded-full px-2 text-[12px] leading-6',
+                      'text-palette-secondary max-w-[45%] shrink-0 grow-0 overflow-hidden overflow-ellipsis whitespace-nowrap',
                       styles.query
                     )}
                   >

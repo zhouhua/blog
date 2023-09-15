@@ -1,11 +1,11 @@
 .lineTitle {
-  @apply relative pb-20 font-normal text-primary opacity-25 dark:text-dark-primary md:pb-[60px];
+  @apply text-palette-primary relative pb-20 font-normal opacity-25 md:pb-[60px];
   transition:
     background 0.25s var(--ease-in-out-quad),
     color 0.25s var(--ease-in-out-quad);
   &::after {
     @apply absolute left-40 right-0 top-[11px] h-px content-[''];
-    @apply bg-grey dark:bg-dark-grey;
+    @apply bg-palette-gray;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -14,14 +14,24 @@
 
 .journalCard {
   @apply px-0 pt-0 !important;
+  > article {
+    box-shadow:
+      0 30px 60px -10px rgba(0, 0, 0, 0.2),
+      0 18px 36px -18px rgba(0, 0, 0, 0.22);
+  }
+}
+:global(.dark) {
+  .journalCard > article {
+    box-shadow: inset -1px 1px 0 0 #ffffff5d;
+  }
 }
 
 .fade::after {
   @apply absolute bottom-0 left-0 right-0 h-12;
   content: '';
-  background: linear-gradient(180deg, theme(colors.card/0) 0%, theme(colors.card) 95%);
-}
-
-:global(.dark) .fade::after {
-  background: linear-gradient(180deg, theme(colors.dark.card/0) 0%, theme(colors.dark.card) 95%);
+  background: linear-gradient(
+    180deg,
+    theme(colors.palette.card/0) 0%,
+    theme(colors.palette.card) 95%
+  );
 }

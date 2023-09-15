@@ -71,7 +71,7 @@ const Footer: FC = () => {
     <footer
       className={clsx(
         'flex flex-row-reverse justify-between',
-        'border-t-[1px] border-solid border-horizontalRule px-6 py-4 dark:border-dark-horizontalRule'
+        'border-palette-bgAlt border-t-[1px] border-solid px-6 py-4'
       )}
     >
       <PoweredBy

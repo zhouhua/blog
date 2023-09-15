@@ -17,7 +17,7 @@ const Layout: FC<PropsWithChildren & { isDetailPage?: boolean }> = ({
   <ArticlesContextProvider>
     <div
       className={clsx(
-        'colorModeTransition relative min-h-screen min-w-[360px] overflow-x-auto bg-background dark:bg-dark-background',
+        'colorModeTransition bg-palette-bg overflow-x-overlap relative min-h-screen min-w-[360px]',
         { [styles.cardView]: isDetailPage }
       )}
     >
@@ -35,7 +35,6 @@ const Layout: FC<PropsWithChildren & { isDetailPage?: boolean }> = ({
       >
         {children}
       </motion.main>
-      <div className={clsx(styles.Gradient, 'colorModeTransition')} />
       <NavigationFooter />
     </div>
   </ArticlesContextProvider>

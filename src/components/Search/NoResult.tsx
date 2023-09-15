@@ -4,8 +4,8 @@ import { useStats } from 'react-instantsearch';
 const NoResult: FC = () => {
   const { query, processingTimeMS } = useStats();
   return (
-    <div className="px-6 py-16 text-center text-grey dark:text-dark-grey">
-      没有关于<span className="px-1 text-secondary dark:text-dark-secondary">{query}</span>
+    <div className="text-palette-gray px-6 py-16 text-center">
+      没有关于<span className="text-palette-secondary px-1.5">{query}</span>
       的搜索结果，耗时 {processingTimeMS}ms。
     </div>
   );

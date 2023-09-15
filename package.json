@@ -24,7 +24,6 @@
     "@giscus/react": "^2.3.0",
     "@mdx-js/react": "^2.3.0",
     "@rwh/keystrokes": "^1.2.3",
-    "@tailwindcss/typography": "^0.5.10",
     "algoliasearch": "^4.20.0",
     "autoprefixer": "^10.4.15",
     "cheerio": "1.0.0-rc.12",

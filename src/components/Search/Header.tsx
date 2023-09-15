@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import { useInstantSearch, useSearchBox } from 'react-instantsearch';
 import clsx from 'clsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faSpinner, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { throttle } from 'lodash';
 
 function beforeQuery(query: string, search: (value: string) => void) {
@@ -39,22 +39,21 @@ const Header: FC<{ hide: () => void }> = ({ hide }) => {
   return (
     <header
       className={clsx(
-        'border-b-[1px] border-solid border-horizontalRule dark:border-dark-horizontalRule',
+        'border-palette-gray border-b-[1px] border-solid',
         'relative flex flex-none items-center'
       )}
     >
       <div className="p-4 text-center">
-        <i
-          className={clsx('fa-solid  text-2xl', {
-            'fa-magnifying-glass': status !== 'stalled',
-            'fa-spinner fa-spin': status === 'stalled'
-          })}
+        <FontAwesomeIcon
+          icon={status === 'stalled' ? faSpinner : faMagnifyingGlass}
+          size="lg"
+          spin={status === 'stalled'}
         />
       </div>
       <form action="" className="flex max-w-full grow-[2]" noValidate onSubmit={onSubmit}>
         <input
           ref={inputRef}
-          className="h-14 max-w-full grow-[2] appearance-none bg-background px-2 dark:bg-dark-background"
+          className="bg-palette-card h-14 max-w-full grow-[2] appearance-none px-2"
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"

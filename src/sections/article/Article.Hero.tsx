@@ -30,7 +30,7 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, author }) => {
         <div
           className={clsx(
             styles.HeroSubtitle,
-            'colorModeTransition relative flex w-full justify-between text-lg text-grey dark:text-dark-grey'
+            'colorModeTransition text-palette-gray relative flex w-full justify-between text-lg'
           )}
         >
           <div className="flex">
@@ -52,7 +52,7 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, author }) => {
 
           {article.frontmatter.layout === 'journal' && (
             <Link
-              className="underline-offset-4 hover:text-accent hover:underline dark:hover:text-dark-accent"
+              className="hover:text-palette-accent underline-offset-4 hover:underline"
               to="/journals"
             >
               更多随笔
@@ -66,13 +66,13 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, author }) => {
                 <Link
                   to={article.fields.tagSlugs![index]}
                   className={clsx(
-                    'rounded-full bg-dark-card/10 px-4 py-1 text-secondary dark:bg-card/10 dark:text-dark-secondary',
+                    'bg-palette-bgAlt text-palette-secondary rounded-full px-4 py-1',
                     'opacity-80 hover:opacity-100'
                   )}
                 >
                   <FontAwesomeIcon
                     icon={faHashtag}
-                    className="mr-1 h-3.5 w-3.5 text-accent opacity-80 dark:text-dark-accent"
+                    className="text-palette-accent mr-1 h-3.5 w-3.5 opacity-80"
                   />
                   {tag}
                 </Link>

@@ -42,13 +42,13 @@ const Panel: FC<{ show: boolean; hide: () => void }> = ({ show, hide }) => {
       <div
         className={clsx(
           styles.mask,
-          'fixed left-0 top-0 z-50 h-screen w-screen min-w-[360px] bg-dark-background/20 backdrop-blur dark:bg-background/20',
-          'px-[10vw] py-[10vh] text-secondary dark:text-dark-secondary sm:px-[2vw] sm:py-[5vh] md:px-[5vw]'
+          'bg-palette-primary/10 fixed left-0 top-0 z-50 h-screen w-screen  min-w-[360px] backdrop-blur',
+          'text-palette-secondary px-[10vw] py-[10vh] sm:px-[2vw] sm:py-[5vh] md:px-[5vw]'
         )}
         onClick={hide}
       >
         <div
-          className="mx-auto flex min-h-0 w-full max-w-2xl flex-col rounded-lg bg-background dark:bg-dark-background"
+          className="bg-palette-card mx-auto flex min-h-0 w-full max-w-2xl flex-col rounded-lg"
           onClick={makeClickOutside}
         >
           <InstantSearch searchClient={searchClient} indexName="blog">

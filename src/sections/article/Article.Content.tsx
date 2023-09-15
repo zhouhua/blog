@@ -16,12 +16,7 @@ const ArticleContent: FC<{ article: IArticle }> = ({ article }) => {
   });
   return (
     <InnerHTML
-      className={clsx(
-        styles.ArticleBody,
-        'relative z-10 flex flex-col justify-center',
-        'prose prose-stone max-w-none dark:prose-invert',
-        'prose-code:before:content-[unset] prose-code:after:content-[unset]'
-      )}
+      className={clsx(styles.ArticleBody, 'relative z-10 flex max-w-none flex-col justify-center')}
       html={article.html || ''}
     />
   );

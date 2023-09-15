@@ -1,5 +1,4 @@
 import type { Config } from 'tailwindcss';
-import typography from '@tailwindcss/typography';
 
 export default {
   darkMode: 'class',
@@ -12,41 +11,19 @@ export default {
   ],
   theme: {
     colors: {
-      primary: '#000',
-      secondary: '#73737D',
-      grey: '#73737D',
-      background: '#fafafa',
-      accent: '#6166DC',
-      hover: 'rgba(0, 0, 0, 0.07)',
-      gradientFrom: 'rgba(217, 219, 224, 0)',
-      gradientTo: '#D9DBE0',
-      articleText: '#08080B',
-      track: 'rgba(8, 8, 11, 0.3)',
-      progress: '#000',
-      card: '#fff',
-      error: '#EE565B',
-      success: '#46B17B',
-      errorBackground: 'rgba(238, 86, 91, 0.1)',
-      horizontalRule: 'rgba(8, 8, 11, 0.15)',
-      inputBackground: 'rgba(0, 0, 0, 0.05)',
+      palette: {
+        primary: 'rgb(var(--color-primary) / <alpha-value>)',
+        secondary: 'rgb(var(--color-secondary) / <alpha-value>)',
+        bg: 'rgb(var(--color-bg) / <alpha-value>)',
+        card: 'rgb(var(--color-card) / <alpha-value>)',
+        accent: 'rgb(var(--color-accent) / <alpha-value>)',
+        gray: 'rgb(var(--color-gray) / <alpha-value>)',
+        error: 'rgb(var(--color-error) / <alpha-value>)',
+        success: 'rgb(var(--color-success) / <alpha-value>)',
+        warn: 'rgb(var(--color-warn) / <alpha-value>)',
+        bgAlt: 'rgb(var(--color-bg-alt) / <alpha-value>)'
+      },
       dark: {
-        grey: '#73737D',
-        primary: '#fff',
-        secondary: '#fff',
-        accent: '#E9DAAC',
-        background: '#111216',
-        hover: 'rgba(255, 255, 255, 0.07)',
-        gradientFrom: '#111216',
-        gradientTo: 'rgba(66, 81, 98, 0.36)',
-        articleText: '#fff',
-        track: 'rgba(255, 255, 255, 0.3)',
-        progress: '#fff',
-        card: '#1D2128',
-        error: '#EE565B',
-        success: '#46B17B',
-        errorBackground: 'rgba(238, 86, 91, 0.1)',
-        horizontalRule: 'rgba(255, 255, 255, 0.15)',
-        inputBackground: 'rgba(255, 255, 255, 0.07)',
         prism: {
           'token': '#fff',
           'languageJavascript': '#e8696b',
@@ -166,6 +143,5 @@ export default {
         '3xl': { min: '1537px' }
       }
     }
-  },
-  plugins: [typography]
+  }
 } satisfies Config;

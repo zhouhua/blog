@@ -28,6 +28,7 @@ function simplifyArticle(item: Queries.MarkdownRemark): Queries.MarkdownRemark {
     'frontmatter.title',
     'frontmatter.date',
     'frontmatter.tags',
+    'frontmatter.layout',
     'frontmatter.hero',
     'timeToRead',
     'wordCount.words',

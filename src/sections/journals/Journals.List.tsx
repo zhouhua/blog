@@ -47,14 +47,14 @@ const JounalsList: FC<{ articles: IArticle[] }> = ({ articles }) => {
     });
   });
   return (
-    <ul className="colorModeTransition text-primary dark:text-dark-primary">
+    <ul className="colorModeTransition text-palette-primary">
       {orderedYears.map(year => (
         <li key={year} className="relative mb-20">
           <div
             id={`journals${year}`}
             className={clsx(
               'absolute -top-9 left-16 ml-3 sm:left-0 md:left-0 md:ml-1 lg:left-2',
-              'font-monospace text-3xl font-semibold text-accent dark:text-dark-accent',
+              'text-palette-accent font-monospace text-3xl font-semibold',
               'colorModeTransition'
             )}
           >
@@ -68,13 +68,11 @@ const JounalsList: FC<{ articles: IArticle[] }> = ({ articles }) => {
                 className={clsx(
                   articleStyles.ArticleBody,
                   styles.note,
-                  'relative z-10 flex flex-col justify-center',
-                  'prose prose-stone max-w-none dark:prose-invert',
-                  'prose-code:before:content-[unset] prose-code:after:content-[unset]',
+                  'relative z-10 flex max-w-none flex-col justify-center',
                   'colorModeTransition'
                 )}
               >
-                <div className="absolute right-4 top-12 z-10 h-4 font-monospace text-sm text-grey dark:text-dark-grey sm:top-9">
+                <div className="text-palette-gray absolute right-4 top-12 z-10 h-4 font-monospace text-sm sm:top-9">
                   共 {wordCount} 字，预计 {timeToRead} 分钟读完
                 </div>
                 <Link
@@ -90,7 +88,7 @@ const JounalsList: FC<{ articles: IArticle[] }> = ({ articles }) => {
                 </Link>
                 <article
                   className={clsx(
-                    'relative rounded-2xl bg-card px-10 pb-2 pt-12 dark:bg-card/10 sm:px-4 sm:pt-8 md:px-8',
+                    'bg-palette-card relative rounded-2xl px-10 pb-2 pt-12 sm:px-4 sm:pt-8 md:px-8',
                     'colorModeTransition',
                     styles.noteContent
                   )}

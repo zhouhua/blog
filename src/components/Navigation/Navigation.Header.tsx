@@ -46,8 +46,8 @@ const DarkModeToggle: FC = () => {
         className={clsx(
           styles.MoonOrSun,
           'relative h-6 w-6 border-solid',
-          'border-[2px] border-primary dark:border-[4px] dark:border-dark-primary',
-          'bg-primary dark:bg-dark-primary',
+          'border-palette-primary border-[2px] dark:border-[4px]',
+          'bg-palette-primary',
           'scale-100 dark:scale-[0.55]',
           'overflow-hidden dark:overflow-visible'
         )}
@@ -55,7 +55,7 @@ const DarkModeToggle: FC = () => {
       <div
         className={clsx(
           styles.MoonMask,
-          'absolute -top-2 h-6 w-6 border-0 bg-background dark:bg-dark-background',
+          'bg-palette-bg absolute -top-2 h-6 w-6 border-0',
           '-right-px opacity-100 dark:opacity-0'
         )}
       />
@@ -117,7 +117,7 @@ const NavigationHeader: FC = () => {
           {menu.map(({ name, path, icon }) => (
             <Link
               className={clsx(
-                'colorModeTransition px-4 py-2 text-primary underline-offset-4 hover:underline dark:text-dark-primary sm:px-2 md:px-2',
+                'colorModeTransition text-palette-primary px-4 py-2 underline-offset-4 hover:underline sm:px-2 md:px-2',
                 'sm:flex sm:flex-col'
               )}
               key={path}

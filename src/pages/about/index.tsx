@@ -58,7 +58,7 @@ const Index: FC<PageProps> = ({ location }) => {
           <div
             className={clsx(
               'relative z-10 my-36 rounded-3xl',
-              'bg-card dark:bg-dark-card',
+              'colorModeTransition bg-palette-card',
               styles.card
             )}
           >
@@ -69,14 +69,14 @@ const Index: FC<PageProps> = ({ location }) => {
               className={clsx('flex items-center justify-between px-8 py-6 sm:flex-col sm:px-6')}
             >
               <div className="flex h-80 flex-col justify-between leading-10 sm:justify-around">
-                <div className="text-primary dark:text-dark-primary sm:ml-16">
+                <div className="colorModeTransition text-palette-primary sm:ml-16">
                   <h2 className="mb-4 mt-6 text-4xl">{author.name}</h2>
                   <a href="mailto:zhou--hua@163.com">
                     <FontAwesomeIcon icon={faEnvelope} className="mr-3" />
                     zhou--hua@163.com
                   </a>
                 </div>
-                <div className="font-serif text-sm leading-6 text-secondary dark:text-dark-secondary sm:text-center">
+                <div className="text-palette-secondary font-serif text-sm leading-6 sm:text-center">
                   想成为⼀个有趣的⼈。
                   <br />
                   爱⾜球，爱桌游，

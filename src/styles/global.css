@@ -4,10 +4,6 @@
 @import 'lxgw-wenkai-lite-webfont/style.css';
 @import url(https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css);
 
-/**
-   * Thanks to Benjamin De Cock
-   * https://gist.github.com/bendc/ac03faac0bf2aee25b49e5fd260a727d
-   */
 :root {
   --ease-in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
   --ease-in-quart: cubic-bezier(0.895, 0.03, 0.685, 0.22);
@@ -15,6 +11,34 @@
   --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
   --ease-in-out-quad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
   --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+}
+body {
+  --color-primary: 0 0 0;
+  --color-secondary: 47 53 66;
+  --color-bg: 241 242 246;
+  --color-card: 255 255 255;
+  --color-accent: 30 144 255;
+  --color-gray: 116 125 140;
+  --color-error: 255 107 129;
+  --color-success: 123 237 159;
+  --color-warn: 255 165 2;
+  --color-bg-alt: 206 214 224;
+}
+body.dark {
+  --color-primary: 255 255 255;
+  --color-secondary: 223 228 234;
+  --color-bg: 47 53 66;
+  --color-card: 0 0 0;
+  --color-accent: 236 204 104;
+  --color-gray: 116 125 140;
+  --color-error: 255 71 87;
+  --color-success: 46 213 115;
+  --color-warn: 255 127 80;
+  --color-bg-alt: 164 176 190;
+}
+
+img.Image__Zoom ~ div {
+  background: transparent !important;
 }
 
 body {
@@ -29,10 +53,6 @@ body {
     color 0.25s var(--ease-in-out-quad);
 }
 
-svg path {
-  transition: fill 0.25s var(--ease-in-out-quad);
-}
-
 html {
   @apply font-sans;
   -webkit-font-smoothing: antialiased;
@@ -40,12 +60,6 @@ html {
 
 article {
   word-break: break-word;
-}
-
-button,
-a {
-  text-decoration: none;
-  cursor: pointer;
 }
 
 a:focus {
@@ -80,7 +94,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: monospace;
+  @apply font-monospace;
   font-feature-settings: 'calt';
 }
 
@@ -119,7 +133,7 @@ img.Image__Zoom ~ div {
 }
 
 .article-columns {
-  @apply w-full text-lg leading-[1.756] text-articleText dark:text-dark-articleText;
+  @apply text-palette-primary w-full text-lg leading-[1.756];
   @apply mx-auto sm:px-0 sm:py-0;
   @apply max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
   @apply grid items-center gap-x-5;
@@ -154,4 +168,16 @@ img.Image__Zoom ~ div {
 /* Compensate by reducing space around display math */
 .katex-display {
   margin: 0.5em 0 !important;
+}
+.overflow-overlap {
+  overflow: auto;
+  overflow: overlap;
+}
+.overflow-x-overlap {
+  overflow-x: auto;
+  overflow-x: overlap;
+}
+.overflow-y-overlap {
+  overflow-y: auto;
+  overflow-y: overlap;
 }

@@ -18,12 +18,7 @@ const Bio: FC<{ author: IAuthor; hideText?: boolean }> = ({ author, hideText = f
       </div>
     </div>
     {!hideText && (
-      <p
-        className={clsx(
-          styles.BioText,
-          'colorModeTransition text-sm text-grey dark:text-dark-grey'
-        )}
-      >
+      <p className={clsx(styles.BioText, 'colorModeTransition text-palette-gray text-sm')}>
         {author.bio}
       </p>
     )}

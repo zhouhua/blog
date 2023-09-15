@@ -1,15 +1,7 @@
-.Gradient {
-  @apply pointer-events-none absolute bottom-0 left-0 z-0 h-[590px] w-full;
-  @apply bg-gradient-to-b from-gradientFrom to-gradientTo dark:from-dark-gradientFrom dark:to-dark-gradientTo;
-  transition:
-    background 0.25s var(--ease-in-out-quad),
-    color 0.25s var(--ease-in-out-quad);
-}
-
 .cardView {
   @media (max-width: theme(screens.sm.max)) {
     &::before {
-      @apply absolute left-0 top-0 h-5 w-full bg-primary dark:bg-dark-primary;
+      @apply bg-palette-primary absolute left-0 top-0 h-5 w-full;
       min-width: 360px;
       content: '';
       transition:
@@ -17,7 +9,7 @@
         color 0.25s var(--ease-in-out-quad);
     }
     &::after {
-      @apply absolute left-0 top-2.5 h-2.5 w-full bg-background dark:bg-dark-background;
+      @apply bg-palette-bg absolute left-0 top-2.5 h-2.5 w-full;
       content: '';
       min-width: 360px;
       border-top-left-radius: 25px;
