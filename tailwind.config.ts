@@ -21,7 +21,8 @@ export default {
         error: 'rgb(var(--color-error) / <alpha-value>)',
         success: 'rgb(var(--color-success) / <alpha-value>)',
         warn: 'rgb(var(--color-warn) / <alpha-value>)',
-        bgAlt: 'rgb(var(--color-bg-alt) / <alpha-value>)'
+        bgAlt: 'rgb(var(--color-bg-alt) / <alpha-value>)',
+        bgRevert: 'rgb(var(--color-bg-revert) / <alpha-value>)'
       },
       dark: {
         prism: {

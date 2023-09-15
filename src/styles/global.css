@@ -12,7 +12,7 @@
   --ease-in-out-quad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
   --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
 }
-body {
+html {
   --color-primary: 0 0 0;
   --color-secondary: 47 53 66;
   --color-bg: 241 242 246;
@@ -23,8 +23,9 @@ body {
   --color-success: 123 237 159;
   --color-warn: 255 165 2;
   --color-bg-alt: 206 214 224;
+  --color-bg-revert: 47 53 66;
 }
-body.dark {
+html.dark {
   --color-primary: 255 255 255;
   --color-secondary: 223 228 234;
   --color-bg: 47 53 66;
@@ -35,6 +36,7 @@ body.dark {
   --color-success: 46 213 115;
   --color-warn: 255 127 80;
   --color-bg-alt: 164 176 190;
+  --color-bg-revert: 241 242 246;
 }
 
 img.Image__Zoom ~ div {
@@ -180,4 +182,11 @@ img.Image__Zoom ~ div {
 .overflow-y-overlap {
   overflow-y: auto;
   overflow-y: overlap;
+}
+
+html {
+  background-color: theme(colors.palette.bg);
+  @media (screen(sm)) {
+    background: theme(colors.palette.bgRevert);
+  }
 }

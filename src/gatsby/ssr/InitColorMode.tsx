@@ -10,9 +10,9 @@ const code = `
     localStorage.setItem
   }
   if (init === 'dark') {
-    document.body.classList.add('dark');
+    document.querySelector('html').classList.add('dark');
   } else {
-    document.body.classList.remove('dark');
+    document.querySelector('html').classList.remove('dark');
   }
 })();
 `;

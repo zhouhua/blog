@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect } from 'react';
 import { createGlobalState } from 'react-use';
 
 type UseColorModeType = () => [ColorMode, (colorMode: ColorMode) => void];
@@ -14,30 +14,15 @@ const useGlobalColorMode = createGlobalState<ColorMode>(setup());
 
 const useColorMode: UseColorModeType = () => {
   const [colorMode, setColorMode] = useGlobalColorMode();
-  const $html = useRef<HTMLHtmlElement | null>(null);
 
-  const changeHTMLBg = useCallback(
-    (color: ColorMode) => {
-      if ($html.current) {
-        const bg: Record<ColorMode, string> = { light: '#f1f2f6', dark: '#2f3542' };
-        $html.current.style.background = bg[color];
-      }
-    },
-    [$html.current]
-  );
-
-  const applyChange = useCallback(
-    (newColorMode: ColorMode) => {
-      if (newColorMode === 'dark') {
-        document.body.classList.add('dark');
-      } else {
-        document.body.classList.remove('dark');
-      }
-      changeHTMLBg(newColorMode);
-      localStorage.setItem(storeKey, newColorMode);
-    },
-    [changeHTMLBg]
-  );
+  const applyChange = useCallback((newColorMode: ColorMode) => {
+    if (newColorMode === 'dark') {
+      document.querySelector('html')!.classList.add('dark');
+    } else {
+      document.querySelector('html')!.classList.remove('dark');
+    }
+    localStorage.setItem(storeKey, newColorMode);
+  }, []);
 
   const changeColorMode = useCallback(
     (newColorMode: ColorMode) => {
@@ -48,7 +33,6 @@ const useColorMode: UseColorModeType = () => {
   );
 
   useEffect(() => {
-    $html.current = document.querySelector('html')!;
     const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
     function colorModeChangeHandler(e: MediaQueryListEvent) {
       changeColorMode(e.matches ? 'dark' : 'light');
