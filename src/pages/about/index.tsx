@@ -14,7 +14,7 @@ import * as styles from './index.module.css';
 
 const authorQuery = graphql`
   {
-    author: allAuthorsYaml {
+    author: allAuthor {
       edges {
         node {
           bio
@@ -79,9 +79,9 @@ const Index: FC<PageProps> = ({ location }) => {
                 <div className="text-palette-secondary font-serif text-sm leading-6 sm:text-center">
                   想成为⼀个有趣的⼈。
                   <br />
-                  爱⾜球，爱桌游，
+                  爱足球，爱桌游，
                   <br />
-                  爱美⻝，爱⽣活。
+                  爱美食，爱⽣活。
                   <br />
                   爱钻研技术，更爱⽤技术改变产品；
                   <br />

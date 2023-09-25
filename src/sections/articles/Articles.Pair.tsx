@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import Image from '@components/Image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
+import { motion } from 'framer-motion';
 import type { IArticle } from '../../types';
 import * as styles from './index.module.css';
 import type { GridLayout } from './Articles.List.Context';
@@ -53,8 +54,12 @@ const ListItem: FC<ArticlesPairItemProps> = ({ article, narrow, gridLayout }) =>
       to={article.fields!.slug || '/'}
       data-a11y="false"
     >
-      <div className={`${gridLayout === 'rows' ? styles.listItemRow : styles.listItemTile}`}>
-        <div
+      <motion.div
+        layout
+        className={`${gridLayout === 'rows' ? styles.listItemRow : styles.listItemTile}`}
+      >
+        <motion.div
+          layout
           className={clsx(styles.ImageContainer, {
             [styles.narrow]: narrow
           })}
@@ -64,8 +69,8 @@ const ListItem: FC<ArticlesPairItemProps> = ({ article, narrow, gridLayout }) =>
           }}
         >
           <Image src={imageSource!} alt={`文章《${article.frontmatter.title}》的题图`} />
-        </div>
-        <div>
+        </motion.div>
+        <motion.div layout>
           <h2
             className={clsx(styles.Title, styles.limitToTwoLines)}
             style={{
@@ -91,8 +96,8 @@ const ListItem: FC<ArticlesPairItemProps> = ({ article, narrow, gridLayout }) =>
             {dayjs(article.frontmatter?.date).fromNow()} · {article.wordCount!.words} 个字 ·{' '}
             {article.timeToRead} 分钟读完
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </Link>
   );
 };
@@ -110,7 +115,8 @@ const ArticlesPair: FC<ArticlesPairProps> = ({
   const hasOnlyOneArticle = articles.length === 1;
 
   return (
-    <div
+    <motion.div
+      layout
       className={clsx(`${gridLayout === 'tiles' ? styles.listTile : styles.listRow}`, {
         [styles.oneArticle]: hasOnlyOneArticle,
         [styles.reverse]: reverse
@@ -138,7 +144,7 @@ const ArticlesPair: FC<ArticlesPairProps> = ({
           <FontAwesomeIcon icon={faAnglesRight} className="ml-4" />
         </Link>
       )}
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,47 +1,27 @@
-import type { HeadFC, PageProps } from 'gatsby';
-import { Link } from 'gatsby';
+import Layout from '@components/Layout';
+import Section from '@components/Section';
+import type { HeadFC } from 'gatsby';
 import type { FC } from 'react';
+import BrokenText from '@components/Text/BrokenText';
+import { Link } from 'gatsby';
 
-const pageStyles = {
-  color: '#232129',
-  padding: '96px',
-  fontFamily: '-apple-system, Roboto, sans-serif, serif'
-};
-const headingStyles = {
-  marginTop: 0,
-  marginBottom: 64,
-  maxWidth: 320
-};
-
-const paragraphStyles = { marginBottom: 48 };
-const codeStyles = {
-  color: '#8A6534',
-  padding: 4,
-  backgroundColor: '#FFF4DB',
-  fontSize: '1.25rem',
-  borderRadius: 4
-};
-
-const NotFoundPage: FC<PageProps> = () => (
-  <main style={pageStyles}>
-    <h1 style={headingStyles}>Page not found</h1>
-    <p style={paragraphStyles}>
-      Sorry 😔, we couldn’t find what you were looking for.
-      <br />
-      {process.env.NODE_ENV === 'development' ? (
-        <>
-          <br />
-          Try creating a page in <code style={codeStyles}>src/pages/</code>
-          .
-          <br />
-        </>
-      ) : null}
-      <br />
-      <Link to="/">Go home</Link>.
-    </p>
-  </main>
+const NotFoundPage: FC = () => (
+  <Layout>
+    <Section narrow className="py-20">
+      <BrokenText text="404" />
+      <h1 className="text-palette-primary mt-20 text-center text-lg">找不到你访问的页面</h1>
+      <div className="flex justify-center pt-10">
+        <Link
+          to="/"
+          className="text-palette-primary hover:text-palette-accent p-2 underline-offset-4 hover:underline"
+        >
+          回到首页
+        </Link>
+      </div>
+    </Section>
+  </Layout>
 );
 
 export default NotFoundPage;
 
-export const Head: HeadFC = () => <title>Not found</title>;
+export const Head: HeadFC = () => <title>404 Not Found</title>;

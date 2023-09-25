@@ -1,46 +1,27 @@
 import type { FC } from 'react';
-import { useEffect, useState } from 'react';
-import throttle from 'lodash/throttle';
 import clsx from 'clsx';
-import { clamp } from '@utils';
 import * as styles from './index.module.css';
 
-export interface IProgress {
-  contentHeight: number;
-}
-
-const Progress: FC<IProgress> = ({ contentHeight }) => {
-  const [progress, setProgress] = useState<number>(0);
-
-  useEffect(() => {
-    const handleScroll = throttle(() => {
-      const percentComplete = (window.scrollY / contentHeight) * 100;
-
-      setProgress(clamp(+percentComplete.toFixed(2), -2, 104));
-    }, 20);
-
-    if (contentHeight) {
-      window.addEventListener('scroll', handleScroll);
-      window.addEventListener('resize', handleScroll);
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-        window.removeEventListener('resize', handleScroll);
-      };
-    }
-  }, [contentHeight]);
-
+const Progress: FC<{ progress: number }> = ({ progress }) => {
+  let offset = 0;
+  if (progress > 0.95) {
+    offset = 1;
+  } else if (progress > 0.05) {
+    offset = (progress - 0.05) / 0.9;
+  }
+  offset *= 100;
   return (
     <div className="relative select-none outline-none" tabIndex={-1}>
       <div
         className={clsx(
           styles.Trackline,
-          'colorModeTransition bg-palette-bgAlt relative flex w-px flex-col overflow-hidden opacity-60'
+          'colorModeTransition bg-palette-secondary/50 relative flex w-px flex-col overflow-hidden opacity-60'
         )}
         aria-hidden="true"
       >
         <div
-          className="colorModeTransition bg-palette-secondary absolute -top-full left-0 h-full w-px"
-          style={{ transform: `translateY(${progress}%)` }}
+          className="colorModeTransition bg-palette-primary absolute -top-full left-0 h-full w-px"
+          style={{ transform: `translateY(${offset}%)` }}
         />
       </div>
     </div>

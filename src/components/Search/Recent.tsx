@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import { bindKey, unbindKey } from '@rwh/keystrokes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHashtag, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { motion } from 'framer-motion';
 import Empty from './Empty';
 import * as styles from './index.module.css';
 import useRecentList from './useRecentList';
@@ -79,7 +80,9 @@ const Recent: FC<{ hide: () => void }> = ({ hide }) => {
         <div>
           <ul className="pb-6 pt-4 text-[14px]">
             {recentList.map((recent, index) => (
-              <li
+              <motion.li
+                layout
+                layoutId="recent"
                 // eslint-disable-next-line react/no-array-index-key
                 key={`${index}`}
                 className={clsx(
@@ -114,7 +117,7 @@ const Recent: FC<{ hide: () => void }> = ({ hide }) => {
                 >
                   <FontAwesomeIcon icon={faTrashCan} />
                 </div>
-              </li>
+              </motion.li>
             ))}
           </ul>
         </div>

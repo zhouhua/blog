@@ -27,7 +27,7 @@ const Layout: FC<PropsWithChildren & { isDetailPage?: boolean }> = ({
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: 200 }}
         transition={{
-          type: 'spring',
+          type: 'tween',
           mass: 0.35,
           stiffness: 75,
           duration: 0.4

@@ -1,0 +1,11 @@
+layout: photo
+title: 登顶峨嵋山
+date: 2023-07-22
+list:
+  - picture: ./1.jpg
+    description: 普贤佛光
+    featured: true
+  - picture: ./2.jpg
+    description: 云海
+  - picture: ./3.jpg
+    description: 下山的缆车直冲云雾，突然转身一片蓝盈盈的迷雾中

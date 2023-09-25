@@ -7,7 +7,7 @@ import Logo from '@components/Logo';
 import useSiteMetadata from '@hooks/useSiteMetaData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { faPenFancy, faMessage, faAddressCard } from '@fortawesome/free-solid-svg-icons';
+import { faPenFancy, faMessage, faAddressCard, faImage } from '@fortawesome/free-solid-svg-icons';
 
 import { StaticImage } from 'gatsby-plugin-image';
 import * as styles from './index.module.css';
@@ -16,7 +16,8 @@ import { SearchButton } from '../Search';
 const iconMap: Record<string, IconDefinition> = {
   'pen-fancy': faPenFancy,
   'message': faMessage,
-  'address-card': faAddressCard
+  'address-card': faAddressCard,
+  'image': faImage
 };
 
 const DarkModeToggle: FC = () => {
@@ -79,7 +80,7 @@ const NavigationHeader: FC = () => {
       <div
         className={clsx(
           styles.NavContainer,
-          'relative z-20 flex items-end justify-between pt-16 sm:items-center sm:pt-10'
+          'relative z-20 flex items-end justify-between pt-16 sm:items-center sm:pt-10 md:items-center'
         )}
       >
         <Link
@@ -111,23 +112,23 @@ const NavigationHeader: FC = () => {
         <div
           className={clsx(
             styles.menu,
-            'flex max-w-2xl grow-[2] justify-around px-10 sm:px-2 md:px-8'
+            'flex max-w-2xl grow-[2] justify-around px-10 sm:px-2 md:px-2 lg:px-2'
           )}
         >
           {menu.map(({ name, path, icon }) => (
             <Link
               className={clsx(
                 'colorModeTransition text-palette-primary px-4 py-2 underline-offset-4 hover:underline sm:px-2 md:px-2',
-                'sm:flex sm:flex-col'
+                'sm:flex sm:flex-col md:flex md:flex-col'
               )}
               key={path}
               to={path}
             >
               <FontAwesomeIcon
                 icon={iconMap[icon]!}
-                className="mr-2 h-4 w-4 opacity-60 sm:mb-2 sm:mr-0 sm:h-6 sm:w-6"
+                className="mr-2 h-4 w-4 opacity-60 sm:mb-2 sm:mr-0 sm:h-5 sm:w-5 md:mb-2 md:mr-0 md:h-6 md:w-6 lg:mr-1"
               />
-              <span className="sm:text-xs">{name}</span>
+              <span className="sm:text-xs md:text-sm">{name}</span>
             </Link>
           ))}
         </div>

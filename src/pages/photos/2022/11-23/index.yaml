@@ -1,0 +1,16 @@
+layout: photo
+title: 秋日暖阳·兴业坊
+date: 2018-08-18
+list:
+  - picture: ./1.jpg
+    description: 某个小区围墙外的不知名小野果
+    featured: true
+  - picture: ./2.jpg
+    description: 铁轨边，透过飞驰而去的车厢间隙，等待通行的人们，沉浸在各自的忙碌中
+    featured: true
+  - picture: ./3.jpg
+    description: 火车来了！
+  - picture: ./4.jpg
+    description: 枯黄的银杏叶
+  - picture: ./5.jpg
+    description: 废弃的摩拜单车

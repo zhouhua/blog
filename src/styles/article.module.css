@@ -128,18 +128,24 @@
 }
 .ArticleBody {
   blockquote {
-    @apply border-palette-accent/80 mx-auto mb-12 mt-2.5 w-full italic sm:mb-9;
+    @apply text-palette-secondary relative mx-auto mb-12 mt-2.5 w-full italic sm:mb-9;
     @apply max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
+    @apply border-palette-bgAlt border-l-4 px-4;
     transition:
       background 0.25s var(--ease-in-out-quad),
       border 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
     & > p {
       @apply mb-1;
+      color: inherit;
       &::after,
       &::before {
         content: none;
       }
+    }
+    &::after {
+      content: '\201D';
+      @apply text-palette-bgAlt absolute left-full top-full -ml-6 -mt-12 text-[96px] sm:-ml-8 sm:-mt-8 sm:text-[72px];
     }
   }
 }

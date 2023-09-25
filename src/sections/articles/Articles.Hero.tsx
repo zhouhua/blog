@@ -7,6 +7,7 @@ import Bio from '@components/Bio';
 import Icons from '@icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight, faHashtag } from '@fortawesome/free-solid-svg-icons';
+import { describe } from 'node:test';
 import { GridLayoutContext } from './Articles.List.Context';
 import * as styles from './index.module.css';
 
@@ -25,7 +26,7 @@ const authorQuery = graphql`
         }
       }
     }
-    author: allAuthorsYaml {
+    author: allAuthor {
       edges {
         node {
           authorsPage
@@ -52,11 +53,12 @@ const authorQuery = graphql`
   }
 `;
 
-const ArticlesHero: FC<{ tag?: string; showLayout?: boolean; title?: string }> = ({
-  tag,
-  showLayout = false,
-  title
-}) => {
+const ArticlesHero: FC<{
+  tag?: string;
+  showLayout?: boolean;
+  title?: string;
+  description?: string;
+}> = ({ tag, showLayout = false, title, description }) => {
   const { gridLayout = 'tiles', hasSetGridLayout, setGridLayout } = useContext(GridLayoutContext);
 
   const results = useStaticQuery(authorQuery);
@@ -114,6 +116,7 @@ const ArticlesHero: FC<{ tag?: string; showLayout?: boolean; title?: string }> =
             {title || hero.heading}
           </h1>
           {!title && <p className="colorModeTransition">{subtitle}</p>}
+          {description && <p className="colorModeTransition">{description}</p>}
         </div>
       )}
       <div className="mb-[100px] flex items-center justify-between sm:hidden md:mb-20">

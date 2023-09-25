@@ -24,10 +24,14 @@ export type Icon = FC<{
 }>;
 
 export interface IImg
-  extends Omit<
-    ImgHTMLAttributes<HTMLImageElement>,
-    'placeholder' | 'onLoad' | 'src' | 'srcSet' | 'width' | 'height'
-  > {
+  extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'placeholder' | 'onLoad' | 'src' | 'srcSet'> {
   src: string | Queries.File;
   alt: string;
 }
+
+type CustomPhotoType = {
+  image: Queries.ImageSharp;
+  count: number;
+  date: string;
+  slug: string;
+};

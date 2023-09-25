@@ -68,6 +68,22 @@ const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] = ({ ac
     type AuthorsYamlSocial {
       url: String!
     }
+    `,
+    `
+    type photo implements Node{
+      layout: String!
+      title: String!
+      date: Date!
+      fields: photoFields!
+      list: [photoList!]!
+    }
+    type photoFields {
+      slug: String!
+    }
+    type photoList {
+      description: String!
+      featured: Boolean
+    }
     `
   ];
 

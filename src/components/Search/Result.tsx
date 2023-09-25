@@ -8,14 +8,14 @@ import clsx from 'clsx';
 import { bindKey, unbindKey } from '@rwh/keystrokes';
 import scrollIntoView from 'scroll-into-view-if-needed';
 import { AnchorLink } from 'gatsby-plugin-anchor-links';
-import { faAngleRight, faFileLines, faPenNib } from '@fortawesome/free-solid-svg-icons';
+import { faAngleRight, faFileLines, faImages, faPenNib } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as styles from './index.module.css';
 import NoResult from './NoResult';
 import Recent from './Recent';
 import useRecentList from './useRecentList';
 
-const icons = { post: faFileLines, journal: faPenNib };
+const icons = { post: faFileLines, journal: faPenNib, photo: faImages };
 
 const Result: FC<{ hide: () => void }> = ({ hide }) => {
   const { hits, isLastPage, showMore } = useInfiniteHits();
@@ -154,9 +154,9 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                     'absolute left-4 top-1/2 h-6 w-6 shrink-0 -translate-y-1/2 text-center text-[14px]'
                   )}
                 >
-                  <FontAwesomeIcon icon={icons[hit.layout as 'post' | 'journal']} />
+                  <FontAwesomeIcon icon={icons[hit.layout as 'post' | 'journal' | 'photo']} />
                 </div>
-                {hit.layout === 'post' && (
+                {(hit.layout === 'post' || hit.layout === 'photo') && (
                   <Link
                     to={hit.slug as string}
                     className="block cursor-pointer px-10 sm:px-8"

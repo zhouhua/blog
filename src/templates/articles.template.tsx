@@ -16,7 +16,12 @@ const ArticlesPage: FC<PageProps<object, { articles: IArticle[]; tag?: string }>
   return (
     <Layout>
       <SEO pathname={location.pathname} isBlogPost={false} title={title} />
-      <ArticlesHero tag={pageContext.tag} showLayout title={`${title} - 所有文章`} />
+      <ArticlesHero
+        tag={pageContext.tag}
+        showLayout
+        title={`${title} - 所有文章`}
+        description="胡言乱语"
+      />
       <Section narrow>
         <ArticlesList articles={pageContext.articles} />
       </Section>

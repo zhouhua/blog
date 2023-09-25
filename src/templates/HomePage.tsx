@@ -1,18 +1,20 @@
 import { Link, navigate } from 'gatsby';
 import type { HeadFC, PageProps } from 'gatsby';
 import type { FC } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Layout from '@components/Layout';
 import SEO from '@components/SEO';
 import Section from '@components/Section';
 import clsx from 'clsx';
 import useSiteMetadata from '@hooks/useSiteMetaData';
-import { sampleSize } from 'lodash';
+import { sampleSize, shuffle, take } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
+import type { PhotoProps } from 'react-photo-gallery';
+import ImageGallery from '@components/Photo/ImageGallery';
 import ArticlesHero from '../sections/articles/Articles.Hero';
 import * as styles from './index.module.css';
-import type { IArticle } from '../types/index';
+import type { CustomPhotoType, IArticle } from '../types/index';
 import ArticlePair from '../sections/articles/Articles.Pair';
 import * as articleStyles from '../styles/article.module.css';
 
@@ -20,13 +22,25 @@ type PageContentType = {
   articleNumber: number;
   journalNumber: number;
   totalWordCount: number;
+  photoNumber: number;
+  allPhotoCount: number;
+  allFeaturedImage: PhotoProps<CustomPhotoType>[];
   featuredArticles: IArticle[];
   newestJournals: IArticle[];
 };
 
 const Index: FC<PageProps<object, PageContentType>> = ({
   location,
-  pageContext: { articleNumber, journalNumber, totalWordCount, featuredArticles, newestJournals }
+  pageContext: {
+    totalWordCount,
+    articleNumber,
+    photoNumber,
+    journalNumber,
+    allPhotoCount,
+    allFeaturedImage,
+    featuredArticles,
+    newestJournals
+  }
 }) => {
   const { title } = useSiteMetadata();
   const [randomPostsPairs, setPairList] = useState<[IArticle, IArticle][]>([]);
@@ -38,6 +52,7 @@ const Index: FC<PageProps<object, PageContentType>> = ({
     }
     setPairList(pairs);
   }, [featuredArticles]);
+  const shuffledImageList = useMemo(() => take(shuffle(allFeaturedImage), 50), [allFeaturedImage]);
   return (
     <Layout>
       <SEO pathname={location.pathname} isBlogPost={false} title={title} />
@@ -99,9 +114,18 @@ const Index: FC<PageProps<object, PageContentType>> = ({
         </ul>
       </Section>
       <Section narrow>
-        <div className="text-palette-secondary relative z-10 py-20 text-right">
-          这里收集了 {articleNumber} 篇文章和 {journalNumber} 篇小随笔，合计{' '}
-          {(totalWordCount / 10000).toFixed(2)} 万字
+        <h3 className={clsx(styles.lineTitle, 'mt-20')}>精彩照片</h3>
+      </Section>
+      <section className="min-w-[360px] max-w-full px-20 sm:px-5 md:px-8 lg:px-8 xl:px-8">
+        <ImageGallery
+          key={shuffledImageList.map(item => item.slug).join()}
+          photos={shuffledImageList}
+        />
+      </section>
+      <Section narrow>
+        <div className="text-palette-secondary relative z-10 py-24 text-center">
+          这里收集了 {articleNumber} 篇文章、 {journalNumber} 篇小随笔和 {photoNumber}{' '}
+          个照片集，合计 {(totalWordCount / 10000).toFixed(2)} 万字和 {allPhotoCount} 张照片
         </div>
       </Section>
     </Layout>

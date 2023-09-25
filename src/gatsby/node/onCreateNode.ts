@@ -37,11 +37,15 @@ const onCreateNode: GatsbyNode['onCreateNode'] = ({ node, actions, getNode }) =>
         );
       createNodeField({ node: markdownNode as any, name: 'tagSlugs', value: tagSlugs });
     }
-
-    // if (typeof markdownNode.frontmatter?.category !== 'undefined') {
-    //   const categorySlug = `/categories/${kebabCase(markdownNode.frontmatter.category || '')}/`;
-    //   createNodeField({ node: markdownNode as any, name: 'categorySlug', value: categorySlug });
-    // }
+  } else if (node.internal.type === 'photo') {
+    const photoNode = node as unknown as Queries.photo;
+    const year = dayjs(photoNode.date).format('YYYY');
+    const slug = createFilePath({ node: photoNode as any, getNode }).replace(/^\/[^/]+/, '');
+    createNodeField({
+      node: photoNode as any,
+      name: 'slug',
+      value: `/photo/${year}${slug}`
+    });
   }
 };
 export default onCreateNode;

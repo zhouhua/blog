@@ -1,0 +1,11 @@
+name: 周骅
+bio: |
+  周骅，前端研发，目前就职于字节跳动。
+avatar: ./avatars/photo.jpg
+featured: true
+authorsPage: '/about'
+social:
+  - url: https://unsplash.com
+  - url: https://stackoverflow.com
+  - url: https://github.com
+layout: author

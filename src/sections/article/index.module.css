@@ -80,9 +80,7 @@
 }
 .AsideContainer {
   max-width: 1024px;
-  @media (max-width: theme(screens.lg.max)) {
-    display: none;
-  }
+  @apply sm:hidden md:hidden lg:hidden;
 }
 .NotOverlapContainer {
   user-select: initial;

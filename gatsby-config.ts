@@ -17,7 +17,7 @@ const config: GatsbyConfig = {
     menu: [
       { name: '文章', path: '/articles', icon: 'pen-fancy' },
       { name: '随笔', path: '/journals', icon: 'message' },
-      // { name: '照片', path: '/photos' },
+      { name: '照片', path: '/photos', icon: 'image' },
       { name: '关于我', path: '/about', icon: 'address-card' }
     ]
   },
@@ -27,36 +27,12 @@ const config: GatsbyConfig = {
   trailingSlash: 'always',
   jsxRuntime: 'automatic',
   flags: {
-    DEV_SSR: true,
+    DEV_SSR: true
     // eslint-disable-next-line id-length
-    GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY: true
+    // GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY: true
   },
   plugins: [
     'gatsby-plugin-postcss',
-    'gatsby-plugin-image',
-    'gatsby-plugin-sitemap',
-    {
-      resolve: 'gatsby-plugin-sharp',
-      options: {
-        failOn: 'none'
-      }
-    },
-    'gatsby-transformer-sharp',
-    'gatsby-transformer-yaml',
-    'gatsby-plugin-pnpm',
-    'gatsby-plugin-netlify',
-    // {
-    //   resolve: 'gatsby-plugin-transition-link',
-    //   options: {
-    //     layout: require.resolve('./src/components/Layout/Layout.tsx')
-    //   }
-    // },
-    {
-      resolve: 'gatsby-plugin-anchor-links',
-      options: {
-        duration: 500
-      }
-    },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
@@ -67,8 +43,22 @@ const config: GatsbyConfig = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        name: 'pages',
-        path: `${__dirname}/src/pages`
+        name: 'articles',
+        path: `${__dirname}/src/pages/articles`
+      }
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'journals',
+        path: `${__dirname}/src/pages/journals`
+      }
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'photos',
+        path: `${__dirname}/src/pages/photos`
       }
     },
     {
@@ -76,6 +66,29 @@ const config: GatsbyConfig = {
       options: {
         name: 'images',
         path: `${__dirname}/src/images`
+      }
+    },
+    'gatsby-plugin-image',
+    'gatsby-plugin-sitemap',
+    {
+      resolve: 'gatsby-plugin-sharp',
+      options: {
+        failOn: 'none'
+      }
+    },
+    'gatsby-transformer-sharp',
+    {
+      resolve: 'gatsby-transformer-yaml',
+      // @ts-ignore
+      options: { typeName: ({ object }) => object?.layout }
+    },
+    'gatsby-plugin-pnpm',
+    'gatsby-plugin-netlify',
+    'gatsby-plugin-sharp-exif',
+    {
+      resolve: 'gatsby-plugin-anchor-links',
+      options: {
+        duration: 500
       }
     },
     {
@@ -90,7 +103,7 @@ const config: GatsbyConfig = {
               linkImagesToOriginal: false,
               quality: 80,
               withWebp: true,
-              srcSetBreakpoints: [200, 360, 500, 650, 1300, 2600]
+              srcSetBreakpoints: [200, 360, 640, 1280, 2600]
             }
           },
           { resolve: 'gatsby-remark-numbered-footnotes' },

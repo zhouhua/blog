@@ -4,8 +4,16 @@ import type { GatsbyNode } from 'gatsby';
 import { config } from 'dotenv';
 import { load } from 'cheerio';
 import { pick, take, words } from 'lodash';
+import type { PhotoProps } from 'react-photo-gallery';
 
 config();
+
+type CustomPhotoType = {
+  image: Queries.ImageSharp;
+  count: number;
+  date: string;
+  slug: string;
+};
 
 function simplifyList(list: Queries.MarkdownRemark[]): Queries.MarkdownRemark[] {
   return list.map<Queries.MarkdownRemark>(
@@ -45,7 +53,9 @@ const templates = {
   article: path.resolve(templatesDirectory, 'article.template.tsx'),
   author: path.resolve(templatesDirectory, 'author.template.tsx'),
   journals: path.resolve(templatesDirectory, 'journals.template.tsx'),
-  homepage: path.resolve(templatesDirectory, 'HomePage.tsx')
+  homepage: path.resolve(templatesDirectory, 'HomePage.tsx'),
+  photos: path.resolve(templatesDirectory, 'photos.list.template.tsx'),
+  photo: path.resolve(templatesDirectory, 'photo.group.template.tsx')
 };
 
 const createPages: GatsbyNode['createPages'] = async (
@@ -66,6 +76,7 @@ const createPages: GatsbyNode['createPages'] = async (
 
   let authors: Queries.AuthorsYaml[] = [];
   let articles: Queries.MarkdownRemark[] = [];
+  let photos: Queries.photo[] = [];
   if (rootPath) {
     log('Config rootPath', rootPath as string);
   } else {
@@ -103,7 +114,6 @@ const createPages: GatsbyNode['createPages'] = async (
                 hero {
                   childImageSharp {
                     gatsbyImageData(
-                      width: 1560
                       layout: CONSTRAINED
                       placeholder: BLURRED
                       formats: [AUTO, WEBP]
@@ -126,7 +136,7 @@ const createPages: GatsbyNode['createPages'] = async (
     `);
     const authorsQuery = await graphql(`
       {
-        authors: allAuthorsYaml {
+        authors: allAuthor {
           edges {
             node {
               authorsPage
@@ -152,6 +162,57 @@ const createPages: GatsbyNode['createPages'] = async (
         }
       }
     `);
+    const photosQeury = await graphql(`
+      {
+        photos: allPhoto(sort: { date: DESC }, limit: 1000) {
+          edges {
+            node {
+              title
+              date
+              fields {
+                slug
+              }
+              list {
+                description
+                featured
+                picture {
+                  childImageSharp {
+                    fields {
+                      exif {
+                        raw {
+                          image {
+                            Make
+                            Model
+                            Orientation
+                          }
+                          exif {
+                            ExposureBiasValue
+                            ExposureTime
+                            FNumber
+                            FocalLength
+                            FocalLengthIn35mmFormat
+                            ISO
+                            PixelXDimension
+                            PixelYDimension
+                            DateTimeOriginal
+                          }
+                        }
+                      }
+                    }
+                    gatsbyImageData(
+                      layout: CONSTRAINED
+                      quality: 80
+                      placeholder: DOMINANT_COLOR
+                      breakpoints: [200, 640, 1280, 1600, 2000]
+                    )
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    `);
     authors = ((authorsQuery.data as any).authors.edges as Queries.AuthorsYamlEdge[]).map(
       edge => edge.node
     );
@@ -159,6 +220,7 @@ const createPages: GatsbyNode['createPages'] = async (
     articles = ((articlesQuery.data as any).articles.edges as Queries.MarkdownRemarkEdge[]).map(
       edge => edge.node
     );
+    photos = ((photosQeury.data as any).photos.edges as Queries.photoEdge[]).map(edge => edge.node);
   } catch (error) {
     console.error(error);
   }
@@ -310,9 +372,71 @@ const createPages: GatsbyNode['createPages'] = async (
     });
   });
 
+  const photoList: PhotoProps<CustomPhotoType>[] = [];
+  photos.forEach(({ list, title: alt, date, fields }) => {
+    const [{ picture }] = [...list.filter(({ featured }) => !!featured), list[0]];
+    const { width, height } = picture!.childImageSharp!.gatsbyImageData;
+    const { fallback } = picture?.childImageSharp?.gatsbyImageData.images || {};
+    photoList.push({
+      src: fallback!.src,
+      width,
+      height,
+      alt,
+      image: picture!.childImageSharp!,
+      count: list.length,
+      date: date!,
+      slug: fields.slug
+    });
+  });
+  const featuredList: PhotoProps<CustomPhotoType>[] = [];
+  photos.forEach(({ list, title: alt, date, fields }) => {
+    const featuredPictures = [...list.filter(({ featured }) => !!featured)];
+    if (featuredPictures.length) {
+      const [{ picture }] = featuredPictures;
+      const { width, height } = picture!.childImageSharp!.gatsbyImageData;
+      const { fallback } = picture?.childImageSharp?.gatsbyImageData.images || {};
+      featuredList.push({
+        src: fallback!.src,
+        width,
+        height,
+        alt,
+        image: picture!.childImageSharp!,
+        count: list.length,
+        date: date!,
+        slug: fields.slug
+      });
+    }
+  });
+  createPage({
+    path: '/photos',
+    component: templates.photos,
+    context: {
+      author: authors[0],
+      photos: photoList,
+      basePath,
+      permalink: '/photos',
+      slug: '/photos'
+    }
+  });
+  photos.forEach(photo => {
+    createPage({
+      path: photo.fields.slug,
+      component: templates.photo,
+      context: {
+        author: authors[0],
+        photoPost: photo,
+        featuredList: featuredList.filter(item => item.slug !== photo.fields.slug),
+        basePath,
+        permalink: photo.fields.slug,
+        slug: photo.fields.slug
+      }
+    });
+  });
+
   // make homepage
   const articleNumber = articlesPublished.length;
   const journalNumber = journals.length;
+  const photoNumber = photos.length;
   const articleWordCount = articlesPublished.reduce(
     (prev, article) => prev + (article.wordCount?.words || 0),
     0
@@ -321,19 +445,42 @@ const createPages: GatsbyNode['createPages'] = async (
     (prev, journal) => prev + (journal.wordCount?.words || 0),
     0
   );
+  const allPhotoCount = photos.reduce((prev, { list }) => prev + list.length, 0);
   const totalWordCount = articleWordCount + journalWordCount;
   const featuredArticles = simplifyList(
     articlesPublished.filter(article => article.frontmatter.featured)
   );
+  const allFeaturedImage: PhotoProps<CustomPhotoType>[] = [];
+  photos.forEach(photo => {
+    photo.list.forEach(({ featured, picture }) => {
+      if (featured) {
+        const { width, height } = picture!.childImageSharp!.gatsbyImageData;
+        const { fallback } = picture?.childImageSharp?.gatsbyImageData.images || {};
+        allFeaturedImage.push({
+          src: fallback!.src,
+          width,
+          height,
+          alt: photo.title,
+          count: 0,
+          image: picture!.childImageSharp!,
+          date: photo.date!,
+          slug: photo.fields.slug
+        });
+      }
+    });
+  });
   const newestJournals = take(journals, 5).map(simplifyArticle);
   createPage({
     path: '/',
     component: templates.homepage,
     context: {
-      authors: authors[0],
+      author: authors[0],
       totalWordCount,
       articleNumber,
+      photoNumber,
       journalNumber,
+      allPhotoCount,
+      allFeaturedImage,
       basePath,
       featuredArticles,
       newestJournals,
