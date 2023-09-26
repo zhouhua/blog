@@ -24,11 +24,11 @@ const Article: FC<PageProps<object, { article: IArticle; author: IAuthor; next: 
   const [progress, setProgress] = useState<number>(0);
   const { scrollYProgress } = useScroll({
     target: contentSectionRef,
-    offset: ['start 60%', 'end 40%']
+    offset: ['start 20vh', 'end 70vh']
   });
+
   useEffect(() => {
     scrollYProgress.on('change', e => {
-      console.log(e);
       setProgress(e);
     });
   }, [scrollYProgress]);
@@ -37,11 +37,10 @@ const Article: FC<PageProps<object, { article: IArticle; author: IAuthor; next: 
     <Layout isDetailPage>
       <ArticleSEO article={article} author={author} location={location} />
       <ArticleHero article={article} author={author} />
-      {!!article.frontmatter.hero && (
-        <ArticleAside show={progress > 0 && progress < 1}>
-          <Progress progress={progress} />
-        </ArticleAside>
-      )}
+      <ArticleAside show={progress > 0 && progress < 1}>
+        <Progress progress={progress} />
+      </ArticleAside>
+
       <article className="relative" ref={contentSectionRef}>
         <ArticleContent article={article} />
       </article>
