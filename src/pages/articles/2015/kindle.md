@@ -44,7 +44,11 @@ Amazon 出品的电子书制作、转换工具，它能把 HTML、XML、XHTML、
 
 ### 解析 url
 
+<div class="mix-light mix-both">
+
 ![](./kindle/url.png)
+
+</div>
 
 <p class="captain">天涯帖子 url 示意</p>
 
@@ -156,11 +160,19 @@ scope = page.evaluate(function (scope) {
 
 OK，至此现在该分析网页本身的结构了。首先我在代码中发现一个全局变量 `bbsGlobal`，可以从中得到总页数和作者 ID。
 
+<div class="mix-light">
+
 ![](./kindle/var.png)
+
+</div>
 
 于是，嗯，我就直接拿来用了。再看帖子结构，如下：
 
+<div class="mix-light mix-both">
+
 ![](./kindle/content.png)
+
+</div>
 
 我们可以直接用 `javascript±$('[_host="' + scope.hostName + '"] .bbs-content')` 把正文节点都找出来，然后拼合在一起，完成！
 

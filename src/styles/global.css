@@ -135,7 +135,7 @@ img.Image__Zoom ~ div {
 }
 
 .article-columns {
-  @apply text-palette-primary w-full text-lg leading-[1.756];
+  @apply w-full text-lg leading-[1.756] text-palette-primary;
   @apply mx-auto sm:px-0 sm:py-0;
   @apply max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
   @apply grid items-center gap-x-5;
@@ -188,5 +188,45 @@ html {
   background-color: theme(colors.palette.bg);
   @media (screen(sm)) {
     background: theme(colors.palette.bgRevert);
+  }
+}
+.mix-light,
+.mix-dark {
+  p {
+    @apply bg-palette-bg;
+  }
+}
+
+.mix-light {
+  .gatsby-resp-image-wrapper {
+    @apply mix-blend-darken;
+  }
+}
+.mix-dark {
+  .gatsby-resp-image-wrapper {
+    @apply mix-blend-normal;
+  }
+}
+.mix-dark.mix-both {
+  .gatsby-resp-image-wrapper {
+    @apply mix-blend-darken invert;
+  }
+}
+
+.dark {
+  .mix-dark {
+    .gatsby-resp-image-wrapper {
+      @apply mix-blend-lighten;
+    }
+  }
+  .mix-light {
+    .gatsby-resp-image-wrapper {
+      @apply mix-blend-normal;
+    }
+  }
+  .mix-light.mix-both {
+    .gatsby-resp-image-wrapper {
+      @apply mix-blend-lighten invert;
+    }
   }
 }

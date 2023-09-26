@@ -28,7 +28,11 @@ Application Cache 的使用要做两个方面的工作，浏览器端和服务�
 
 仅仅这样做就完成了 Application Cache 的配置，关于 cache 的检查、更新、读取都是浏览器自动完成。
 
+<div class="mix-light mix-both">
+
 ![](./applicationcache/flow.png)
+
+</div>
 
 <p class="captain">图1：manifest的解析过程</p>
 
@@ -60,7 +64,11 @@ Application Cache 被支持情况见下图：
 
 除此之外，我觉得 Application Cache 的使用足够简单，向开发人员屏蔽了实现细节，只需要很小的工作量就可以使用。不仅如此，在成熟项目中使用此功能，对原有逻辑几乎没有影响，即使设备不支持也不会产生副作用。
 
+<div class="mix-light mix-both">
+
 ![](./applicationcache/result.png)
+
+</div>
 
 <p class="captain">图4：本地搭建环境测试结果</p>
 

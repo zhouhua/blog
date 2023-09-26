@@ -8,10 +8,11 @@ const Comment: FC = () => {
   return (
     <Section
       narrow
-      className="border-palette-bgAlt relative z-10 mb-32 mt-10 border-t border-solid pt-10"
+      className="relative z-10 mb-32 mt-10 border-t border-solid border-palette-bgAlt pt-10"
     >
       <div className="mx-auto max-w-[680px]">
         <Giscus
+          key={colorMode}
           repo="zhouhua/blog-comment"
           repoId="MDEwOlJlcG9zaXRvcnkxMjQwOTQzNzk="
           category="Announcements"

@@ -19,7 +19,7 @@ DNA——脱氧核糖核苷酸——是大众熟知的概念，它是遗传物�
 
 <style>
   .dark .dna-image {
-    background: #aaa;
+    filter: invert(1);
   }
 </style>
 

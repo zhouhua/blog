@@ -23,7 +23,11 @@ date: 2023-04-07 10:00:00
 - 关注用户场景，注重效率
 </div>
 
+<div class="mix-both mix-light">
+
 ![Untitled](./octalysis/Untitled.png)
+
+</div>
 
 <div class="callout">
 
@@ -71,7 +75,11 @@ $$
 
 回到 `Octalysis` 这个词，它是一个人造词，由 Octagon 和 Analysis 两个词拼起来的。
 
+<div class="mix-light">
+
 ![Untitled](./octalysis/Untitled3.png)
+
+</div>
 
 Octalysis 引入了“核心驱动力”的概念来归纳人们的行为动机，如上图所示，一共抽象了八种核心驱动力，形成了这样的八边形（Octagon shape）。基于这八种核心驱动力，我们可以进一步分析（Analysis）产品现状、设计游戏化体验。
 
@@ -331,7 +339,11 @@ Octalysis 引入了“核心驱动力”的概念来归纳人们的行为动机�
 
 在前文中已经提及过左脑和右脑驱动，这里的左脑和右脑只是一个文字符号，并不是真正意义上的左脑和右脑，这个文字符号用以说明各个核心驱动理性的或是感性的倾向而已。
 
+<div class="mix-light">
+
 ![Untitled](./octalysis/Untitled23.png)
+
+</div>
 
 <div class="article-columns" style="grid-template-columns: 1fr 1fr;">
 <div>
@@ -378,7 +390,11 @@ Octalysis 引入了“核心驱动力”的概念来归纳人们的行为动机�
 
 ### 白帽与黑帽核心驱动
 
+<div class="mix-light">
+
 ![Untitled](./octalysis/Untitled24.png)
+
+</div>
 
 <div class="article-columns" style="grid-template-columns: 1fr 1fr;">
 <div>

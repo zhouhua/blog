@@ -25,7 +25,11 @@ draft: false
 
 回想一下前后端的交互过程，可以总结出网页上一个文件的传输过程，从URL请求开始，大致经历了以下步骤：
 
+<div class="mix-light mix-both">
+
 ![](./load/steps.png)
+
+</div>
 
 <p class="captain">图1：网页HTTP请求过程</p>
 

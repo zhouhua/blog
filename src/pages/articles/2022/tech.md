@@ -20,7 +20,11 @@ date: 2022-05-10 10:00:00
 
 第一，我们追求效用最大化，最好能有 10 倍的体验差。这是几天前听了黎婷的教育产品分享后我的收获，她分享了一个例子：
 
+<div class="mix-light mix-both">
+
 ![Untitled](./images/table.png)
+
+<div class="mix-light mix-both">
 
 对于产品 B 做的事情，太像我们日常技改要做的事情了。为什么产品 B 不成功，大家可以好好想想。
 
