@@ -47,7 +47,7 @@ const ImageGallery: FC<{ photos: PhotoProps<CustomPhotoType>[] }> = ({ photos })
           {!!alt && loaded && isNarrow ? (
             <div
               className={clsx(
-                styles.mask,
+                { [styles.fullMask]: !!count, [styles.mask]: !count },
                 'text-palette-bg absolute left-0 top-0 h-full w-full p-3',
                 'flex items-end'
               )}
@@ -65,7 +65,7 @@ const ImageGallery: FC<{ photos: PhotoProps<CustomPhotoType>[] }> = ({ photos })
           ) : (
             <motion.div
               className={clsx(
-                styles.mask,
+                { [styles.fullMask]: !!count, [styles.mask]: !count },
                 'text-palette-bg absolute left-0 top-0 h-full w-full p-3',
                 'flex items-end pb-96 opacity-0'
               )}
