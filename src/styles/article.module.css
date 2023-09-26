@@ -1,7 +1,7 @@
 .ArticleBody {
   padding: 120px 0 35px;
   transition: background 0.2s linear;
-  @apply sm:py-14;
+  @apply sm:px-5 sm:py-14;
 }
 
 .ArticleBody {
@@ -12,7 +12,7 @@
     @apply relative z-0 mx-auto inline-block h-auto max-w-full rounded-[5px];
     @apply mb-[50px] mt-[15px] sm:mb-[45px] sm:mt-[10px];
   }
-  :global(.gatsby-palette-image-background-image) {
+  :global(.gatsby-resp-image-background-image) {
     @apply opacity-0;
   }
   .Image__Container {
@@ -55,6 +55,12 @@
       margin: 0 auto 25px;
     }
   }
+  .fullImage {
+    @apply pointer-events-none relative mx-auto mb-[60px] mt-[25px] max-w-[100vw] sm:-mx-5 sm:w-screen;
+    img {
+      @apply rounded-none;
+    }
+  }
 }
 .ArticleBody {
   h1,
@@ -63,7 +69,7 @@
   h4,
   h5,
   h6 {
-    @apply text-palette-primary mx-auto my-0 font-sans font-bold;
+    @apply mx-auto my-0 font-sans font-bold text-palette-primary;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -128,9 +134,9 @@
 }
 .ArticleBody {
   blockquote {
-    @apply text-palette-secondary relative mx-auto mb-12 mt-2.5 w-full italic sm:mb-9;
+    @apply relative mx-auto mb-12 mt-2.5 w-full italic text-palette-secondary sm:mb-9;
     @apply max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
-    @apply border-palette-bgAlt border-l-4 px-4;
+    @apply border-l-4 border-palette-bgAlt px-4;
     transition:
       background 0.25s var(--ease-in-out-quad),
       border 0.25s var(--ease-in-out-quad),
@@ -145,7 +151,7 @@
     }
     &::after {
       content: '\201D';
-      @apply text-palette-bgAlt absolute left-full top-full -ml-6 -mt-12 text-[96px] sm:-ml-8 sm:-mt-8 sm:text-[72px];
+      @apply absolute left-full top-full -ml-6 -mt-12 text-[96px] text-palette-bgAlt sm:-ml-8 sm:-mt-8 sm:text-[72px];
     }
   }
 }
@@ -154,7 +160,7 @@
   dl,
   ol {
     padding: 15px 0 30px 30px;
-    @apply text-palette-primary relative mx-auto my-0 w-full list-none text-lg;
+    @apply relative mx-auto my-0 w-full list-none text-lg text-palette-primary;
     @apply max-w-[680px] sm:max-w-[486px] sm:pl-5 md:max-w-[507px];
     transition:
       background 0.25s var(--ease-in-out-quad),
@@ -177,7 +183,7 @@
     }
   }
   ul > li::before {
-    @apply bg-palette-secondary h-2  w-2 content-[''];
+    @apply h-2 w-2  bg-palette-secondary content-[''];
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -194,7 +200,7 @@
     font-size: 20px;
   }
   dl {
-    @apply bg-palette-card mb-10;
+    @apply mb-10 bg-palette-card;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -203,7 +209,7 @@
 .ArticleBody {
   p,
   :global(.math-display) {
-    @apply text-palette-primary w-full text-lg leading-[1.756];
+    @apply w-full text-lg leading-[1.756] text-palette-primary;
     @apply max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
     @apply mx-auto mb-[35px] mt-0 sm:mb-[25px] sm:py-0 sm:text-base sm:leading-7;
     transition:
@@ -266,7 +272,7 @@
       }
     }
     :not(pre) > code[class*='language-'] {
-      @apply text-palette-secondary  rounded bg-prism-background font-monospace font-normal dark:bg-dark-prism-background;
+      @apply rounded  bg-prism-background font-monospace font-normal text-palette-secondary dark:bg-dark-prism-background;
       transition:
         background 0.25s var(--ease-in-out-quad),
         color 0.25s var(--ease-in-out-quad);
@@ -383,7 +389,7 @@
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
     thead {
-      @apply text-palette-primary relative border-collapse text-left font-sans font-semibold;
+      @apply relative border-collapse text-left font-sans font-semibold text-palette-primary;
       line-height: 1.756;
       transition:
         background 0.25s var(--ease-in-out-quad),
@@ -399,8 +405,8 @@
     }
     tbody {
       td {
-        @apply border-palette-bgAlt border border-solid;
-        @apply bg-palette-card break-words px-[30px] py-[15px] text-base;
+        @apply border border-solid border-palette-bgAlt;
+        @apply break-words bg-palette-card px-[30px] py-[15px] text-base;
         @apply sm:px-5 sm:py-3.5 sm:text-sm md:px-5 md:py-3.5;
         transition:
           background 0.25s var(--ease-in-out-quad),
@@ -413,7 +419,7 @@
   :global(.captain),
   figcaption,
   caption {
-    @apply text-palette-gray -mt-6 mb-6 w-full pt-1.5 text-center text-sm;
+    @apply -mt-6 mb-6 w-full pt-1.5 text-center text-sm text-palette-gray;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -434,7 +440,7 @@
     @apply mb-4;
   }
   hr {
-    @apply text-palette-bgAlt relative mx-auto my-12 w-full max-w-[680px];
+    @apply relative mx-auto my-12 w-full max-w-[680px] text-palette-bgAlt;
     @apply sm:max-w-[486px] sm:px-5 sm:py-0 md:max-w-[507px];
     transition:
       background 0.25s var(--ease-in-out-quad),
@@ -445,7 +451,7 @@
   :global(.callout) {
     @apply mx-auto mb-[35px] mt-0 p-4 pl-12 sm:mb-[25px];
     @apply w-full max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
-    @apply border-palette-bgAlt rounded-lg border border-solid;
+    @apply rounded-lg border border-solid border-palette-bgAlt;
     @apply bg-palette-bgAlt/20;
     h2,
     h3,

@@ -103,7 +103,7 @@ const config: GatsbyConfig = {
               linkImagesToOriginal: false,
               quality: 80,
               withWebp: true,
-              srcSetBreakpoints: [200, 360, 640, 1280, 2600]
+              srcSetBreakpoints: [200, 360, 650, 1280, 1800, 2600]
             }
           },
           { resolve: 'gatsby-remark-numbered-footnotes' },

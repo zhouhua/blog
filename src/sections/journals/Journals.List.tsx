@@ -54,7 +54,7 @@ const JounalsList: FC<{ articles: IArticle[] }> = ({ articles }) => {
             id={`journals${year}`}
             className={clsx(
               'absolute -top-9 left-16 ml-3 sm:left-0 md:left-0 md:ml-1 lg:left-2',
-              'text-palette-accent font-monospace text-3xl font-semibold',
+              'font-monospace text-3xl font-semibold text-palette-accent',
               'colorModeTransition'
             )}
           >
@@ -72,7 +72,7 @@ const JounalsList: FC<{ articles: IArticle[] }> = ({ articles }) => {
                   'colorModeTransition'
                 )}
               >
-                <div className="text-palette-gray absolute right-4 top-12 z-10 h-4 font-monospace text-sm sm:top-9">
+                <div className="absolute right-4 top-12 z-10 h-4 font-monospace text-sm text-palette-gray sm:top-9">
                   共 {wordCount} 字，预计 {timeToRead} 分钟读完
                 </div>
                 <Link
@@ -88,7 +88,7 @@ const JounalsList: FC<{ articles: IArticle[] }> = ({ articles }) => {
                 </Link>
                 <article
                   className={clsx(
-                    'bg-palette-card relative rounded-2xl px-10 pb-2 pt-12 sm:px-4 sm:pt-8 md:px-8',
+                    'relative rounded-2xl bg-palette-card px-10 pb-2 pt-12 sm:px-4 sm:pt-8 md:px-8',
                     'colorModeTransition',
                     styles.noteContent
                   )}

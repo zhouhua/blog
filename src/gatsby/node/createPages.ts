@@ -203,7 +203,7 @@ const createPages: GatsbyNode['createPages'] = async (
                       layout: CONSTRAINED
                       quality: 80
                       placeholder: DOMINANT_COLOR
-                      breakpoints: [200, 640, 1280, 1600, 2000]
+                      breakpoints: [200, 650, 1280, 1800, 2000]
                     )
                   }
                 }

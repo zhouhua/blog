@@ -75,7 +75,7 @@ date: 2022-01-15 10:00:00
 
 <div class="mix-light">
 
-![](./images/4.png)
+![](./images/4.jpg)
 
 </div>
 
@@ -117,7 +117,7 @@ RTC 中台上层是教室中台，对教室进行抽象封装，以 rtc 房间�
 
 <div class="mix-light">
 
-![](./images/7.png)
+![](./images/7.jpg)
 
 </div>
 
@@ -149,7 +149,7 @@ RTC 中台上层是教室中台，对教室进行抽象封装，以 rtc 房间�
 
 <div class="mix-light">
 
-![](./images/11.png)
+![](./images/11.jpg)
 
 </div>
 
@@ -161,7 +161,7 @@ RTC 中台上层是教室中台，对教室进行抽象封装，以 rtc 房间�
 
 <div class="mix-light">
 
-![](./images/12.png)
+![](./images/12.jpg)
 
 </div>
 
@@ -177,7 +177,7 @@ RTC 中台上层是教室中台，对教室进行抽象封装，以 rtc 房间�
 
 <div class="mix-light">
 
-![](./images/14.png)
+![](./images/14.jpg)
 
 </div>
 

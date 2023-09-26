@@ -10,6 +10,12 @@ featured: true
 date: 2023-04-07 10:00:00
 ---
 
+<style>
+  .limitImage p {
+    max-width: 1000px !important;
+  }
+</style>
+
 ## 什么是游戏化
 
 游戏化是指提取游戏中的那些引人入胜、令人着迷的元素，并应用到现实世界或产品设计的一种方法。
@@ -75,7 +81,7 @@ $$
 
 回到 `Octalysis` 这个词，它是一个人造词，由 Octagon 和 Analysis 两个词拼起来的。
 
-<div class="mix-light">
+<div class="mix-light limitImage">
 
 ![Untitled](./octalysis/Untitled3.png)
 
@@ -339,7 +345,7 @@ Octalysis 引入了“核心驱动力”的概念来归纳人们的行为动机�
 
 在前文中已经提及过左脑和右脑驱动，这里的左脑和右脑只是一个文字符号，并不是真正意义上的左脑和右脑，这个文字符号用以说明各个核心驱动理性的或是感性的倾向而已。
 
-<div class="mix-light">
+<div class="mix-light limitImage">
 
 ![Untitled](./octalysis/Untitled23.png)
 
@@ -390,7 +396,7 @@ Octalysis 引入了“核心驱动力”的概念来归纳人们的行为动机�
 
 ### 白帽与黑帽核心驱动
 
-<div class="mix-light">
+<div class="mix-light limitImage">
 
 ![Untitled](./octalysis/Untitled24.png)
 

@@ -22,7 +22,7 @@
   }
 }
 .HeroHeading {
-  @apply text-palette-primary font-sans font-bold;
+  @apply font-sans font-bold text-palette-primary;
   @apply break-words text-[48px] leading-[1.32];
   @apply md:text-[38px] md:leading-[1.2];
   @apply sm:text-[36px] sm:leading-[1.3];
