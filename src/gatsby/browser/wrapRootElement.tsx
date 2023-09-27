@@ -20,10 +20,13 @@ const wrapRootElement: GatsbyBrowser['wrapRootElement'] = ({ element }) => (
             __html: `
             var _hmt = _hmt || [];
             (function() {
-              var hm = document.createElement("script");
-              hm.src = "https://hm.baidu.com/hm.js?4ba41c610c84f57d1dce873524e57a7c";
-              var s = document.getElementsByTagName("script")[0]; 
-              s.parentNode.insertBefore(hm, s);
+              var src = "https://hm.baidu.com/hm.js?4ba41c610c84f57d1dce873524e57a7c";
+              var s = document.getElementsByTagName("script")[0];
+              if(s.getAttribute('src') !== src) {
+                var hm = document.createElement("script");
+                hm.src = src;
+                s.parentNode.insertBefore(hm, s);
+              }
             })();`
           }}
         />
