@@ -29,7 +29,7 @@ date: 2023-04-07 10:00:00
 - 关注用户场景，注重效率
 </div>
 
-<div class="mix-both mix-light">
+<div class="mix-both mix-light" style="width: 80px">
 
 ![Untitled](./octalysis/Untitled.png)
 

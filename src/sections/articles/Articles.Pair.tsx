@@ -5,7 +5,6 @@ import dayjs from 'dayjs';
 import Image from '@components/Image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
-import { motion } from 'framer-motion';
 import type { IArticle } from '../../types';
 import * as styles from './index.module.css';
 import type { GridLayout } from './Articles.List.Context';
@@ -54,12 +53,8 @@ const ListItem: FC<ArticlesPairItemProps> = ({ article, narrow, gridLayout }) =>
       to={article.fields!.slug || '/'}
       data-a11y="false"
     >
-      <motion.div
-        layout
-        className={`${gridLayout === 'rows' ? styles.listItemRow : styles.listItemTile}`}
-      >
-        <motion.div
-          layout
+      <div className={`${gridLayout === 'rows' ? styles.listItemRow : styles.listItemTile}`}>
+        <div
           className={clsx(styles.ImageContainer, {
             [styles.narrow]: narrow
           })}
@@ -69,8 +64,8 @@ const ListItem: FC<ArticlesPairItemProps> = ({ article, narrow, gridLayout }) =>
           }}
         >
           <Image src={imageSource!} alt={`文章《${article.frontmatter.title}》的题图`} />
-        </motion.div>
-        <motion.div layout>
+        </div>
+        <div>
           <h2
             className={clsx(styles.Title, styles.limitToTwoLines)}
             style={{
@@ -83,7 +78,7 @@ const ListItem: FC<ArticlesPairItemProps> = ({ article, narrow, gridLayout }) =>
             className={clsx(
               styles.Excerpt,
               styles.limitToTwoLines,
-              'text-palette-gray mb-2.5 font-serif text-base',
+              'mb-2.5 font-serif text-base text-palette-gray',
               'colorModeTransition sm:mb-5 sm:max-w-full sm:px-5 sm:py-0'
             )}
             style={{
@@ -92,12 +87,12 @@ const ListItem: FC<ArticlesPairItemProps> = ({ article, narrow, gridLayout }) =>
           >
             {article.excerpt}
           </p>
-          <div className="colorModeTransition text-palette-gray text-base opacity-60 sm:max-w-full sm:px-5 sm:pb-[30px] sm:pt-0">
+          <div className="colorModeTransition text-base text-palette-gray opacity-60 sm:max-w-full sm:px-5 sm:pb-[30px] sm:pt-0">
             {dayjs(article.frontmatter?.date).fromNow()} · {article.wordCount!.words} 个字 ·{' '}
             {article.timeToRead} 分钟读完
           </div>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </Link>
   );
 };
@@ -115,8 +110,7 @@ const ArticlesPair: FC<ArticlesPairProps> = ({
   const hasOnlyOneArticle = articles.length === 1;
 
   return (
-    <motion.div
-      layout
+    <div
       className={clsx(`${gridLayout === 'tiles' ? styles.listTile : styles.listRow}`, {
         [styles.oneArticle]: hasOnlyOneArticle,
         [styles.reverse]: reverse
@@ -134,9 +128,9 @@ const ArticlesPair: FC<ArticlesPairProps> = ({
         <Link
           className={clsx(
             styles.moreLink,
-            'text-palette-primary flex items-center justify-center',
-            'border-palette-bgAlt border border-solid',
-            'sm:bg-palette-card sm:mb-20 sm:h-28 sm:border-0'
+            'flex items-center justify-center text-palette-primary',
+            'border border-solid border-palette-bgAlt',
+            'sm:mb-20 sm:h-28 sm:border-0 sm:bg-palette-card'
           )}
           to="/articles"
         >
@@ -144,7 +138,7 @@ const ArticlesPair: FC<ArticlesPairProps> = ({
           <FontAwesomeIcon icon={faAnglesRight} className="ml-4" />
         </Link>
       )}
-    </motion.div>
+    </div>
   );
 };
 

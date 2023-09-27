@@ -38,7 +38,7 @@
   border-radius: 50%;
   transition: all 0.45s ease;
   &::before {
-    @apply border-palette-primary absolute border-[2px] border-solid;
+    @apply absolute border-[2px] border-solid border-palette-primary;
     @apply opacity-100 dark:opacity-0;
     transform: translate(0, 0);
     content: '';

@@ -25,7 +25,6 @@ const ArticleContent: FC<{ article: IArticle }> = ({ article }) => {
     );
     picturesComtainers.forEach(item => {
       const limitOuter = item.closest(limitOuterSelector);
-      console.log(limitOuter);
       if (limitOuter) {
         return;
       }

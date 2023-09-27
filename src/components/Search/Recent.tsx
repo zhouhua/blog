@@ -5,7 +5,6 @@ import clsx from 'clsx';
 import { bindKey, unbindKey } from '@rwh/keystrokes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHashtag, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { motion } from 'framer-motion';
 import Empty from './Empty';
 import * as styles from './index.module.css';
 import useRecentList from './useRecentList';
@@ -80,14 +79,12 @@ const Recent: FC<{ hide: () => void }> = ({ hide }) => {
         <div>
           <ul className="pb-6 pt-4 text-[14px]">
             {recentList.map((recent, index) => (
-              <motion.li
-                layout
-                layoutId="recent"
+              <li
                 // eslint-disable-next-line react/no-array-index-key
                 key={`${index}`}
                 className={clsx(
                   styles.recentItem,
-                  'bg-palette-bg colorModeTransition mx-6 mt-4 flex h-16 max-w-full items-center justify-between rounded-lg sm:mx-2.5',
+                  'colorModeTransition mx-6 mt-4 flex h-16 max-w-full items-center justify-between rounded-lg bg-palette-bg sm:mx-2.5',
                   { [styles.selected]: index === selectIndex }
                 )}
                 onMouseEnter={() => setSelectIndex(index)}
@@ -99,8 +96,8 @@ const Recent: FC<{ hide: () => void }> = ({ hide }) => {
                 >
                   <span
                     className={clsx(
-                      'bg-palette-card colorModeTransition mr-4 inline-block h-6 rounded-full px-2 text-[12px] leading-6',
-                      'text-palette-secondary max-w-[45%] shrink-0 grow-0 overflow-hidden overflow-ellipsis whitespace-nowrap',
+                      'colorModeTransition mr-4 inline-block h-6 rounded-full bg-palette-card px-2 text-[12px] leading-6',
+                      'max-w-[45%] shrink-0 grow-0 overflow-hidden overflow-ellipsis whitespace-nowrap text-palette-secondary',
                       styles.query
                     )}
                   >
@@ -117,7 +114,7 @@ const Recent: FC<{ hide: () => void }> = ({ hide }) => {
                 >
                   <FontAwesomeIcon icon={faTrashCan} />
                 </div>
-              </motion.li>
+              </li>
             ))}
           </ul>
         </div>
