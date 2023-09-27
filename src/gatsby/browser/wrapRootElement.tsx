@@ -1,5 +1,4 @@
 import type { GatsbyBrowser } from 'gatsby';
-import { Script } from 'gatsby';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/zh-cn';
@@ -28,8 +27,8 @@ const wrapRootElement: GatsbyBrowser['wrapRootElement'] = ({ element }) => (
             })();`
           }}
         />
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-KM74RM0181" />
-        <Script
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-KM74RM0181" />
+        <script
           dangerouslySetInnerHTML={{
             __html: `
           window.dataLayer = window.dataLayer || [];
