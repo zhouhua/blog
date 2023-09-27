@@ -25,14 +25,14 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, author, photo }) => {
     setTooltipTheme(colorMode === 'dark' ? 'light' : 'dark');
   }, [colorMode]);
   return (
-    <div className={styles.Hero}>
+    <div>
       <header className={clsx(styles.Header, 'relative z-10')}>
         {article && <h1 className={styles.HeroHeading}>{article.frontmatter.title}</h1>}
         {photo && <h1 className={styles.HeroHeading}>{photo.title}</h1>}
         <div
           className={clsx(
             styles.HeroSubtitle,
-            'colorModeTransition text-palette-gray relative flex w-full justify-between text-lg'
+            'colorModeTransition relative flex w-full justify-between text-lg text-palette-gray'
           )}
         >
           <div className="flex">
@@ -71,7 +71,7 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, author, photo }) => {
 
           {article?.frontmatter.layout === 'journal' && (
             <Link
-              className="hover:text-palette-accent underline-offset-4 hover:underline"
+              className="underline-offset-4 hover:text-palette-accent hover:underline"
               to="/journals"
             >
               更多随笔
@@ -85,13 +85,13 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, author, photo }) => {
                 <Link
                   to={article.fields.tagSlugs![index]}
                   className={clsx(
-                    'bg-palette-bgAlt/40 text-palette-primary rounded-full px-4 py-1 text-sm',
-                    'hover:bg-palette-bgAlt/60 colorModeTransition border-palette-gray border border-solid'
+                    'rounded-full bg-palette-bgAlt/40 px-4 py-1 text-sm text-palette-primary',
+                    'colorModeTransition border border-solid border-palette-gray hover:bg-palette-bgAlt/60'
                   )}
                 >
                   <FontAwesomeIcon
                     icon={faHashtag}
-                    className="text-palette-accent mr-1 h-3 w-3 opacity-80"
+                    className="mr-1 h-3 w-3 text-palette-accent opacity-80"
                   />
                   {tag}
                 </Link>

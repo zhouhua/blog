@@ -12,11 +12,12 @@ const onCreateNode: GatsbyNode['onCreateNode'] = ({ node, actions, getNode }) =>
     createNodeField({
       node,
       name: 'slug',
-      value: createFilePath({ node, getNode }).replace(/^\/[^/]+/, '')
+      value: createFilePath({ node, getNode })
     });
   } else if (node.internal.type === 'MarkdownRemark') {
     const markdownNode = node as unknown as Queries.MarkdownRemark;
-    let slug = createFilePath({ node: markdownNode as any, getNode }).replace(/^\/[^/]+/, '');
+    let slug = createFilePath({ node: markdownNode as any, getNode });
+    console.log(slug);
     if (typeof markdownNode.frontmatter?.path !== 'undefined') {
       slug = markdownNode.frontmatter.path || '';
     }
@@ -39,12 +40,11 @@ const onCreateNode: GatsbyNode['onCreateNode'] = ({ node, actions, getNode }) =>
     }
   } else if (node.internal.type === 'photo') {
     const photoNode = node as unknown as Queries.photo;
-    const year = dayjs(photoNode.date).format('YYYY');
-    const slug = createFilePath({ node: photoNode as any, getNode }).replace(/^\/[^/]+/, '');
+    const slug = createFilePath({ node: photoNode as any, getNode });
     createNodeField({
       node: photoNode as any,
       name: 'slug',
-      value: `/photo/${year}${slug}`
+      value: `/photo${slug}`
     });
   }
 };
