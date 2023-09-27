@@ -1,4 +1,5 @@
-import { Script, type GatsbyBrowser, type HeadFC } from 'gatsby';
+import type { GatsbyBrowser } from 'gatsby';
+import { Script } from 'gatsby';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/zh-cn';
@@ -11,14 +12,13 @@ import 'katex/dist/katex.min.css';
 dayjs.locale('zh-cn');
 dayjs.extend(relativeTime);
 
-const wrapRootElement: GatsbyBrowser['wrapRootElement'] = ({ element }) => element;
-
-export const Head: HeadFC = () =>
-  process.env.NODE_ENV !== 'devlopment' ? (
-    <>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
+const wrapRootElement: GatsbyBrowser['wrapRootElement'] = ({ element }) => (
+  <>
+    {process.env.NODE_ENV !== 'devlopment' ? (
+      <>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
             var _hmt = _hmt || [];
             (function() {
               var hm = document.createElement("script");
@@ -26,23 +26,27 @@ export const Head: HeadFC = () =>
               var s = document.getElementsByTagName("script")[0]; 
               s.parentNode.insertBefore(hm, s);
             })();`
-        }}
-      />
-      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-KM74RM0181" />
-      <Script
-        dangerouslySetInnerHTML={{
-          __html: `
+          }}
+        />
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-KM74RM0181" />
+        <Script
+          dangerouslySetInnerHTML={{
+            __html: `
           window.dataLayer = window.dataLayer || [];
           function gtag(){
             dataLayer.push(arguments);
           }
           gtag('js', new Date());
           gtag('config', 'G-KM74RM0181');`
-        }}
-      />
-    </>
-  ) : (
-    // eslint-disable-next-line react/jsx-no-useless-fragment
-    <></>
-  );
+          }}
+        />
+      </>
+    ) : (
+      // eslint-disable-next-line react/jsx-no-useless-fragment
+      <></>
+    )}
+    {element}
+  </>
+);
+
 export default wrapRootElement;
