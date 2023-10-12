@@ -34,8 +34,7 @@ const onInitialClientRender: GatsbyBrowser['onInitialClientRender'] = () => {
   const GATSBY_NAVIGATE = window.___navigate || {}; // eslint-disable-line
 
   window.addEventListener('popstate', () =>
-    GATSBY_NAVIGATE(window.location.pathname, { replace: true })
-  );
+    GATSBY_NAVIGATE(window.location.pathname, { replace: true }));
 };
 
 export default onInitialClientRender;

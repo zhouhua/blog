@@ -7,7 +7,6 @@ import Bio from '@components/Bio';
 import Icons from '@icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight, faHashtag } from '@fortawesome/free-solid-svg-icons';
-import { describe } from 'node:test';
 import { GridLayoutContext } from './Articles.List.Context';
 import * as styles from './index.module.css';
 

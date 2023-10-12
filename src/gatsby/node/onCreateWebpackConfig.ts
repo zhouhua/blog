@@ -2,7 +2,7 @@ import path from 'path';
 import type { GatsbyNode } from 'gatsby';
 import type { Configuration, RuleSetRule } from 'webpack';
 // @ts-ignore
-import { defaultGetLocalIdent } from 'css-loader';
+import { defaultGetLocalIdent } from 'css-loader'; // eslint-disable-line
 
 interface IUse {
   ident?: string;
