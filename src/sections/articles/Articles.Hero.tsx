@@ -7,6 +7,7 @@ import Bio from '@components/Bio';
 import Icons from '@icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight, faHashtag } from '@fortawesome/free-solid-svg-icons';
+import { RoughNotation } from 'react-rough-notation';
 import { GridLayoutContext } from './Articles.List.Context';
 import * as styles from './index.module.css';
 
@@ -87,10 +88,19 @@ const ArticlesHero: FC<{
             <small>
               <FontAwesomeIcon
                 icon={faHashtag}
-                className="text-palette-accent ml-2 mr-1 opacity-70"
+                className="ml-2 mr-1 text-palette-accent opacity-70"
               />
             </small>
-            {tag} 的文章：
+            <RoughNotation
+              type="underline"
+              show
+              animationDelay={800}
+              strokeWidth={2}
+              color="rgb(var(--color-accent))"
+            >
+              {tag}
+            </RoughNotation>{' '}
+            的文章：
           </h1>
           <Link
             to="/articles"
@@ -102,7 +112,7 @@ const ArticlesHero: FC<{
         </div>
       ) : (
         <div
-          className={clsx('text-palette-primary mx-0 my-[100px] sm:w-full md:w-4/5')}
+          className={clsx('mx-0 my-[100px] text-palette-primary sm:w-full md:w-4/5')}
           style={{ maxWidth: `${hero.maxWidth}px` }}
         >
           <h1
@@ -114,8 +124,30 @@ const ArticlesHero: FC<{
           >
             {title || hero.heading}
           </h1>
-          {!title && <p className="colorModeTransition">{subtitle}</p>}
-          {description && <p className="colorModeTransition">{description}</p>}
+          {!title && (
+            <p className="colorModeTransition">
+              <RoughNotation
+                type="highlight"
+                show
+                animationDelay={800}
+                color="rgb(var(--color-accent) / 0.4)"
+              >
+                {subtitle}
+              </RoughNotation>
+            </p>
+          )}
+          {description && (
+            <p className="colorModeTransition">
+              <RoughNotation
+                type="highlight"
+                show
+                animationDelay={800}
+                color="rgb(var(--color-accent) / 0.4)"
+              >
+                {description}
+              </RoughNotation>
+            </p>
+          )}
         </div>
       )}
       <div className="mb-[100px] flex items-center justify-between sm:hidden md:mb-20">

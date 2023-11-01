@@ -136,7 +136,7 @@
   blockquote {
     @apply relative mx-auto mb-12 mt-2.5 w-full italic text-palette-secondary sm:mb-9;
     @apply max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
-    @apply border-l-4 border-palette-bgAlt px-4;
+    @apply px-4;
     transition:
       background 0.25s var(--ease-in-out-quad),
       border 0.25s var(--ease-in-out-quad),
@@ -451,7 +451,6 @@
   :global(.callout) {
     @apply mx-auto mb-[35px] mt-0 p-4 pl-12 sm:mb-[25px];
     @apply w-full max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
-    @apply rounded-lg border border-solid border-palette-bgAlt;
     @apply bg-palette-bgAlt/20;
     h2,
     h3,

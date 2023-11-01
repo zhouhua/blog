@@ -1,17 +1,19 @@
 import dayjs from 'dayjs';
 import type { FC } from 'react';
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import clsx from 'clsx';
 import { useMount } from 'react-use';
 import mediumZoom from 'medium-zoom';
 import useColorMode from '@hooks/useColorMode';
 import { Link } from 'gatsby';
+import { annotate } from 'rough-notation';
 import type { IArticle } from '../../types/index';
 import * as articleStyles from '../../styles/article.module.css';
 import * as styles from './index.module.css';
 
 const JounalsList: FC<{ articles: IArticle[] }> = ({ articles }) => {
   const [colorMode] = useColorMode();
+  const $notes = useRef<HTMLUListElement>(null);
   const yearsList = useMemo(() => {
     const yearsSet = new Map<
       number,
@@ -42,12 +44,34 @@ const JounalsList: FC<{ articles: IArticle[] }> = ({ articles }) => {
   }, [articles.length]);
   const orderedYears = useMemo(() => [...yearsList.keys()].sort((a, b) => b - a), [yearsList]);
   useMount(() => {
-    mediumZoom('article picture img', {
-      background: colorMode === 'dark' ? 'rgba(17,18,22,0.1)' : 'rgba(250,250,250,0.1)'
-    });
+    if ($notes.current) {
+      mediumZoom('article picture img', {
+        background: colorMode === 'dark' ? 'rgba(17,18,22,0.1)' : 'rgba(250,250,250,0.1)'
+      });
+      const callouts = $notes.current.querySelectorAll<HTMLDivElement>('.callout');
+      callouts.forEach(callout =>
+        annotate(callout, {
+          type: 'box',
+          color: 'rgb(var(--color-bg-alt))',
+          strokeWidth: 1,
+          padding: 0
+        }).show()
+      );
+      const blockquates = $notes.current.querySelectorAll<HTMLDivElement>('blockquote');
+      console.log(blockquates);
+      blockquates.forEach(blockquote =>
+        annotate(blockquote, {
+          type: 'bracket',
+          color: 'rgb(var(--color-bg-alt))',
+          strokeWidth: 3,
+          brackets: ['left'],
+          padding: 2
+        }).show()
+      );
+    }
   });
   return (
-    <ul className="colorModeTransition text-palette-primary">
+    <ul className="colorModeTransition text-palette-primary" ref={$notes}>
       {orderedYears.map(year => (
         <li key={year} className="relative mb-20">
           <div

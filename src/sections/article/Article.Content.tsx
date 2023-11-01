@@ -4,6 +4,7 @@ import InnerHTML from 'dangerously-set-html-content';
 import mediumZoom from 'medium-zoom';
 import { useMount } from 'react-use';
 import useColorMode from '@hooks/useColorMode';
+import { annotate } from 'rough-notation';
 import type { IArticle } from '../../types/index';
 import * as styles from '../../styles/article.module.css';
 
@@ -37,6 +38,25 @@ const ArticleContent: FC<{ article: IArticle }> = ({ article }) => {
         item.querySelectorAll('source').forEach(source => source.setAttribute('sizes', '100vw'));
       }
     });
+    const callouts = $main.current.querySelectorAll<HTMLDivElement>('.callout');
+    callouts.forEach(callout =>
+      annotate(callout, {
+        type: 'box',
+        color: 'rgb(var(--color-bg-alt))',
+        strokeWidth: 1,
+        padding: 0
+      }).show()
+    );
+    const blockquates = $main.current.querySelectorAll<HTMLDivElement>('blockquote');
+    blockquates.forEach(blockquote =>
+      annotate(blockquote, {
+        type: 'bracket',
+        color: 'rgb(var(--color-bg-alt))',
+        strokeWidth: 3,
+        brackets: ['left'],
+        padding: 2
+      }).show()
+    );
   });
   return (
     <div ref={$main}>
