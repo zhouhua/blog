@@ -226,6 +226,9 @@
     .gatsby-highlight pre[class*='language-'] {
       @apply mx-auto w-full max-w-[744px];
     }
+    .gatsby-highlight pre[class*='language-'] {
+      @apply mockup-code;
+    }
     .gatsby-remark-prismjs-copy-button-container {
       @apply left-[unset] right-4 top-8 mb-[-38px] mt-0 font-monospace sm:hidden;
       .gatsby-remark-prismjs-copy-button {
@@ -244,14 +247,19 @@
     }
     .gatsby-highlight {
       pre[class*='language-'] {
-        @apply my-0  overflow-auto p-8 pl-16 text-[14px] leading-[20px];
+        @apply my-0  overflow-auto p-8 pl-16 pt-6 text-[14px] leading-[20px];
         @apply bg-prism-background font-monospace dark:bg-dark-prism-background;
         @apply mb-[50px] mt-[15px];
+        &::before {
+          @apply -ml-12 mb-6;
+          opacity: 1;
+          box-shadow: 1.4em 0 0 theme(colors.palette.gray), 2.8em 0 0 theme(colors.palette.gray), 4.2em 0 0 theme(colors.palette.gray);
+        }
         overflow: overlap;
         transition:
           background 0.25s var(--ease-in-out-quad),
           color 0.25s var(--ease-in-out-quad);
-        border-radium: 5px;
+        border-radius: 5px;
         .gatsby-highlight-code-line {
           @apply -ml-2 block pl-1;
           @apply bg-prism-highlight dark:bg-dark-prism-highlight;
@@ -261,9 +269,10 @@
             border 0.25s var(--ease-in-out-quad);
         }
         .line-numbers-rows {
-          @apply border-0 py-8 pl-8;
+          @apply border-0 py-8 pl-8 pt-[60px];
           & > span::before {
             @apply mt-px w-8 p-0 text-left text-prism-linenumber dark:text-dark-prism-linenumber;
+            line-height: 20.5px;
             transition:
               background 0.25s var(--ease-in-out-quad),
               color 0.25s var(--ease-in-out-quad);
@@ -380,6 +389,7 @@
 }
 .ArticleBody {
   table:not(:where([class~='no-style'] table)) {
+    @apply table;
     @apply relative mx-auto mb-[85px] mt-[45px] w-auto border-separate overflow-hidden rounded-[5px] border border-solid;
     @apply border-palette-bgAlt bg-palette-card text-palette-secondary;
     @apply border-collapse sm:mb-[55px] sm:mt-[15px] sm:max-w-[480px] md:mb-[65px] md:mt-[25px];

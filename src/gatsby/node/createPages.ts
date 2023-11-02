@@ -446,7 +446,6 @@ const createPages: GatsbyNode['createPages'] = async (
     0
   );
   const allPhotoCount = photos.reduce((prev, { list }) => prev + list.length, 0);
-  const totalWordCount = articleWordCount + journalWordCount;
   const featuredArticles = simplifyList(
     articlesPublished.filter(article => article.frontmatter.featured)
   );
@@ -475,7 +474,8 @@ const createPages: GatsbyNode['createPages'] = async (
     component: templates.homepage,
     context: {
       author: authors[0],
-      totalWordCount,
+      journalWordCount,
+      articleWordCount,
       articleNumber,
       photoNumber,
       journalNumber,

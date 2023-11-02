@@ -9,7 +9,7 @@ import clsx from 'clsx';
 import useSiteMetadata from '@hooks/useSiteMetaData';
 import { sampleSize, shuffle, take } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
+import { faAnglesRight, faImage, faMessage, faPenFancy } from '@fortawesome/free-solid-svg-icons';
 import type { PhotoProps } from 'react-photo-gallery';
 import ImageGallery from '@components/Photo/ImageGallery';
 import { useMount } from 'react-use';
@@ -23,7 +23,8 @@ import * as articleStyles from '../styles/article.module.css';
 type PageContentType = {
   articleNumber: number;
   journalNumber: number;
-  totalWordCount: number;
+  articleWordCount: number;
+  journalWordCount: number;
   photoNumber: number;
   allPhotoCount: number;
   allFeaturedImage: PhotoProps<CustomPhotoType>[];
@@ -34,7 +35,8 @@ type PageContentType = {
 const Index: FC<PageProps<object, PageContentType>> = ({
   location,
   pageContext: {
-    totalWordCount,
+    articleWordCount,
+    journalWordCount,
     articleNumber,
     photoNumber,
     journalNumber,
@@ -142,16 +144,38 @@ const Index: FC<PageProps<object, PageContentType>> = ({
       <Section narrow>
         <h3 className={clsx(styles.lineTitle, 'mt-20')}>精彩照片</h3>
       </Section>
-      <section className="min-w-[360px] max-w-full px-20 sm:px-5 md:px-8 lg:px-8 xl:px-8">
+      <section className="min-w-[360px] max-w-full">
         <ImageGallery
           key={shuffledImageList.map(item => item.slug).join()}
           photos={shuffledImageList}
         />
       </section>
-      <Section narrow>
-        <div className="relative z-10 py-24 text-center text-palette-secondary">
-          这里收集了 {articleNumber} 篇文章、 {journalNumber} 篇小随笔和 {photoNumber}{' '}
-          个照片集，合计 {(totalWordCount / 10000).toFixed(2)} 万字和 {allPhotoCount} 张照片
+      <Section narrow className="flex justify-center">
+        <div className="stats mt-24 bg-palette-card text-palette-secondary shadow sm:-mx-2 sm:mt-12 sm:text-center">
+          <div className="stat border-palette-gray/20 px-8 py-5 sm:p-3">
+            <div className="stat-figure ml-2 sm:hidden">
+              <FontAwesomeIcon icon={faPenFancy} size="lg" />
+            </div>
+            <div className="stat-title">收录文章</div>
+            <div className="stat-value my-1">{articleNumber} 篇</div>
+            <div className="stat-desc">合计 {(articleWordCount / 10000).toFixed(2)} 万字</div>
+          </div>
+          <div className="stat border-palette-gray/20 px-8 py-5 sm:p-3">
+            <div className="stat-figure ml-2 sm:hidden">
+              <FontAwesomeIcon icon={faMessage} size="lg" />
+            </div>
+            <div className="stat-title">收录随笔</div>
+            <div className="stat-value my-1">{journalNumber} 篇</div>
+            <div className="stat-desc">合计 {(journalWordCount / 10000).toFixed(2)} 万字</div>
+          </div>
+          <div className="stat border-palette-gray/20 px-8 py-5 sm:p-3">
+            <div className="stat-figure ml-2 sm:hidden">
+              <FontAwesomeIcon icon={faImage} size="lg" />
+            </div>
+            <div className="stat-title">收录图集</div>
+            <div className="stat-value my-1">{photoNumber} 组</div>
+            <div className="stat-desc">合计 {allPhotoCount} 张照片</div>
+          </div>
         </div>
       </Section>
     </Layout>
