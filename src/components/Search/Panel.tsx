@@ -32,7 +32,7 @@ const Panel: FC<{ show: boolean; hide: () => void }> = ({ show, hide }) => {
   useEffect(() => {
     if (show) {
       document.body.classList.add('no-scroll');
-      window.gtag('open_search_box');
+      window.gtag('event', 'open_search_box');
     } else {
       document.body.classList.remove('no-scroll');
     }

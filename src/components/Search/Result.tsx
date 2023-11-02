@@ -54,7 +54,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
       query,
       slug: hit.slug
     });
-    window.gtag('search_hit', { query, uri: hit.slug, title });
+    window.gtag('event', 'search_hit', { query, uri: hit.slug, title });
     hide();
   }
   const [selectIndex, setSelectIndex] = useState<number>(-1);
@@ -66,7 +66,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
 
   useEffect(() => {
     if (query) {
-      window.gtag('search_query', { number: nbHits });
+      window.gtag('event', 'search_query', { number: nbHits });
     }
   }, [query, nbHits]);
 
