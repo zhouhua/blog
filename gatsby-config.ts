@@ -144,11 +144,14 @@ const config: GatsbyConfig = {
     {
       resolve: 'gatsby-plugin-webpack-bundle-analyser-v2',
       options: {
-        openAnalyzer: false,
+        openAnalyzer: true,
         analyzerMode: 'server',
         analyzerPort: '8888',
         defaultSizes: 'gzip'
       }
+    },
+    {
+      resolve: 'gatsby-plugin-sitemap'
     }
   ]
 };
