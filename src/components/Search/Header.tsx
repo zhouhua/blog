@@ -9,7 +9,7 @@ import { throttle } from 'lodash';
 function beforeQuery(query: string, search: (value: string) => void) {
   search(query);
 }
-const throttledSearch = throttle(beforeQuery, 400);
+const throttledSearch = throttle(beforeQuery, 600);
 
 const Header: FC<{ hide: () => void }> = ({ hide }) => {
   const { query, refine } = useSearchBox({
@@ -67,9 +67,16 @@ const Header: FC<{ hide: () => void }> = ({ hide }) => {
           autoFocus
         />
       </form>
-      <button className="p-4 text-center opacity-60 hover:opacity-100" onClick={hide} type="button">
-        <FontAwesomeIcon icon={faXmark} size="xl" />
-      </button>
+      {
+        // eslint-disable-next-line jsx-a11y/control-has-associated-label
+        <button
+          className="p-4 text-center opacity-60 hover:opacity-100"
+          onClick={hide}
+          type="button"
+        >
+          <FontAwesomeIcon icon={faXmark} size="xl" />
+        </button>
+      }
     </header>
   );
 };

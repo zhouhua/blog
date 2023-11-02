@@ -8,3 +8,9 @@ declare module '*.css' {
 }
 
 type ColorMode = 'light' | 'dark';
+
+type GtagEvent = 'open_search_box' | 'search_query' | 'search_hit';
+
+declare interface Window {
+  gtag: (name: GtagEvent, data?: any) => void;
+}

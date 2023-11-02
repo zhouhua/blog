@@ -32,6 +32,7 @@ const Panel: FC<{ show: boolean; hide: () => void }> = ({ show, hide }) => {
   useEffect(() => {
     if (show) {
       document.body.classList.add('no-scroll');
+      window.gtag('open_search_box');
     } else {
       document.body.classList.remove('no-scroll');
     }
@@ -45,8 +46,8 @@ const Panel: FC<{ show: boolean; hide: () => void }> = ({ show, hide }) => {
           exit={{ opacity: 0 }}
           className={clsx(
             styles.mask,
-            'bg-palette-primary/10 fixed left-0 top-0 z-50 h-screen w-screen  min-w-[360px] backdrop-blur',
-            'text-palette-secondary px-[10vw] py-[10vh] sm:px-[2vw] sm:py-[5vh] md:px-[5vw]'
+            'fixed left-0 top-0 z-50 h-screen w-screen min-w-[360px]  bg-palette-primary/10 backdrop-blur',
+            'px-[10vw] py-[10vh] text-palette-secondary sm:px-[2vw] sm:py-[5vh] md:px-[5vw]'
           )}
           onClick={hide}
         >
@@ -54,7 +55,7 @@ const Panel: FC<{ show: boolean; hide: () => void }> = ({ show, hide }) => {
             initial={{ opacity: 0, y: 200 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -200 }}
-            className="bg-palette-card mx-auto flex min-h-0 w-full max-w-2xl flex-col rounded-lg"
+            className="mx-auto flex min-h-0 w-full max-w-2xl flex-col rounded-lg bg-palette-card"
             onClick={makeClickOutside}
           >
             <InstantSearch searchClient={searchClient} indexName="blog">

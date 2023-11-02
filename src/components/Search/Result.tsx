@@ -54,6 +54,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
       query,
       slug: hit.slug
     });
+    window.gtag('search_hit', { query, uri: hit.slug, title });
     hide();
   }
   const [selectIndex, setSelectIndex] = useState<number>(-1);
@@ -62,6 +63,12 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
   useEffect(() => {
     setSelectIndex(-1);
   }, [query]);
+
+  useEffect(() => {
+    if (query) {
+      window.gtag('search_query', { number: nbHits });
+    }
+  }, [query, nbHits]);
 
   useEffect(() => {
     if (selectedDom.current) {
@@ -127,8 +134,8 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
     <>
       {showHits && (
         <div className="overflow-y-overlap max-h-[60vh]" ref={rootRef}>
-          <p className="text-palette-gray px-6 pt-4 text-right text-[12px]">
-            搜索<span className="text-palette-secondary px-1">{query}</span>
+          <p className="px-6 pt-4 text-right text-[12px] text-palette-gray">
+            搜索<span className="px-1 text-palette-secondary">{query}</span>
             共找到 {nbHits} 条结果，耗时 {processingTimeMS}ms
           </p>
           <ul className="pb-6 ">
@@ -137,7 +144,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                 key={hit.objectID}
                 className={clsx(
                   styles.resultItem,
-                  'bg-palette-bg colorModeTransition relative mx-6 mt-2 items-center overflow-hidden rounded-lg p-4 sm:mx-2.5',
+                  'colorModeTransition relative mx-6 mt-2 items-center overflow-hidden rounded-lg bg-palette-bg p-4 sm:mx-2.5',
                   { [styles.selected]: index === selectIndex }
                 )}
                 onMouseEnter={() => setSelectIndex(index)}
@@ -150,7 +157,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                 <div
                   className={clsx(
                     styles.icon,
-                    'border-palette-gray colorModeTransition rounded border border-solid',
+                    'colorModeTransition rounded border border-solid border-palette-gray',
                     'absolute left-4 top-1/2 h-6 w-6 shrink-0 -translate-y-1/2 text-center text-[14px]'
                   )}
                 >
@@ -164,8 +171,8 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                   >
                     <h2
                       className={clsx(
-                        'bg-palette-card mb-1 inline-block h-6 max-w-[90%] rounded-full px-2 text-xs leading-6',
-                        'text-palette-primary colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap'
+                        'mb-1 inline-block h-6 max-w-[90%] rounded-full bg-palette-card px-2 text-xs leading-6',
+                        'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap text-palette-primary'
                       )}
                     >
                       <Highlight className="max-w-full" attribute="title" hit={hit} />
@@ -183,8 +190,8 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                     >
                       <h2
                         className={clsx(
-                          'bg-palette-card mb-1 inline-block h-6 max-w-[90%] rounded-full px-2 text-xs leading-6',
-                          'text-palette-primary colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap'
+                          'mb-1 inline-block h-6 max-w-[90%] rounded-full bg-palette-card px-2 text-xs leading-6',
+                          'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap text-palette-primary'
                         )}
                       >
                         随笔 🗓️ {(hit.slug as string).split('#').pop()}
