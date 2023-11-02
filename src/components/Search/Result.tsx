@@ -66,7 +66,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
 
   useEffect(() => {
     if (query) {
-      window.gtag('event', 'search_query', { number: nbHits });
+      window.gtag('event', 'search_query', { number: nbHits, query });
     }
   }, [query, nbHits]);
 
