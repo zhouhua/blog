@@ -27,9 +27,12 @@ const config: GatsbyConfig = {
   trailingSlash: 'always',
   jsxRuntime: 'automatic',
   flags: {
-    DEV_SSR: true
+    DEV_SSR: true,
     // eslint-disable-next-line id-length
     // GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY: true
+    FAST_DEV: true,
+    PARALLEL_SOURCING: true,
+    DETECT_NODE_MUTATIONS: true
   },
   plugins: [
     'gatsby-plugin-postcss',
