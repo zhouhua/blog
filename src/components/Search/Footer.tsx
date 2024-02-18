@@ -4,18 +4,12 @@ import { PoweredBy, useStats } from 'react-instantsearch';
 import useColorMode from '@hooks/useColorMode';
 import { Kbd } from '@components/Keyboard';
 import clsx from 'clsx';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faArrowDown,
-  faArrowUp,
-  faArrowTurnDown,
-  faDeleteLeft
-} from '@fortawesome/free-solid-svg-icons';
 import useRecentList from './useRecentList';
+import { Icon } from '@iconify/react';
 
 const hotKeys = [
   {
-    keys: [<FontAwesomeIcon icon={faArrowTurnDown} rotation={90} />],
+    keys: [<Icon icon="oui:return-key" />],
     text: '选择',
     showIn: {
       search: true,
@@ -24,7 +18,7 @@ const hotKeys = [
     }
   },
   {
-    keys: [<FontAwesomeIcon icon={faArrowUp} />, <FontAwesomeIcon icon={faArrowDown} />],
+    keys: [<Icon icon="fa6-solid:arrow-up" />, <Icon icon="fa6-solid:arrow-down" />],
     text: '切换',
     showIn: {
       search: true,
@@ -33,7 +27,7 @@ const hotKeys = [
     }
   },
   {
-    keys: [<FontAwesomeIcon icon={faDeleteLeft} />],
+    keys: [<Icon icon="fa6-solid:delete-left" />],
     text: '删除',
     showIn: {
       search: false,
@@ -42,7 +36,7 @@ const hotKeys = [
     }
   },
   {
-    keys: ['ESC'],
+    keys: [<Icon icon="vaadin:esc-a"/>],
     text: '退出',
     showIn: {
       search: true,

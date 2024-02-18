@@ -17,7 +17,6 @@ const onCreateNode: GatsbyNode['onCreateNode'] = ({ node, actions, getNode }) =>
   } else if (node.internal.type === 'MarkdownRemark') {
     const markdownNode = node as unknown as Queries.MarkdownRemark;
     let slug = createFilePath({ node: markdownNode as any, getNode });
-    console.log(slug);
     if (typeof markdownNode.frontmatter?.path !== 'undefined') {
       slug = markdownNode.frontmatter.path || '';
     }
@@ -39,7 +38,9 @@ const onCreateNode: GatsbyNode['onCreateNode'] = ({ node, actions, getNode }) =>
       createNodeField({ node: markdownNode as any, name: 'tagSlugs', value: tagSlugs });
     }
   } else if (node.internal.type === 'photo') {
-    const photoNode = node as unknown as Queries.photo;
+    const photoNode = {
+      ...(node as unknown as Queries.photo)
+    };
     const slug = createFilePath({ node: photoNode as any, getNode });
     createNodeField({
       node: photoNode as any,

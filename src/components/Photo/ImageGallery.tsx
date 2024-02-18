@@ -1,6 +1,5 @@
 import Image from '@components/Image';
-import { faImages } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Icon } from '@iconify/react';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import { Link } from 'gatsby';
@@ -58,7 +57,7 @@ const ImageGallery: FC<{ photos: PhotoProps<CustomPhotoType>[] }> = ({ photos })
               {(count || 0) > 0 && (
                 <span className="absolute right-3 top-2">
                   {count}
-                  <FontAwesomeIcon icon={faImages} className="ml-1" />
+                  <Icon icon="fa6-solid:image" className="ml-1" />
                 </span>
               )}
             </div>
@@ -77,7 +76,7 @@ const ImageGallery: FC<{ photos: PhotoProps<CustomPhotoType>[] }> = ({ photos })
               {(count || 0) > 0 && (
                 <span className="absolute right-3 top-2">
                   {count}
-                  <FontAwesomeIcon icon={faImages} className="ml-3" />
+                  <Icon icon="fa6-solid:image" className="ml-3" />
                 </span>
               )}
             </motion.div>

@@ -74,11 +74,11 @@ const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] = ({ ac
       layout: String!
       title: String!
       date: Date!
-      fields: photoFields!
+      fields: photoFields
       list: [photoList!]!
     }
     type photoFields {
-      slug: String!
+      slug: String
     }
     type photoList {
       description: String!

@@ -5,19 +5,16 @@ import useColorMode from '@hooks/useColorMode';
 import Section from '@components/Section';
 import Logo from '@components/Logo';
 import useSiteMetadata from '@hooks/useSiteMetaData';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { faPenFancy, faMessage, faAddressCard, faImage } from '@fortawesome/free-solid-svg-icons';
-
+import { Icon } from '@iconify/react';
 import { StaticImage } from 'gatsby-plugin-image';
 import * as styles from './index.module.css';
 import { SearchButton } from '../Search';
 
-const iconMap: Record<string, IconDefinition> = {
-  'pen-fancy': faPenFancy,
-  'message': faMessage,
-  'address-card': faAddressCard,
-  'image': faImage
+const iconMap: Record<string, string> = {
+  'pen-fancy': 'fa6-solid:pen-fancy',
+  'message': 'fa6-solid:message',
+  'address-card': 'fa6-solid:address-card',
+  'image': 'fa6-solid:image'
 };
 
 const DarkModeToggle: FC = () => {
@@ -124,8 +121,9 @@ const NavigationHeader: FC = () => {
               key={path}
               to={path}
             >
-              <FontAwesomeIcon
+              <Icon
                 icon={iconMap[icon]!}
+                inline
                 className="mr-2 h-4 w-4 opacity-60 sm:mb-2 sm:mr-0 sm:h-5 sm:w-5 md:mb-2 md:mr-0 md:h-6 md:w-6 lg:mr-1"
               />
               <span className="sm:text-xs md:text-sm">{name}</span>

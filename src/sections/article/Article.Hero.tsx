@@ -6,8 +6,7 @@ import { Link } from 'gatsby';
 import type { VariantType } from 'react-tooltip';
 import { Tooltip } from 'react-tooltip';
 import useColorMode from '@hooks/useColorMode';
-import { faHashtag } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Icon } from '@iconify/react';
 import type { IArticle, IAuthor } from '../../types';
 import ArticleAuthors from './Article.Authors';
 import * as styles from './index.module.css';
@@ -89,8 +88,8 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, author, photo }) => {
                     'colorModeTransition border border-solid border-palette-gray hover:bg-palette-bgAlt/60'
                   )}
                 >
-                  <FontAwesomeIcon
-                    icon={faHashtag}
+                  <Icon
+                    icon="heroicons:hashtag-solid"
                     className="mr-1 h-3 w-3 text-palette-accent opacity-80"
                   />
                   {tag}

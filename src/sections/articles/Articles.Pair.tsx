@@ -3,8 +3,7 @@ import { Link } from 'gatsby';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import Image from '@components/Image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@iconify/react';
 import type { IArticle } from '../../types';
 import * as styles from './index.module.css';
 import type { GridLayout } from './Articles.List.Context';
@@ -135,7 +134,7 @@ const ArticlesPair: FC<ArticlesPairProps> = ({
           to="/articles"
         >
           查看所有文章
-          <FontAwesomeIcon icon={faAnglesRight} className="ml-4" />
+          <Icon icon="heroicons:hashtag-solid" className="ml-4" />
         </Link>
       )}
     </div>

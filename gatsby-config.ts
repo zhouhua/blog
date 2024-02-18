@@ -44,6 +44,16 @@ const config: GatsbyConfig = {
       }
     },
     {
+      resolve: 'gatsby-transformer-yaml',
+      // @ts-ignore
+      options: {
+        typeName: ({ object }) => {
+          console.log(typeof object.date);
+          return object?.layout;
+        }
+      }
+    },
+    {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'articles',
@@ -80,11 +90,6 @@ const config: GatsbyConfig = {
       }
     },
     'gatsby-transformer-sharp',
-    {
-      resolve: 'gatsby-transformer-yaml',
-      // @ts-ignore
-      options: { typeName: ({ object }) => object?.layout }
-    },
     'gatsby-plugin-pnpm',
     'gatsby-plugin-netlify',
     'gatsby-plugin-sharp-exif',

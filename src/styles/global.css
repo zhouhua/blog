@@ -149,7 +149,7 @@ img.Image__Zoom ~ div {
   }
 }
 
-.svg-inline--fa {
+svg.iconify {
   display: inline-block;
   font-size: inherit;
   height: 1em;

@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { Icon } from '@iconify-icon/react';
+import { Icon } from '@iconify/react';
 import dayjs from 'dayjs';
 import clsx from 'clsx';
 

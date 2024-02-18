@@ -8,12 +8,11 @@ import Section from '@components/Section';
 import clsx from 'clsx';
 import useSiteMetadata from '@hooks/useSiteMetaData';
 import { sampleSize, shuffle, take } from 'lodash';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAnglesRight, faImage, faMessage, faPenFancy } from '@fortawesome/free-solid-svg-icons';
 import type { PhotoProps } from 'react-photo-gallery';
 import ImageGallery from '@components/Photo/ImageGallery';
 import { useMount } from 'react-use';
 import { annotate } from 'rough-notation';
+import { Icon } from '@iconify/react';
 import ArticlesHero from '../sections/articles/Articles.Hero';
 import * as styles from './index.module.css';
 import type { CustomPhotoType, IArticle } from '../types/index';
@@ -136,7 +135,8 @@ const Index: FC<PageProps<object, PageContentType>> = ({
               )}
               to="/journals"
             >
-              查看更多随笔 <FontAwesomeIcon icon={faAnglesRight} className="ml-4" />
+              查看更多随笔
+              <Icon icon="fa6-solid:angles-right" className="ml-4" />
             </Link>
           </li>
         </ul>
@@ -153,24 +153,24 @@ const Index: FC<PageProps<object, PageContentType>> = ({
       <Section narrow className="flex justify-center">
         <div className="stats mt-24 bg-palette-card text-palette-secondary shadow sm:-mx-2 sm:mt-12 sm:text-center">
           <div className="stat border-palette-gray/20 px-8 py-5 sm:p-3">
-            <div className="stat-figure ml-2 sm:hidden">
-              <FontAwesomeIcon icon={faPenFancy} size="lg" />
+            <div className="stat-figure ml-2 text-lg sm:hidden">
+              <Icon icon="fa6-solid:pen-fancy" />
             </div>
             <div className="stat-title">收录文章</div>
             <div className="stat-value my-1">{articleNumber} 篇</div>
             <div className="stat-desc">合计 {(articleWordCount / 10000).toFixed(2)} 万字</div>
           </div>
           <div className="stat border-palette-gray/20 px-8 py-5 sm:p-3">
-            <div className="stat-figure ml-2 sm:hidden">
-              <FontAwesomeIcon icon={faMessage} size="lg" />
+            <div className="stat-figure ml-2 text-lg sm:hidden">
+              <Icon icon="fa6-solid:message" />
             </div>
             <div className="stat-title">收录随笔</div>
             <div className="stat-value my-1">{journalNumber} 篇</div>
             <div className="stat-desc">合计 {(journalWordCount / 10000).toFixed(2)} 万字</div>
           </div>
           <div className="stat border-palette-gray/20 px-8 py-5 sm:p-3">
-            <div className="stat-figure ml-2 sm:hidden">
-              <FontAwesomeIcon icon={faImage} size="lg" />
+            <div className="stat-figure ml-2 text-lg sm:hidden">
+              <Icon icon="fa6-solid:image" />
             </div>
             <div className="stat-title">收录图集</div>
             <div className="stat-value my-1">{photoNumber} 组</div>

@@ -2,9 +2,8 @@ import type { ChangeEvent, FC, FormEvent } from 'react';
 import { useRef, useState } from 'react';
 import { useInstantSearch, useSearchBox } from 'react-instantsearch';
 import clsx from 'clsx';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { throttle } from 'lodash';
+import { Icon } from '@iconify/react';
 
 function beforeQuery(query: string, search: (value: string) => void) {
   search(query);
@@ -47,7 +46,7 @@ const Header: FC<{ hide: () => void }> = ({ hide }) => {
         {status === 'stalled' ? (
           <div className="loading loading-ring loading-xs" />
         ) : (
-          <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" />
+          <Icon icon="fa6-solid:magnifying-glass" />
         )}
       </div>
       <form action="" className="flex max-w-full grow-[2]" noValidate onSubmit={onSubmit}>
@@ -74,7 +73,7 @@ const Header: FC<{ hide: () => void }> = ({ hide }) => {
           onClick={hide}
           type="button"
         >
-          <FontAwesomeIcon icon={faXmark} size="xl" />
+          <Icon icon="fa6-solid:xmark" />
         </button>
       }
     </header>

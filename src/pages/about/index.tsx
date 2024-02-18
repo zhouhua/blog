@@ -8,9 +8,8 @@ import clsx from 'clsx';
 import useSiteMetadata from '@hooks/useSiteMetaData';
 import { StaticImage } from 'gatsby-plugin-image';
 import Bio from '@components/Bio';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RoughNotation } from 'react-rough-notation';
+import { Icon } from '@iconify/react';
 import * as styles from './index.module.css';
 
 const authorQuery = graphql`
@@ -73,7 +72,7 @@ const Index: FC<PageProps> = ({ location }) => {
                 <div className="colorModeTransition text-palette-primary sm:ml-16">
                   <h2 className="mb-4 mt-6 text-4xl">{author.name}</h2>
                   <a href="mailto:zhou--hua@163.com">
-                    <FontAwesomeIcon icon={faEnvelope} className="mr-3" />
+                    <Icon icon="fa6-solid:envelope" className="mr-3" />
                     <RoughNotation
                       type="underline"
                       show

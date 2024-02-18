@@ -4,8 +4,7 @@ import { bindKeyCombo, unbindKeyCombo } from '@rwh/keystrokes';
 import { Kbd } from '@components/Keyboard';
 import { UAParser } from 'ua-parser-js';
 import clsx from 'clsx';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Icon } from '@iconify/react';
 import SearchPanel from './Panel';
 
 const SearchButton: FC = () => {
@@ -28,14 +27,14 @@ const SearchButton: FC = () => {
         className={clsx(
           'colorModeTransition',
           'flex h-10 w-40 cursor-pointer items-center justify-between px-3 text-sm',
-          'border-palette-gray rounded-full border border-solid',
+          'rounded-full border border-solid border-palette-gray',
           'bg-palette-bg text-palette-gray hover:text-palette-primary',
-          'sm:text-palette-primary sm:w-10 sm:border-0 sm:bg-opacity-0 sm:p-2 sm:text-2xl sm:opacity-50'
+          'sm:w-10 sm:border-0 sm:bg-opacity-0 sm:p-2 sm:text-2xl sm:text-palette-primary sm:opacity-50'
         )}
         onClick={() => setShowSearchPanel(true)}
       >
         <span>
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
+          <Icon icon="fa6-solid:magnifying-glass" />
           <span className="sm:hidden"> 搜索</span>
         </span>
         <span className="sm:hidden">
