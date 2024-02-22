@@ -103,6 +103,7 @@ const config: GatsbyConfig = {
       resolve: 'gatsby-transformer-remark',
       options: {
         plugins: [
+          '@zhouhua-dev/remark-media-card-gatsby',
           'gatsby-remark-prismjs-copy-button',
           {
             resolve: 'gatsby-remark-images',
