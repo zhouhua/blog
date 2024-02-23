@@ -18,7 +18,7 @@ title: 消失的 13 级台阶
 cover: ./covers/s34070178.jpg
 publishDate: 2020-05-15
 author: 高野和明
-rate: 8.6
+rating: 8.6
 width: 600
 introduction: |-
   一对老夫妇惨遭杀害。一切证据都指向树原亮，他却因车祸，恰好丧失了案发前后数小时的记忆……
@@ -43,7 +43,7 @@ title: 六个说谎的大学生
 cover: ./covers/s34497205.jpg
 publishDate: 2023-04
 author: 浅仓秋成
-rate: 7.7
+rating: 7.7
 width: 600
 introduction: |-
   八年前，日本著名IT企业首次开启校招，六名大学生从五千人中脱颖而出。原以为六人团队可以全部拿到内定，但最终却是六人争夺唯一一个入职名额。伴随紧张气氛而来的，还有六封神秘“告发信”，揭发六人面具之下的“谎言”与“罪恶”。完美光鲜的名校生人设一夕崩塌，谁又能成为最终赢家……
@@ -67,7 +67,7 @@ title: 无人生还
 cover: ./covers/s29012369.jpg
 publishDate: 2016-08
 author: 阿加莎·克里斯蒂
-rate: 8.8
+rating: 8.8
 width: 600
 introduction: |-
   十个相互陌生、身份各异的人受邀前往德文郡海岸边一座孤岛上的豪宅。客人到齐后，主人却没有出现。
@@ -87,7 +87,7 @@ title: 失明症漫记
 cover: ./covers/s34269503.jpg
 publishDate: 2022-08-27
 author: 若泽·萨拉马戈
-rate: 9.1
+rating: 9.1
 width: 600
 introduction: |-
   街上出现了第一个突然失明的人，紧接着是第二个、第三个……
@@ -106,7 +106,7 @@ title: 复明症漫记
 cover: ./covers/s34480115.jpg
 publishDate: 2023-04
 author: 若泽·萨拉马戈
-rate: 8.6
+rating: 8.6
 width: 600
 introduction: |-
   经历过失明症的首都，一场更凶残的白色瘟疫正在蔓延。
@@ -138,7 +138,7 @@ title: 五号屠场
 cover: ./covers/s34247279.jpg
 publishDate: 2022-07-01
 author: 库尔特·冯内古特
-rate: 8.7
+rating: 8.7
 width: 600
 introduction: |-
   故事中的一切，或多或少都发生过。至少，关于战争的部分是相当真实的。
@@ -171,7 +171,7 @@ title: 很久很久以前，在某一个地方……
 cover: ./covers/s34039890.jpg
 publishDate: 2021-12
 author: 青柳碧人
-rate: 7.7
+rating: 7.7
 width: 600
 introduction: |-
   一寸法师的不在场证据：一寸法师打败恶鬼保护了公主。他靠打出小锤变大，心里却藏着一个计划……
@@ -196,7 +196,7 @@ title: 福尔摩斯探案全集
 cover: ./covers/s34416818.jpg
 publishDate: 2022-11
 author: 亚瑟·柯南·道尔
-rate: 9.3
+rating: 9.3
 width: 600
 ```
 
@@ -215,7 +215,7 @@ title: 太白金星有点烦
 cover: ./covers/s34544956.jpg
 publishDate: 2023-06
 author: 马伯庸
-rate: 9.0
+rating: 9.0
 width: 600
 introduction: |-
   太白金星李长庚最近有点烦。
@@ -237,7 +237,7 @@ title: 放下手边事，坐下来读读书
 cover: ./covers/s29402821.jpg
 publishDate: 2017-04-01
 author: 蔡颖卿
-rate: 7.7
+rating: 7.7
 width: 600
 introduction: |-
   相信“世界上任何书籍都不能带给你好运，但是它能让你悄悄成为自己”的蔡颖卿，她以阅读为生命吸收养分，把坚持变为信仰，把聪明转为智慧。
@@ -263,7 +263,7 @@ title: 金牌投资人
 cover: ./covers/s29054917.jpg
 publishDate: 2016-07-01
 author: 龙在宇
-rate: 8.3
+rating: 8.3
 width: 600
 introduction: |-
   与千千万万的年轻人一样，来到大城市奋斗的小城青年方玉斌，凭借过人才华与努力奋斗，成为投资公司的中层精英。他在操盘了一个堪称经典案例的投资项目后，却身不由己地卷入了公司高层斗争，处在了人生最艰难的时刻。
