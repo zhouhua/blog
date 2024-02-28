@@ -1,0 +1,9 @@
+.box {
+  @apply relative rounded-lg border border-palette-gray p-4 pt-5;
+}
+.title {
+  @apply absolute top-0 -translate-y-1/2 bg-palette-bg p-2 text-lg;
+}
+.code {
+  @apply font-monospace;
+}

@@ -16,6 +16,7 @@ const config: GatsbyConfig = {
     },
     menu: [
       { name: '文章', path: '/articles', icon: 'pen-fancy' },
+      { name: '项目', path: '/projects', icon: 'project' },
       { name: '随笔', path: '/journals', icon: 'message' },
       { name: '照片', path: '/photos', icon: 'image' },
       { name: '关于我', path: '/about', icon: 'address-card' }

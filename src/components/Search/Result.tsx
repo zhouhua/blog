@@ -132,7 +132,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
   return (
     <>
       {showHits && (
-        <div className="overflow-y-overlap max-h-[60vh]" ref={rootRef}>
+        <div className="overflow-y-overlay max-h-[60vh]" ref={rootRef}>
           <p className="px-6 pt-4 text-right text-[12px] text-palette-gray">
             搜索<span className="px-1 text-palette-secondary">{query}</span>
             共找到 {nbHits} 条结果，耗时 {processingTimeMS}ms

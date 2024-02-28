@@ -1,0 +1,33 @@
+.bars {
+  width: 40px;
+  cursor: pointer;
+}
+.line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 8;
+  stroke-linecap: square;
+  transition:
+    stroke-dasharray 400ms,
+    stroke-dashoffset 400ms;
+}
+.top {
+  stroke-dasharray: 40 172;
+}
+.middle {
+  stroke-dasharray: 40 111;
+}
+.bottom {
+  stroke-dasharray: 40 172;
+}
+.active {
+  .top {
+    stroke-dashoffset: -132px;
+  }
+  .middle {
+    stroke-dashoffset: -71px;
+  }
+  .bottom {
+    stroke-dashoffset: -132px;
+  }
+}

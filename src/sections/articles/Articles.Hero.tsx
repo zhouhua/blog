@@ -73,7 +73,7 @@ const ArticlesHero: FC<{
   }
 
   return (
-    <Section narrow>
+    <Section narrow className="relative">
       {tag ? (
         <div className="my-28 flex items-center justify-between sm:my-10 md:my-16">
           <h1

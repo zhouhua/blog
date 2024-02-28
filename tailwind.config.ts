@@ -4,11 +4,10 @@ import daisyui from 'daisyui';
 export default {
   darkMode: 'class',
   content: [
-    './src/pages/**/*.{js,jsx,ts,tsx,css}',
-    './src/components/**/*.{js,jsx,ts,tsx,css}',
-    './src/templates/**/*.{js,jsx,ts,tsx,css}',
-    './src/sections/**/*.{js,jsx,ts,tsx,css}',
-    './src/styles/**/*.css'
+    './src/pages/**/*.{js,jsx,ts,tsx,md}',
+    './src/components/**/*.{js,jsx,ts,tsx}',
+    './src/templates/**/*.{js,jsx,ts,tsx}',
+    './src/sections/**/*.{js,jsx,ts,tsx}'
   ],
   theme: {
     colors: {
@@ -148,6 +147,6 @@ export default {
   },
   plugins: [daisyui],
   daisyui: {
-    themes: []
+    themes: false
   }
 } satisfies Config;

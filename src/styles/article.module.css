@@ -253,9 +253,12 @@
         &::before {
           @apply -ml-12 mb-6;
           opacity: 1;
-          box-shadow: 1.4em 0 0 theme(colors.palette.gray), 2.8em 0 0 theme(colors.palette.gray), 4.2em 0 0 theme(colors.palette.gray);
+          box-shadow:
+            1.4em 0 0 theme(colors.palette.gray),
+            2.8em 0 0 theme(colors.palette.gray),
+            4.2em 0 0 theme(colors.palette.gray);
         }
-        overflow: overlap;
+        overflow: overlay;
         transition:
           background 0.25s var(--ease-in-out-quad),
           color 0.25s var(--ease-in-out-quad);

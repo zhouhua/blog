@@ -17,12 +17,15 @@ const Layout: FC<PropsWithChildren & { isDetailPage?: boolean }> = ({
   <ArticlesContextProvider>
     <div
       className={clsx(
-        'colorModeTransition bg-palette-bg overflow-x-overlap relative min-h-screen min-w-[360px]',
+        'colorModeTransition overflow-overlay relative h-screen min-w-[360px] bg-palette-bg',
+        'flex flex-col',
         { [styles.cardView]: isDetailPage }
       )}
+      style={{ overflowY: 'scroll' }}
     >
       <NavigationHeader />
       <motion.main
+        className="flex-grow"
         initial={{ opacity: 0, x: -200 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: 200 }}

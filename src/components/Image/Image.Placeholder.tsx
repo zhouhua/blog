@@ -1,7 +1,6 @@
 import type { FC } from 'react';
 import { useRef, useEffect, useState } from 'react';
 import clsx from 'clsx';
-import * as styles from './index.module.css';
 
 const ImagePlaceholder: FC = props => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -19,7 +18,7 @@ const ImagePlaceholder: FC = props => {
   return (
     <div
       className={clsx(
-        styles.container,
+        'bg-[#ccc] text-[#898989]',
         'flex h-full w-full items-center justify-center font-semibold',
         'text-[32px] sm:text-[28px]'
       )}

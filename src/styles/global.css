@@ -58,6 +58,13 @@ body {
 html {
   @apply font-sans;
   -webkit-font-smoothing: antialiased;
+  height: 100vh;
+  overflow: overlay;
+}
+
+body {
+  height: 100vh;
+  overflow: overlay;
 }
 
 article {
@@ -175,17 +182,17 @@ svg.iconify {
 .katex-display {
   margin: 0.5em 0 !important;
 }
-.overflow-overlap {
+.overflow-overlay {
   overflow: auto;
-  overflow: overlap;
+  overflow: overlay;
 }
-.overflow-x-overlap {
+.overflow-x-overlay {
   overflow-x: auto;
-  overflow-x: overlap;
+  overflow-x: overlay;
 }
-.overflow-y-overlap {
+.overflow-y-overlay {
   overflow-y: auto;
-  overflow-y: overlap;
+  overflow-y: overlay;
 }
 
 html {
