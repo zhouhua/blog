@@ -84,11 +84,11 @@ const NavigationHeader: FC = () => {
   }, [colorMode]);
 
   return (
-    <Section narrow className="!sticky -top-16 backdrop-blur-md sm:-top-10">
+    <Section narrow className="!sticky -top-16 z-[100] backdrop-blur-md sm:-top-10">
       <div
         className={clsx(
           styles.NavContainer,
-          'relative z-20 flex items-end justify-between pt-16 sm:items-center sm:pt-10 md:items-center'
+          'relative z-20 flex items-center justify-between pt-16 sm:items-center sm:pt-10 md:items-center'
         )}
       >
         <Link

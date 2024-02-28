@@ -5,12 +5,13 @@
   "description": "",
   "author": "Zhou Hua",
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "blog"
   ],
   "scripts": {
     "develop": "gatsby develop",
     "start": "gatsby develop",
-    "build": "gatsby build",
+    "build": "gatsby clean && gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "typecheck": "tsc --noEmit"
