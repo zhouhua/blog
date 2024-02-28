@@ -46,10 +46,9 @@ const config: GatsbyConfig = {
     },
     {
       resolve: 'gatsby-transformer-yaml',
-      // @ts-ignore
       options: {
+        // @ts-ignore
         typeName: ({ object }) => {
-          console.log(typeof object.date);
           return object?.layout;
         }
       }
@@ -93,7 +92,12 @@ const config: GatsbyConfig = {
     'gatsby-transformer-sharp',
     'gatsby-plugin-pnpm',
     'gatsby-plugin-netlify',
-    'gatsby-plugin-sharp-exif',
+    {
+      resolve: '@zhouhua-dev/gatsby-plugin-sharp-exif',
+      options: {
+        includes: ['src/pages/photos/**/*.{jpg,png,jpeg,gif,webp}']
+      }
+    },
     {
       resolve: 'gatsby-plugin-anchor-links',
       options: {
@@ -159,9 +163,6 @@ const config: GatsbyConfig = {
         analyzerPort: '8888',
         defaultSizes: 'gzip'
       }
-    },
-    {
-      resolve: 'gatsby-plugin-sitemap'
     }
   ]
 };
