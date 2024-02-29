@@ -6,8 +6,8 @@ import type { FC } from 'react';
 import useSiteMetadata from '@hooks/useSiteMetaData';
 import { Icon } from '@iconify/react';
 import ArticlesHero from '../../sections/articles/Articles.Hero';
-import type { Type } from './projects';
-import projects from './projects';
+import type { Type } from '../../utils/projects';
+import projects from '../../utils/projects';
 
 const iconMap: Record<Type, string> = {
   web: 'mdi:cellphone-link',
