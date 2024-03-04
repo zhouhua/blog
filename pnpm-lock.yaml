@@ -62,9 +62,9 @@ dependencies:
   gatsby-plugin-netlify:
     specifier: ^5.1.1
     version: 5.1.1(gatsby@5.13.3)(webpack@5.90.3)
-  gatsby-plugin-pnpm:
-    specifier: ^1.2.10
-    version: 1.2.10(gatsby@5.13.3)
+  gatsby-plugin-pnpm-gatsby-5:
+    specifier: ^1.2.11
+    version: 1.2.11(gatsby@5.13.3)
   gatsby-plugin-postcss:
     specifier: ^6.13.1
     version: 6.13.1(gatsby@5.13.3)(postcss@8.4.35)(typescript@5.3.3)(webpack@5.90.3)
@@ -8480,10 +8480,10 @@ packages:
       - graphql
       - supports-color
 
-  /gatsby-plugin-pnpm@1.2.10(gatsby@5.13.3):
-    resolution: {integrity: sha512-29xjIakNEUY42OBb3wI9Thmawr5EcUUOB3dB8nE51yr/TfKQFCREk+HAOATQHTNedG3VZhgU4wVjl2V3wgOXJA==}
+  /gatsby-plugin-pnpm-gatsby-5@1.2.11(gatsby@5.13.3):
+    resolution: {integrity: sha512-3isxA0QFNmESkUlUPDNs/kzY4c8lA5XypTULjzE00rbdHQSWVD/BFXPyr3GSvY4U7sCubAlVa8KSNR6Zf+gzLg==}
     peerDependencies:
-      gatsby: ~2.x.x || ~3.x.x || ~4.x.x
+      gatsby: ~2.x.x || ~3.x.x || ~4.x.x || ~5.x.x
     dependencies:
       gatsby: 5.13.3(@types/webpack@5.28.5)(babel-eslint@10.1.0)(eslint-import-resolver-typescript@3.6.1)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)
       lodash.get: 4.4.2

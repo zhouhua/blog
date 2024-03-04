@@ -48,9 +48,7 @@ const config: GatsbyConfig = {
       resolve: 'gatsby-transformer-yaml',
       options: {
         // @ts-ignore
-        typeName: ({ object }) => {
-          return object?.layout;
-        }
+        typeName: ({ object }) => object?.layout
       }
     },
     {
@@ -90,7 +88,7 @@ const config: GatsbyConfig = {
       }
     },
     'gatsby-transformer-sharp',
-    'gatsby-plugin-pnpm',
+    'gatsby-plugin-pnpm-gatsby-5',
     'gatsby-plugin-netlify',
     {
       resolve: '@zhouhua-dev/gatsby-plugin-sharp-exif',
