@@ -89,7 +89,6 @@ const config: GatsbyConfig = {
     },
     'gatsby-transformer-sharp',
     'gatsby-plugin-pnpm-gatsby-5',
-    'gatsby-plugin-netlify',
     {
       resolve: '@zhouhua-dev/gatsby-plugin-sharp-exif',
       options: {

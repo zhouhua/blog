@@ -8,10 +8,10 @@ import useSiteMetadata from '@hooks/useSiteMetaData';
 import { Icon } from '@iconify/react';
 import { StaticImage } from 'gatsby-plugin-image';
 import { useMedia } from 'react-use';
+import { motion } from 'framer-motion';
 import * as styles from './index.module.css';
 import { SearchButton } from '../Search';
 import MenuIcon from './MenuIcon';
-import { motion } from 'framer-motion';
 
 const iconMap: Record<string, string> = {
   'pen-fancy': 'fa6-solid:pen-fancy',
@@ -118,11 +118,9 @@ const NavigationHeader: FC = () => {
           />
         </Link>
         <div
-          className={clsx(
-            styles.menu,
-            'flex max-w-2xl grow-[2] justify-around px-10 sm:px-2 md:px-2 lg:px-2',
-            { hidden: isNarrow }
-          )}
+          className={clsx('flex max-w-2xl grow-[2] justify-around px-10 sm:px-2 md:px-2 lg:px-2', {
+            hidden: isNarrow
+          })}
         >
           {menu.map(({ name, path, icon }) => (
             <Link
