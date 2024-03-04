@@ -20,6 +20,7 @@
     "@giscus/react": "^3.0.0",
     "@iconify/react": "^4.1.1",
     "@rwh/keystrokes": "^1.5.4",
+    "@vercel/analytics": "^1.2.2",
     "@vercel/speed-insights": "^1.0.10",
     "algoliasearch": "^4.22.1",
     "autoprefixer": "^10.4.18",

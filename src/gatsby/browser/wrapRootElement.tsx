@@ -1,5 +1,7 @@
 import type { GatsbyBrowser } from 'gatsby';
 import { SpeedInsights } from '@vercel/speed-insights/react';
+import { Analytics } from '@vercel/analytics/react';
+
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/zh-cn';
@@ -46,7 +48,12 @@ const wrapRootElement: GatsbyBrowser['wrapRootElement'] = ({ element }) => (
       </>
     ) : null}
     {element}
-    {process.env.NODE_ENV !== 'devlopment' ? <SpeedInsights /> : null}
+    {process.env.NODE_ENV !== 'devlopment' ? (
+      <>
+        <Analytics />
+        <SpeedInsights />
+      </>
+    ) : null}
   </>
 );
 
