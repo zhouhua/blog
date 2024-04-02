@@ -1,16 +1,17 @@
 /* eslint-disable react/no-unstable-nested-components */
 import type { HeadFC, PageProps } from 'gatsby';
-import { useState, type FC, useEffect, useCallback } from 'react';
+import { useState, type FC, useCallback } from 'react';
 import Layout from '@components/Layout';
 import Section from '@components/Section';
 import clsx from 'clsx';
-import type { OptionProps, SingleValueProps } from 'react-select';
-import Select, { components } from 'react-select';
 import { Icon } from '@iconify/react';
 import copyToClipboard from 'copy-to-clipboard';
 import { Tooltip } from 'react-tooltip';
 import useColorMode from '@hooks/useColorMode';
+import { MenuItem, Select } from '@mui/material';
 import * as styles from './index.module.css';
+import ProjectHeader from '../../../sections/project/Project.Header';
+import list from '../../../utils/projects';
 
 let clock: number;
 
@@ -74,43 +75,43 @@ const featureMap = [
     group: '字符变体',
     needLigatures: false,
     features: [
-      { text: 'a', values: ['', 'cv01'] },
-      { text: 'g', values: ['', 'cv02'] },
-      { text: 'i', values: ['', 'cv03', 'cv04', 'cv05', 'cv06'] },
-      { text: 'l', values: ['', 'cv07', 'cv08', 'cv09', 'cv10'] },
-      { text: 'r', values: ['', 'ss01'] },
-      { text: '0', values: ['', 'zero', 'cv11', 'cv12', 'cv13'] },
-      { text: '4679', values: ['', 'onum'], long: true },
-      { text: '~', values: ['', 'cv17'] },
-      { text: '@', values: ['', 'ss05'] },
-      { text: '$', values: ['', 'ss04'] },
-      { text: '%', values: ['', 'cv18'] },
-      { text: '&', values: ['', 'ss03'] },
-      { text: '*', values: ['', 'cv15', 'cv16'] },
-      { text: '()', values: ['', 'cv31'] },
-      { text: '{}', values: ['', 'ss29'] },
-      { text: '|', values: ['', 'ss30'] }
+      { text: 'a', values: ['unset', 'cv01'] },
+      { text: 'g', values: ['unset', 'cv02'] },
+      { text: 'i', values: ['unset', 'cv03', 'cv04', 'cv05', 'cv06'] },
+      { text: 'l', values: ['unset', 'cv07', 'cv08', 'cv09', 'cv10'] },
+      { text: 'r', values: ['unset', 'ss01'] },
+      { text: '0', values: ['unset', 'zero', 'cv11', 'cv12', 'cv13'] },
+      { text: '4679', values: ['unset', 'onum'], long: true },
+      { text: '~', values: ['unset', 'cv17'] },
+      { text: '@', values: ['unset', 'ss05'] },
+      { text: '$', values: ['unset', 'ss04'] },
+      { text: '%', values: ['unset', 'cv18'] },
+      { text: '&', values: ['unset', 'ss03'] },
+      { text: '*', values: ['unset', 'cv15', 'cv16'] },
+      { text: '()', values: ['unset', 'cv31'] },
+      { text: '{}', values: ['unset', 'ss29'] },
+      { text: '|', values: ['unset', 'ss30'] }
     ]
   },
   {
     group: '连字特性变体',
     needLigatures: true,
     features: [
-      { text: '<= >=', values: ['', 'ss02'], long: true },
-      { text: '<=', values: ['', 'cv19', 'cv20'] },
-      { text: '>=', values: ['', 'cv23'] },
-      { text: '=<', values: ['', 'cv21', 'cv22'] },
-      { text: '== === != !==', values: ['', 'ss08'], long: true },
-      { text: '/=', values: ['', 'cv24'] },
-      { text: '>>= <<= ||= |=', values: ['', 'ss09'], long: true },
-      { text: '.-', values: ['', 'cv25'] },
-      { text: ':-', values: ['', 'cv26'] },
-      { text: '.=', values: ['', 'cv32'] },
-      { text: '[]', values: ['', 'cv27'] },
-      { text: '{. .}', values: ['', 'cv28'], long: true },
-      { text: '\\\\', values: ['', 'ss06'] },
-      { text: '=~ !~', values: ['', 'ss07'], long: true },
-      { text: 'Fl Tl fi fj fl ft', values: ['', 'ss10'], long: true }
+      { text: '<= >=', values: ['unset', 'ss02'], long: true },
+      { text: '<=', values: ['unset', 'cv19', 'cv20'] },
+      { text: '>=', values: ['unset', 'cv23'] },
+      { text: '=<', values: ['unset', 'cv21', 'cv22'] },
+      { text: '== === != !==', values: ['unset', 'ss08'], long: true },
+      { text: '/=', values: ['unset', 'cv24'] },
+      { text: '>>= <<= ||= |=', values: ['unset', 'ss09'], long: true },
+      { text: '.-', values: ['unset', 'cv25'] },
+      { text: ':-', values: ['unset', 'cv26'] },
+      { text: '.=', values: ['unset', 'cv32'] },
+      { text: '[]', values: ['unset', 'cv27'] },
+      { text: '{. .}', values: ['unset', 'cv28'], long: true },
+      { text: '\\\\', values: ['unset', 'ss06'] },
+      { text: '=~ !~', values: ['unset', 'ss07'], long: true },
+      { text: 'Fl Tl fi fj fl ft', values: ['unset', 'ss10'], long: true }
     ]
   }
 ];
@@ -151,43 +152,24 @@ const arrowConbine = [
   }
 ];
 
-type LigaturesOptionType = { value: 'normal' | 'none'; label: string };
-type CommonOptionType = { value: string; label: string };
+type LigaturesType = 'normal' | 'none';
+type LigaturesOptionType = { value: LigaturesType; label: string };
 
 const ligaturesOptions: LigaturesOptionType[] = [
   { value: 'normal', label: '开启' },
   { value: 'none', label: '关闭' }
 ];
 
-const Option = (props: OptionProps<CommonOptionType>) => (
-  // eslint-disable-next-line react/destructuring-assignment
-  <div className="font-monospace" style={{ fontFeatureSettings: `'${props.data.value}'` }}>
-    <components.Option {...props} />
-  </div>
-);
-const SingleValue = ({ data, children, ...rest }: SingleValueProps<CommonOptionType>) => (
-  <components.SingleValue {...rest} data={data}>
-    <span
-      className="font-monospace"
-      style={{ fontFeatureSettings: data.value ? `'${data.value}'` : 'unset' }}
-    >
-      {children}
-    </span>
-  </components.SingleValue>
-);
-
 const Index: FC<PageProps> = () => {
   const featureValueMap: Record<string, string> = {};
   const [feature, setFeature] = useState('');
-  const [ligatures, setLigatures] = useState<LigaturesOptionType>(ligaturesOptions[0]);
-  useEffect(() => {
-    console.log(ligatures.value);
-  }, [ligatures.value]);
+  const [ligatures, setLigatures] = useState<LigaturesType>('normal');
   const collect = useCallback((key: string, value: string) => {
     featureValueMap[key] = value;
     setFeature(
       Object.values(featureValueMap)
         .filter(Boolean)
+        .filter(v => v !== 'unset')
         .map(v => `'${v}'`)
         .join(', ')
     );
@@ -212,42 +194,67 @@ const Index: FC<PageProps> = () => {
   }, [feature]);
   return (
     <Layout>
+      <ProjectHeader title={list[0].name} description={list[0].description} />
       <Section narrow>
-        <div className="mockup-window mt-20 border border-palette-gray/40 bg-palette-gray/10 text-palette-secondary">
-          <div className="text bg-palette-bg px-4 py-10">
+        <div className="colorModeTransition mockup-window mt-20 border border-palette-gray/40 bg-palette-gray/10 text-palette-secondary">
+          <div className="text colorModeTransition bg-palette-bg px-4 py-10">
             <div className={clsx(styles.box, 'mb-8')}>
-              <h3 className={clsx(styles.title)}>控制：</h3>
+              <h3 className={clsx(styles.title, 'colorModeTransition')}>控制：</h3>
               <div className="flex cursor-pointer justify-between">
-                <span className="mb-1 mt-2 text-palette-secondary/80">连字特性</span>
-                <Select<LigaturesOptionType>
+                <span className="colorModeTransition mb-1 mt-2 text-palette-secondary/80">
+                  连字特性
+                </span>
+                <Select<LigaturesType>
+                  size="small"
                   value={ligatures}
-                  onChange={option => option && setLigatures({ ...option })}
-                  options={ligaturesOptions}
-                  className="text-palette-secondary dark:text-palette-card"
-                />
+                  onChange={e => setLigatures(e.target.value as LigaturesType)}
+                >
+                  {ligaturesOptions.map(option => (
+                    <MenuItem value={option.value}>{option.label}</MenuItem>
+                  ))}
+                </Select>
               </div>
 
               {featureMap.map(
                 ({ group, features, needLigatures }) =>
-                  (!needLigatures || ligatures.value === 'normal') && (
+                  (!needLigatures || ligatures === 'normal') && (
                     <div key={group}>
-                      <h4 className="mb-1 mt-2 text-palette-secondary/80">{group}</h4>
+                      <h4 className="colorModeTransition mb-1 mt-2 text-palette-secondary/80">
+                        {group}
+                      </h4>
                       <div className="flex flex-wrap">
                         {features.map(({ text, values, long }) => (
-                          <Select<CommonOptionType>
-                            className={clsx(
-                              'm-4',
-                              long ? 'w-56' : 'w-24',
-                              'text-palette-secondary dark:text-palette-card'
-                            )}
-                            defaultValue={{ value: values[0], label: text }}
-                            onChange={option => collect(group + text, option?.value || '')}
-                            options={values.map(value => {
-                              return { value, label: text };
-                            })}
-                            components={{ Option, SingleValue }}
+                          <Select
+                            size="small"
+                            sx={{ m: 1 }}
+                            className={clsx('m-4', long ? 'w-56' : 'w-24')}
+                            defaultValue={values[0]}
+                            onChange={e => collect(group + text, e.target.value)}
                             key={group + text}
-                          />
+                            renderValue={value => (
+                              <span
+                                className="font-monospace"
+                                style={{
+                                  fontFeatureSettings: value !== 'unset' ? `'${value}'` : 'unset'
+                                }}
+                              >
+                                {text}
+                              </span>
+                            )}
+                          >
+                            {values.map(value => (
+                              <MenuItem value={value}>
+                                <span
+                                  className="font-monospace"
+                                  style={{
+                                    fontFeatureSettings: value !== 'unset' ? `'${value}'` : 'unset'
+                                  }}
+                                >
+                                  {text}
+                                </span>
+                              </MenuItem>
+                            ))}
+                          </Select>
                         ))}
                       </div>
                     </div>
@@ -255,7 +262,7 @@ const Index: FC<PageProps> = () => {
               )}
             </div>
             <div className={clsx(styles.box, 'mb-8')}>
-              <h3 className={clsx(styles.title)}>预览：</h3>
+              <h3 className={clsx(styles.title, 'colorModeTransition')}>预览：</h3>
               <div>
                 {charSets.map(({ category, sets }) => (
                   <div key={category}>
@@ -268,10 +275,13 @@ const Index: FC<PageProps> = () => {
                         >
                           <div className="w-36">{name}</div>
                           <div
-                            className={clsx(styles.code, 'text-palette-secondary/80')}
+                            className={clsx(
+                              styles.code,
+                              'colorModeTransition text-palette-secondary/80'
+                            )}
                             style={{
                               fontFeatureSettings: feature,
-                              fontVariantLigatures: ligatures.value
+                              fontVariantLigatures: ligatures
                             }}
                           >
                             {content.map(str => (
@@ -287,7 +297,7 @@ const Index: FC<PageProps> = () => {
             </div>
 
             <div className={clsx(styles.box)}>
-              <h3 className={clsx(styles.title)}>箭头：</h3>
+              <h3 className={clsx(styles.title, 'colorModeTransition')}>箭头：</h3>
               <div className="flex flex-wrap">
                 <div className="mb-4 w-1/2 pl-4 sm:w-full">
                   {arrows.map(({ title, contents }) => (
@@ -296,7 +306,7 @@ const Index: FC<PageProps> = () => {
                       {contents.map(content => (
                         <div
                           key={content}
-                          className="font-monospace text-sm text-palette-secondary/80"
+                          className="colorModeTransition font-monospace text-sm text-palette-secondary/80"
                         >
                           <div style={{ fontVariantLigatures: 'normal' }}>{content}</div>
                           <div style={{ fontVariantLigatures: 'none' }} className=" opacity-40">
@@ -313,7 +323,7 @@ const Index: FC<PageProps> = () => {
                     {variant.map(v => (
                       <div
                         key={`${title}${v}`}
-                        className="font-monospace text-sm text-palette-secondary/80"
+                        className="colorModeTransition font-monospace text-sm text-palette-secondary/80"
                       >
                         <div style={{ fontVariantLigatures: 'normal' }}>
                           {[0, 1, 2]
@@ -341,7 +351,7 @@ const Index: FC<PageProps> = () => {
             </div>
           </div>
         </div>
-        <div className="mockup-code relative mt-10 overflow-visible border border-palette-gray text-palette-secondary">
+        <div className="colorModeTransition mockup-code relative mt-10 overflow-visible border border-palette-gray/40 bg-palette-gray/10 text-palette-secondary">
           <pre data-prefix="1">
             font-feature-settings: <i>{feature || 'unset'}</i>;
           </pre>
@@ -351,7 +361,10 @@ const Index: FC<PageProps> = () => {
             data-tooltip-content={copySuccess ? '复制成功！' : '复制代码'}
             data-tooltip-id="copy-tooltip"
           >
-            <div className="cursor-pointer rounded-md bg-palette-gray/20 px-5 py-1" onClick={copy}>
+            <div
+              className="colorModeTransition cursor-pointer rounded-md bg-palette-gray/20 px-5 py-1"
+              onClick={copy}
+            >
               <Icon icon="uil:copy" />
             </div>
           </div>

@@ -112,7 +112,6 @@ button {
   appearance: none;
   border: none;
   outline: none;
-  background: transparent;
 }
 
 table {
@@ -240,4 +239,20 @@ html {
       @apply mix-blend-lighten invert;
     }
   }
+}
+
+.jtabs-content + div {
+  display: none;
+}
+
+.jtabs .jtabs-headers {
+  /* flex-wrap: wrap; */
+  font-size: 14px;
+  max-width: calc(100vw-40px);
+}
+.jtabs .jtabs-headers > div:not(.jtabs-border) {
+  padding: 6px 8px;
+}
+.jtabs .jtabs-controls .jtabs-add {
+  display: none;
 }

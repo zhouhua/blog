@@ -160,7 +160,9 @@ const config: GatsbyConfig = {
         analyzerPort: '8888',
         defaultSizes: 'gzip'
       }
-    }
+    },
+    'gatsby-plugin-emotion',
+    'gatsby-plugin-material-ui'
   ]
 };
 

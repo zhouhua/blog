@@ -112,6 +112,7 @@
   },
   "include": [
     "./src/**/*",
+    "./api/**/*.ts",
     "./gatsby-node.ts",
     "./gatsby-config.ts",
     "./gatsby-browser.ts",

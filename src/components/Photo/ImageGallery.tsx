@@ -47,7 +47,7 @@ const ImageGallery: FC<{ photos: PhotoProps<CustomPhotoType>[] }> = ({ photos })
             <div
               className={clsx(
                 { [styles.fullMask]: !!count, [styles.mask]: !count },
-                'text-palette-bg absolute left-0 top-0 h-full w-full p-3',
+                'absolute left-0 top-0 h-full w-full p-3 text-palette-bg',
                 'flex items-end'
               )}
             >
@@ -65,7 +65,7 @@ const ImageGallery: FC<{ photos: PhotoProps<CustomPhotoType>[] }> = ({ photos })
             <motion.div
               className={clsx(
                 { [styles.fullMask]: !!count, [styles.mask]: !count },
-                'text-palette-bg absolute left-0 top-0 h-full w-full p-3',
+                'absolute left-0 top-0 h-full w-full p-3 text-palette-bg',
                 'flex items-end pb-96 opacity-0'
               )}
               whileHover={{ opacity: 1, paddingBottom: '12px' }}

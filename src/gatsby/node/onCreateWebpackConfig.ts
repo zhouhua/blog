@@ -1,6 +1,9 @@
 import path from 'path';
 import type { GatsbyNode } from 'gatsby';
 import type { Configuration, RuleSetRule } from 'webpack';
+// @ts-ignore
+// eslint-disable-next-line import/no-unresolved
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { defaultGetLocalIdent } from './utils';
 
 interface IUse {
@@ -69,6 +72,17 @@ const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({ actions, g
       });
     }
   });
+  const plugins = config.plugins || [];
+  const pluginIndex = plugins.findIndex(p => p instanceof MiniCssExtractPlugin);
+  if (pluginIndex >= 0) {
+    plugins[pluginIndex] = new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+      ignoreOrder: true,
+      insert: (linkTag: HTMLLinkElement) =>
+        document.getElementsByTagName('head')[0].prepend(linkTag)
+    });
+  }
   actions.replaceWebpackConfig(config);
 };
 
