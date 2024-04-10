@@ -10,7 +10,7 @@ export function defaultGetLocalIdent(
   loaderContext: Record<string, any> & { resourcePath: string },
   localIdentName: string,
   localName: string,
-  options: Record<string, any>
+  options: Record<string, any>,
 ): string {
   const { context, hashSalt, hashStrategy } = options;
   const { resourcePath } = loaderContext;
@@ -20,7 +20,7 @@ export function defaultGetLocalIdent(
   if (loaderContext._module && loaderContext._module.matchResource) {
     relativeResourcePath = `${normalizePath(
       // eslint-disable-next-line no-underscore-dangle
-      path.relative(context, loaderContext._module.matchResource)
+      path.relative(context, loaderContext._module.matchResource),
     )}`;
   }
 
@@ -32,7 +32,7 @@ export function defaultGetLocalIdent(
 
   let { hashFunction, hashDigest, hashDigestLength } = options;
   const matches = localIdentName.match(
-    /\[(?:([^:\]]+):)?(?:(hash|contenthash|fullhash))(?::([a-z]+\d*))?(?::(\d+))?\]/i
+    /\[(?:([^:\]]+):)?(?:(hash|contenthash|fullhash))(?::([a-z]+\d*))?(?::(\d+))?\]/i,
   );
 
   if (matches) {
@@ -48,7 +48,7 @@ export function defaultGetLocalIdent(
     // eslint-disable-next-line no-param-reassign
     localIdentName = localIdentName.replace(
       /\[(?:([^:\]]+):)?(?:hash|contenthash|fullhash)(?::([a-z]+\d*))?(?::(\d+))?\]/gi,
-      () => (hashName === 'fullhash' ? '[fullhash]' : '[contenthash]')
+      () => (hashName === 'fullhash' ? '[fullhash]' : '[contenthash]'),
     );
   }
 
@@ -94,8 +94,8 @@ export function defaultGetLocalIdent(
     chunk: {
       name,
       hash: localIdentHash,
-      contentHash: localIdentHash
-    }
+      contentHash: localIdentHash,
+    },
   };
 
   // eslint-disable-next-line no-underscore-dangle
@@ -127,4 +127,12 @@ export function defaultGetLocalIdent(
   }
 
   return result;
+}
+
+export function slugForI18n(slug: string) {
+  const matches = slug.match(/^(.*?)\.en/$);
+  if (matches) {
+    return `/en${matches[1]}`;
+  }
+  return slug;
 }

@@ -4,19 +4,19 @@ module.exports = {
     'airbnb-typescript/base',
     'plugin:import/recommended',
     'plugin:import/typescript',
-    'prettier'
+    'prettier',
   ],
   settings: {
     'import/resolver': {
       typescript: true,
-      node: true
-    }
+      node: true,
+    },
   },
   parserOptions: { project: './tsconfig.json' },
   globals: { graphql: true },
   env: {
     browser: true,
-    node: true
+    node: true,
   },
   ignorePatterns: ['public/**/*'],
   rules: {
@@ -28,8 +28,8 @@ module.exports = {
     'arrow-body-style': ['error', 'as-needed', { requireReturnForObjectLiteral: true }],
     'no-console': 'off',
     'no-debugger': 2,
-    'comma-dangle': ['error', 'never'],
-    '@typescript-eslint/comma-dangle': ['error', 'never'],
+    'comma-dangle': ['error', 'always-multiline'],
+    '@typescript-eslint/comma-dangle': ['error', 'always-multiline'],
     'indent': ['error', 2, { SwitchCase: 1 }],
     'quotes': ['error', 'single'],
     'semi': ['error', 'always'],
@@ -40,16 +40,16 @@ module.exports = {
       'error',
       {
         allowShortCircuit: true,
-        allowTernary: true
-      }
+        allowTernary: true,
+      },
     ],
     'no-lonely-if': 2,
     'prefer-const': [
       'error',
       {
         destructuring: 'any',
-        ignoreReadBeforeAssign: false
-      }
+        ignoreReadBeforeAssign: false,
+      },
     ],
     'no-constant-condition': ['error', { checkLoops: false }],
     'quote-props': ['error', 'consistent-as-needed'],
@@ -61,16 +61,16 @@ module.exports = {
       {
         max: 1,
         maxBOF: 1,
-        maxEOF: 1
-      }
+        maxEOF: 1,
+      },
     ],
     'id-length': [
       'error',
       {
         min: 1,
         max: 32,
-        exceptions: ['i', 'j', 'k', 'u', '_', '$', 't', 'r', 'l', 'x', 'y']
-      }
+        exceptions: ['i', 'j', 'k', 'u', '_', '$', 't', 'r', 'l', 'x', 'y'],
+      },
     ],
     'no-plusplus': 0,
     'no-restricted-syntax': [2, 'LabeledStatement', 'WithStatement'],
@@ -89,8 +89,8 @@ module.exports = {
       'error',
       {
         prefer: 'type-imports',
-        fixStyle: 'separate-type-imports'
-      }
+        fixStyle: 'separate-type-imports',
+      },
     ],
     'no-param-reassign': ['error', { props: false }],
     'import/prefer-default-export': 0,
@@ -101,20 +101,20 @@ module.exports = {
       {
         VariableDeclarator: {
           array: true,
-          object: true
+          object: true,
         },
         AssignmentExpression: {
           array: false,
-          object: false
-        }
+          object: false,
+        },
       },
-      { enforceForRenamedProperties: false }
+      { enforceForRenamedProperties: false },
     ],
     'react/require-default-props': 0,
     'react/prop-types': 0,
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/prefer-optional-chain': 'error',
-    'react/jsx-no-target-blank': 0
-  }
+    'react/jsx-no-target-blank': 0,
+  },
 };

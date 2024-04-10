@@ -35,8 +35,7 @@ export function transferData(sheet: WorkSheet): any[][] {
     sheet['!data'].forEach((row, i) =>
       row.forEach((cell, j) => {
         data[i][j] = cell.v;
-      })
-    );
+      }));
   } else {
     Object.entries(sheet).forEach(([key, value]) => {
       if (/^!/.test(key)) {

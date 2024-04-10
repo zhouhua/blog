@@ -10,7 +10,7 @@ import ArticlesList from '../sections/articles/Articles.List';
 
 const ArticlesPage: FC<PageProps<object, { articles: IArticle[]; tag?: string }>> = ({
   location,
-  pageContext
+  pageContext,
 }) => {
   const { title } = useSiteMetadata();
   return (

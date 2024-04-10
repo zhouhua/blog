@@ -25,8 +25,8 @@ function simplifyList(list: Queries.MarkdownRemark[]): Queries.MarkdownRemark[] 
         'frontmatter.hero',
         'timeToRead',
         'wordCount.words',
-        'excerpt'
-      ]) as Queries.MarkdownRemark
+        'excerpt',
+      ]) as Queries.MarkdownRemark,
   );
 }
 function simplifyArticle(item: Queries.MarkdownRemark): Queries.MarkdownRemark {
@@ -40,7 +40,7 @@ function simplifyArticle(item: Queries.MarkdownRemark): Queries.MarkdownRemark {
     'frontmatter.hero',
     'timeToRead',
     'wordCount.words',
-    'html'
+    'html',
   ]) as Queries.MarkdownRemark;
 }
 
@@ -55,12 +55,12 @@ const templates = {
   journals: path.resolve(templatesDirectory, 'journals.template.tsx'),
   homepage: path.resolve(templatesDirectory, 'HomePage.tsx'),
   photos: path.resolve(templatesDirectory, 'photos.list.template.tsx'),
-  photo: path.resolve(templatesDirectory, 'photo.group.template.tsx')
+  photo: path.resolve(templatesDirectory, 'photo.group.template.tsx'),
 };
 
 const createPages: GatsbyNode['createPages'] = async (
   { actions: { createPage }, graphql },
-  themeOptions
+  themeOptions,
 ) => {
   const { rootPath, basePath = '/', authorsPath = '/authors', authorsPage = true } = themeOptions;
 
@@ -214,11 +214,11 @@ const createPages: GatsbyNode['createPages'] = async (
       }
     `);
     authors = ((authorsQuery.data as any).authors.edges as Queries.AuthorsYamlEdge[]).map(
-      edge => edge.node
+      edge => edge.node,
     );
 
     articles = ((articlesQuery.data as any).articles.edges as Queries.MarkdownRemarkEdge[]).map(
-      edge => edge.node
+      edge => edge.node,
     );
     photos = ((photosQeury.data as any).photos.edges as Queries.photoEdge[]).map(edge => edge.node);
   } catch (error) {
@@ -256,8 +256,8 @@ const createPages: GatsbyNode['createPages'] = async (
       authors: authors[0],
       basePath,
       permalink: '/articles',
-      slug: '/articles'
-    }
+      slug: '/articles',
+    },
   });
 
   const journals = articles.filter(article => article.frontmatter.layout === 'journal');
@@ -270,8 +270,8 @@ const createPages: GatsbyNode['createPages'] = async (
       authors: authors[0],
       basePath,
       permalink: '/journals',
-      slug: '/journals'
-    }
+      slug: '/journals',
+    },
   });
 
   /**
@@ -311,8 +311,8 @@ const createPages: GatsbyNode['createPages'] = async (
         slug: article.fields.slug,
         id: article.id,
         title: article.frontmatter.title,
-        next
-      }
+        next,
+      },
     });
 
     // 处理 tag 列表
@@ -343,8 +343,8 @@ const createPages: GatsbyNode['createPages'] = async (
         }${slug}/`,
         slug,
         id: article.id,
-        title
-      }
+        title,
+      },
     });
 
     // 处理 tag 列表
@@ -367,8 +367,8 @@ const createPages: GatsbyNode['createPages'] = async (
         tag,
         basePath,
         permalink: slug,
-        slug
-      }
+        slug,
+      },
     });
   });
 
@@ -385,7 +385,7 @@ const createPages: GatsbyNode['createPages'] = async (
       image: picture!.childImageSharp!,
       count: list.length,
       date: date!,
-      slug: fields.slug
+      slug: fields.slug,
     });
   });
   const featuredList: PhotoProps<CustomPhotoType>[] = [];
@@ -403,7 +403,7 @@ const createPages: GatsbyNode['createPages'] = async (
         image: picture!.childImageSharp!,
         count: list.length,
         date: date!,
-        slug: fields.slug
+        slug: fields.slug,
       });
     }
   });
@@ -415,8 +415,8 @@ const createPages: GatsbyNode['createPages'] = async (
       photos: photoList,
       basePath,
       permalink: '/photos',
-      slug: '/photos'
-    }
+      slug: '/photos',
+    },
   });
   photos.forEach(photo => {
     createPage({
@@ -428,65 +428,68 @@ const createPages: GatsbyNode['createPages'] = async (
         featuredList: featuredList.filter(item => item.slug !== photo.fields.slug),
         basePath,
         permalink: photo.fields.slug,
-        slug: photo.fields.slug
-      }
+        slug: photo.fields.slug,
+      },
     });
   });
 
-  // make homepage
-  const articleNumber = articlesPublished.length;
-  const journalNumber = journals.length;
-  const photoNumber = photos.length;
-  const articleWordCount = articlesPublished.reduce(
-    (prev, article) => prev + (article.wordCount?.words || 0),
-    0
-  );
-  const journalWordCount = journals.reduce(
-    (prev, journal) => prev + (journal.wordCount?.words || 0),
-    0
-  );
-  const allPhotoCount = photos.reduce((prev, { list }) => prev + list.length, 0);
-  const featuredArticles = simplifyList(
-    articlesPublished.filter(article => article.frontmatter.featured)
-  );
-  const allFeaturedImage: PhotoProps<CustomPhotoType>[] = [];
-  photos.forEach(photo => {
-    photo.list.forEach(({ featured, picture }) => {
-      if (featured) {
-        const { width, height } = picture!.childImageSharp!.gatsbyImageData;
-        const { fallback } = picture?.childImageSharp?.gatsbyImageData.images || {};
-        allFeaturedImage.push({
-          src: fallback!.src,
-          width,
-          height,
-          alt: photo.title,
-          count: 0,
-          image: picture!.childImageSharp!,
-          date: photo.date!,
-          slug: photo.fields.slug
-        });
-      }
-    });
-  });
   const newestJournals = take(journals, 5).map(simplifyArticle);
-  createPage({
-    path: '/',
-    component: templates.homepage,
-    context: {
-      author: authors[0],
-      journalWordCount,
-      articleWordCount,
-      articleNumber,
-      photoNumber,
-      journalNumber,
-      allPhotoCount,
-      allFeaturedImage,
-      basePath,
-      featuredArticles,
-      newestJournals,
-      permalink: '/',
-      slug: '/'
-    }
+  ['', 'en'].forEach(lang => {
+    // make homepage
+    const articleNumber = articlesPublished.length;
+    const journalNumber = journals.length;
+    const photoNumber = photos.length;
+    const articleWordCount = articlesPublished.reduce(
+      (prev, article) => prev + (article.wordCount?.words || 0),
+      0,
+    );
+    const journalWordCount = journals.reduce(
+      (prev, journal) => prev + (journal.wordCount?.words || 0),
+      0,
+    );
+    const allPhotoCount = photos.reduce((prev, { list }) => prev + list.length, 0);
+    const featuredArticles = simplifyList(
+      articlesPublished.filter(article => article.frontmatter.featured),
+    );
+    const allFeaturedImage: PhotoProps<CustomPhotoType>[] = [];
+    photos.forEach(photo => {
+      photo.list.forEach(({ featured, picture }) => {
+        if (featured) {
+          const { width, height } = picture!.childImageSharp!.gatsbyImageData;
+          const { fallback } = picture?.childImageSharp?.gatsbyImageData.images || {};
+          allFeaturedImage.push({
+            src: fallback!.src,
+            width,
+            height,
+            alt: photo.title,
+            count: 0,
+            image: picture!.childImageSharp!,
+            date: photo.date!,
+            slug: photo.fields!.slug!,
+          });
+        }
+      });
+    });
+    createPage({
+      path: '/' + lang,
+      component: templates.homepage,
+      context: {
+        author: authors[0],
+        journalWordCount,
+        articleWordCount,
+        articleNumber,
+        photoNumber,
+        journalNumber,
+        allPhotoCount,
+        allFeaturedImage,
+        basePath,
+        featuredArticles,
+        newestJournals,
+        permalink: '/',
+        slug: '/',
+        lang: lang || 'zh',
+      },
+    });
   });
 };
 

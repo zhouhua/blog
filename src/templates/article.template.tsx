@@ -6,6 +6,7 @@ import Progress from '@components/Progress';
 import Section from '@components/Section';
 import { useScroll } from 'framer-motion';
 import Comment from '@components/Comment';
+import { useI18nContext } from '@i18n/i18n-react';
 import ArticleAside from '../sections/article/Article.Aside';
 import type { IArticle, IAuthor } from '../types/index';
 import ArticleHero from '../sections/article/Article.Hero';
@@ -17,15 +18,19 @@ import * as styles from './index.module.css';
 
 const Article: FC<PageProps<object, { article: IArticle; author: IAuthor; next: IArticle[] }>> = ({
   pageContext,
-  location
+  location,
 }) => {
   const contentSectionRef = useRef<HTMLDivElement>(null);
   const { article, author, next } = pageContext;
   const [progress, setProgress] = useState<number>(0);
   const { scrollYProgress } = useScroll({
     target: contentSectionRef,
-    offset: ['start 20vh', 'end 70vh']
+    offset: ['start 20vh', 'end 70vh'],
   });
+
+  const { LL, locale } = useI18nContext();
+
+  console.log('locale', locale);
 
   useEffect(() => {
     scrollYProgress.on('change', e => {
@@ -48,7 +53,7 @@ const Article: FC<PageProps<object, { article: IArticle; author: IAuthor; next: 
       <ArticleFooter />
       {(next || []).length > 0 && (
         <Section className="block" narrow>
-          <h3 className={styles.lineTitle}>看看其他的文章</h3>
+          <h3 className={styles.lineTitle}>{LL?.articleDetail?.readOtherArticles()}</h3>
           <ArticlesNext articles={next} />
           <div className="mb-[65px]" />
         </Section>

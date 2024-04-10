@@ -12,15 +12,15 @@ const config: GatsbyConfig = {
     copyright: '© All rights reserved.',
     hero: {
       heading: '周骅的博客',
-      maxWidth: 800
+      maxWidth: 800,
     },
     menu: [
       { name: '文章', path: '/articles', icon: 'pen-fancy' },
       { name: '项目', path: '/projects', icon: 'project' },
       { name: '随笔', path: '/journals', icon: 'message' },
       { name: '照片', path: '/photos', icon: 'image' },
-      { name: '关于我', path: '/about', icon: 'address-card' }
-    ]
+      { name: '关于我', path: '/about', icon: 'address-card' },
+    ],
   },
   // If you use VSCode you can also use the GraphQL plugin
   // Learn more at: https://gatsby.dev/graphql-typegen
@@ -33,7 +33,7 @@ const config: GatsbyConfig = {
     // GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY: true
     FAST_DEV: true,
     PARALLEL_SOURCING: true,
-    DETECT_NODE_MUTATIONS: true
+    DETECT_NODE_MUTATIONS: true,
   },
   plugins: [
     'gatsby-plugin-postcss',
@@ -41,65 +41,65 @@ const config: GatsbyConfig = {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'authors',
-        path: `${__dirname}/src/authors`
-      }
+        path: `${__dirname}/src/authors`,
+      },
     },
     {
       resolve: 'gatsby-transformer-yaml',
       options: {
         // @ts-ignore
-        typeName: ({ object }) => object?.layout
-      }
+        typeName: ({ object }) => object?.layout,
+      },
     },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'articles',
-        path: `${__dirname}/src/pages/articles`
-      }
+        path: `${__dirname}/src/pages/articles`,
+      },
     },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'journals',
-        path: `${__dirname}/src/pages/journals`
-      }
+        path: `${__dirname}/src/pages/journals`,
+      },
     },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'photos',
-        path: `${__dirname}/src/pages/photos`
-      }
+        path: `${__dirname}/src/pages/photos`,
+      },
     },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'images',
-        path: `${__dirname}/src/images`
-      }
+        path: `${__dirname}/src/images`,
+      },
     },
     'gatsby-plugin-image',
     'gatsby-plugin-sitemap',
     {
       resolve: 'gatsby-plugin-sharp',
       options: {
-        failOn: 'none'
-      }
+        failOn: 'none',
+      },
     },
     'gatsby-transformer-sharp',
     'gatsby-plugin-pnpm-gatsby-5',
     {
       resolve: '@zhouhua-dev/gatsby-plugin-sharp-exif',
       options: {
-        includes: ['src/pages/photos/**/*.{jpg,png,jpeg,gif,webp}']
-      }
+        includes: ['src/pages/photos/**/*.{jpg,png,jpeg,gif,webp}'],
+      },
     },
     {
       resolve: 'gatsby-plugin-anchor-links',
       options: {
-        duration: 500
-      }
+        duration: 500,
+      },
     },
     {
       resolve: 'gatsby-transformer-remark',
@@ -114,56 +114,56 @@ const config: GatsbyConfig = {
               linkImagesToOriginal: false,
               quality: 80,
               withWebp: true,
-              srcSetBreakpoints: [200, 360, 650, 1280, 1800, 2600]
-            }
+              srcSetBreakpoints: [200, 360, 650, 1280, 1800, 2600],
+            },
           },
           { resolve: 'gatsby-remark-numbered-footnotes' },
           {
             resolve: 'gatsby-remark-external-links',
             options: {
               target: '_blank',
-              rel: 'nofollow'
-            }
+              rel: 'nofollow',
+            },
           },
           {
             resolve: 'gatsby-remark-prismjs',
             options: {
               showLineNumbers: true,
-              inlineCodeMarker: '±'
-            }
+              inlineCodeMarker: '±',
+            },
           },
           'gatsby-remark-copy-linked-files',
-          { resolve: 'gatsby-remark-katex', options: { output: 'html' } }
+          { resolve: 'gatsby-remark-katex', options: { output: 'html' } },
           // 'gatsby-remark-autolink-headers'
-        ]
-      }
+        ],
+      },
     },
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
-        icon: 'src/images/logo.png'
-      }
+        icon: 'src/images/logo.png',
+      },
     },
     {
       resolve: 'gatsby-plugin-algolia',
       options: {
         appId: process.env.GATSBY_ALGOLIA_APP_ID,
         apiKey: process.env.ALGOLIA_ADMIN_KEY,
-        queries: query
-      }
+        queries: query,
+      },
     },
     {
       resolve: 'gatsby-plugin-webpack-bundle-analyser-v2',
       options: {
-        openAnalyzer: true,
+        openAnalyzer: false,
         analyzerMode: 'server',
         analyzerPort: '8888',
-        defaultSizes: 'gzip'
-      }
+        defaultSizes: 'gzip',
+      },
     },
     'gatsby-plugin-emotion',
-    'gatsby-plugin-material-ui'
-  ]
+    'gatsby-plugin-material-ui',
+  ],
 };
 
 export default config;

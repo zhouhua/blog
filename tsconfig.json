@@ -42,7 +42,8 @@
       "@styles/*": ["src/styles/*"],
       "@utils": ["src/utils/index.ts"],
       "@hooks/*": ["src/hooks/*"],
-      "@types/*": ["src/types/*"]
+      "@types/*": ["src/types/*"],
+      "@i18n/*": ["src/i18n/*"]
     } /* Specify a set of entries that re-map imports to additional lookup locations. */,
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     "typeRoots": [
@@ -112,7 +113,6 @@
   },
   "include": [
     "./src/**/*",
-    "./api/**/*.ts",
     "./gatsby-node.ts",
     "./gatsby-config.ts",
     "./gatsby-browser.ts",
@@ -120,7 +120,7 @@
     "./tailwind.config.ts",
     "./plugins/**/*",
     "./*.js",
-    "./.eslintrc.js"
+    "./.eslintrc.js",
   ],
   "exclude": ["./public/**/*"],
   "ts-node": {

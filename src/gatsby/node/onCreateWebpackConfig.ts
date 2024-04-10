@@ -19,7 +19,9 @@ const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({ actions, g
         '@icons': path.resolve(__dirname, '../../icons/'),
         '@styles': path.resolve(__dirname, '../../styles/'),
         '@utils': path.resolve(__dirname, '../../utils/'),
-        '@hooks': path.resolve(__dirname, '../../hooks/')
+        '@hooks': path.resolve(__dirname, '../../hooks/'),
+        '@i18n': path.resolve(__dirname, '../../i18n'),
+        '@types': path.resolve(__dirname, '../../types')
       },
       extensions: ['.js', '.json', '.ts', '.tsx'],
       modules: [path.resolve(__dirname, '../../'), 'node_modules']
