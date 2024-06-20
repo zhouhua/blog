@@ -14,7 +14,8 @@
     "build": "gatsby clean && gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "postinstall": "pnpm exec playwright install"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
