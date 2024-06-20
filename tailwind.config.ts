@@ -1,5 +1,7 @@
 import type { Config } from 'tailwindcss';
 import daisyui from 'daisyui';
+import { scrollbarGutter  } from 'tailwind-scrollbar-utilities';
+
 
 export default {
   darkMode: 'class',
@@ -145,8 +147,8 @@ export default {
       }
     }
   },
-  plugins: [daisyui],
+  plugins: [daisyui, scrollbarGutter()],
   daisyui: {
-    themes: false
+    themes: [],
   }
 } satisfies Config;

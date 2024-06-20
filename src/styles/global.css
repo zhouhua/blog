@@ -256,3 +256,9 @@ html {
 .jtabs .jtabs-controls .jtabs-add {
   display: none;
 }
+
+svg .label {
+  padding: 0;
+  display: block;
+  line-height: 20px;
+}

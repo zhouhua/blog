@@ -30,11 +30,10 @@ const Layout: FC<PropsWithChildren & { isDetailPage?: boolean }> = ({
         <ArticlesContextProvider>
           <div
             className={clsx(
-              'colorModeTransition overflow-overlay relative h-screen min-w-[360px] bg-palette-bg',
+              'colorModeTransition overflow-y-auto scrollbar-both-edges relative h-screen min-w-[360px] bg-palette-bg',
               'flex flex-col',
               { [styles.cardView]: isDetailPage }
             )}
-            style={{ overflowY: 'scroll' }}
           >
             <NavigationHeader />
             <motion.main

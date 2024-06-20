@@ -126,6 +126,14 @@ const config: GatsbyConfig = {
             }
           },
           {
+            resolve: `gatsby-remark-mermaid`,
+            options: /** @type {import('gatsby-remark-mermaid').Options} */ ({
+              mermaidConfig: {
+                theme: 'default',
+              }
+            })
+          },
+          {
             resolve: 'gatsby-remark-prismjs',
             options: {
               showLineNumbers: true,
@@ -133,7 +141,7 @@ const config: GatsbyConfig = {
             }
           },
           'gatsby-remark-copy-linked-files',
-          { resolve: 'gatsby-remark-katex', options: { output: 'html' } }
+          { resolve: 'gatsby-remark-katex', options: { output: 'html', strict: 'ignore' } }
           // 'gatsby-remark-autolink-headers'
         ]
       }
