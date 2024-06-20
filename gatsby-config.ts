@@ -160,15 +160,16 @@ const config: GatsbyConfig = {
         queries: query
       }
     },
-    {
-      resolve: 'gatsby-plugin-webpack-bundle-analyser-v2',
-      options: {
-        openAnalyzer: true,
-        analyzerMode: 'server',
-        analyzerPort: '8888',
-        defaultSizes: 'gzip'
-      }
-    },
+    // {
+    //   resolve: 'gatsby-plugin-webpack-bundle-analyser-v2',
+    //   options: {
+    //     openAnalyzer: true,
+    //     analyzerMode: 'server',
+    //     analyzerPort: '8888',
+    //     defaultSizes: 'gzip',
+
+    //   }
+    // },
     'gatsby-plugin-emotion',
     'gatsby-plugin-material-ui'
   ]
