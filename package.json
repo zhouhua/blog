@@ -15,7 +15,7 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "typecheck": "tsc --noEmit",
-    "postinstall": "pnpm exec playwright install"
+    "postinstall": "pnpm exec playwright install --with-deps chromium"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",

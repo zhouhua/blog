@@ -4,6 +4,7 @@ export interface Project {
   description: string;
   link: string;
   type: Type;
+  hidden?: boolean;
 }
 
 const list: Project[] = [
@@ -31,11 +32,12 @@ const list: Project[] = [
     link: 'https://github.com/zhouhua/remark-media-card-gatsby',
     type: 'github'
   },
-  // {
-  //   name: 'Excel 快速拆分表格',
-  //   description: '尝试实现 WPS 付费会员的表格拆分功能，支持快速按行或按列拆分多表，灵活性非常强',
-  //   link: '/projects/splitTable',
-  //   type: 'github'
-  // }
+  {
+    name: 'Excel 快速拆分表格',
+    description: '尝试实现 WPS 付费会员的表格拆分功能，支持快速按行或按列拆分多表，灵活性非常强',
+    link: '/projects/splitTable',
+    type: 'web',
+    hidden: true,
+  }
 ];
 export default list;

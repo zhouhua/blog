@@ -21,7 +21,7 @@ const Projects: FC<PageProps> = () => {
       <ArticlesHero title={`${title} - 一些小项目`} description="自娱自乐的空间" />
       <Section narrow />
       <ul className="mx-auto max-w-[560px] text-center">
-        {projects.map(({ name, description, link, type }) => (
+        {projects.filter(p => !p.hidden).map(({ name, description, link, type }) => (
           <li key={name} className="mt-20">
             <a href={link} target={/^https?:/.test(link) ? '_blank' : '_self'}>
               <h3 className="text-2xl text-palette-secondary">
