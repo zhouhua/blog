@@ -11,7 +11,9 @@ import projects from '../../utils/projects';
 
 const iconMap: Record<Type, string> = {
   web: 'mdi:cellphone-link',
-  github: 'mdi:github'
+  github: 'mdi:github',
+  obsidian: 'simple-icons:obsidian',
+  gatsby: 'ri:gatsby-fill',
 };
 
 const Projects: FC<PageProps> = () => {

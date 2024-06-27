@@ -1,4 +1,4 @@
-export type Type = 'github' | 'web';
+export type Type = 'github' | 'web' | 'obsidian' | 'gatsby';
 export interface Project {
   name: string;
   description: string;
@@ -18,7 +18,7 @@ const list: Project[] = [
     name: 'Obsidian Export Image Plugin',
     description: 'Obsidian 插件，支持快速把文章导出成图片',
     link: 'https://github.com/zhouhua/obsidian-export-image',
-    type: 'github'
+    type: 'obsidian'
   },
   {
     name: 'Remark Media Card',
@@ -30,7 +30,7 @@ const list: Project[] = [
     name: 'Remark Media Card For Gatsby',
     description: 'Gatsby Remark 插件，是对 Remark Media Card 插件的包装，以支持在 Gatsby 中使用',
     link: 'https://github.com/zhouhua/remark-media-card-gatsby',
-    type: 'github'
+    type: 'gatsby'
   },
   {
     name: 'Excel 快速拆分表格',
@@ -38,6 +38,30 @@ const list: Project[] = [
     link: '/projects/splitTable',
     type: 'web',
     hidden: true,
-  }
+  },
+  {
+    name: 'Obsidian Power Mode',
+    description: '把有趣的 Power Mode 引入到 obsidian 世界，包含屏幕抖动、combo 计数和许多文字爆炸特效',
+    link: 'https://github.com/zhouhua/obsidian-power-mode',
+    type: 'obsidian'
+  },
+  {
+    name: 'Obsidian vConsole',
+    description: '在 Obsidian 中集成 vConsole，方便开发人员调试',
+    link: 'https://github.com/zhouhua/obsidian-vconsole',
+    type: 'obsidian'
+  },
+  {
+    name: 'Obsidian Another Sticky Headings',
+    description: '在编辑和预览时在顶部固定显示标题树以指示当前位置',
+    link: 'https://github.com/zhouhua/obsidian-sticky-headings',
+    type: 'obsidian'
+  },
+  {
+    name: 'Obsidian PopKit',
+    description: '选中文字后即弹出快捷工具栏',
+    link: 'https://github.com/zhouhua/obsidian-popkit',
+    type: 'obsidian'
+  },
 ];
 export default list;
