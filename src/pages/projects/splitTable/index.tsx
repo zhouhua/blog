@@ -38,7 +38,7 @@ import {
   Chip,
   useTheme,
   IconButton,
-  FormHelperText
+  FormHelperText,
 } from '@mui/material';
 import Button from '@mui/material-next/Button';
 import { Icon } from '@iconify/react';
@@ -49,12 +49,11 @@ import {
   getRowCount,
   splitByCol,
   transferData,
-  transferRange
+  transferRange,
 } from '../../../utils/projectUtils';
 import ProjectHeader from '../../../sections/project/Project.Header';
 import list from '../../../utils/projects';
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 const { encode_col, aoa_to_sheet, book_new, book_append_sheet } = utils;
 
 const ITEM_HEIGHT = 48;
@@ -73,14 +72,14 @@ interface Values {
 function getStyles(cur: number, value: number[], theme: Theme) {
   return {
     fontWeight:
-      value.indexOf(cur) === -1
+      !value.includes(cur)
         ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium
+        : theme.typography.fontWeightMedium,
   };
 }
 
 jspreadsheet.setLicense(
-  'N2JlYzE3YmU1NDc0OTJlOWE4ZmUyMGY2ZjY4ZmIzM2Q5OGNlNjkxY2VmMGMwNjlkMDdkNWU3MWM5MjI3NTFiOTZmNzMxZGVhYmQ2YWYxOTk0MjUyMGQzNzUxODVhMTM5MWUzNjVjYzRiZmZkYzVjODQ2ZjI1OTQ4NjUxMjZmOGEsZXlKdVlXMWxJam9pWEhVNVlUZzFJaXdpWkdGMFpTSTZNVGN4TWpJM01UWXdNQ3dpWkc5dFlXbHVJanBiSW5kbFlpSXNJbXh2WTJGc2FHOXpkQ0pkTENKd2JHRnVJam93TENKelkyOXdaU0k2V3lKMk55SXNJblk0SWl3aWRqa2lMQ0oyTVRBaVhYMD0='
+  'N2JlYzE3YmU1NDc0OTJlOWE4ZmUyMGY2ZjY4ZmIzM2Q5OGNlNjkxY2VmMGMwNjlkMDdkNWU3MWM5MjI3NTFiOTZmNzMxZGVhYmQ2YWYxOTk0MjUyMGQzNzUxODVhMTM5MWUzNjVjYzRiZmZkYzVjODQ2ZjI1OTQ4NjUxMjZmOGEsZXlKdVlXMWxJam9pWEhVNVlUZzFJaXdpWkdGMFpTSTZNVGN4TWpJM01UWXdNQ3dpWkc5dFlXbHVJanBiSW5kbFlpSXNJbXh2WTJGc2FHOXpkQ0pkTENKd2JHRnVJam93TENKelkyOXdaU0k2V3lKMk55SXNJblk0SWl3aWRqa2lMQ0oyTVRBaVhYMD0=',
 );
 const defaultWorkbookConfig: Partial<jspreadsheet.Spreadsheet> = {
   tabs: false,
@@ -89,7 +88,7 @@ const defaultWorkbookConfig: Partial<jspreadsheet.Spreadsheet> = {
     return false;
   },
   editable: false,
-  allowDeleteWorksheet: true
+  allowDeleteWorksheet: true,
 };
 const defaultSheetsConfig: Partial<jspreadsheet.Worksheet> = {
   tableHeight: '600px',
@@ -97,7 +96,7 @@ const defaultSheetsConfig: Partial<jspreadsheet.Worksheet> = {
   tableOverflow: true,
   resize: 'both',
   rowResize: true,
-  columnResize: true
+  columnResize: true,
 };
 
 const validationSchema: yup.ObjectSchema<Values> = yup.object({
@@ -124,7 +123,8 @@ const validationSchema: yup.ObjectSchema<Values> = yup.object({
                 if (cache[key]) {
                   cache[key].push(i);
                   isValid = false;
-                } else {
+                }
+                else {
                   cache[key] = [i];
                 }
               });
@@ -134,16 +134,16 @@ const validationSchema: yup.ObjectSchema<Values> = yup.object({
               const repeat = Object.values(cache).filter(v => v.length > 1);
               console.log('repeat', JSON.stringify(repeat));
               return context.createError({
-                message: repeat.map(v => `分组${v.map(j => j + 1).join('、')}重复`).join('，')
+                message: repeat.map(v => `分组${v.map(j => j + 1).join('、')}重复`).join('，'),
               });
-            }
-          })
-      )
+            },
+          }),
+      ),
   }),
   rowConditions: yup.array().when('type', {
     is: 'row',
-    then: schema => schema.of(yup.object({ condition: yup.array().of(yup.string()) }))
-  })
+    then: schema => schema.of(yup.object({ condition: yup.array().of(yup.string()) })),
+  }),
 });
 
 const SplitTable: FC = () => {
@@ -154,7 +154,7 @@ const SplitTable: FC = () => {
   const [sheetName, setSheetName] = useState<string | null>(null);
   const [workbook, setWorkbook] = useState<WorkBook | null>(null);
   const { width } = useWindowSize();
-  const [colOptions, setColOptions] = useState<{ value: number; text: string }[]>([]);
+  const [colOptions, setColOptions] = useState<{ value: number; text: string; }[]>([]);
 
   const submit = useCallback(
     async (values: Values) => {
@@ -187,15 +187,15 @@ const SplitTable: FC = () => {
               });
               const zipFile = new zip.BlobWriter('application/zip');
               const zipWriter = new zip.ZipWriter(zipFile, {
-                bufferedWrite: true
+                bufferedWrite: true,
               });
               await Promise.all(
                 newWorkbooks.map(async (book, i) =>
                   zipWriter.add(
                     `分组${i + 1}.xlsx`,
-                    new zip.Uint8ArrayReader(writeXLSX(book, { type: 'array' }))
-                  )
-                )
+                    new zip.Uint8ArrayReader(writeXLSX(book, { type: 'array' })),
+                  ),
+                ),
               );
               const blob = await zipWriter.close();
               const url = URL.createObjectURL(blob);
@@ -212,12 +212,12 @@ const SplitTable: FC = () => {
         }
       }
     },
-    [workbook, sheetName]
+    [workbook, sheetName],
   );
   const formik = useFormik<Values>({
     onSubmit: submit,
     initialValues: { type: 'row', outputType: 'old', titleLine: 1 },
-    validationSchema
+    validationSchema,
   });
   console.log(formik.errors);
 
@@ -230,7 +230,7 @@ const SplitTable: FC = () => {
     const data = await incomeFile.arrayBuffer();
     const wb = read(data, { dense: true });
     setWorkbook(wb);
-    setSheetName(wb?.SheetNames?.[0] || null);
+    setSheetName(wb.SheetNames[0] || null);
     conditionCache = {};
   }, []);
 
@@ -240,10 +240,10 @@ const SplitTable: FC = () => {
       'application/vnd.ms-excel': [],
       'application/vnd.ms-excel.sheet.macroEnabled.12': ['.xlsm'],
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': [],
-      'text/csv': []
+      'text/csv': [],
     },
     noKeyboard: true,
-    multiple: false
+    multiple: false,
   });
 
   useEffect(() => {
@@ -253,7 +253,8 @@ const SplitTable: FC = () => {
       const rowCount = getRowCount(sheet);
       if (rowCount < formik.values.titleLine) {
         titleLine = rowCount + 1;
-      } else if (formik.values.titleLine < 0) {
+      }
+      else if (formik.values.titleLine < 0) {
         titleLine = 0;
       }
       formik.setFieldValue('titleLine', titleLine);
@@ -263,18 +264,19 @@ const SplitTable: FC = () => {
         setColOptions(
           Array.from({ length: getColCount(sheet) + 1 }).map((_, i) => {
             return { value: i, text: `第${encode_col(i)}列` };
-          })
+          }),
         );
-      } else {
+      }
+      else {
         const titleRow = sheet['!data']?.[titleLine - 1];
         setColOptions(
           Array.from({ length: getColCount(sheet) + 1 }).map((_, i) => {
             const title = titleRow?.[i]?.v;
             return {
               value: i,
-              text: title ? `${title}(${encode_col(i)})` : `第${encode_col(i)}列`
+              text: title ? `${title}(${encode_col(i)})` : `第${encode_col(i)}列`,
             };
-          })
+          }),
         );
       }
     }
@@ -289,12 +291,12 @@ const SplitTable: FC = () => {
       const sheet = workbook.Sheets[sheetName];
       const style: Record<string, string> = {};
       if (formik.values.titleLine > 1) {
-        style[`A1:Z${formik.values.titleLine - 1}`] =
-          'background-image: linear-gradient(135deg,#cccccc 3.85%,#f0f0f0 3.85%,#f0f0f0 50%,#cccccc 50%,#cccccc 53.85%,#f0f0f0 53.85%,#f0f0f0 100%);background-size: 13px 13px;';
+        style[`A1:Z${formik.values.titleLine - 1}`]
+          = 'background-image: linear-gradient(135deg,#cccccc 3.85%,#f0f0f0 3.85%,#f0f0f0 50%,#cccccc 50%,#cccccc 53.85%,#f0f0f0 53.85%,#f0f0f0 100%);background-size: 13px 13px;';
       }
       if (formik.values.titleLine > 0) {
-        style[`A${formik.values.titleLine}:Z${formik.values.titleLine}`] =
-          'background-color: #f7f5ff;font-weight: 600;';
+        style[`A${formik.values.titleLine}:Z${formik.values.titleLine}`]
+          = 'background-color: #f7f5ff;font-weight: 600;';
       }
       const sheets: jspreadsheet.Worksheet[] = [
         {
@@ -302,16 +304,16 @@ const SplitTable: FC = () => {
           worksheetName: sheetName,
           mergeCells: transferRange(sheet['!merges']),
           data: transferData(sheet),
-          style
-        }
+          style,
+        },
       ];
-      const sheetsInstances = jspreadsheet(jssRef.current!, {
+      const sheetsInstances = jspreadsheet(jssRef.current, {
         ...defaultWorkbookConfig,
-        worksheets: sheets
+        worksheets: sheets,
       });
       jssheetRef.current = sheetsInstances;
       sheetsInstances.forEach(instance => {
-        instance.autoWidth(instance.colgroup.map((_, i) => i));
+        instance.autoWidth(instance.cols.map((_, i) => i));
       });
     }
     return () => {
@@ -324,7 +326,7 @@ const SplitTable: FC = () => {
     jssheetRef.current?.forEach(instance => {
       instance.setViewport(
         Math.min(width - 40, instance.width || Infinity),
-        Math.min(instance.height || Infinity, 600)
+        Math.min(instance.height || Infinity, 600),
       );
     });
   }, [width]);
@@ -337,7 +339,7 @@ const SplitTable: FC = () => {
 
   const getTextFromCol = useCallback(
     (v: number) => colOptions.find(({ value }) => v === value)?.text || String(v),
-    [colOptions]
+    [colOptions],
   );
 
   return (
@@ -349,22 +351,24 @@ const SplitTable: FC = () => {
             {...getRootProps({
               className: clsx(
                 'flex flex-1 flex-col items-center bg-palette-gray/10 text-palette-primary/60 cursor-pointer',
-                'border-2 border-dashed border-palette-gray p-5 focus:border-palette-accent/80 rounded-md'
-              )
+                'border-2 border-dashed border-palette-gray p-5 focus:border-palette-accent/80 rounded-md',
+              ),
             })}
           >
             <input {...getInputProps()} />
-            {isDragActive ? (
-              <p>
-                <Icon icon="ri:drag-drop-line" className="mr-2" />
-                把文件拖拽到这里
-              </p>
-            ) : (
-              <p>
-                <Icon icon="ri:drag-drop-line" className="mr-2" />
-                拖拽文件到这里，或点击选择文件
-              </p>
-            )}
+            {isDragActive
+              ? (
+                  <p>
+                    <Icon icon="ri:drag-drop-line" className="mr-2" />
+                    把文件拖拽到这里
+                  </p>
+                )
+              : (
+                  <p>
+                    <Icon icon="ri:drag-drop-line" className="mr-2" />
+                    拖拽文件到这里，或点击选择文件
+                  </p>
+                )}
           </div>
           <div className="my-5 text-sm leading-6">
             {file && (
@@ -427,12 +431,12 @@ const SplitTable: FC = () => {
                   <TextField
                     name="titleLine"
                     value={formik.values.titleLine}
-                    onChange={formik.handleChange}
                     type="number"
                     margin="none"
                     size="small"
                     className="w-20"
                     id="titleLine"
+                    onChange={formik.handleChange}
                   />
                 </FormGroup>
               </FormControl>
@@ -445,7 +449,7 @@ const SplitTable: FC = () => {
               {formik.values.type === 'col' && (
                 <Card>
                   <CardContent>
-                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    <Typography gutterBottom sx={{ fontSize: 14 }} color="text.secondary">
                       按列拆分
                     </Typography>
                     <Stack spacing={1}>
@@ -459,15 +463,15 @@ const SplitTable: FC = () => {
                             exit={{ opacity: 0, height: 0 }}
                           >
                             <Box display="flex" alignItems="center" gap={2} paddingX={2}>
-                              <span>分组-{i + 1}: </span>
+                              <span>
+                                分组-
+                                {i + 1}
+                                :
+                                {' '}
+                              </span>
                               <FormControl sx={{ m: 1, flex: 1 }}>
                                 <Select
-                                  labelId={`col-condition-group-${i}`}
                                   multiple
-                                  size="small"
-                                  name={`colConditions[${i}]`}
-                                  value={condition || []}
-                                  onChange={formik.handleChange}
                                   renderValue={selected => (
                                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                       {selected.map(value => (
@@ -483,10 +487,15 @@ const SplitTable: FC = () => {
                                     PaperProps: {
                                       style: {
                                         maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-                                        width: 250
-                                      }
-                                    }
+                                        width: 250,
+                                      },
+                                    },
                                   }}
+                                  labelId={`col-condition-group-${i}`}
+                                  size="small"
+                                  name={`colConditions[${i}]`}
+                                  value={condition || []}
+                                  onChange={formik.handleChange}
                                 >
                                   {colOptions.map(({ value, text }) => (
                                     <MenuItem
@@ -500,14 +509,13 @@ const SplitTable: FC = () => {
                                 </Select>
                               </FormControl>
                               <IconButton
-                                onClick={() =>
+                                onClick={async () =>
                                   formik.setFieldValue(
                                     'colConditions',
                                     (formik.values.colConditions || []).filter(
-                                      (_, index) => index !== i
-                                    )
-                                  )
-                                }
+                                      (_, index) => index !== i,
+                                    ),
+                                  )}
                               >
                                 <Icon icon="ic:baseline-delete-forever" />
                               </IconButton>
@@ -524,12 +532,11 @@ const SplitTable: FC = () => {
                     <Button
                       size="small"
                       startIcon={<Icon icon="solar:add-circle-broken" />}
-                      onClick={() =>
+                      onClick={async () =>
                         formik.setFieldValue(
                           'colConditions',
-                          (formik.values.colConditions || []).concat([[]])
-                        )
-                      }
+                          (formik.values.colConditions || []).concat([[]]),
+                        )}
                     >
                       添加分组
                     </Button>
@@ -538,8 +545,8 @@ const SplitTable: FC = () => {
               )}
               <div className="my-8 flex w-full justify-center">
                 <Button
-                  variant="filledTonal"
                   disableElevation
+                  variant="filledTonal"
                   type="submit"
                   size="large"
                   startIcon={<Icon icon="lucide:table-rows-split" />}
@@ -551,20 +558,20 @@ const SplitTable: FC = () => {
           </Section>
           <Tabs
             value={sheetName}
-            onChange={(e, value) => setSheetName(value)}
             variant="scrollable"
             scrollButtons="auto"
             className="ml-5 w-[calc(100vw-40px)]"
+            onChange={(e, value) => { setSheetName(value); }}
           >
             {workbook.SheetNames.map(name => (
-              <Tab wrapped={name.length > 15} key={name} value={name} label={name} />
+              <Tab key={name} wrapped={name.length > 15} value={name} label={name} />
             ))}
           </Tabs>
         </>
       )}
       <div
         className="mx-auto flex w-[calc(100vw-40px)] items-center justify-center text-xs dark:invert"
-        onKeyDownCapture={e => e.stopPropagation()}
+        onKeyDownCapture={e => { e.stopPropagation(); }}
       >
         {workbook?.Sheets[sheetName || ''] && <div ref={jssRef} />}
       </div>

@@ -1,6 +1,6 @@
 import { useMemo, type FC } from 'react';
 import type { PageProps } from 'gatsby';
-import SEO from '@components/SEO';
+import Seo from '@components/SEO';
 import Layout from '@components/Layout';
 import Comment from '@components/Comment';
 import Section from '@components/Section';
@@ -15,23 +15,23 @@ import PhotoGroupSection from '../sections/photo/PhotoGroupSection';
 const PhotosPage: FC<
   PageProps<
     object,
-    { photoPost: Queries.photo; author: IAuthor; featuredList: PhotoProps<CustomPhotoType>[] }
+    { photoPost: Queries.photo; author: IAuthor; featuredList: PhotoProps<CustomPhotoType>[]; }
   >
 > = ({ location, pageContext }) => {
   const { photoPost, author, featuredList } = pageContext;
   const extraList = useMemo<PhotoProps<CustomPhotoType>[]>(
     () => take(shuffle(featuredList), 16),
-    [featuredList]
+    [featuredList],
   );
 
   return (
     <Layout>
-      <SEO pathname={location.pathname} isBlogPost={false} title={`照片-${photoPost.title}`} />
+      <Seo pathname={location.pathname} isBlogPost={false} title={`照片-${photoPost.title}`} />
       <ArticleHero photo={photoPost} author={author} />
       <PhotoGroupSection photoPost={photoPost} />
       <Comment />
       {extraList.length > 0 && (
-        <Section className="block" narrow>
+        <Section narrow className="block">
           <h3 className={styles.lineTitle}>看看更多照片</h3>
           <ImageGallery photos={extraList} />
           <div className="mb-[65px]" />

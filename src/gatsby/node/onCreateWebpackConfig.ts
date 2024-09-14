@@ -4,29 +4,33 @@ import type { Configuration, RuleSetRule } from 'webpack';
 // @ts-ignore
 // eslint-disable-next-line import/no-unresolved
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import MillionLint from '@million/lint';
 import { defaultGetLocalIdent } from './utils';
 
 interface IUse {
   ident?: string;
   loader?: string;
-  options?: { [index: string]: any };
+  options?: Record<string, any>;
 }
 const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({ actions, getConfig }) => {
   actions.setWebpackConfig({
     resolve: {
       alias: {
+        '@': path.resolve(__dirname, '../../'),
         '@components': path.resolve(__dirname, '../../components/'),
         '@icons': path.resolve(__dirname, '../../icons/'),
         '@styles': path.resolve(__dirname, '../../styles/'),
         '@utils': path.resolve(__dirname, '../../utils/'),
-        '@hooks': path.resolve(__dirname, '../../hooks/')
+        '@hooks': path.resolve(__dirname, '../../hooks/'),
+        '@ui': path.resolve(__dirname, '../../ui/'),
       },
       extensions: ['.js', '.json', '.ts', '.tsx'],
-      modules: [path.resolve(__dirname, '../../'), 'node_modules']
-    }
+      modules: [path.resolve(__dirname, '../../'), 'node_modules'],
+    },
+    plugins: [MillionLint.webpack()],
   });
   const config = getConfig() as Configuration;
-  const rules = (config.module?.rules?.find(r => !!(r as RuleSetRule)?.oneOf) || []) as RuleSetRule;
+  const rules = (config.module?.rules?.find(r => !!(r as RuleSetRule).oneOf) || []) as RuleSetRule;
   rules.oneOf?.forEach(loaders => {
     if (!loaders) {
       return;
@@ -37,9 +41,9 @@ const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({ actions, g
           return;
         }
         if (
-          typeof use !== 'string' &&
-          typeof (use as IUse).loader === 'string' &&
-          /(?<!post)css-loader/.test((use as IUse).loader || '')
+          typeof use !== 'string'
+          && typeof (use as IUse).loader === 'string'
+          && /(?<!post)css-loader/.test((use as IUse).loader || '')
         ) {
           if (!(use as IUse).options?.modules) {
             return;
@@ -56,17 +60,17 @@ const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({ actions, g
                     ctx,
                     localName,
                     localName,
-                    ...args
+                    ...args,
                   );
                 }
                 return (getLocalIdent || defaultGetLocalIdent)(
                   ctx,
                   `[path]__${localName}--[hash:base64:5]`,
                   localName,
-                  ...args
+                  ...args,
                 );
-              }
-            }
+              },
+            },
           };
         }
       });
@@ -79,8 +83,7 @@ const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({ actions, g
       filename: '[name].css',
       chunkFilename: '[id].css',
       ignoreOrder: true,
-      insert: (linkTag: HTMLLinkElement) =>
-        document.getElementsByTagName('head')[0].prepend(linkTag)
+      insert: (linkTag: HTMLLinkElement) => { document.getElementsByTagName('head')[0].prepend(linkTag); },
     });
   }
   actions.replaceWebpackConfig(config);

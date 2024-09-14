@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { useMemo } from 'react';
-import type { SlideImage } from 'yet-another-react-lightbox';
+import type { SlideImage, Slide } from 'yet-another-react-lightbox';
 import Lightbox from 'yet-another-react-lightbox';
 import Inline from 'yet-another-react-lightbox/plugins/inline';
 import Captions from 'yet-another-react-lightbox/plugins/captions';
@@ -14,45 +14,42 @@ import 'yet-another-react-lightbox/plugins/counter.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import Meta from '../../components/Photo/Meta';
 
-const LightBoxSection: FC<{ photoPost: Queries.photo }> = ({ photoPost }) => {
+const LightBoxSection: FC<{ photoPost: Queries.photo; }> = ({ photoPost }) => {
   const slides = useMemo<SlideImage[]>(
     () =>
       photoPost.list.map(({ description, picture }) => {
-        const { PixelXDimension, PixelYDimension } =
-          picture!.childImageSharp!.fields?.exif?.raw?.exif || {};
+        const { PixelXDimension, PixelYDimension }
+          = picture!.childImageSharp!.fields?.exif?.raw?.exif || {};
         return {
           type: 'image',
-          src: picture!.childImageSharp!.gatsbyImageData.images.fallback!.src!,
+          src: picture!.childImageSharp!.gatsbyImageData.images.fallback!.src,
           description,
           title: ' ',
           width: PixelXDimension!,
           height: PixelYDimension!,
-          imageFit: 'contain'
+          imageFit: 'contain',
         };
       }),
-    [photoPost]
+    [photoPost],
   );
 
   return (
     <Lightbox
-      plugins={[Inline, Captions, Counter, Fullscreen, Thumbnails, Zoom]}
-      slides={slides}
       inline={{
         style: {
           maxWidth: '100vw',
           minWidth: '360px',
           maxHeight: '90vh',
           aspectRatio: '4 / 3',
-          margin: '60px auto'
-        }
+          margin: '60px auto',
+        },
       }}
       counter={{
         style: {
           color: 'rgb(var(--color-secondary))',
-          filter: 'unset'
-        }
+          filter: 'unset',
+        },
       }}
-      thumbnails={{ imageFit: 'cover', vignette: false }}
       styles={{
         container: {
           borderRadius: '8px',
@@ -62,7 +59,7 @@ const LightBoxSection: FC<{ photoPost: Queries.photo }> = ({ photoPost }) => {
           backgroundPosition: '0 0, 10px 10px',
           backgroundImage: `linear-gradient(45deg, rgb(var(--color-primary) / 0.2) 25%, transparent 25%, transparent 75%,rgb(var(--color-primary) / 0.2) 75%), 
                 linear-gradient(45deg,rgb(var(--color-primary) / 0.2) 25%, transparent 25%, transparent 75%, rgb(var(--color-primary) / 0.2) 75%)`,
-          boxShadow: '0px 20px 40px rgba(0, 0, 0, 0.2)'
+          boxShadow: '0px 20px 40px rgba(0, 0, 0, 0.2)',
         },
         thumbnailsContainer: { background: 'none' },
         thumbnail: { background: 'rgb(var(--color-primary))' },
@@ -72,10 +69,10 @@ const LightBoxSection: FC<{ photoPost: Queries.photo }> = ({ photoPost }) => {
           padding: '4px 16px',
           display: 'flex',
           alignItems: 'center',
-          fontSize: '14px'
+          fontSize: '14px',
         },
         captionsTitle: {
-          color: 'rgb(var(--color-secondary))'
+          color: 'rgb(var(--color-secondary))',
         },
         captionsDescription: {
           color: 'rgb(var(--color-secondary))',
@@ -84,31 +81,30 @@ const LightBoxSection: FC<{ photoPost: Queries.photo }> = ({ photoPost }) => {
           lineClamp: 2,
           width: '100%',
           margin: '0 auto',
-          padding: '0 16px'
+          padding: '0 16px',
         },
         captionsTitleContainer: {
           background: 'rgb(var(--color-card))',
           height: '60px',
-          paddingLeft: '80px'
+          paddingLeft: '80px',
         },
         slide: {
-          padding: '60px 0 128px 0'
+          padding: '60px 0 128px 0',
         },
         button: {
           color: 'rgb(var(--color-secondary))',
           filter: 'unset',
-          opacity: 0.8
+          opacity: 0.8,
         },
         navigationNext: {
           transform: 'scale(2)',
-          transformOrigin: 'bottom right'
+          transformOrigin: 'bottom right',
         },
         navigationPrev: {
           transform: 'scale(2)',
-          transformOrigin: 'bottom left'
-        }
+          transformOrigin: 'bottom left',
+        },
       }}
-      carousel={{ padding: 0, spacing: 0 }}
       render={{
         slideFooter: ({ slide }) => (
           <Meta
@@ -120,9 +116,9 @@ const LightBoxSection: FC<{ photoPost: Queries.photo }> = ({ photoPost }) => {
           />
         ),
         thumbnail: ({ slide }) => {
-          const { sources, fallback } =
-            photoPost.list[slides.findIndex(s => s.src === slide.src)]!.picture!.childImageSharp!
-              .gatsbyImageData.images!;
+          const { sources, fallback }
+            = photoPost.list[slides.findIndex(s => s.src === slide.src)].picture!.childImageSharp!
+              .gatsbyImageData.images;
           return (
             <div className="h-full w-full overflow-hidden">
               <picture>
@@ -138,8 +134,12 @@ const LightBoxSection: FC<{ photoPost: Queries.photo }> = ({ photoPost }) => {
               </picture>
             </div>
           );
-        }
+        },
       }}
+      plugins={[Inline, Captions, Counter, Fullscreen, Thumbnails, Zoom]}
+      slides={slides}
+      thumbnails={{ imageFit: 'cover', vignette: false }}
+      carousel={{ padding: 0, spacing: 0 }}
     />
   );
 };

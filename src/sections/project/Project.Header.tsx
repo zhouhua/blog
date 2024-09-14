@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { Icon } from '@iconify/react';
 import * as styles from './index.module.css';
 
-const ProjectHeader: FC<{ title: string; description?: string }> = ({ title, description }) => {
+const ProjectHeader: FC<{ title: string; description?: string; }> = ({ title, description }) => {
   return (
     <header className={clsx(styles.Header, 'relative z-10')}>
       <h1 className={styles.HeroHeading}>{title}</h1>

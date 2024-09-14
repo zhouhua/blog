@@ -1,4 +1,3 @@
-/* eslint-disable no-console, import/no-extraneous-dependencies, prefer-const, no-shadow */
 import path from 'path';
 import type { GatsbyNode } from 'gatsby';
 import { config } from 'dotenv';
@@ -8,12 +7,12 @@ import type { PhotoProps } from 'react-photo-gallery';
 
 config();
 
-type CustomPhotoType = {
+interface CustomPhotoType {
   image: Queries.ImageSharp;
   count: number;
   date: string;
   slug: string;
-};
+}
 
 function simplifyList(list: Queries.MarkdownRemark[]): Queries.MarkdownRemark[] {
   return list.map<Queries.MarkdownRemark>(
@@ -25,8 +24,8 @@ function simplifyList(list: Queries.MarkdownRemark[]): Queries.MarkdownRemark[] 
         'frontmatter.hero',
         'timeToRead',
         'wordCount.words',
-        'excerpt'
-      ]) as Queries.MarkdownRemark
+        'excerpt',
+      ]),
   );
 }
 function simplifyArticle(item: Queries.MarkdownRemark): Queries.MarkdownRemark {
@@ -40,12 +39,13 @@ function simplifyArticle(item: Queries.MarkdownRemark): Queries.MarkdownRemark {
     'frontmatter.hero',
     'timeToRead',
     'wordCount.words',
-    'html'
+    'html',
   ]) as Queries.MarkdownRemark;
 }
 
-const log = (message: string, section: string) =>
+const log = (message: string, section: string) => {
   console.log(`\n\u001B[36m${message} \u001B[4m${section}\u001B[0m\u001B[0m\n`);
+};
 
 const templatesDirectory = path.resolve(__dirname, '../../templates');
 const templates = {
@@ -55,12 +55,12 @@ const templates = {
   journals: path.resolve(templatesDirectory, 'journals.template.tsx'),
   homepage: path.resolve(templatesDirectory, 'HomePage.tsx'),
   photos: path.resolve(templatesDirectory, 'photos.list.template.tsx'),
-  photo: path.resolve(templatesDirectory, 'photo.group.template.tsx')
+  photo: path.resolve(templatesDirectory, 'photo.group.template.tsx'),
 };
 
 const createPages: GatsbyNode['createPages'] = async (
   { actions: { createPage }, graphql },
-  themeOptions
+  themeOptions,
 ) => {
   const { rootPath, basePath = '/', authorsPath = '/authors', authorsPage = true } = themeOptions;
 
@@ -79,7 +79,8 @@ const createPages: GatsbyNode['createPages'] = async (
   let photos: Queries.photo[] = [];
   if (rootPath) {
     log('Config rootPath', rootPath as string);
-  } else {
+  }
+  else {
     log('Config rootPath not set, using basePath instead =>', basePath as string);
   }
 
@@ -214,23 +215,24 @@ const createPages: GatsbyNode['createPages'] = async (
       }
     `);
     authors = ((authorsQuery.data as any).authors.edges as Queries.AuthorsYamlEdge[]).map(
-      edge => edge.node
+      edge => edge.node,
     );
 
     articles = ((articlesQuery.data as any).articles.edges as Queries.MarkdownRemarkEdge[]).map(
-      edge => edge.node
+      edge => edge.node,
     );
     photos = ((photosQeury.data as any).photos.edges as Queries.photoEdge[]).map(edge => edge.node);
-  } catch (error) {
+  }
+  catch (error) {
     console.error(error);
   }
 
   articles.forEach(article => {
     const $ = load(article.html || '');
     const pureText = $.text();
-    const wordCount =
-      words(pureText).length +
-      words(pureText, /[\p{sc=Katakana}\p{sc=Hiragana}\p{sc=Han}]/gu).length;
+    const wordCount
+      = words(pureText).length
+      + words(pureText, /[\p{sc=Katakana}\p{sc=Hiragana}\p{sc=Han}]/gu).length;
     const imagesCount = $('picture').length;
     const timeToRead = Math.ceil(wordCount / 275 + imagesCount / 12);
     // @ts-ignore
@@ -242,7 +244,7 @@ const createPages: GatsbyNode['createPages'] = async (
   const articlesPublished = articles
     .filter(article => article.frontmatter.layout === 'post')
     .filter(article => !!article.frontmatter.title)
-    .filter(article => !article.frontmatter?.draft);
+    .filter(article => !article.frontmatter.draft);
 
   if (articles.length === 0 || authors.length === 0) {
     throw new Error('You must have at least one Author and Post. ');
@@ -256,8 +258,8 @@ const createPages: GatsbyNode['createPages'] = async (
       authors: authors[0],
       basePath,
       permalink: '/articles',
-      slug: '/articles'
-    }
+      slug: '/articles',
+    },
   });
 
   const journals = articles.filter(article => article.frontmatter.layout === 'journal');
@@ -270,8 +272,8 @@ const createPages: GatsbyNode['createPages'] = async (
       authors: authors[0],
       basePath,
       permalink: '/journals',
-      slug: '/journals'
-    }
+      slug: '/journals',
+    },
   });
 
   /**
@@ -279,7 +281,7 @@ const createPages: GatsbyNode['createPages'] = async (
    * To do this, we need to find the corresponding authors since we allow for co-authors.
    */
   log('Creating', 'article posts');
-  const tagsMap = new Map<string, { slug: string; articles: Queries.MarkdownRemark[] }>();
+  const tagsMap = new Map<string, { slug: string; articles: Queries.MarkdownRemark[]; }>();
   articlesPublished.forEach((article, index) => {
     /**
      * We need a way to find the next artiles to suggest at the bottom of the articles page.
@@ -311,8 +313,8 @@ const createPages: GatsbyNode['createPages'] = async (
         slug: article.fields.slug,
         id: article.id,
         title: article.frontmatter.title,
-        next
-      }
+        next,
+      },
     });
 
     // 处理 tag 列表
@@ -320,7 +322,8 @@ const createPages: GatsbyNode['createPages'] = async (
       const cache = tagsMap.get(tag);
       if (!cache) {
         tagsMap.set(tag, { slug: article.fields.tagSlugs![i], articles: [article] });
-      } else {
+      }
+      else {
         cache.articles.push(article);
       }
     });
@@ -343,8 +346,8 @@ const createPages: GatsbyNode['createPages'] = async (
         }${slug}/`,
         slug,
         id: article.id,
-        title
-      }
+        title,
+      },
     });
 
     // 处理 tag 列表
@@ -352,7 +355,8 @@ const createPages: GatsbyNode['createPages'] = async (
       const cache = tagsMap.get(tag);
       if (!cache) {
         tagsMap.set(tag, { slug: article.fields.tagSlugs![i], articles: [article] });
-      } else {
+      }
+      else {
         cache.articles.push(article);
       }
     });
@@ -367,8 +371,8 @@ const createPages: GatsbyNode['createPages'] = async (
         tag,
         basePath,
         permalink: slug,
-        slug
-      }
+        slug,
+      },
     });
   });
 
@@ -384,8 +388,8 @@ const createPages: GatsbyNode['createPages'] = async (
       alt,
       image: picture!.childImageSharp!,
       count: list.length,
-      date: date!,
-      slug: fields.slug
+      date: date,
+      slug: fields.slug,
     });
   });
   const featuredList: PhotoProps<CustomPhotoType>[] = [];
@@ -402,8 +406,8 @@ const createPages: GatsbyNode['createPages'] = async (
         alt,
         image: picture!.childImageSharp!,
         count: list.length,
-        date: date!,
-        slug: fields.slug
+        date: date,
+        slug: fields.slug,
       });
     }
   });
@@ -415,8 +419,8 @@ const createPages: GatsbyNode['createPages'] = async (
       photos: photoList,
       basePath,
       permalink: '/photos',
-      slug: '/photos'
-    }
+      slug: '/photos',
+    },
   });
   photos.forEach(photo => {
     createPage({
@@ -428,8 +432,8 @@ const createPages: GatsbyNode['createPages'] = async (
         featuredList: featuredList.filter(item => item.slug !== photo.fields.slug),
         basePath,
         permalink: photo.fields.slug,
-        slug: photo.fields.slug
-      }
+        slug: photo.fields.slug,
+      },
     });
   });
 
@@ -439,15 +443,15 @@ const createPages: GatsbyNode['createPages'] = async (
   const photoNumber = photos.length;
   const articleWordCount = articlesPublished.reduce(
     (prev, article) => prev + (article.wordCount?.words || 0),
-    0
+    0,
   );
   const journalWordCount = journals.reduce(
     (prev, journal) => prev + (journal.wordCount?.words || 0),
-    0
+    0,
   );
   const allPhotoCount = photos.reduce((prev, { list }) => prev + list.length, 0);
   const featuredArticles = simplifyList(
-    articlesPublished.filter(article => article.frontmatter.featured)
+    articlesPublished.filter(article => article.frontmatter.featured),
   );
   const allFeaturedImage: PhotoProps<CustomPhotoType>[] = [];
   photos.forEach(photo => {
@@ -462,8 +466,8 @@ const createPages: GatsbyNode['createPages'] = async (
           alt: photo.title,
           count: 0,
           image: picture!.childImageSharp!,
-          date: photo.date!,
-          slug: photo.fields.slug
+          date: photo.date,
+          slug: photo.fields.slug,
         });
       }
     });
@@ -485,8 +489,8 @@ const createPages: GatsbyNode['createPages'] = async (
       featuredArticles,
       newestJournals,
       permalink: '/',
-      slug: '/'
-    }
+      slug: '/',
+    },
   });
 };
 

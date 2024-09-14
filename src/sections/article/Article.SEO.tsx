@@ -1,6 +1,5 @@
-/* eslint-disable no-param-reassign */
 import type { FC } from 'react';
-import SEO from '@components/SEO';
+import Seo from '@components/SEO';
 import useSiteMetadata from '@hooks/useSiteMetaData';
 import type { IArticle, IAuthor } from '../../types';
 
@@ -14,13 +13,12 @@ interface ArticleSEOProps {
 const ArticleSEO: FC<ArticleSEOProps> = ({ article, author, location, imagelocation }) => {
   const { siteUrl } = useSiteMetadata();
 
-  imagelocation = `${
-    siteUrl +
-    (article.frontmatter.hero?.childImageSharp?.gatsbyImageData?.images?.fallback?.src || '')
-  }`;
+  imagelocation = siteUrl
+  + (article.frontmatter.hero?.childImageSharp?.gatsbyImageData.images.fallback?.src || '');
 
   return (
-    <SEO
+    <Seo
+      isBlogPost
       authorName={author.name}
       authorsBio={author.bio}
       authorsSlug={author.authorsPage}
@@ -28,7 +26,6 @@ const ArticleSEO: FC<ArticleSEOProps> = ({ article, author, location, imagelocat
       dateforSEO={article.frontmatter.date}
       description={article.excerpt || ''}
       image={imagelocation}
-      isBlogPost
       articlepathName={siteUrl + location.pathname}
       pathname={location.pathname}
       published={article.frontmatter.date}

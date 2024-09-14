@@ -1,8 +1,8 @@
 import type { FC } from 'react';
 
-export interface IAuthor extends Queries.AuthorsYaml {}
+export type IAuthor = Queries.AuthorsYaml;
 
-export interface IArticle extends Queries.MarkdownRemark {}
+export type IArticle = Queries.MarkdownRemark;
 
 interface IArticleQuery {
   edges: {
@@ -25,13 +25,13 @@ export type Icon = FC<{
 
 export interface IImg
   extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'placeholder' | 'onLoad' | 'src' | 'srcSet'> {
-  src: string | Queries.File;
+  src: string | Queries.File | Queries.ImageSharp;
   alt: string;
 }
 
-type CustomPhotoType = {
+interface CustomPhotoType {
   image: Queries.ImageSharp;
   count: number;
   date: string;
   slug: string;
-};
+}

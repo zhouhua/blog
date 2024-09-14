@@ -84,7 +84,7 @@ const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] = ({ ac
       description: String!
       featured: Boolean
     }
-    `
+    `,
   ];
 
   createTypes(typeDefs);

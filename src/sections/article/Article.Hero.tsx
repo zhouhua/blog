@@ -31,7 +31,7 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, author, photo }) => {
         <div
           className={clsx(
             styles.HeroSubtitle,
-            'colorModeTransition relative flex w-full justify-between text-lg text-palette-gray'
+            'colorModeTransition relative flex w-full justify-between text-lg text-palette-gray',
           )}
         >
           <div className="flex">
@@ -47,8 +47,17 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, author, photo }) => {
                   data-tooltip-variant={tooltipTheme}
                 >
                   {dayjs(article.frontmatter.date).fromNow()}
-                </span>{' '}
-                · {article.wordCount!.words} 个字 · {article.timeToRead} 分钟读完
+                </span>
+                {' '}
+                ·
+                {' '}
+                {article.wordCount!.words}
+                {' '}
+                个字 ·
+                {' '}
+                {article.timeToRead}
+                {' '}
+                分钟读完
               </div>
             )}
             {photo && (
@@ -62,8 +71,13 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, author, photo }) => {
                   data-tooltip-variant={tooltipTheme}
                 >
                   {dayjs(photo.date).fromNow()}
-                </span>{' '}
-                · {photo.list.length} 张图
+                </span>
+                {' '}
+                ·
+                {' '}
+                {photo.list.length}
+                {' '}
+                张图
               </div>
             )}
           </div>
@@ -80,13 +94,13 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, author, photo }) => {
         {(article?.frontmatter.tags?.length || 0) > 0 && (
           <ul className="mb-4 mt-8 flex flex-wrap">
             {article?.frontmatter.tags!.map((tag, index) => (
-              <li className="mb-4 mr-4 block" key={tag}>
+              <li key={tag} className="mb-4 mr-4 block">
                 <Link
-                  to={article.fields.tagSlugs![index]}
                   className={clsx(
                     'rounded-full bg-palette-bgAlt/40 px-4 py-1 text-sm text-palette-primary',
-                    'colorModeTransition border border-solid border-palette-gray hover:bg-palette-bgAlt/60'
+                    'colorModeTransition border border-solid border-palette-gray hover:bg-palette-bgAlt/60',
                   )}
+                  to={article.fields.tagSlugs![index]}
                 >
                   <Icon
                     icon="heroicons:hashtag-solid"
@@ -104,12 +118,12 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, author, photo }) => {
           className={clsx(
             styles.HeroImage,
             'relative z-[1] mx-auto my-0 w-full overflow-hidden text-center',
-            'aspect-video sm:max-w-full md:max-w-full'
+            'aspect-video sm:max-w-full md:max-w-full',
           )}
           id="ArticleImage__Hero"
         >
           <Image
-            src={article.frontmatter.hero!}
+            src={article.frontmatter.hero}
             alt={`文章《${article.frontmatter.title}》的题图`}
           />
         </div>

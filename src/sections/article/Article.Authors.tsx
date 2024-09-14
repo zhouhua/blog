@@ -14,10 +14,10 @@ const ArticleAuthors: FC<AuthorsProps> = ({ author }) => (
     <div
       className={clsx(
         styles.AuthorAvatar,
-        'colorModeTransition bg-palette-secondary overflow-hidden sm:hidden'
+        'colorModeTransition bg-palette-secondary overflow-hidden sm:hidden',
       )}
     >
-      <Image className={styles.RoundedImage} src={author.avatar!} alt="作者头像" />
+      <Image className={styles.RoundedImage} src={author.avatar} alt="作者头像" />
     </div>
     <strong>{author.name}</strong>
     <span>，&nbsp;</span>

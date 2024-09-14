@@ -3,7 +3,7 @@ import type { HeadFC, PageProps } from 'gatsby';
 import type { FC } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Layout from '@components/Layout';
-import SEO from '@components/SEO';
+import Seo from '@components/SEO';
 import Section from '@components/Section';
 import clsx from 'clsx';
 import useSiteMetadata from '@hooks/useSiteMetaData';
@@ -19,7 +19,7 @@ import type { CustomPhotoType, IArticle } from '../types/index';
 import ArticlePair from '../sections/articles/Articles.Pair';
 import * as articleStyles from '../styles/article.module.css';
 
-type PageContentType = {
+interface PageContentType {
   articleNumber: number;
   journalNumber: number;
   articleWordCount: number;
@@ -29,7 +29,7 @@ type PageContentType = {
   allFeaturedImage: PhotoProps<CustomPhotoType>[];
   featuredArticles: IArticle[];
   newestJournals: IArticle[];
-};
+}
 
 const Index: FC<PageProps<object, PageContentType>> = ({
   location,
@@ -42,8 +42,8 @@ const Index: FC<PageProps<object, PageContentType>> = ({
     allPhotoCount,
     allFeaturedImage,
     featuredArticles,
-    newestJournals
-  }
+    newestJournals,
+  },
 }) => {
   const { title } = useSiteMetadata();
   const $notes = useRef<HTMLUListElement>(null);
@@ -52,6 +52,7 @@ const Index: FC<PageProps<object, PageContentType>> = ({
     const sampledList = sampleSize(featuredArticles, 5);
     const pairs: [IArticle, IArticle][] = [];
     while (sampledList.length) {
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
       pairs.push(sampledList.splice(0, 2) as [IArticle, IArticle]);
     }
     setPairList(pairs);
@@ -60,29 +61,31 @@ const Index: FC<PageProps<object, PageContentType>> = ({
   useMount(() => {
     if ($notes.current) {
       const callouts = $notes.current.querySelectorAll<HTMLDivElement>('.callout');
-      callouts.forEach(callout =>
+      callouts.forEach(callout => {
         annotate(callout, {
           type: 'box',
           color: 'rgb(var(--color-bg-alt))',
           strokeWidth: 1,
-          padding: 0
-        }).show()
+          padding: 0,
+        }).show();
+      },
       );
       const blockquates = $notes.current.querySelectorAll<HTMLDivElement>('blockquote');
-      blockquates.forEach(blockquote =>
+      blockquates.forEach(blockquote => {
         annotate(blockquote, {
           type: 'bracket',
           color: 'rgb(var(--color-bg-alt))',
           strokeWidth: 3,
           brackets: ['left'],
-          padding: 2
-        }).show()
+          padding: 2,
+        }).show();
+      },
       );
     }
   });
   return (
     <Layout>
-      <SEO pathname={location.pathname} isBlogPost={false} title={title} />
+      <Seo pathname={location.pathname} isBlogPost={false} title={title} />
       <ArticlesHero showLayout={false} />
       <Section narrow>
         <h3 className={clsx(styles.lineTitle, 'mt-20')}>精选文章</h3>
@@ -90,10 +93,10 @@ const Index: FC<PageProps<object, PageContentType>> = ({
           const isEven = index % 2 !== 0;
           return (
             <ArticlePair
+              key={ap[0].fields.slug}
               articles={ap}
               gridLayout="tiles"
               reverse={isEven}
-              key={ap[0].fields.slug}
               showAllLink={index === randomPostsPairs.length - 1}
             />
           );
@@ -101,26 +104,26 @@ const Index: FC<PageProps<object, PageContentType>> = ({
       </Section>
       <Section narrow>
         <h3 className={clsx(styles.lineTitle, 'mt-20')}>最新随笔</h3>
-        <ul className="relative z-10 columns-2 gap-x-6 sm:columns-1" ref={$notes}>
+        <ul ref={$notes} className="relative z-10 columns-2 gap-x-6 sm:columns-1">
           {newestJournals.map(journal => (
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
             <li
+              key={journal.fields.slug}
               className={clsx(
                 articleStyles.ArticleBody,
                 styles.journalCard,
                 'relative z-10 max-w-none justify-center',
-                'colorModeTransition break-inside-avoid-column'
+                'colorModeTransition break-inside-avoid-column',
               )}
-              key={journal.fields.slug}
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
               onClick={() => navigate(journal.fields.slug)}
             >
               <article
+                dangerouslySetInnerHTML={{ __html: journal.html! }}
                 className={clsx(
                   styles.fade,
                   'relative rounded-2xl bg-palette-card px-10 pb-2 pt-12 sm:pt-8 md:px-8',
-                  'colorModeTransition  max-h-[640px]  overflow-hidden'
+                  'colorModeTransition  max-h-[640px]  overflow-hidden',
                 )}
-                dangerouslySetInnerHTML={{ __html: journal.html! }}
               />
             </li>
           ))}
@@ -131,7 +134,7 @@ const Index: FC<PageProps<object, PageContentType>> = ({
               className={clsx(
                 styles.journalCard,
                 'flex h-32 w-full items-center justify-center rounded-2xl bg-palette-card',
-                'colorModeTransition  max-h-[640px]  overflow-hidden'
+                'colorModeTransition  max-h-[640px]  overflow-hidden',
               )}
               to="/journals"
             >
@@ -157,24 +160,51 @@ const Index: FC<PageProps<object, PageContentType>> = ({
               <Icon icon="fa6-solid:pen-fancy" />
             </div>
             <div className="stat-title">收录文章</div>
-            <div className="stat-value my-1">{articleNumber} 篇</div>
-            <div className="stat-desc">合计 {(articleWordCount / 10000).toFixed(2)} 万字</div>
+            <div className="stat-value my-1">
+              {articleNumber}
+              {' '}
+              篇
+            </div>
+            <div className="stat-desc">
+              合计
+              {(articleWordCount / 10000).toFixed(2)}
+              {' '}
+              万字
+            </div>
           </div>
           <div className="stat border-palette-gray/20 px-8 py-5 sm:p-3">
             <div className="stat-figure ml-2 text-lg sm:hidden">
               <Icon icon="fa6-solid:message" />
             </div>
             <div className="stat-title">收录随笔</div>
-            <div className="stat-value my-1">{journalNumber} 篇</div>
-            <div className="stat-desc">合计 {(journalWordCount / 10000).toFixed(2)} 万字</div>
+            <div className="stat-value my-1">
+              {journalNumber}
+              {' '}
+              篇
+            </div>
+            <div className="stat-desc">
+              合计
+              {(journalWordCount / 10000).toFixed(2)}
+              {' '}
+              万字
+            </div>
           </div>
           <div className="stat border-palette-gray/20 px-8 py-5 sm:p-3">
             <div className="stat-figure ml-2 text-lg sm:hidden">
               <Icon icon="fa6-solid:image" />
             </div>
             <div className="stat-title">收录图集</div>
-            <div className="stat-value my-1">{photoNumber} 组</div>
-            <div className="stat-desc">合计 {allPhotoCount} 张照片</div>
+            <div className="stat-value my-1">
+              {photoNumber}
+              {' '}
+              组
+            </div>
+            <div className="stat-desc">
+              合计
+              {allPhotoCount}
+              {' '}
+              张照片
+            </div>
           </div>
         </div>
       </Section>

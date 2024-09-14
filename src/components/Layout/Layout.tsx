@@ -1,4 +1,4 @@
-import { useLayoutEffect, type FC, type PropsWithChildren } from 'react';
+import { type FC, type PropsWithChildren } from 'react';
 import NavigationFooter from '@components/Navigation/Navigation.Footer';
 import NavigationHeader from '@components/Navigation/Navigation.Header';
 import { motion } from 'framer-motion';
@@ -13,17 +13,17 @@ import ArticlesContextProvider from '../../sections/articles/Articles.List.Conte
  * and the main structure of each page. Within Layout we have the <Container />
  * which hides a lot of the mess we need to create our Desktop and Mobile experiences.
  */
-const Layout: FC<PropsWithChildren & { isDetailPage?: boolean }> = ({
+const Layout: FC<PropsWithChildren & { isDetailPage?: boolean; }> = ({
   children,
-  isDetailPage = false
+  isDetailPage = false,
 }) => {
   const [mode] = useColorMode();
   return (
     <ThemeProvider
       theme={createTheme({
         palette: {
-          mode
-        }
+          mode,
+        },
       })}
     >
       <CssVarsProvider theme={extendTheme()}>
@@ -32,21 +32,21 @@ const Layout: FC<PropsWithChildren & { isDetailPage?: boolean }> = ({
             className={clsx(
               'colorModeTransition overflow-y-auto scrollbar-both-edges relative h-screen min-w-[360px] bg-palette-bg',
               'flex flex-col',
-              { [styles.cardView]: isDetailPage }
+              { [styles.cardView]: isDetailPage },
             )}
           >
             <NavigationHeader />
             <motion.main
-              className="flex-grow"
-              initial={{ opacity: 0, x: -200 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 200 }}
               transition={{
                 type: 'tween',
                 mass: 0.35,
                 stiffness: 75,
-                duration: 0.4
+                duration: 0.4,
               }}
+              className="flex-grow"
+              initial={{ opacity: 0, x: -200 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 200 }}
             >
               {children}
             </motion.main>

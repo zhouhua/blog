@@ -1,4 +1,3 @@
-/* eslint-disable no-prototype-builtins */
 import { createFilePath } from 'gatsby-source-filesystem';
 import { kebabCase } from 'lodash';
 import type { GatsbyNode } from 'gatsby';
@@ -12,12 +11,13 @@ const onCreateNode: GatsbyNode['onCreateNode'] = ({ node, actions, getNode }) =>
     createNodeField({
       node,
       name: 'slug',
-      value: createFilePath({ node, getNode })
+      value: createFilePath({ node, getNode }),
     });
-  } else if (node.internal.type === 'MarkdownRemark') {
+  }
+  else if (node.internal.type === 'MarkdownRemark') {
     const markdownNode = node as unknown as Queries.MarkdownRemark;
     let slug = createFilePath({ node: markdownNode as any, getNode });
-    if (typeof markdownNode.frontmatter?.path !== 'undefined') {
+    if (typeof markdownNode.frontmatter.path !== 'undefined') {
       slug = markdownNode.frontmatter.path || '';
     }
     if (markdownNode.frontmatter.layout === 'journal') {
@@ -26,26 +26,27 @@ const onCreateNode: GatsbyNode['onCreateNode'] = ({ node, actions, getNode }) =>
     createNodeField({
       node: markdownNode as any,
       name: 'slug',
-      value: slug
+      value: slug,
     });
     const regexp = /([^0-1a-z-])/gi;
-    if (markdownNode.frontmatter?.tags) {
+    if (markdownNode.frontmatter.tags) {
       const tagSlugs = markdownNode.frontmatter.tags
         .map(tag => kebabCase(tag || ''))
         .map(
-          tag => `/tag/${tag.replaceAll(regexp, match => Buffer.from(match).toString('base64'))}`
+          tag => `/tag/${tag.replaceAll(regexp, match => Buffer.from(match).toString('base64'))}`,
         );
       createNodeField({ node: markdownNode as any, name: 'tagSlugs', value: tagSlugs });
     }
-  } else if (node.internal.type === 'photo') {
+  }
+  else if (node.internal.type === 'photo') {
     const photoNode = {
-      ...(node as unknown as Queries.photo)
+      ...(node as unknown as Queries.photo),
     };
     const slug = createFilePath({ node: photoNode as any, getNode });
     createNodeField({
       node: photoNode as any,
       name: 'slug',
-      value: `/photo${slug}`
+      value: `/photo${slug}`,
     });
   }
 };

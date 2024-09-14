@@ -15,16 +15,16 @@ import ArticleContent from '../sections/article/Article.Content';
 import ArticleFooter from './article.footer.template';
 import * as styles from './index.module.css';
 
-const Article: FC<PageProps<object, { article: IArticle; author: IAuthor; next: IArticle[] }>> = ({
+const Article: FC<PageProps<object, { article: IArticle; author: IAuthor; next: IArticle[]; }>> = ({
   pageContext,
-  location
+  location,
 }) => {
   const contentSectionRef = useRef<HTMLDivElement>(null);
   const { article, author, next } = pageContext;
   const [progress, setProgress] = useState<number>(0);
   const { scrollYProgress } = useScroll({
     target: contentSectionRef,
-    offset: ['start 20vh', 'end 70vh']
+    offset: ['start 20vh', 'end 70vh'],
   });
 
   useEffect(() => {
@@ -41,13 +41,13 @@ const Article: FC<PageProps<object, { article: IArticle; author: IAuthor; next: 
         <Progress progress={progress} />
       </ArticleAside>
 
-      <article className="relative" ref={contentSectionRef}>
+      <article ref={contentSectionRef} className="relative">
         <ArticleContent article={article} />
       </article>
       <Comment />
       <ArticleFooter />
-      {(next || []).length > 0 && (
-        <Section className="block" narrow>
+      {next.length > 0 && (
+        <Section narrow className="block">
           <h3 className={styles.lineTitle}>看看其他的文章</h3>
           <ArticlesNext articles={next} />
           <div className="mb-[65px]" />

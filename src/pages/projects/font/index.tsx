@@ -8,7 +8,7 @@ import { Icon } from '@iconify/react';
 import copyToClipboard from 'copy-to-clipboard';
 import { Tooltip } from 'react-tooltip';
 import useColorMode from '@hooks/useColorMode';
-import { MenuItem, Select } from '@mui/material';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@ui/select';
 import * as styles from './index.module.css';
 import ProjectHeader from '../../../sections/project/Project.Header';
 import list from '../../../utils/projects';
@@ -204,14 +204,15 @@ const Index: FC<PageProps> = () => {
                 <span className="colorModeTransition mb-1 mt-2 text-palette-secondary/80">
                   连字特性
                 </span>
-                <Select<LigaturesType>
-                  size="small"
-                  value={ligatures}
-                  onChange={e => setLigatures(e.target.value as LigaturesType)}
-                >
-                  {ligaturesOptions.map(option => (
-                    <MenuItem value={option.value}>{option.label}</MenuItem>
-                  ))}
+                <Select value={ligatures} onValueChange={value => setLigatures(value as LigaturesType)}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {ligaturesOptions.map(option => (
+                      <SelectItem value={option.value}>{option.label}</SelectItem>
+                    ))}
+                  </SelectContent>
                 </Select>
               </div>
 
@@ -225,35 +226,26 @@ const Index: FC<PageProps> = () => {
                       <div className="flex flex-wrap">
                         {features.map(({ text, values, long }) => (
                           <Select
-                            size="small"
-                            sx={{ m: 1 }}
-                            className={clsx('m-4', long ? 'w-56' : 'w-24')}
                             defaultValue={values[0]}
-                            onChange={e => collect(group + text, e.target.value)}
+                            onValueChange={value => collect(group + text, value)}
                             key={group + text}
-                            renderValue={value => (
-                              <span
-                                className="font-monospace"
-                                style={{
-                                  fontFeatureSettings: value !== 'unset' ? `'${value}'` : 'unset'
-                                }}
-                              >
-                                {text}
-                              </span>
-                            )}
                           >
-                            {values.map(value => (
-                              <MenuItem value={value}>
-                                <span
-                                  className="font-monospace"
-                                  style={{
-                                    fontFeatureSettings: value !== 'unset' ? `'${value}'` : 'unset'
-                                  }}
-                                >
-                                  {text}
-                                </span>
-                              </MenuItem>
-                            ))}
+                            <SelectTrigger className={clsx('m-4', long ? 'w-56' : 'w-24')}>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {values.map(value => (
+                                <SelectItem value={value}>
+                                  <span
+                                    className="font-monospace"
+                                    style={{
+                                      fontFeatureSettings: value !== 'unset' ? `'${value}'` : 'unset'
+                                    }}
+                                  >
+                                    {text}
+                                  </span></SelectItem>
+                              ))}
+                            </SelectContent>
                           </Select>
                         ))}
                       </div>

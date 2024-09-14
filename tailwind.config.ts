@@ -1,15 +1,15 @@
 import type { Config } from 'tailwindcss';
 import daisyui from 'daisyui';
-import { scrollbarGutter  } from 'tailwind-scrollbar-utilities';
+import animate from 'tailwindcss-animate';
 
-
-export default {
-  darkMode: 'class',
+const config = {
+  darkMode: ['class'],
   content: [
     './src/pages/**/*.{js,jsx,ts,tsx,md}',
     './src/components/**/*.{js,jsx,ts,tsx}',
     './src/templates/**/*.{js,jsx,ts,tsx}',
-    './src/sections/**/*.{js,jsx,ts,tsx}'
+    './src/sections/**/*.{js,jsx,ts,tsx}',
+    './src/ui/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
     colors: {
@@ -24,7 +24,7 @@ export default {
         success: 'rgb(var(--color-success) / <alpha-value>)',
         warn: 'rgb(var(--color-warn) / <alpha-value>)',
         bgAlt: 'rgb(var(--color-bg-alt) / <alpha-value>)',
-        bgRevert: 'rgb(var(--color-bg-revert) / <alpha-value>)'
+        bgRevert: 'rgb(var(--color-bg-revert) / <alpha-value>)',
       },
       dark: {
         prism: {
@@ -57,8 +57,8 @@ export default {
           'highlightBorder': 'rgba(232,105,107,0.4)',
           'dom': '#5F8DC3',
           'operator': '#5FA8AA',
-          'linenumber': '#dcd9e6'
-        }
+          'linenumber': '#dcd9e6',
+        },
       },
       prism: {
         'token': '#000',
@@ -90,8 +90,8 @@ export default {
         'highlightBorder': '#c1f5b0',
         'dom': '#4b83cd',
         'operator': '#777',
-        'linenumber': '#6E705D'
-      }
+        'linenumber': '#6E705D',
+      },
     },
     fontFamily: {
       serif: [
@@ -108,7 +108,7 @@ export default {
         'noto',
         'segoe ui',
         'Arial',
-        'sans-serif'
+        'sans-serif',
       ],
       sans: [
         'apple-system',
@@ -123,7 +123,7 @@ export default {
         'noto',
         'segoe ui',
         'Arial',
-        'sans-serif'
+        'sans-serif',
       ],
       monospace: [
         'Fira Code',
@@ -133,8 +133,15 @@ export default {
         'Monaco',
         'source-code-pro',
         'Courier New',
-        'monospace'
-      ]
+        'monospace',
+      ],
+    },
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: {
+        '2xl': '1400px',
+      },
     },
     extend: {
       screens: {
@@ -143,12 +150,68 @@ export default {
         'lg': { min: '769px', max: '1024px' },
         'xl': { min: '1025px', max: '1280px' },
         '2xl': { min: '1281px', max: '1536px' },
-        '3xl': { min: '1537px' }
-      }
-    }
+        '3xl': { min: '1537px' },
+      },
+      colors: {
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
+      },
+      keyframes: {
+        'accordion-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
+        },
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
+      },
+    },
   },
-  plugins: [daisyui, scrollbarGutter()],
+  plugins: [daisyui, animate],
   daisyui: {
     themes: [],
-  }
+  },
 } satisfies Config;
+
+export default config;

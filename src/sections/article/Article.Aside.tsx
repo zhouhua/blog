@@ -17,20 +17,20 @@ import * as styles from './index.module.css';
  *                  |  content  |
  *
  */
-const Aside: FC<PropsWithChildren & { show: boolean }> = ({ show, children }) => (
+const Aside: FC<PropsWithChildren & { show: boolean; }> = ({ show, children }) => (
   <aside className={clsx(styles.AsideContainer, 'mx-auto my-0 flex')}>
     <div
       className={clsx(
         'fixed items-center',
         {
           'visible opacity-100': show,
-          'invisible opacity-0': !show
+          'invisible opacity-0': !show,
         },
-        'z-[3] flex h-screen translate-y-0'
+        'z-[3] flex h-screen translate-y-0',
       )}
       style={{
         transition: `opacity ${show ? '0.4' : '0.2'}s linear, visibility 0.4s linear`,
-        top: 0
+        top: 0,
       }}
     >
       {children}

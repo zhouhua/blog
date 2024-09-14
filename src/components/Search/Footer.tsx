@@ -14,8 +14,8 @@ const hotKeys = [
     showIn: {
       search: true,
       recent: true,
-      always: false
-    }
+      always: false,
+    },
   },
   {
     keys: [<Icon icon="fa6-solid:arrow-up" />, <Icon icon="fa6-solid:arrow-down" />],
@@ -23,8 +23,8 @@ const hotKeys = [
     showIn: {
       search: true,
       recent: true,
-      always: false
-    }
+      always: false,
+    },
   },
   {
     keys: [<Icon icon="fa6-solid:delete-left" />],
@@ -32,18 +32,18 @@ const hotKeys = [
     showIn: {
       search: false,
       recent: true,
-      always: false
-    }
+      always: false,
+    },
   },
   {
-    keys: [<Icon icon="vaadin:esc-a"/>],
+    keys: [<Icon icon="vaadin:esc-a" />],
     text: '退出',
     showIn: {
       search: true,
       recent: true,
-      always: true
-    }
-  }
+      always: true,
+    },
+  },
 ];
 const Footer: FC = () => {
   const [colorMode] = useColorMode();
@@ -56,23 +56,23 @@ const Footer: FC = () => {
     () =>
       hotKeys.map(
         ({ showIn }) =>
-          showIn.always || (showIn.search && showSearchKey) || (showIn.recent && showRecentKey)
+          showIn.always || (showIn.search && showSearchKey) || (showIn.recent && showRecentKey),
       ),
-    [showRecentKey, showSearchKey]
+    [showRecentKey, showSearchKey],
   );
 
   return (
     <footer
       className={clsx(
         'flex flex-row-reverse justify-between',
-        'border-palette-bgAlt border-t-[1px] border-solid px-6 py-4'
+        'border-palette-bgAlt border-t-[1px] border-solid px-6 py-4',
       )}
     >
       <PoweredBy
-        theme={colorMode}
         classNames={{
-          logo: 'h-[18px] mt-[3px] sm:h-3 md:h-4'
+          logo: 'h-[18px] mt-[3px] sm:h-3 md:h-4',
         }}
+        theme={colorMode}
       />
       <div className="flex text-sm sm:hidden">
         {hotKeys.map(
@@ -82,10 +82,11 @@ const Footer: FC = () => {
                 {keys.map((key, index) => (
                   // eslint-disable-next-line react/no-array-index-key
                   <Kbd key={index}>{key}</Kbd>
-                ))}{' '}
+                ))}
+                {' '}
                 <span className="md:text-xs">{text}</span>
               </div>
-            )
+            ),
         )}
       </div>
     </footer>
