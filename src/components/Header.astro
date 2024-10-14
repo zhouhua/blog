@@ -24,11 +24,8 @@ import { Icon } from 'astro-icon/components';
   }
 </style>
 
-<Container
-  as="header"
-  class="!sticky -top-16 flex pt-16 backdrop-blur-sm z-10 sm:px-5 md:px-5 bg-palette-bg/50 sm:pt-10 sm:-top-10"
->
-  <div class="flex w-full items-center justify-between gap-8 md:gap-2">
+<header class="!sticky -top-16 flex pt-16 backdrop-blur-sm z-10 bg-palette-bg/50 sm:pt-10 sm:-top-10">
+  <Container class="flex w-full items-center justify-between gap-8 md:gap-2 sm:px-5 md:px-5 ">
     <a href="/">
       <div class="logo-container relative">
         <Image
@@ -64,5 +61,5 @@ import { Icon } from 'astro-icon/components';
       <ColorMode client:only="react" />
       <MobileMenu client:only="react" />
     </div>
-  </div>
-</Container>
+  </Container>
+</header>
