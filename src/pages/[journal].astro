@@ -21,7 +21,7 @@ export async function getStaticPaths() {
   });
 }
 interface Props {
-  post: CollectionEntry<'journal'>;
+  post: CollectionEntry<'journals'>;
   date: string;
 }
 
@@ -58,7 +58,7 @@ const excerpt = getExcerpt(await entry!.compiledContent());
 }
 </style>
 <PageLayout description={excerpt} title={`随笔 🗓️ ${date}`}>
-  <ArticleTitle isJournal tags={post.data.tags} time={post.data.date} title={`随笔 🗓️ ${date}`}>
+  <ArticleTitle isJournal time={post.data.date} title={`随笔 🗓️ ${date}`}>
     {wordCount}个字 &bull; {timeToRead}分钟读完
   </ArticleTitle>
   <article class={cn(styles.ArticleBody)}>

@@ -6,16 +6,21 @@ import { BLOG } from '@consts';
 import PageLayout from '@layouts/PageLayout.astro';
 import { type CollectionEntry, getCollection } from 'astro:content';
 
+interface Props {
+  posts: CollectionEntry<'blog'>[];
+  tag: string;
+}
+
 export const prerender = true;
 export async function getStaticPaths() {
-  const posts = await getCollection('blog').sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-  const route: Record<string, CollectionEntry<'blog'>> = {};
+  const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  const route: Record<string, CollectionEntry<'blog'>[]> = {};
   posts.forEach((post) => {
     const tags = post.data.tags || [];
     tags.forEach((tag) => {
-      const t = tag.replace(/\s+/g, '-').toLowerCase();
+      const t = tag.replace(/\s+|\//g, '-').toLowerCase();
       if (!route[t]) {
-        route[t] = post;
+        route[t] = [post];
       }
       else {
         route[t].push(post);
@@ -28,12 +33,8 @@ export async function getStaticPaths() {
   }));
 }
 
-interface Props {
-  posts: CollectionEntry<'blog'>[];
-  tag: string;
-}
 
-const { posts: data, tag } = Astro.props;
+const { posts: data = [], tag } = Astro.props;
 
 const pairs: [CollectionEntry<'blog'>, CollectionEntry<'blog'>][] = data.reduce(
     (result: [CollectionEntry<'blog'>, CollectionEntry<'blog'>][], _, index, array) => {

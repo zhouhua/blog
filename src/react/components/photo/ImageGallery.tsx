@@ -27,7 +27,7 @@ const ImageGallery: FC<{ photos: CustomPhotoType[] }> = ({ photos }) => {
         <a
           key={image.src}
           className={cn('relative cursor-pointer overflow-hidden', styles.cell)}
-          href={`/photos/${slug}`}
+          href={`/photo/${slug}`}
           style={{
             height: `${height}px`,
             margin,

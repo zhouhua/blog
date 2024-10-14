@@ -1,15 +1,10 @@
+import dayjs from '@lib/dayjs';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from '@react/ui/tooltip';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import 'dayjs/locale/zh-cn';
-
-dayjs.locale('zh-cn');
-dayjs.extend(relativeTime);
 
 function FormatDate({ time }: { time: Date | number }) {
   const date = dayjs(time);

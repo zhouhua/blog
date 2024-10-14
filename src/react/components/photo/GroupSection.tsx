@@ -33,7 +33,7 @@ const PhotoGroupSection: FC<{ photoPosts: PhotoImage[] }> = ({ photoPosts }) => 
                 src={photo.transformed.src}
                 srcSet={photo.transformed.srcSet.attribute}
               />
-              <Meta exif={exif} />
+              {exif && <Meta exif={exif} />}
             </div>
             <p className="text-palette-primary mb-10 px-4 py-10">{photo.title}</p>
           </div>

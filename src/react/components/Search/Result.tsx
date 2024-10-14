@@ -14,9 +14,9 @@ import Recent from './Recent';
 const icons = { journal: 'pen-nib', photo: 'images', post: 'file-lines' };
 
 const Result: FC<{ hide: () => void }> = ({ hide }) => {
-  const { hits, isLastPage, showMore } = useInfiniteHits();
+  const { isLastPage, items, showMore } = useInfiniteHits();
   const { nbHits, processingTimeMS, query } = useStats();
-  const showHits = !!hits.length && !!query;
+  const showHits = !!items.length && !!query;
   const noResult = !!query && !nbHits;
   const showRecent = !showHits && !noResult;
   const sentinelRef = useRef<HTMLLIElement>(null);
@@ -78,7 +78,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
   }, [selectIndex]);
 
   useEffect(() => {
-    if (!hits.length || !query) {
+    if (!items.length || !query) {
       return;
     }
     const upKeyHandler = {
@@ -93,11 +93,11 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
     };
     const downKeyHandler = {
       onPressed: () => {
-        if (selectIndex < hits.length - 1) {
+        if (selectIndex < items.length - 1) {
           setSelectIndex(selectIndex + 1);
         }
         else {
-          setSelectIndex(hits.length - 1);
+          setSelectIndex(items.length - 1);
         }
       },
     };
@@ -107,8 +107,8 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
           setSelectIndex(0);
           return;
         }
-        if (selectIndex < hits.length) {
-          const hit = hits[selectIndex];
+        if (selectIndex < items.length) {
+          const hit = items[selectIndex];
           if (!hit) {
             return;
           }
@@ -130,8 +130,8 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
       unbindKey(downKey, downKeyHandler);
       unbindKey(enterKey, enterKeyHandler);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hits.length, selectIndex, setSelectIndex, query]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items.length, selectIndex, setSelectIndex, query]);
 
   return (
     <>
@@ -150,7 +150,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
             ms
           </p>
           <ul className="pb-6 ">
-            {hits.map((hit, index) => (
+            {items.map((hit, index) => (
               <li
                 key={hit.objectID}
                 ref={(node) => {

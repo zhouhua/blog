@@ -92,14 +92,16 @@ const { isJournal = false, tags = [], time, title } = Astro.props;
     <div class="flex flex-wrap gap-4 mb-4 mt-8">
     {
       tags.map(tag => (
-        <Badge className="text-sm font-monospace border-palette-secondary/80" variant="outline">
+        <a href={`/tag/${tag.replace(/\s+|\//g, '-').toLowerCase()}`}>
+          <Badge className="text-sm font-monospace border-palette-secondary/80" variant="outline">
           <Icon
             class="mr-1 h-3 w-3 text-palette-accent opacity-80"
             is:inline
             name="heroicons:hashtag-solid"
           />
           {tag}
-        </Badge>
+          </Badge>
+        </a>
       ))
     }
     </div>

@@ -4,9 +4,9 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel/serverless';
-import sentry from '@sentry/astro';
+// import sentry from '@sentry/astro';
 import { transformerMetaHighlight } from '@shikijs/transformers';
-import spotlightjs from '@spotlightjs/astro';
+// import spotlightjs from '@spotlightjs/astro';
 import mediaCard from '@zhouhua-dev/remark-media-card';
 import { defineConfig } from 'astro/config';
 import devtoolBreakpoints from 'astro-devtool-breakpoints';
@@ -36,8 +36,6 @@ export default defineConfig({
     react({
       include: ['**/react/*'],
     }),
-    sentry(),
-    spotlightjs(),
     metaTags(),
     pageInsight(),
     devtoolBreakpoints(),

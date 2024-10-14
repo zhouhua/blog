@@ -1,6 +1,6 @@
 ---
 import logoImage from '@assets/image/logo.png';
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 import '@styles/global.css';
 
 interface Props {
@@ -42,7 +42,7 @@ const { description, image = logoImage.src, title } = Astro.props;
 <meta content={description} property="twitter:description" />
 <meta content={new URL(image, Astro.url)} property="twitter:image" />
 
-<ViewTransitions />
+<ClientRouter />
 
 <script is:inline>
 </script>

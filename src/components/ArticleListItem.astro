@@ -1,10 +1,10 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { dirname, join } from 'node:path';
+import dayjs from '@lib/dayjs';
 import { getEntry, getExcerpt, getImage, getReadInfo } from '@lib/html';
 import { cn } from '@lib/utils';
 import { Image } from 'astro:assets';
-import dayjs from 'dayjs';
 
 
 interface Props {

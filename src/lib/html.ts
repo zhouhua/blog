@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import { words } from 'lodash-es';
 
 export function getEntry(id: string) {
-  const posts = import.meta.glob<MarkdownInstance<any>>(`@content/**/*.md`, { eager: true });
+  const posts = import.meta.glob<MarkdownInstance<any>>(`../content/**/*.md`, { eager: true });
   for (const key of Object.keys(posts)) {
     if (key.endsWith(id)) {
       return posts[key];
@@ -26,7 +26,7 @@ export function getReadInfo(html: string) {
 }
 
 export function getImage(path: string) {
-  const images = import.meta.glob<{ default: ImageMetadata }>(`@content/**/*.{jpeg,jpg,png,gif}`, { eager: true });
+  const images = import.meta.glob<{ default: ImageMetadata }>(`../content/**/*.{jpeg,jpg,png,gif}`, { eager: true });
   for (const key of Object.keys(images)) {
     if (key.endsWith(path)) {
       return images[key]!.default;
