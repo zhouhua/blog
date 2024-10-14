@@ -1,0 +1,48 @@
+---
+import logoImage from '@assets/image/logo.png';
+import { ViewTransitions } from 'astro:transitions';
+import '@styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+}
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const { description, image = logoImage.src, title } = Astro.props;
+---
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta content="width=device-width,initial-scale=1" name="viewport" />
+<link href={logoImage.src} rel="icon" type="image/x-icon" />
+<meta content={Astro.generator} name="generator" />
+
+<!-- Canonical URL -->
+<link href={canonicalURL} rel="canonical" />
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta content={title} name="title" />
+<meta content={description} name="description" />
+
+<!-- Open Graph / Facebook -->
+<meta content="website" property="og:type" />
+<meta content={Astro.url} property="og:url" />
+<meta content={title} property="og:title" />
+<meta content={description} property="og:description" />
+<meta content={new URL(image, Astro.url)} property="og:image" />
+
+<!-- Twitter -->
+<meta content="summary_large_image" property="twitter:card" />
+<meta content={Astro.url} property="twitter:url" />
+<meta content={title} property="twitter:title" />
+<meta content={description} property="twitter:description" />
+<meta content={new URL(image, Astro.url)} property="twitter:image" />
+
+<ViewTransitions />
+
+<script is:inline>
+</script>

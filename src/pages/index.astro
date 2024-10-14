@@ -1,0 +1,221 @@
+---
+import type { CustomPhotoType } from '@types';
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+import { basename, dirname, join } from 'node:path';
+import ArticlesPair from '@components/ArticlesPair.astro';
+import Container from '@components/Container.astro';
+import ListTitle from '@components/ListTitle.astro';
+import { HOME } from '@consts';
+import PageLayout from '@layouts/PageLayout.astro';
+import { getEntry, getImage, getReadInfo } from '@lib/html';
+import { cn } from '@lib/utils';
+import ImageGallery from '@react/components/photo/ImageGallery';
+import articleStyles from '@styles/article.module.css';
+import { getImage as transform } from 'astro:assets';
+import { type CollectionEntry, getCollection } from 'astro:content';
+import dayjs from 'dayjs';
+import sampleSize from 'lodash-es/sampleSize';
+
+const blogs = (await getCollection('blog'));
+const photos = (await getCollection('photos'));
+const journals = (await getCollection('journals'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const latestJournals: { journal: CollectionEntry<'journals'>; Content: AstroComponentFactory }[] = [];
+for (const journal of journals.slice(0, 5)) {
+  const { Content } = await journal.render();
+  latestJournals.push({ Content, journal });
+}
+const featuredBlogs = blogs
+  .filter(blog => blog.data.featured)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const pairs: [CollectionEntry<'blog'>, CollectionEntry<'blog'>][] = featuredBlogs.reduce(
+  (result: [CollectionEntry<'blog'>, CollectionEntry<'blog'>][], _, index, array) => {
+    if (index % 2 === 0) {
+      result.push(array.slice(index, index + 2) as [CollectionEntry<'blog'>, CollectionEntry<'blog'>]);
+    }
+    return result;
+  },
+  [],
+);
+type Temp = { path: string } & Omit<CustomPhotoType, 'height' | 'transformed' | 'width'>;
+const featuredImages = photos.reduce<Temp[]>((list, item) => [
+  ...list,
+  ...item.data.list.filter(({ featured }) => featured).map(({ picture }) => ({
+    alt: item.data.title,
+    count: item.data.list.length,
+    date: item.data.date,
+    path: join('content/photos/', dirname(item.id), picture),
+    slug: basename(item.id),
+  })),
+], []);
+const pickedList = sampleSize(featuredImages, 50);
+const transformedPickedList: CustomPhotoType[] = [];
+for (const item of pickedList) {
+  const image = getImage(item.path)!;
+  transformedPickedList.push({
+    ...item,
+    height: image.height,
+    transformed: await transform({
+      formats: ['webp', 'jpg'],
+      src: image,
+      widths: [200, 400, 800, 1200],
+    }),
+    width: image.width,
+  });
+}
+let blogWordCount = 0;
+let journalWordCount = 0;
+let photoPictureCount = 0;
+photos.forEach((photo) => {
+  photoPictureCount += photo.data.list.length;
+});
+for (const blog of blogs) {
+  const entry = getEntry(blog.id);
+  const html = await entry?.compiledContent() || '';
+  const { wordCount } = getReadInfo(html);
+  blogWordCount += wordCount;
+}
+for (const journal of journals) {
+  const entry = getEntry(journal.id);
+  const html = await entry?.compiledContent() || '';
+  const { wordCount } = getReadInfo(html);
+  journalWordCount += wordCount;
+}
+---
+
+
+<style lang="postcss">
+.lineTitle {
+  @apply text-palette-primary relative pb-20 font-normal opacity-25 md:pb-[60px];
+  transition:
+    background 0.25s var(--ease-in-out-quad),
+    color 0.25s var(--ease-in-out-quad);
+  &::after {
+    @apply absolute left-40 right-0 top-[11px] h-px content-[''];
+    @apply bg-palette-gray;
+    transition:
+      background 0.25s var(--ease-in-out-quad),
+      color 0.25s var(--ease-in-out-quad);
+  }
+}
+
+.journalCard {
+  @apply px-0 pt-0 !important;
+  article {
+    box-shadow:
+      0 30px 60px -10px rgba(0, 0, 0, 0.2),
+      0 18px 36px -18px rgba(0, 0, 0, 0.22);
+  }
+}
+:global(.dark) {
+  .journalCard article {
+    box-shadow: inset -1px 1px 0 0 #ffffff5d;
+  }
+}
+
+.fade::after {
+  @apply absolute bottom-0 left-0 right-0 h-12;
+  content: '';
+  background: linear-gradient(
+    180deg,
+    theme(colors.palette.card/0) 0%,
+    theme(colors.palette.card) 95%
+  );
+}
+</style>
+
+<PageLayout description={HOME.DESCRIPTION} title={HOME.TITLE}>
+  <ListTitle />
+  <Container>
+    <h3 class={cn('lineTitle', 'mt-20')}>精选文章</h3>
+    {pairs.map((ap, index) => {
+      const isEven = index % 2 !== 0;
+      return (
+        <ArticlesPair
+          gridLayout="tiles"
+          posts={ap}
+          reverse={isEven}
+          showAllLink={index === pairs.length - 1}
+        />
+      );
+    })}
+  </Container>
+  <Container>
+    <h3 class={cn('lineTitle', 'mt-20')}>最新随笔</h3>
+    <div class="relative z-10 columns-2 gap-x-6 sm:columns-1">
+      {latestJournals.map(({ Content, journal }) => (
+        <a
+          class={cn(
+            articleStyles.ArticleBody,
+            'journalCard',
+            'relative z-10 max-w-none justify-center block',
+            'colorModeTransition break-inside-avoid-column',
+          )}
+          href={`/journal${dayjs(journal.data.date).format('YYYY-MM-DD')}`}
+        >
+          <article
+            class={cn(
+              'fade',
+              'relative rounded-2xl bg-palette-card px-10 pb-2 pt-12 sm:pt-8 md:px-8',
+              'colorModeTransition  max-h-[640px]  overflow-hidden',
+            )}
+          >
+            <Content />
+          </article>
+        </a>
+      ))}
+      <div
+        class={cn('colorModeTransition break-inside-avoid-column text-palette-primary')}
+      >
+        <a
+          class={cn(
+            'journalCard',
+            'flex h-32 w-full items-center justify-center rounded-2xl bg-palette-card',
+            'colorModeTransition  max-h-[640px]  overflow-hidden',
+          )}
+          href="/journals"
+        >
+          查看更多随笔
+          <span class="ml-4 iconify fa6-solid--angles-right" />
+        </a>
+      </div>
+    </div>
+  </Container>
+  <Container narrow>
+      <h3 class={cn('lineTitle', 'mt-20')}>精彩照片</h3>
+  </Container>
+  <section class="min-w-[360px] max-w-full mx-auto">
+    <ImageGallery
+      client:load
+      photos={transformedPickedList}
+    />
+  </section>
+  <Container class="flex justify-center">
+    <div class="stats mt-24 bg-palette-card text-palette-secondary shadow sm:-mx-2 sm:mt-12 sm:text-center">
+      <div class="stat border-palette-gray/20 px-8 py-5 sm:p-3">
+        <div class="stat-figure ml-2 text-lg sm:hidden">
+          <span class="iconify fa6-solid--pen-fancy" />
+        </div>
+        <div class="stat-title">收录文章</div>
+        <div class="stat-value my-1">{blogs.length} 篇</div>
+        <div class="stat-desc">合计 {(blogWordCount / 10000).toFixed(2)} 万字</div>
+      </div>
+      <div class="stat border-palette-gray/20 px-8 py-5 sm:p-3">
+        <div class="stat-figure ml-2 text-lg sm:hidden">
+          <span class="iconify fa6-solid--message" />
+        </div>
+        <div class="stat-title">收录随笔</div>
+        <div class="stat-value my-1">{journals.length} 篇</div>
+        <div class="stat-desc">合计 {(journalWordCount / 10000).toFixed(2)} 万字</div>
+      </div>
+      <div class="stat border-palette-gray/20 px-8 py-5 sm:p-3">
+        <div class="stat-figure ml-2 text-lg sm:hidden">
+          <span class="iconify fa6-solid--image" />
+        </div>
+        <div class="stat-title">收录图集</div>
+        <div class="stat-value my-1">{photos.length} 组</div>
+        <div class="stat-desc">合计 {photoPictureCount} 张照片</div>
+      </div>
+    </div>
+  </Container>
+</PageLayout>

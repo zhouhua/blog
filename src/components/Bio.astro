@@ -1,0 +1,64 @@
+---
+import photo from '@assets/image/photo.jpg';
+import { cn } from '@lib/utils';
+import { Image } from 'astro:assets';
+
+interface Props {
+  hideText?: boolean;
+}
+
+const { hideText = false } = Astro.props;
+---
+<style lang="postcss">
+.BioAvatar {
+  background: rgba(0, 0, 0, 0.25);
+  margin: 10px 26px 10px 10px;
+  &::after {
+    @apply absolute;
+    content: '';
+    left: -5px;
+    top: -5px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    transition: border 0.25s var(--ease-in-out-quad);
+  }
+}
+:global(.dark) .BioAvatar::after {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+.RoundedImage {
+  border-radius: 50%;
+}
+.BioAvatarInner {
+  background: rgba(0, 0, 0, 0.25);
+}
+.BioText {
+  max-width: 430px;
+  line-height: 1.45;
+  a {
+    @apply text-palette-gray underline;
+    transition: color 0.25s var(--ease-in-out-quad);
+  }
+}
+</style>
+
+<div class={cn('relative -left-2.5 flex items-center')}>
+    <div class={cn('BioAvatar', 'RoundedImage', 'relative block h-10 w-10')}>
+      <div
+        class={cn(
+          'BioAvatarInner',
+          'RoundedImage',
+          'mr-4 h-10 w-10 overflow-hidden',
+        )}
+      >
+        <Image alt="作者头像" class="RoundedImage" src={photo} width={120} />
+      </div>
+    </div>
+    {!hideText && (
+      <p class={cn('BioText', 'colorModeTransition text-palette-gray text-sm')}>
+        周骅，前端研发，目前就职于字节跳动。
+      </p>
+    )}
+</div>

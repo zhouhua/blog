@@ -1,0 +1,16 @@
+title: 游览华谊兄弟影视乐园
+date: '2023-09-15 10:00:00'
+list:
+  - picture: ./images/174143509910927.jpg
+    description: 电影工场
+  - picture: ./images/174202655304668.jpg
+    description: 民国场景
+  - picture: ./images/174240462664558.jpg
+    description: 集结号
+  - picture: ./images/174271355835907.jpg
+    description: 天主堂
+    featured: true
+  - picture: ./images/174369768640580.jpg
+    description: 武则天
+  - picture: ./images/174440974556715.jpg
+    description: 武则天

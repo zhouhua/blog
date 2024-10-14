@@ -1,0 +1,56 @@
+---
+import { cn } from '@lib/utils';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { description, title } = Astro.props;
+---
+
+<style lang="postcss">
+.Header {
+  margin: 100px auto 120px;
+  min-width: 360px;
+  padding-left: 68px;
+  max-width: 749px;
+  @media (max-width: theme(screens.lg.max)) {
+    padding-left: 53px;
+    max-width: 560px;
+    margin: 100px auto 70px;
+  }
+  @media (max-width: theme(screens.md.max)) {
+    padding-left: 0;
+    margin: 100px auto 70px;
+    max-width: 450px;
+  }
+  @media (max-width: theme(screens.sm.max)) {
+    margin: 80px auto 50px;
+    padding: 0 20px;
+  }
+  @media screen and (max-height: 700px) {
+    margin: 50px auto;
+  }
+}
+.HeroHeading {
+  @apply font-sans font-bold text-palette-primary;
+  @apply break-words text-[48px] leading-[1.32];
+  @apply md:text-[38px] md:leading-[1.2];
+  @apply sm:text-[36px] sm:leading-[1.3];
+  @apply mb-[25px] sm:mb-5;
+  transition:
+    background 0.25s var(--ease-in-out-quad),
+    color 0.25s var(--ease-in-out-quad);
+}
+</style>
+
+<header class={cn('Header', 'relative z-10')}>
+  <h1 class="HeroHeading">{title}</h1>
+  {description && (
+    <div class="leading-6 text-palette-secondary/80 flex items-center">
+      <span class="mr-2 iconify maki--information" />
+      {description}
+    </div>
+  )}
+</header>

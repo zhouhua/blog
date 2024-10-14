@@ -1,0 +1,188 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { dirname, join } from 'node:path';
+import { getEntry, getExcerpt, getImage, getReadInfo } from '@lib/html';
+import { cn } from '@lib/utils';
+import { Image } from 'astro:assets';
+import dayjs from 'dayjs';
+
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  gridLayout: 'rows' | 'tiles';
+  narrow: boolean;
+}
+
+const { gridLayout, narrow, post } = Astro.props;
+const entry = getEntry(post.id);
+const hero = getImage(join('content/blog/', dirname(post.id), post.data.hero));
+const excerpt = getExcerpt(await entry!.compiledContent());
+const { timeToRead, wordCount } = getReadInfo(await entry!.compiledContent());
+const hasOverflow = narrow && post.data.title.length > 35;
+---
+
+<style lang="postcss">
+.ArticleLink {
+  transition: transform 0.33s var(--ease-out-quart);
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  &:hover .ImageContainer,
+  &:focus .ImageContainer {
+    @apply -translate-y-px;
+    box-shadow:
+      0 50px 80px -20px rgba(0, 0, 0, 0.27),
+      0 30px 50px -30px rgba(0, 0, 0, 0.3);
+  }
+  &:hover h2,
+  &:focus h2 {
+    @apply text-palette-accent;
+    transition:
+      background 0.25s var(--ease-in-out-quad),
+      color 0.25s var(--ease-in-out-quad);
+  }
+  @media (max-width: theme(screens.sm.max)) {
+    &:hover .ImageContainer {
+      transform: none;
+      box-shadow: initial;
+    }
+    &:active {
+      transform: scale(0.97) translateY(3px);
+    }
+  }
+}
+.listItemRow {
+  @apply relative grid items-center;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 500px;
+  grid-column-gap: 96px;
+  grid-template-rows: 1;
+  margin-bottom: 50px;
+  @media (max-width: theme(screens.lg.max)) and (min-width: theme(screens.lg.min)) {
+    grid-column-gap: 24px;
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (max-width: theme(screens.md.max)) and (min-width: theme(screens.md.min)) {
+    grid-column-gap: 24px;
+    grid-template-columns: 2fr 3fr;
+  }
+  @media (max-width: theme(screens.sm.max)) {
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: theme(screens.sm.max)) {
+  .listItemRow {
+    @apply bg-palette-card;
+    transition:
+      background 0.25s var(--ease-in-out-quad),
+      color 0.25s var(--ease-in-out-quad);
+  }
+}
+.listItemTile {
+  @apply relative;
+  @media (max-width: theme(screens.sm.max)) {
+    margin-bottom: 60px;
+    margin-bottom: 40px;
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+}
+@media (max-width: theme(screens.sm.max)) {
+  .listItemTile {
+    @apply bg-palette-card;
+    transition:
+      background 0.25s var(--ease-in-out-quad),
+      color 0.25s var(--ease-in-out-quad);
+  }
+}
+.ImageContainer {
+  @apply relative;
+  box-shadow:
+    0 30px 60px -10px rgba(0, 0, 0, 0.3),
+    0 18px 36px -18px rgba(0, 0, 0, 0.33);
+  transition:
+    transform 0.3s var(--ease-out-quad),
+    box-shadow 0.3s var(--ease-out-quad);
+  & > div {
+    height: 100%;
+  }
+  @media (max-width: theme(screens.sm.max)) {
+    overflow: hidden;
+    margin-bottom: 0;
+    box-shadow: none;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+  }
+  &.narrow {
+    box-shadow:
+      0 30px 60px -10px rgba(0, 0, 0, 0.22),
+      0 18px 36px -18px rgba(0, 0, 0, 0.25);
+  }
+}
+.limitToTwoLines {
+  @apply line-clamp-2 text-ellipsis whitespace-normal sm:line-clamp-3;
+  overflow-wrap: normal;
+}
+.Title {
+  @apply text-palette-primary font-sans font-bold;
+  @apply leading-[1.33];
+  @apply md:text-[21px];
+  @apply sm:text-2xl sm:leading-[1.45];
+  @apply text-[21px] sm:mb-[10px] sm:px-5 sm:pb-0 sm:pt-[30px] md:mb-[15px];
+  transition: color 0.3s ease-in-out;
+}
+.Excerpt {
+  @media (max-width: theme(screens.sm.max)) {
+    display: -webkit-box;
+  }
+}
+</style>
+
+<a
+  class={cn(
+    'ArticleLink',
+    'relative left-0 top-0 z-[1] block h-full w-full rounded-[5px]',
+  )}
+  href={`/${post.slug}`}
+>
+  <div class={gridLayout === 'rows' ? 'listItemRow' : 'listItemTile'}>
+    <div
+      class={cn('ImageContainer', { narrow })}
+      style={{
+        height: `${gridLayout === 'tiles' ? '280px' : '250px'}`,
+        marginBottom: `${gridLayout === 'tiles' ? '30px' : '0'}`,
+      }}
+    >
+      <Image alt={`文章《${post.data.title}》的题图`} class="w-full h-full object-cover" src={hero!} width={720} />
+    </div>
+    <div>
+      <h2
+        class={cn('Title', 'limitToTwoLines')}
+        style={{
+          marginBottom: `${hasOverflow && gridLayout === 'tiles' ? '35px' : '10px'}`,
+        }}
+      >
+        {post.data.title}
+      </h2>
+      <p
+        class={cn(
+          'Excerpt',
+          'limitToTwoLines',
+          'mb-2.5 font-serif text-base text-palette-gray',
+          'colorModeTransition sm:mb-5 sm:max-w-full sm:px-5 sm:py-0',
+        )}
+        style={{
+          display: `${hasOverflow && gridLayout === 'tiles' ? 'none' : 'box'}`,
+        }}
+      >
+        {excerpt}
+      </p>
+      <div class="colorModeTransition text-base text-palette-gray opacity-60 sm:max-w-full sm:px-5 sm:pb-[30px] sm:pt-0">
+        {dayjs(post.data.date).fromNow()} · {wordCount} 个字 ·{' '}
+        {timeToRead} 分钟读完
+      </div>
+    </div>
+  </div>
+</a>

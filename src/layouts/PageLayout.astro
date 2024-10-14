@@ -1,0 +1,86 @@
+---
+import Footer from '@components/Footer.astro';
+import Head from '@components/Head.astro';
+import Header from '@components/Header.astro';
+import { SITE } from '@consts';
+import 'katex/dist/katex.css';
+
+type Props = {
+  title: string;
+  description: string;
+};
+
+const { description, title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <Head description={description} title={title ? `${title} | ${SITE.NAME}` : SITE.NAME} />
+  </head>
+  <body class="colorModeTransition overflow-y-auto scrollbar-both-edges relative h-screen min-w-[360px] bg-palette-bg">
+    <Header />
+    <main transition:animate="slide">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<script>
+import mediumZoom from 'medium-zoom/dist/pure';
+import mermaid from 'mermaid';
+import { annotate } from 'rough-notation';
+import 'medium-zoom/dist/style.css';
+
+document.addEventListener('astro:page-load', async () => {
+  const callouts = document.querySelectorAll<HTMLDivElement>('article .callout');
+  callouts.forEach(callout =>
+    annotate(callout, {
+      animate: false,
+      color: 'rgb(var(--color-bg-alt))',
+      padding: 0,
+      strokeWidth: 1,
+      type: 'box',
+    }).show());
+
+  const blockquates = document.querySelectorAll<HTMLDivElement>('article blockquote');
+  blockquates.forEach(blockquote =>
+    annotate(blockquote, {
+      animate: false,
+      brackets: ['left'],
+      color: 'rgb(var(--color-bg-alt))',
+      padding: 2,
+      strokeWidth: 2,
+      type: 'bracket',
+    }).show());
+
+  const limitOuterType = ['.article-columns', 'table', '.callout', 'blockquote', 'li', 'dd'];
+  const limitOuterSelector = limitOuterType.map(type => `.article ${type}`).join(',');
+  const picturesComtainers = document.querySelectorAll<HTMLImageElement>('article p > img');
+  picturesComtainers.forEach((item) => {
+    const limitOuter = item.closest(limitOuterSelector);
+    if (limitOuter) {
+      return;
+    }
+    const width = item.getAttribute('width');
+    const isWide = width && +width >= 1500;
+    if (isWide) {
+      item.parentElement!.classList.add('fullImage');
+    }
+  });
+  const images = document.querySelectorAll<HTMLImageElement>('article p > img:not(.zoomed)');
+  images.forEach(img => img.classList.add('zoomed'));
+  mediumZoom(images, {
+    background: 'rgba(var(--color-bg), 0.5)',
+  });
+
+  mermaid.initialize({ startOnLoad: false });
+  document.querySelectorAll<HTMLDivElement>('[data-language=mermaid]:not(.hidden)').forEach(async (item, i) => {
+    const code = item.textContent!;
+    const { svg } = await mermaid.render(`mermaid${i}`, code);
+    item.classList.add('hidden');
+    item.insertAdjacentHTML('afterend', `<p>${svg}</p>`);
+  });
+}, { once: false });
+</script>

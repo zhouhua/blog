@@ -1,0 +1,15 @@
+---
+import Container from '@components/Container.astro';
+import { SITE } from '@consts';
+
+const year = new Date().getFullYear();
+---
+
+<Container as="footer">
+  <div class="colorModeTransition relative mx-auto mb-[50px] mt-[140px] border-[1px] border-solid border-palette-bgAlt sm:hidden md:mx-auto md:my-[60px]" />
+  <div class="colorModeTransition relative flex items-center justify-between pb-20 text-palette-primary sm:pb-[50px] md:flex-col md:pb-[100px]">
+    <div class="sm:mx-auto sm:mb-[100px] sm:mt-[120px] md:mb-20">
+      Copyright © {year} | {SITE.NAME}
+    </div>
+  </div>
+</Container>

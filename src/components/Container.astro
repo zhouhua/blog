@@ -1,0 +1,13 @@
+---
+import { cn } from '@lib/utils';
+
+interface Props {
+  as?: string;
+}
+
+const { as: Component = 'div' } = Astro.props;
+---
+
+<Component class={cn('max-w-screen-sm mx-auto min-w-[360px] max-w-[1220px] px-10 py-0 sm:px-5', Astro.props.class)}>
+  <slot />
+</Component>

@@ -1,0 +1,68 @@
+---
+import logoSvg from '@assets/icon/logo.svg';
+import logoImage from '@assets/image/logo.png';
+import Container from '@components/Container.astro';
+import { menu } from '@consts';
+import ColorMode from '@react/components/ColorMode';
+import MobileMenu from '@react/components/MobileMenu';
+import { SearchButton } from '@react/components/Search';
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+---
+
+<style lang="postcss">
+  .logo-container:hover {
+    .svg-image {
+      @apply opacity-0;
+    }
+    .png-image {
+      @apply opacity-100;
+    }
+  }
+  .svg-image, .png-image {
+    @apply transition-opacity duration-300;
+  }
+</style>
+
+<Container
+  as="header"
+  class="!sticky -top-16 flex pt-16 backdrop-blur-sm z-10 sm:px-5 md:px-5 bg-palette-bg/50 sm:pt-10 sm:-top-10"
+>
+  <div class="flex w-full items-center justify-between gap-8 md:gap-2">
+    <a href="/">
+      <div class="logo-container relative">
+        <Image
+          alt="logo"
+          class="sm:hidden dark:invert svg-image size-20 text-palette-primary opacity-100 absolute left-0 top-0"
+          src={logoSvg}
+        />
+        <Image
+          alt="logo"
+          class="sm:size-6 png-image size-20 object-contain opacity-100"
+          src={logoImage}
+        />
+      </div>
+    </a>
+    <div class="flex items-center justify-center gap-10 md:gap-6 lg:gap-8 sm:hidden">
+      {
+        menu.map(item => (
+          <a href={item.path}}>
+            <div class="flex items-center md:flex-col lg:flex-col h-20 justify-evenly">
+              <Icon is:inline class="mr-2 opacity-75 md:mr-0 lg:mr-0" name={item.icon} />
+              <div>{item.name}</div>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+    <div class="flex items-center gap-2">
+      <SearchButton
+        appId={import.meta.env.GATSBY_ALGOLIA_APP_ID}
+        appKey={import.meta.env.GATSBY_ALGOLIA_SEARCH_KEY}
+        client:only="react"
+      />
+      <ColorMode client:only="react" />
+      <MobileMenu client:only="react" />
+    </div>
+  </div>
+</Container>

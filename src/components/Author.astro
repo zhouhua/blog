@@ -1,0 +1,45 @@
+---
+import photo from '@assets/image/photo.jpg';
+import { cn } from '@lib/utils';
+import { Image } from 'astro:assets';
+---
+
+<style lang="postcss">
+.AuthorLink {
+  color: inherit;
+  strong {
+    transition: color 0.25s var(--ease-in-out-quad);
+  }
+  &:hover strong {
+    @apply text-palette-primary;
+    transition:
+      background 0.25s var(--ease-in-out-quad),
+      color 0.25s var(--ease-in-out-quad);
+  }
+}
+.AuthorAvatar {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  margin-right: 14px;
+  .gatsby-image-wrapper > div {
+    padding-bottom: 100% !important;
+  }
+}
+.RoundedImage {
+  border-radius: 50%;
+}
+</style>
+
+<a class={cn('AuthorLink', 'flex items-center')} href="/about">
+    <div
+      class={cn(
+        'AuthorAvatar',
+        'colorModeTransition bg-palette-secondary overflow-hidden sm:hidden',
+      )}
+    >
+      <Image alt="作者头像" class="RoundedImage" src={photo} />
+    </div>
+    <strong>周骅</strong>
+    <span>，&nbsp;</span>
+</a>

@@ -1,0 +1,17 @@
+---
+import Container from '@components/Container.astro';
+import ProjectTitle from '@components/ProjectTitle.astro';
+import { HOME } from '@consts';
+import FontProject from '@content/projects/font';
+import projectList from '@content/projects/list';
+import PageLayout from '@layouts/PageLayout.astro';
+
+const project = projectList[0]!;
+---
+
+<PageLayout description={project.description} title={`${HOME.TITLE} - ${project.name}`}>
+  <ProjectTitle description={project.description} title={project.name} />
+  <Container>
+    <FontProject client:only="react" />
+  </Container>
+</PageLayout>

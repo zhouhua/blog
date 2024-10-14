@@ -1,0 +1,110 @@
+---
+import { cn } from '@lib/utils';
+import { RoughNotation } from 'react-rough-notation';
+import Bio from './Bio.astro';
+import Container from './Container.astro';
+
+
+interface Props {
+  tag?: string;
+  title?: string;
+  description?: string;
+}
+
+const { description, tag, title } = Astro.props;
+---
+
+<style lang="postcss">
+.HeroHeading {
+  a {
+    @apply text-palette-accent;
+    transition:
+      background 0.25s var(--ease-in-out-quad),
+      color 0.25s var(--ease-in-out-quad);
+  }
+}
+</style>
+
+<Container class="relative">
+  { tag
+? (
+    <div class="my-28 flex items-center justify-between sm:my-10 md:my-16">
+      <h1
+        class={cn(
+          'HeroHeading',
+          'colorModeTransition text-[36px] font-semibold not-italic leading-[1.15]',
+          'text-palette-primary sm:text-[24px] md:text-[30px]',
+        )}
+      >
+        关于
+        <small>
+          <span
+            class="ml-2 mr-1 text-palette-accent opacity-70 iconify heroicons--hashtag-solid"
+          />
+        </small>
+        <RoughNotation
+          animationDelay={800}
+          color="rgb(var(--color-accent))"
+          show
+          strokeWidth={2}
+          type="underline"
+        >
+          {tag}
+        </RoughNotation>{' '}
+        的文章：
+      </h1>
+      <a
+        class="hover:text-palette-accent hover:underline hover:underline-offset-4 sm:hidden"
+        href="/articles"
+      >
+        <span class="mr-2 iconify fa6-solid--angle-right" />
+        所有文章
+      </a>
+    </div>
+  )
+: (
+    <div
+      class={cn('mx-0 my-[100px] text-palette-primary sm:w-full md:w-4/5')}
+      style={{ maxWidth: `800px` }}
+    >
+      <h1
+        class={cn(
+          'HeroHeading',
+          'colorModeTransition text-[52px] font-semibold not-italic leading-[1.15]',
+          'mb-10 sm:text-[32px] md:text-[38px]',
+        )}
+      >
+        {title || '周骅的博客'}
+      </h1>
+      {!title && (
+        <p class="colorModeTransition">
+          <RoughNotation
+            animationDelay={800}
+            client:only="react"
+            color="rgb(var(--color-accent) / 0.4)"
+            show
+            type="highlight"
+          >
+            有趣的灵魂终会相遇
+          </RoughNotation>
+        </p>
+      )}
+      {description && (
+        <p class="colorModeTransition">
+          <RoughNotation
+            animationDelay={800}
+            client:only="react"
+            color="rgb(var(--color-accent) / 0.4)"
+            show
+            type="highlight"
+          >
+            {description}
+          </RoughNotation>
+        </p>
+      )}
+    </div>
+  )}
+  <div class="mb-[100px] flex items-center justify-between sm:hidden md:mb-20">
+    <Bio />
+  </div>
+</Container>

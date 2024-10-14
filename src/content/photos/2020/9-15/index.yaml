@@ -1,0 +1,6 @@
+title: 上海野生动物园
+date: '2020-09-15 10:00:00'
+list:
+  - picture: ./animal.jpg
+    description: 细尾獴
+    featured: true

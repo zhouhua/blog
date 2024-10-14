@@ -1,0 +1,38 @@
+---
+import ArticlesPair from '@components/ArticlesPair.astro';
+import Container from '@components/Container.astro';
+import ListTitle from '@components/ListTitle.astro';
+import { BLOG } from '@consts';
+import PageLayout from '@layouts/PageLayout.astro';
+import { type CollectionEntry, getCollection } from 'astro:content';
+
+const data = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const pairs: [CollectionEntry<'blog'>, CollectionEntry<'blog'>][] = data.reduce(
+    (result: [CollectionEntry<'blog'>, CollectionEntry<'blog'>][], _, index, array) => {
+      if (index % 2 === 0) {
+        result.push(array.slice(index, index + 2) as [CollectionEntry<'blog'>, CollectionEntry<'blog'>]);
+      }
+      return result;
+    },
+    [],
+  );
+---
+
+<PageLayout description={BLOG.DESCRIPTION} title={BLOG.TITLE}>
+  <ListTitle
+    description="胡言乱语"
+    title="周骅的博客 - 所有文章"
+  />
+  <Container>
+    {pairs.map((ap, index) => {
+      const isEven = index % 2 !== 0;
+      return (
+        <ArticlesPair
+          gridLayout="tiles"
+          posts={ap}
+          reverse={isEven}
+        />
+      );
+    })}
+  </Container>
+</PageLayout>

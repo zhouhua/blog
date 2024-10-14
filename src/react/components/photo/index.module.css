@@ -1,0 +1,26 @@
+.fullMask {
+  background: linear-gradient(
+    0,
+    theme(colors.palette.bgRevert/20) 0%,
+    theme(colors.palette.bgRevert/0) 40%,
+    theme(colors.palette.bgRevert/0) 70%,
+    theme(colors.palette.bgRevert/10) 100%
+  );
+}
+.mask {
+  background: linear-gradient(0, theme(colors.palette.bgRevert/20) 0%, theme(colors.palette.bgRevert/0) 60%);
+}
+
+.cell {
+  box-shadow:
+    0 30px 60px -10px rgba(0, 0, 0, 0.2),
+    0 18px 36px -18px rgba(0, 0, 0, 0.22);
+  @apply overflow-hidden rounded-md;
+}
+
+.photoCard {
+  box-shadow:
+    0 30px 60px -10px rgba(0, 0, 0, 0.2),
+    0 18px 36px -18px rgba(0, 0, 0, 0.22);
+  @apply overflow-hidden rounded-md;
+}

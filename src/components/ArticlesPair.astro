@@ -1,0 +1,82 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { cn } from '@lib/utils';
+import ListItem from './ArticleListItem.astro';
+
+interface Props {
+  posts: [CollectionEntry<'blog'>, CollectionEntry<'blog'>] | [CollectionEntry<'blog'>];
+  gridLayout: 'rows' | 'tiles';
+  showAllLink?: boolean;
+  reverse: boolean;
+}
+
+const { gridLayout, posts, reverse, showAllLink } = Astro.props;
+---
+
+<style lang="postcss">
+.listTile {
+  @apply relative grid;
+  @apply sm:grid-cols-[1fr];
+  grid-template-columns: 1fr 457px;
+  grid-template-rows: 2;
+  column-gap: 30px;
+  &:not(last-child) {
+    @apply mb-[75px] sm:mb-0;
+  }
+  @media (max-width: theme(screens.lg.max)) and (min-width: theme(screens.md.min)) {
+    grid-template-columns: 1fr 1fr !important;
+    a {
+      max-width: calc(50vw - 55px);
+    }
+  }
+  @media (max-width: theme(screens.sm.max)) {
+    grid-template-columns: 1fr !important;
+  }
+}
+.listTile.reverse {
+  grid-template-columns: 457px 1fr;
+}
+/* If only 1 article, dont create 2 rows.*/
+.listRow {
+  @apply grid;
+  grid-template-rows: 1fr 1fr;
+}
+.listRow.oneArticle {
+  grid-template-rows: 1fr;
+}
+.moreLink {
+  border-radius: 5px;
+  @media (max-width: theme(screens.sm.max)) {
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
+  }
+}
+</style>
+
+<div
+  class={cn(`${gridLayout === 'tiles' ? 'listTile' : 'listRow'}`, {
+        oneArticle: posts.length === 1,
+        reverse,
+      })}
+>
+      {posts.slice(0, 2).map((article, i) => (
+        <ListItem
+          gridLayout={gridLayout}
+          narrow={i % 2 ? reverse : !reverse}
+          post={article}
+        />
+      ))}
+      {posts.length === 1 && showAllLink && (
+        <a
+          class={cn(
+            'moreLink',
+            'flex items-center justify-center text-palette-primary',
+            'border border-solid border-palette-bgAlt',
+            'sm:mb-20 sm:h-28 sm:border-0 sm:bg-palette-card',
+          )}
+          href="/articles"
+        >
+          查看所有文章
+          <span class="ml-4 iconify heroicons--hashtag-solid" />
+        </a>
+      )}
+</div>

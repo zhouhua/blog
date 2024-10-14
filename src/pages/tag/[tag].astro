@@ -1,0 +1,67 @@
+---
+import ArticlesPair from '@components/ArticlesPair.astro';
+import Container from '@components/Container.astro';
+import ListTitle from '@components/ListTitle.astro';
+import { BLOG } from '@consts';
+import PageLayout from '@layouts/PageLayout.astro';
+import { type CollectionEntry, getCollection } from 'astro:content';
+
+export const prerender = true;
+export async function getStaticPaths() {
+  const posts = await getCollection('blog').sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  const route: Record<string, CollectionEntry<'blog'>> = {};
+  posts.forEach((post) => {
+    const tags = post.data.tags || [];
+    tags.forEach((tag) => {
+      const t = tag.replace(/\s+/g, '-').toLowerCase();
+      if (!route[t]) {
+        route[t] = post;
+      }
+      else {
+        route[t].push(post);
+      }
+    });
+  });
+  return Object.keys(route).map(tag => ({
+    params: { tag },
+    props: { posts: route[tag], tag },
+  }));
+}
+
+interface Props {
+  posts: CollectionEntry<'blog'>[];
+  tag: string;
+}
+
+const { posts: data, tag } = Astro.props;
+
+const pairs: [CollectionEntry<'blog'>, CollectionEntry<'blog'>][] = data.reduce(
+    (result: [CollectionEntry<'blog'>, CollectionEntry<'blog'>][], _, index, array) => {
+      if (index % 2 === 0) {
+        result.push(array.slice(index, index + 2) as [CollectionEntry<'blog'>, CollectionEntry<'blog'>]);
+      }
+      return result;
+    },
+    [],
+  );
+---
+
+<PageLayout description={BLOG.DESCRIPTION} title={BLOG.TITLE}>
+  <ListTitle
+    description="胡言乱语"
+    tag={tag}
+    title="周骅的博客 - 所有文章"
+  />
+  <Container>
+    {pairs.map((ap, index) => {
+      const isEven = index % 2 !== 0;
+      return (
+        <ArticlesPair
+          gridLayout="tiles"
+          posts={ap}
+          reverse={isEven}
+        />
+      );
+    })}
+  </Container>
+</PageLayout>

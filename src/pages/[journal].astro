@@ -1,0 +1,71 @@
+---
+import ArticleTitle from '@components/ArticleTitle.astro';
+import Container from '@components/Container.astro';
+import PageLayout from '@layouts/PageLayout.astro';
+import { getEntry, getExcerpt, getReadInfo } from '@lib/html';
+import { cn } from '@lib/utils';
+import Comment from '@react/components/Comment';
+import styles from '@styles/article.module.css';
+import { type CollectionEntry, getCollection } from 'astro:content';
+import dayjs from 'dayjs';
+
+export const prerender = true;
+export async function getStaticPaths() {
+  const posts = await getCollection('journals');
+  return posts.map((post) => {
+    const date = dayjs(post.data.date).format('YYYY-MM-DD');
+    return {
+      params: { journal: `journal${date}` },
+      props: { date, post },
+    };
+  });
+}
+interface Props {
+  post: CollectionEntry<'journal'>;
+  date: string;
+}
+
+const { date, post } = Astro.props;
+const { Content } = await post.render();
+const entry = getEntry(post.id);
+const html = await entry?.compiledContent() || '';
+const { timeToRead, wordCount } = getReadInfo(html);
+const excerpt = getExcerpt(await entry!.compiledContent());
+---
+<style lang="postcss">
+.hero {
+  max-width: calc(min(1560px, 100%));
+  box-shadow:
+    0 30px 60px -10px rgba(0, 0, 0, 0.2),
+    0 18px 36px -18px rgba(0, 0, 0, 0.22);
+  @media (max-width: theme(screens.sm.max)) {
+    height: 220px;
+    object-fit: cover;
+  }
+}
+.lineTitle {
+  @apply text-palette-primary relative pb-20 font-normal opacity-25 md:pb-[60px];
+  transition:
+    background 0.25s var(--ease-in-out-quad),
+    color 0.25s var(--ease-in-out-quad);
+  &::after {
+    @apply absolute left-40 right-0 top-[11px] h-px content-[''];
+    @apply bg-palette-gray;
+    transition:
+      background 0.25s var(--ease-in-out-quad),
+      color 0.25s var(--ease-in-out-quad);
+  }
+}
+</style>
+<PageLayout description={excerpt} title={`随笔 🗓️ ${date}`}>
+  <ArticleTitle isJournal tags={post.data.tags} time={post.data.date} title={`随笔 🗓️ ${date}`}>
+    {wordCount}个字 &bull; {timeToRead}分钟读完
+  </ArticleTitle>
+  <article class={cn(styles.ArticleBody)}>
+    <Content />
+  </article>
+  <Comment client:only="react" />
+  <Container>
+      <div class="mb-[65px]" />
+  </Container>
+</PageLayout>

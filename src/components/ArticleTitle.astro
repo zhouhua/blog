@@ -1,0 +1,108 @@
+---
+import { cn } from '@lib/utils';
+import FormatDate from '@react/components/FormatDate';
+import { Badge } from '@react/ui/badge';
+import { Icon } from 'astro-icon/components';
+import Author from './Author.astro';
+
+interface Props {
+  title: string;
+  time: Date | number;
+  tags?: string[];
+  isJournal?: boolean;
+}
+
+const { isJournal = false, tags = [], time, title } = Astro.props;
+
+---
+
+<style lang="postcss">
+.Header {
+  margin: 100px auto 120px;
+  min-width: 360px;
+  padding-left: 68px;
+  max-width: 749px;
+  @media (max-width: theme(screens.lg.max)) {
+    padding-left: 53px;
+    max-width: 560px;
+    margin: 100px auto 70px;
+  }
+  @media (max-width: theme(screens.md.max)) {
+    padding-left: 0;
+    margin: 100px auto 70px;
+    max-width: 450px;
+  }
+  @media (max-width: theme(screens.sm.max)) {
+    margin: 80px auto 50px;
+    padding: 0 20px;
+  }
+  @media screen and (max-height: 700px) {
+    margin: 50px auto;
+  }
+}
+.HeroHeading {
+  @apply font-sans font-bold text-palette-primary;
+  @apply break-words text-[48px] leading-[1.32];
+  @apply md:text-[38px] md:leading-[1.2];
+  @apply sm:text-[36px] sm:leading-[1.3];
+  @apply mb-[25px] sm:mb-5;
+  transition:
+    background 0.25s var(--ease-in-out-quad),
+    color 0.25s var(--ease-in-out-quad);
+}
+.HeroSubtitle {
+  @media (max-width: theme(screens.sm.max)) {
+    font-size: 14px;
+    flex-direction: column;
+    strong {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+  }
+}
+</style>
+
+<header class={cn('Header', 'relative z-10')}>
+  <h1 class="HeroHeading">{title}</h1>
+  <div
+    class={cn(
+      'HeroSubtitle',
+      'colorModeTransition relative flex w-full justify-between text-lg text-palette-gray',
+    )}
+  >
+    <div class="flex">
+      <Author />
+      <div>
+        <FormatDate client:load time={time} />
+        &bull;
+        <slot />
+      </div>
+    </div>
+    {isJournal && (
+      <a
+        class="underline-offset-4 hover:text-palette-accent hover:underline"
+        href="/journals"
+      >
+        更多随笔
+      </a>
+    )}
+  </div>
+  {tags.length > 0 && (
+    <div class="flex flex-wrap gap-4 mb-4 mt-8">
+    {
+      tags.map(tag => (
+        <Badge className="text-sm font-monospace border-palette-secondary/80" variant="outline">
+          <Icon
+            class="mr-1 h-3 w-3 text-palette-accent opacity-80"
+            is:inline
+            name="heroicons:hashtag-solid"
+          />
+          {tag}
+        </Badge>
+      ))
+    }
+    </div>
+  )}
+</header>
+

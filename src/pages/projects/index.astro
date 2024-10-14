@@ -1,0 +1,30 @@
+---
+import Container from '@components/Container.astro';
+import ListTitle from '@components/ListTitle.astro';
+import { BLOG } from '@consts';
+import projects from '@content/projects/list';
+import PageLayout from '@layouts/PageLayout.astro';
+import ProjectIcon from '@react/components/ProjectIcon';
+---
+
+<PageLayout description={BLOG.DESCRIPTION} title={BLOG.TITLE}>
+  <ListTitle
+    description="自娱自乐的空间"
+    title="周骅的博客 - 一些小项目"
+  />
+  <Container>
+    <ul class="mx-auto max-w-[560px] text-center">
+        {projects.filter(p => !p.hidden).map(({ description, link, name, type }) => (
+          <li class="mt-20">
+            <a href={link} target={/^https?:/.test(link) ? '_blank' : '_self'}>
+              <h3 class="text-2xl text-palette-secondary flex items-center justify-center">
+                <ProjectIcon type={type} />
+                {name}
+              </h3>
+              {description && <p class="mt-2 text-palette-gray">{description}</p>}
+            </a>
+          </li>
+        ))}
+    </ul>
+  </Container>
+</PageLayout>
