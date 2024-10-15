@@ -1,5 +1,5 @@
-import process from 'node:process';
 // @ts-check
+import process from 'node:process';
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
@@ -7,12 +7,12 @@ import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel/serverless';
 import sentry from '@sentry/astro';
 import { transformerMetaHighlight } from '@shikijs/transformers';
+import swup, { Theme } from '@swup/astro';
 import mediaCard from '@zhouhua-dev/remark-media-card';
 import { defineConfig } from 'astro/config';
 import devtoolBreakpoints from 'astro-devtool-breakpoints';
 import pageInsight from 'astro-page-insight';
 import tailwindConfigViewer from 'astro-tailwind-config-viewer';
-import swup, { Theme } from 'node_modules/@swup/astro/src';
 import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math';
 
