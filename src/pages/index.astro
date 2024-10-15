@@ -88,7 +88,7 @@ document.addEventListener('astro:page-load', () => {
     item.addEventListener('click', () => {
       const href = item.getAttribute('data-href');
       if (href) {
-        swup.navigate(href);
+        window.swup.navigate(href);
       }
     });
   });
