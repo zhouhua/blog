@@ -1,7 +1,7 @@
 ---
 import type { CustomPhotoType } from '@types';
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
-import { basename, dirname, join } from 'node:path';
+import { dirname, join } from 'node:path';
 import ArticlesPair from '@components/ArticlesPair.astro';
 import Container from '@components/Container.astro';
 import ListTitle from '@components/ListTitle.astro';
@@ -45,7 +45,7 @@ const featuredImages = photos.reduce<Temp[]>((list, item) => [
     count: item.data.list.length,
     date: item.data.date,
     path: join('content/photos/', dirname(item.id), picture),
-    slug: basename(item.id),
+    slug: dirname(item.id),
   })),
 ], []);
 const pickedList = sampleSize(featuredImages, 50);
@@ -82,7 +82,18 @@ for (const journal of journals) {
   journalWordCount += wordCount;
 }
 ---
-
+<script>
+document.addEventListener('astro:page-load', () => {
+  document.querySelectorAll('.journalCard').forEach((item) => {
+    item.addEventListener('click', () => {
+      const href = item.getAttribute('data-href');
+      if (href) {
+        swup.navigate(href);
+      }
+    });
+  });
+});
+</script>
 
 <style lang="postcss">
 .lineTitle {
@@ -144,14 +155,14 @@ for (const journal of journals) {
     <h3 class={cn('lineTitle', 'mt-20')}>最新随笔</h3>
     <div class="relative z-10 columns-2 gap-x-6 sm:columns-1">
       {latestJournals.map(({ Content, journal }) => (
-        <a
+        <div
           class={cn(
             articleStyles.ArticleBody,
             'journalCard',
             'relative z-10 max-w-none justify-center block',
-            'colorModeTransition break-inside-avoid-column',
+            'colorModeTransition break-inside-avoid-column cursor-pointer',
           )}
-          href={`/journal${dayjs(journal.data.date).format('YYYY-MM-DD')}`}
+          data-href={`/journal${dayjs(journal.data.date).format('YYYY-MM-DD')}`}
         >
           <article
             class={cn(
@@ -162,7 +173,7 @@ for (const journal of journals) {
           >
             <Content />
           </article>
-        </a>
+        </div>
       ))}
       <div
         class={cn('colorModeTransition break-inside-avoid-column text-palette-primary')}

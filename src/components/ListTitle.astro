@@ -43,7 +43,7 @@ const { description, tag, title } = Astro.props;
           />
         </small>
         <RoughNotation
-          animationDelay={800}
+          animate={false}
           color="rgb(var(--color-accent))"
           show
           strokeWidth={2}
@@ -79,7 +79,7 @@ const { description, tag, title } = Astro.props;
       {!title && (
         <p class="colorModeTransition">
           <RoughNotation
-            animationDelay={800}
+            animate={false}
             client:only="react"
             color="rgb(var(--color-accent) / 0.4)"
             show
@@ -92,7 +92,7 @@ const { description, tag, title } = Astro.props;
       {description && (
         <p class="colorModeTransition">
           <RoughNotation
-            animationDelay={800}
+            animate={false}
             client:only="react"
             color="rgb(var(--color-accent) / 0.4)"
             show

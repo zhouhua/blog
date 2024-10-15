@@ -11,7 +11,6 @@ import { getImage as transform } from 'astro:assets';
 import { type CollectionEntry, getCollection } from 'astro:content';
 import exif from 'fast-exif';
 import { sampleSize } from 'lodash-es';
-import { basename } from 'node:path';
 import Comment from '@react/components/Comment';
 import ImageGallery from '@react/components/photo/ImageGallery';
 import {getRoot} from '@lib/node';
@@ -67,7 +66,7 @@ const featuredImages = data.reduce<Temp[]>((list, item) => [
     alt: item.data.title,
     count: item.data.list.length,
     date: item.data.date,
-    slug: basename(item.id),
+    slug: dirname(item.id),
     path: join('content/photos/', dirname(item.id), picture),
   })),
 ], []);

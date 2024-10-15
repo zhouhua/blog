@@ -2,7 +2,6 @@
 import { cn } from '@lib/utils';
 import FormatDate from '@react/components/FormatDate';
 import { Badge } from '@react/ui/badge';
-import { Icon } from 'astro-icon/components';
 import Author from './Author.astro';
 
 interface Props {
@@ -94,10 +93,8 @@ const { isJournal = false, tags = [], time, title } = Astro.props;
       tags.map(tag => (
         <a href={`/tag/${tag.replace(/\s+|\//g, '-').toLowerCase()}`}>
           <Badge className="text-sm font-monospace border-palette-secondary/80" variant="outline">
-          <Icon
-            class="mr-1 h-3 w-3 text-palette-accent opacity-80"
-            is:inline
-            name="heroicons:hashtag-solid"
+          <span
+            class="mr-1 h-3 w-3 text-palette-accent opacity-80 heroicons--hashtag-solid iconify"
           />
           {tag}
           </Badge>

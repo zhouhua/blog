@@ -11,7 +11,11 @@ import styles from './index.module.css';
 import NoResult from './NoResult';
 import Recent from './Recent';
 
-const icons = { journal: 'pen-nib', photo: 'images', post: 'file-lines' };
+const icons = {
+  journal: <span className="iconify fa6-solid--pen-nib" />,
+  photo: <span className="iconify fa6-solid--images" />,
+  post: <span className="iconify fa6-solid--file-lines" />,
+};
 
 const Result: FC<{ hide: () => void }> = ({ hide }) => {
   const { isLastPage, items, showMore } = useInfiniteHits();
@@ -51,7 +55,6 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
       slug,
       title,
     });
-    // window.gtag('event', 'search_hit', { query, uri: hit.slug, title });
     hide();
   }
   const [selectIndex, setSelectIndex] = useState<number>(-1);
@@ -60,12 +63,6 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
   useEffect(() => {
     setSelectIndex(-1);
   }, [query]);
-
-  useEffect(() => {
-    if (query) {
-      // window.gtag('event', 'search_query', { number: nbHits, query });
-    }
-  }, [query, nbHits]);
 
   useEffect(() => {
     if (selectedDom.current) {
@@ -170,9 +167,10 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                     styles.icon,
                     'colorModeTransition rounded border border-solid border-palette-gray',
                     'absolute left-4 top-1/2 h-6 w-6 shrink-0 -translate-y-1/2 text-center text-[14px]',
+                    'flex items-center justify-center',
                   )}
                 >
-                  <span className={cn(`fa6-solid--${icons[hit.layout as 'journal' | 'photo' | 'post']}`, 'iconify')} />
+                  {icons[hit.layout as keyof typeof icons]}
                 </div>
                 {(hit.layout === 'post' || hit.layout === 'photo') && (
                   <a

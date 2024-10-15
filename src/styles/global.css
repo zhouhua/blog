@@ -335,3 +335,8 @@ svg .label {
     @apply bg-background text-foreground;
   }
 }
+
+.swup-transition-overlay {
+  --swup-overlay-theme-color: theme(colors.palette.bgRevert) !important;
+  --swup-overlay-theme-duration: 0.3s !important;
+}

@@ -1,4 +1,5 @@
 import type { ChangeEvent, FC, FormEvent } from 'react';
+import { cn } from '@lib/utils';
 import clsx from 'clsx';
 import { throttle } from 'lodash-es';
 import { useRef, useState } from 'react';
@@ -41,14 +42,12 @@ const Header: FC<{ hide: () => void }> = ({ hide }) => {
         'relative flex flex-none items-center',
       )}
     >
-      <div className="p-4 text-center">
-        {status === 'stalled'
-          ? (
-              <div className="loading loading-ring loading-xs" />
-            )
-          : (
-              <span className="iconify fa6-solid--magnifying-glass" />
-            )}
+      <div className="p-4 flex items-center justify-center">
+        <span className={cn({
+          'iconify fa6-solid--magnifying-glass': status !== 'stalled',
+          'loading loading-ring loading-xs': status === 'stalled',
+        })}
+        />
       </div>
       <form noValidate action="" className="flex max-w-full grow-[2]" onSubmit={onSubmit}>
         <input

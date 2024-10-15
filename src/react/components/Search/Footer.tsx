@@ -73,16 +73,15 @@ const Footer: FC = () => {
         }}
         theme={colorMode}
       />
-      <div className="flex text-sm sm:hidden">
+      <div className="flex text-sm sm:hidden gap-4 md:gap-2">
         {hotKeys.map(
           ({ keys, text }, i) =>
             showMap[i] && (
-              <div key={text} className="mr-4 md:mr-2">
+              <div key={text} className="flex gap-1 items-center">
                 {keys.map((key, index) => (
                   // eslint-disable-next-line react/no-array-index-key
                   <Kbd key={index}>{key}</Kbd>
                 ))}
-                {' '}
                 <span className="md:text-xs">{text}</span>
               </div>
             ),

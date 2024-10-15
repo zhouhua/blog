@@ -1,14 +1,14 @@
 ---
+import process from 'node:process';
 import logoSvg from '@assets/icon/logo.svg';
 import logoImage from '@assets/image/logo.png';
 import Container from '@components/Container.astro';
 import { menu } from '@consts';
+import { cn } from '@lib/utils';
 import ColorMode from '@react/components/ColorMode';
 import MobileMenu from '@react/components/MobileMenu';
 import { SearchButton } from '@react/components/Search';
 import { Image } from 'astro:assets';
-import { Icon } from 'astro-icon/components';
-import process from 'node:process';
 ---
 
 <style lang="postcss">
@@ -23,9 +23,12 @@ import process from 'node:process';
   .svg-image, .png-image {
     @apply transition-opacity duration-300;
   }
+  .header {
+    box-shadow: 0 1px 3px 0 rgb(var(--color-bg) / 0.8);
+  }
 </style>
 
-<header class="!sticky -top-16 flex pt-16 backdrop-blur-sm z-10 bg-palette-bg/50 sm:pt-10 sm:-top-10">
+<header class="!sticky -top-16 flex pt-16 backdrop-blur-sm z-10 bg-palette-bg/50 sm:pt-10 sm:-top-10 header">
   <Container class="flex w-full items-center justify-between gap-8 md:gap-2 sm:px-5 md:px-5 ">
     <a href="/">
       <div class="logo-container relative">
@@ -44,9 +47,9 @@ import process from 'node:process';
     <div class="flex items-center justify-center gap-10 md:gap-6 lg:gap-8 sm:hidden">
       {
         menu.map(item => (
-          <a href={item.path}}>
+          <a href={item.path}>
             <div class="flex items-center md:flex-col lg:flex-col h-20 justify-evenly">
-              <Icon is:inline class="mr-2 opacity-75 md:mr-0 lg:mr-0" name={item.icon} />
+              <span class={cn('mr-2 opacity-75 md:mr-0 lg:mr-0 iconify', item.icon.replace(':', '--'))} />
               <div>{item.name}</div>
             </div>
           </a>

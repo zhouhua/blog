@@ -98,12 +98,12 @@ const Recent: FC<{ hide: () => void }> = ({ hide }) => {
                 >
                   <span
                     className={cn(
-                      'colorModeTransition mr-4 inline-block h-6 rounded-full bg-palette-card px-2 text-[12px] leading-6',
+                      'colorModeTransition mr-4 h-6 rounded-full bg-palette-card px-2 text-[12px] leading-6 inline-flex items-center justify-center gap-1',
                       'max-w-[45%] shrink-0 grow-0 overflow-hidden overflow-ellipsis whitespace-nowrap text-palette-secondary',
                       styles.query,
                     )}
                   >
-                    <span className="iconify heroicons--hashtag-solid mr-2" />
+                    <span className="iconify heroicons--hashtag-solid" />
                     {recent.query}
                   </span>
                   <span className="line-clamp-2 text-ellipsis whitespace-normal text-sm leading-6">

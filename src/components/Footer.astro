@@ -7,9 +7,13 @@ const year = new Date().getFullYear();
 
 <Container as="footer">
   <div class="colorModeTransition relative mx-auto mb-[50px] mt-[140px] border-[1px] border-solid border-palette-bgAlt sm:hidden md:mx-auto md:my-[60px]" />
-  <div class="colorModeTransition relative flex items-center justify-between pb-20 text-palette-primary sm:pb-[50px] md:flex-col md:pb-[100px]">
-    <div class="sm:mx-auto sm:mb-[100px] sm:mt-[120px] md:mb-20">
+  <div class="colorModeTransition relative flex items-center justify-between pb-20 text-palette-primary sm:pb-[50px] md:flex-col sm:flex-col md:pb-[100px]">
+    <div class="sm:mx-auto sm:mb-5 sm:mt-[120px] md:mb-5">
       Copyright © {year} | {SITE.NAME}
+    </div>
+    <div class="flex gap-4 text-palette-secondary/80">
+      <a href="mailto:zhou--hua@163.com"><span class="iconify mdi--gmail size-6" /></a>
+      <a href="https://github.com/zhouhua"><span class="iconify mdi--github size-6" /></a>
     </div>
   </div>
 </Container>

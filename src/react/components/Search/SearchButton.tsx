@@ -31,10 +31,9 @@ export const SearchButton: FC<{ appId: string; appKey: string }> = ({ appId, app
       className={cn(
         'colorModeTransition',
         'flex h-10 w-40 cursor-pointer items-center justify-between px-3 text-sm',
-        'rounded-full border border-solid border-palette-gray',
-        'bg-palette-bg text-palette-gray sm:dark:bg-palette-bgRevert/0',
+        'rounded-full border border-solid border-palette-gray text-palette-gray',
         'md:w-28',
-        'sm:w-10 sm:border-0 sm:bg-palette-bg/0 sm:p-2 sm:text-2xl sm:text-palette-primary sm:opacity-50',
+        'sm:w-10 sm:border-0 sm:p-2 sm:text-2xl sm:text-palette-primary sm:opacity-50',
       )}
       onClick={() => {
         setShowSearchPanel(true);

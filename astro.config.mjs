@@ -1,19 +1,18 @@
+import process from 'node:process';
 // @ts-check
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel/serverless';
-// import sentry from '@sentry/astro';
+import sentry from '@sentry/astro';
 import { transformerMetaHighlight } from '@shikijs/transformers';
-// import spotlightjs from '@spotlightjs/astro';
 import mediaCard from '@zhouhua-dev/remark-media-card';
 import { defineConfig } from 'astro/config';
 import devtoolBreakpoints from 'astro-devtool-breakpoints';
-import icon from 'astro-icon';
-import metaTags from 'astro-meta-tags';
 import pageInsight from 'astro-page-insight';
 import tailwindConfigViewer from 'astro-tailwind-config-viewer';
+import swup, { Theme } from 'node_modules/@swup/astro/src';
 import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math';
 
@@ -23,11 +22,11 @@ export default defineConfig({
   base: '/',
   integrations: [
     mdx(),
-    icon({
-      iconDir: 'src/assets/icon',
-      include: {
-        'fa6-solid': ['pen-fancy', 'code', 'message', 'image', 'address-card'],
-      },
+    swup({
+      accessibility: false,
+      cache: true,
+      globalInstance: true,
+      theme: [Theme.overlay, { color: '#777', direction: 'to-right', duration: '0.3s' }],
     }),
     sitemap(),
     tailwind({
@@ -36,10 +35,16 @@ export default defineConfig({
     react({
       include: ['**/react/*'],
     }),
-    metaTags(),
     pageInsight(),
     devtoolBreakpoints(),
     tailwindConfigViewer(),
+    sentry({
+      dsn: 'https://3980dc24dd4a6cbe00ad71338a2f834c@o56440.ingest.us.sentry.io/4508126150656000',
+      sourceMapsUploadOptions: {
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        project: 'javascript-astro',
+      },
+    }),
   ],
   markdown: {
     rehypePlugins: [rehypeKatex],
