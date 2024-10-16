@@ -12,6 +12,7 @@ import mediaCard from '@zhouhua-dev/remark-media-card';
 import { defineConfig } from 'astro/config';
 import devtoolBreakpoints from 'astro-devtool-breakpoints';
 import pageInsight from 'astro-page-insight';
+import remarkDescription from 'astro-remark-description';
 import tailwindConfigViewer from 'astro-tailwind-config-viewer';
 import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math';
@@ -51,6 +52,8 @@ export default defineConfig({
     remarkPlugins: [
       mediaCard,
       remarkMath,
+      [remarkDescription, { name: 'excerpt' }],
+
     ],
     shikiConfig: {
       transformers: [

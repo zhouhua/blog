@@ -68,7 +68,9 @@ const Panel: FC<{
               <Configure
                 advancedSyntax
                 synonyms
-                attributesToRetrieve={['objectID', 'slug', 'title', 'excerpt', 'layout']}
+                attributesToRetrieve={['objectID', 'slug', 'title', 'layout']}
+                attributesToSnippet={['text:50']}
+                attributesToHighlight={['title']}
               />
               <Header hide={hide} />
               <Result hide={hide} />

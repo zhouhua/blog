@@ -35,8 +35,8 @@ export function getImage(path: string) {
   return null;
 }
 
-export function getExcerpt(html: string) {
+export function getExcerpt(html: string, cut = 140) {
   const $ = load(html);
-  const pureText = $(':root').text();
-  return pureText.slice(0, 140);
+  const pureText = $(':root').text().replace(/\s+/g, ' ');
+  return pureText.slice(0, cut);
 }

@@ -9,5 +9,5 @@
     },
     "strictNullChecks": true
   },
-  "include": ["./src/**/*.ts", "./src/**/*.tsx", "./*.mjs", "./src/**/*.astro"]
+  "include": ["./src/**/*.ts", "./src/**/*.tsx", "./*.mjs", "./src/**/*.astro", "src/lib/algolia.mjs"]
 }

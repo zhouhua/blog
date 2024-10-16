@@ -15,6 +15,7 @@ const icons = {
   journal: <span className="iconify fa6-solid--pen-nib" />,
   photo: <span className="iconify fa6-solid--images" />,
   post: <span className="iconify fa6-solid--file-lines" />,
+  tag: <span className="iconify fa6-solid--tag" />,
 };
 
 const Result: FC<{ hide: () => void }> = ({ hide }) => {
@@ -187,7 +188,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                       <Highlight attribute="title" className="max-w-full" hit={hit} />
                     </h2>
                     <p className="line-clamp-2 overflow-ellipsis whitespace-normal text-sm leading-6">
-                      <Snippet attribute="excerpt" hit={hit} />
+                      <Snippet attribute="text" hit={hit} />
                     </p>
                   </a>
                 )}
@@ -203,13 +204,28 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                           'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap text-palette-primary',
                         )}
                       >
-                        随笔 🗓️
-                        {' '}
-                        {(hit.slug as string).split('#').pop()}
+                        <Highlight attribute="title" className="max-w-full" hit={hit} />
                       </h2>
                       <p className="line-clamp-2 overflow-ellipsis whitespace-normal text-sm leading-6">
-                        <Snippet attribute="excerpt" hit={hit} />
+                        <Snippet attribute="text" hit={hit} />
                       </p>
+                    </a>
+                  </div>
+                )}
+                {hit.layout === 'tag' && (
+                  <div onClick={once(() => addHistory(hit))}>
+                    <a
+                      className="block cursor-pointer px-10 sm:px-8"
+                      href={hit.slug as string}
+                    >
+                      <h2
+                        className={cn(
+                          'mb-1 inline-block h-6 max-w-[90%] rounded-full bg-palette-card px-2 text-xs leading-6',
+                          'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap text-palette-primary',
+                        )}
+                      >
+                        <Highlight attribute="title" className="max-w-full" hit={hit} />
+                      </h2>
                     </a>
                   </div>
                 )}

@@ -7,6 +7,7 @@ import Container from '@components/Container.astro';
 import ListTitle from '@components/ListTitle.astro';
 import { HOME } from '@consts';
 import PageLayout from '@layouts/PageLayout.astro';
+import { algolia } from '@lib/algolia';
 import { getEntry, getImage, getReadInfo } from '@lib/html';
 import { cn } from '@lib/utils';
 import ImageGallery from '@react/components/photo/ImageGallery';
@@ -81,6 +82,7 @@ for (const journal of journals) {
   const { wordCount } = getReadInfo(html);
   journalWordCount += wordCount;
 }
+algolia();
 ---
 <script>
 document.addEventListener('astro:page-load', () => {
