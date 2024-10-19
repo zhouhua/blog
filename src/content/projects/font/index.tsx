@@ -1,14 +1,10 @@
+import type { FC } from 'react';
 import { cn } from '@lib/utils';
+import Tooltip from '@react/components/Tooltip';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@react/ui/select';
 import { Toaster } from '@react/ui/sonner';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@react/ui/tooltip';
 import copyToClipboard from 'copy-to-clipboard';
-import { type FC, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { toast } from 'sonner';
 import styles from './index.module.css';
 
@@ -175,13 +171,13 @@ const Font: FC = () => {
   const copy = useCallback(() => {
     copyToClipboard(`font-feature-settings: ${feature || 'unset'};`, {
       onCopy() {
-        toast('复制成功!');
+        toast.success('复制成功!');
       },
     });
   }, [feature]);
   return (
     <>
-      <div className="colorModeTransition mockup-window mt-20 border border-palette-gray/40 bg-palette-gray/10 text-palette-secondary">
+      <div className="colorModeTransition daisy-mockup-window mt-20 border border-palette-gray/40 bg-palette-gray/10 text-palette-secondary">
         <div className="text colorModeTransition bg-palette-bg px-4 py-10">
           <div className={cn(styles.box, 'mb-8')}>
             <h3 className={cn(styles.title, 'colorModeTransition')}>控制：</h3>
@@ -329,7 +325,7 @@ const Font: FC = () => {
           </div>
         </div>
       </div>
-      <div className="colorModeTransition mockup-code relative mt-10 overflow-visible border border-palette-gray/40 bg-palette-gray/10 text-palette-secondary">
+      <div className="colorModeTransition daisy-mockup-code relative mt-10 overflow-visible border border-palette-gray/40 bg-palette-gray/10 text-palette-secondary">
         <pre data-prefix="1">
           font-feature-settings:
           {' '}
@@ -337,24 +333,17 @@ const Font: FC = () => {
           ;
         </pre>
         <div className={cn('absolute right-4 top-2')}>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <div
-                  className="colorModeTransition cursor-pointer rounded-md bg-palette-gray/20 px-5 py-1"
-                  onClick={copy}
-                >
-                  <span className="uil--copy iconify" />
-                </div>
-              </TooltipTrigger>
-              <TooltipContent>
-                <div>复制代码</div>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <Tooltip content="复制代码">
+            <div
+              className="colorModeTransition cursor-pointer rounded-md bg-palette-gray/20 px-5 py-1"
+              onClick={copy}
+            >
+              <span className="uil--copy iconify" />
+            </div>
+          </Tooltip>
         </div>
       </div>
-      <Toaster />
+      <Toaster position="top-right" />
     </>
   );
 };

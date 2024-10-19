@@ -1,18 +1,15 @@
-import type { FC, MouseEvent } from 'react';
+import type { FC } from 'react';
 import { cn } from '@lib/utils';
 import { bindKey, unbindKey } from '@rwh/keystrokes';
 import { liteClient } from 'algoliasearch/lite';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Configure, InstantSearch } from 'react-instantsearch';
+import { useClickAway } from 'react-use';
 import Footer from './Footer';
 import Header from './Header';
 import styles from './index.module.css';
 import Result from './Result';
-
-function makeClickOutside(e: MouseEvent<HTMLDivElement>) {
-  e.stopPropagation();
-}
 
 const Panel: FC<{
   show: boolean;
@@ -24,6 +21,7 @@ const Panel: FC<{
     appId,
     appKey,
   ), [appId, appKey]);
+  const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const hotkeyHandler = {
       onPressed: hide,
@@ -34,6 +32,7 @@ const Panel: FC<{
       unbindKey(hideKey, hotkeyHandler);
     };
   }, [hide]);
+  useClickAway(ref, hide);
   useEffect(() => {
     if (show) {
       document.body.classList.add('no-scroll');
@@ -55,14 +54,13 @@ const Panel: FC<{
           )}
           exit={{ opacity: 0 }}
           initial={{ opacity: 0 }}
-          onClick={hide}
         >
           <motion.div
             animate={{ opacity: 1, y: 0 }}
             className="mx-auto flex min-h-0 w-full max-w-2xl flex-col rounded-lg bg-palette-card"
             exit={{ opacity: 0, y: -200 }}
             initial={{ opacity: 0, y: 200 }}
-            onClick={makeClickOutside}
+            ref={ref}
           >
             <InstantSearch indexName="blog" searchClient={searchClient}>
               <Configure

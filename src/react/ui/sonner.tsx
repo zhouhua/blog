@@ -10,7 +10,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
     // @ts-expect-error
     <Sonner
       theme={theme as ToasterProps["theme"]}
-      className="toaster group"
+      className="toaster group flex"
       toastOptions={{
         classNames: {
           toast:

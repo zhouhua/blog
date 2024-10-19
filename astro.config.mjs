@@ -19,7 +19,14 @@ import remarkMath from 'remark-math';
 
 // https://astro.build/config
 export default defineConfig({
-  adapter: vercel(),
+  adapter: vercel({
+    isr: {
+      expiration: 7 * 60 * 60 * 24,
+    },
+    webAnalytics: {
+      enabled: true,
+    },
+  }),
   base: '/',
   integrations: [
     mdx(),

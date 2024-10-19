@@ -19,11 +19,13 @@ const { description, title } = Astro.props;
     <Head description={description} title={title ? `${title} | ${SITE.NAME}` : SITE.NAME} />
   </head>
   <body class="colorModeTransition overflow-y-auto scrollbar-both-edges relative h-screen min-w-[360px] bg-palette-bg">
-    <Header />
-    <main transition:animate="slide">
-      <slot />
-    </main>
-    <Footer />
+    <div class="bg-palette-bg text-foreground" data-vaul-drawer-wrapper>
+      <Header />
+      <main transition:animate="slide">
+        <slot />
+      </main>
+      <Footer />
+    </div>
   </body>
 </html>
 

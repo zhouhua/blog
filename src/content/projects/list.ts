@@ -63,5 +63,11 @@ const list: Project[] = [
     name: 'Obsidian PopKit',
     type: 'obsidian',
   },
+  {
+    description: '短链工具',
+    link: '/projects/link',
+    name: 'short link',
+    type: 'web',
+  },
 ];
 export default list;

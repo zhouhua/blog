@@ -20,6 +20,7 @@ export default config(
   {
     rules: {
       'eslint-comments/no-unlimited-disable': 'off',
+      'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
       'no-console': 'warn',
       'perfectionist/sort-classes': 'warn',
       'perfectionist/sort-enums': 'warn',

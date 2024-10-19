@@ -5,6 +5,7 @@ import colors from 'tailwindcss/colors';
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   daisyui: {
+    prefix: 'daisy-',
     themes: [],
   },
   darkMode: ['class'],
@@ -16,7 +17,7 @@ export default {
   ],
   theme: {
     container: {
-      center: true,
+      center: 'true',
       padding: '2rem',
       screens: {
         '2xl': '1400px',
@@ -26,6 +27,8 @@ export default {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'border-beam': 'border-beam calc(var(--duration)*1s) infinite linear',
+        'ripple': 'ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -148,7 +151,6 @@ export default {
           'token': '#000',
           'var': '#7a3e9d',
         },
-
         ring: 'hsl(var(--ring))',
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
@@ -156,56 +158,39 @@ export default {
         },
       },
       fontFamily: {
-        monospace: [
-          'Fira Code',
-          'Operator Mono',
-          'Consolas',
-          'Menlo',
-          'Monaco',
-          'source-code-pro',
-          'Courier New',
-          'monospace',
-        ],
-        sans: [
-          'apple-system',
-          'BlinkMacSystemFont',
-          'PingFang SC',
-          'Hiragino Sans GB',
-          'Microsoft YaHei',
-          'helvetica neue',
-          'helvetica',
-          'ubuntu',
-          'roboto',
-          'noto',
-          'segoe ui',
-          'Arial',
-          'sans-serif',
-        ],
-        serif: [
-          'LXGW WenKai Lite',
-          'apple-system',
-          'BlinkMacSystemFont',
-          'PingFang SC',
-          'Hiragino Sans GB',
-          'Microsoft YaHei',
-          'helvetica neue',
-          'helvetica',
-          'ubuntu',
-          'roboto',
-          'noto',
-          'segoe ui',
-          'Arial',
-          'sans-serif',
-        ],
+        monospace: ['Fira Code', 'Operator Mono', 'Consolas', 'Menlo', 'Monaco', 'source-code-pro', 'Courier New', 'monospace'],
+        sans: ['apple-system', 'BlinkMacSystemFont', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'helvetica neue', 'helvetica', 'ubuntu', 'roboto', 'noto', 'segoe ui', 'Arial', 'sans-serif'],
+        serif: ['LXGW WenKai Lite', 'apple-system', 'BlinkMacSystemFont', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'helvetica neue', 'helvetica', 'ubuntu', 'roboto', 'noto', 'segoe ui', 'Arial', 'sans-serif'],
       },
       keyframes: {
         'accordion-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' },
+          from: {
+            height: '0',
+          },
+          to: {
+            height: 'var(--radix-accordion-content-height)',
+          },
         },
         'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' },
+          from: {
+            height: 'var(--radix-accordion-content-height)',
+          },
+          to: {
+            height: '0',
+          },
+        },
+        'border-beam': {
+          '100%': {
+            'offset-distance': '100%',
+          },
+        },
+        'ripple': {
+          '0%, 100%': {
+            transform: 'translate(-50%, -50%) scale(1)',
+          },
+          '50%': {
+            transform: 'translate(-50%, -50%) scale(0.9)',
+          },
         },
       },
       screens: {

@@ -331,9 +331,6 @@ svg .label {
   * {
     @apply border-border;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
 }
 
 .swup-transition-overlay {

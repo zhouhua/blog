@@ -3,18 +3,18 @@ import useColorMode from '@react/hooks/useColorMode';
 const ColorMode: React.FC = () => {
   const [colorMode, setColorMode] = useColorMode();
   return (
-    <label className="swap swap-rotate size-10 p-1.5 opacity-50">
+    <label className="daisy-swap daisy-swap-rotate size-10 p-1.5 opacity-50">
       {/* this hidden checkbox controls the state */}
       <input
         type="checkbox"
-        className="theme-controller"
+        className="daisy-theme-controller"
         checked={colorMode === 'dark'}
         onChange={e => setColorMode(e.target.checked ? 'dark' : 'light')}
       />
 
       {/* sun icon */}
       <svg
-        className="swap-off size-7 fill-current stroke-2"
+        className="daisy-swap-off size-7 fill-current stroke-2"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >
@@ -25,7 +25,7 @@ const ColorMode: React.FC = () => {
 
       {/* moon icon */}
       <svg
-        className="swap-on size-7 fill-current stroke-2"
+        className="daisy-swap-on size-7 fill-current stroke-2"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >

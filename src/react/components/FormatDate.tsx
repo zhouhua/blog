@@ -1,24 +1,10 @@
 import dayjs from '@lib/dayjs';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@react/ui/tooltip';
+import Tooltip from '@react/components/Tooltip';
 
 function FormatDate({ time }: { time: Date | number }) {
   const date = dayjs(time);
   return (
-    <TooltipProvider delayDuration={400}>
-      <Tooltip>
-        <TooltipTrigger>
-          <span>{date.fromNow()}</span>
-        </TooltipTrigger>
-        <TooltipContent side="bottom">
-          {date.format('YYYY-MM-DD HH:mm:ss')}
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <Tooltip side="bottom" content={date.format('YYYY-MM-DD HH:mm:ss')}>{date.fromNow()}</Tooltip>
   );
 }
 

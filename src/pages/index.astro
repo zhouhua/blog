@@ -1,6 +1,7 @@
 ---
 import type { CustomPhotoType } from '@types';
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+import type { CollectionEntry } from 'astro:content';
 import { dirname, join } from 'node:path';
 import ArticlesPair from '@components/ArticlesPair.astro';
 import Container from '@components/Container.astro';
@@ -13,7 +14,7 @@ import { cn } from '@lib/utils';
 import ImageGallery from '@react/components/photo/ImageGallery';
 import articleStyles from '@styles/article.module.css';
 import { getImage as transform } from 'astro:assets';
-import { type CollectionEntry, getCollection } from 'astro:content';
+import { getCollection } from 'astro:content';
 import dayjs from 'dayjs';
 import sampleSize from 'lodash-es/sampleSize';
 
@@ -204,30 +205,30 @@ document.addEventListener('astro:page-load', () => {
     />
   </section>
   <Container class="flex justify-center">
-    <div class="stats mt-24 bg-palette-card text-palette-secondary shadow sm:-mx-2 sm:mt-12 sm:text-center">
-      <div class="stat border-palette-gray/20 px-8 py-5 sm:p-3">
-        <div class="stat-figure ml-2 text-lg sm:hidden">
+    <div class="daisy-stats mt-24 bg-palette-card text-palette-secondary shadow sm:-mx-2 sm:mt-12 sm:text-center">
+      <div class="daisy-stat border-palette-gray/20 px-8 py-5 sm:p-3">
+        <div class="daisy-stat-figure ml-2 text-lg sm:hidden">
           <span class="iconify fa6-solid--pen-fancy" />
         </div>
-        <div class="stat-title">收录文章</div>
-        <div class="stat-value my-1">{blogs.length} 篇</div>
-        <div class="stat-desc">合计 {(blogWordCount / 10000).toFixed(2)} 万字</div>
+        <div class="daisy-stat-title">收录文章</div>
+        <div class="daisy-stat-value my-1">{blogs.length} 篇</div>
+        <div class="daisy-stat-desc">合计 {(blogWordCount / 10000).toFixed(2)} 万字</div>
       </div>
-      <div class="stat border-palette-gray/20 px-8 py-5 sm:p-3">
-        <div class="stat-figure ml-2 text-lg sm:hidden">
+      <div class="daisy-stat border-palette-gray/20 px-8 py-5 sm:p-3">
+        <div class="daisy-stat-figure ml-2 text-lg sm:hidden">
           <span class="iconify fa6-solid--message" />
         </div>
-        <div class="stat-title">收录随笔</div>
-        <div class="stat-value my-1">{journals.length} 篇</div>
-        <div class="stat-desc">合计 {(journalWordCount / 10000).toFixed(2)} 万字</div>
+        <div class="daisy-stat-title">收录随笔</div>
+        <div class="daisy-stat-value my-1">{journals.length} 篇</div>
+        <div class="daisy-stat-desc">合计 {(journalWordCount / 10000).toFixed(2)} 万字</div>
       </div>
-      <div class="stat border-palette-gray/20 px-8 py-5 sm:p-3">
-        <div class="stat-figure ml-2 text-lg sm:hidden">
+      <div class="daisy-stat border-palette-gray/20 px-8 py-5 sm:p-3">
+        <div class="daisy-stat-figure ml-2 text-lg sm:hidden">
           <span class="iconify fa6-solid--image" />
         </div>
-        <div class="stat-title">收录图集</div>
-        <div class="stat-value my-1">{photos.length} 组</div>
-        <div class="stat-desc">合计 {photoPictureCount} 张照片</div>
+        <div class="daisy-stat-title">收录图集</div>
+        <div class="daisy-stat-value my-1">{photos.length} 组</div>
+        <div class="daisy-stat-desc">合计 {photoPictureCount} 张照片</div>
       </div>
     </div>
   </Container>

@@ -172,7 +172,7 @@
   :global {
     pre.astro-code {
       @apply mx-auto w-full max-w-[744px];
-      @apply mockup-code;
+      @apply daisy-mockup-code;
       @apply my-0 overflow-auto p-8 pl-16 md:pl-10 sm:pl-8 pt-6 text-[14px] leading-[20px];
       @apply bg-prism-background dark:bg-dark-prism-background font-monospace;
       @apply mb-[50px] mt-[15px];

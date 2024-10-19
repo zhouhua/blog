@@ -3,7 +3,7 @@ import process from 'node:process';
 import { algoliasearch } from 'algoliasearch';
 import { getCollection } from 'astro:content';
 import crypto from 'crypto-js';
-import { chunk, omit, pick } from 'lodash-es';
+import { chunk, omit } from 'lodash-es';
 import { getExcerpt } from './html';
 
 function MD5(str: string) {
