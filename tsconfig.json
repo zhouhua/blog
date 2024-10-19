@@ -9,5 +9,6 @@
     },
     "strictNullChecks": true
   },
-  "include": ["./src/**/*.ts", "./src/**/*.tsx", "./*.mjs", "./src/**/*.astro", "src/lib/algolia.mjs"]
+  "include": ["./src/**/*.ts", "./src/**/*.tsx", "./*.mjs", "./src/**/*.astro", "src/lib/algolia.mjs"],
+  "exclude": ["src/react/ui/"]
 }
