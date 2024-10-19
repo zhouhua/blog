@@ -1,6 +1,8 @@
 ---
+import process from 'node:process';
 import logoImage from '@assets/image/logo.png';
 import { ClientRouter } from 'astro:transitions';
+import APM from './APM.astro';
 import '@styles/global.css';
 
 interface Props {
@@ -44,24 +46,5 @@ const { description, image = logoImage.src, title } = Astro.props;
 <meta content={new URL(image, Astro.url)} property="twitter:image" />
 
 <ClientRouter />
-<script async defer is:inline src="https://scripts.simpleanalyticscdn.com/latest.js" />
-<noscript>
-  <img alt="" referrerpolicy="no-referrer-when-downgrade" src="https://queue.simpleanalyticscdn.com/noscript.gif" />
-</noscript>
-<script data-website-id="bbc47beb-b08f-4abf-a6a4-ad483e5e1f3b" defer is:inline src="https://cloud.umami.is/script.js" />
-<script is:inline src="https://cdn.amplitude.com/libs/analytics-browser-2.11.1-min.js.gz" />
-<script is:inline>
-window.amplitude.init('edba67e81703139ca37bc7d63c11f220', { autocapture: { elementInteractions: true } });
-</script>
-<script is:inline src="https://unpkg.com/highlight.run" />
-<script is:inline>
-H.init('qe9jzn4g', {
-  environment: 'production',
-  networkRecording: {
-    enabled: true,
-    recordHeadersAndBody: true,
-    urlBlocklist: [],
-  },
-  version: 'commit:abcdefg12345',
-});
-</script>
+
+{ process.env.NODE_ENV === 'production' && <APM /> }
