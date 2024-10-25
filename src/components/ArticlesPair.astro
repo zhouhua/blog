@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { cn } from '@lib/utils';
+import EvervaultCard from '@react/components/EvervaultCard';
 import ListItem from './ArticleListItem.astro';
 
 interface Props {
@@ -69,14 +70,12 @@ const { gridLayout, posts, reverse, showAllLink } = Astro.props;
         <a
           class={cn(
             'moreLink',
-            'flex items-center justify-center text-palette-primary',
-            'border border-solid border-palette-bgAlt',
-            'sm:mb-20 sm:h-28 sm:border-0 sm:bg-palette-card',
+            'flex items-center justify-center text-palette-primary rounded-2xl',
+            'sm:mb-20 sm:h-28 bg-palette-card',
           )}
           href="/articles"
         >
-          查看所有文章
-          <span class="ml-4 iconify heroicons--hashtag-solid" />
+          <EvervaultCard client:only="react" text="查看所有文章" />
         </a>
       )}
 </div>

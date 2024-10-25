@@ -34,7 +34,8 @@ export default defineConfig({
       accessibility: false,
       cache: true,
       globalInstance: true,
-      theme: [Theme.overlay, { color: '#777', direction: 'to-right', duration: '0.3s' }],
+      theme: [Theme.overlay, { color: '#000', direction: 'to-right', duration: '0.2s' }],
+      updateHead: true,
     }),
     sitemap(),
     tailwind({
@@ -60,7 +61,6 @@ export default defineConfig({
       mediaCard,
       remarkMath,
       [remarkDescription, { name: 'excerpt' }],
-
     ],
     shikiConfig: {
       transformers: [

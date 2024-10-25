@@ -1,4 +1,4 @@
-export type Type = 'gatsby' | 'github' | 'obsidian' | 'web';
+export type Type = 'gatsby' | 'github' | 'obsidian' | 'tool' | 'web';
 export interface Project {
   name: string;
   description: string;
@@ -68,6 +68,30 @@ const list: Project[] = [
     link: '/projects/link',
     name: 'short link',
     type: 'web',
+  },
+  {
+    description: '生成背景图片噪点',
+    link: '/projects/gradient',
+    name: 'SVG Noise Generator',
+    type: 'tool',
+  },
+  {
+    description: '生成优雅的模糊色彩背景图片',
+    link: '/projects/blurry',
+    name: 'Blurry Generator',
+    type: 'tool',
+  },
+  {
+    description: '收集一些 SVG 和 CSS 的 Pattern',
+    link: '/projects/collection/pattern',
+    name: 'Pattern Collection',
+    type: 'tool',
+  },
+  {
+    description: '收集一些渐变色彩',
+    link: '/projects/collection/gradient',
+    name: 'Gradient Collection',
+    type: 'tool',
   },
 ];
 export default list;

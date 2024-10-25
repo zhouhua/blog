@@ -12,7 +12,7 @@ export default {
   plugins: [
     require('@tailwindcss/typography'),
     require('tailwindcss-animate'),
-    addIconSelectors(['fa6-solid', 'oui', 'vaadin', 'heroicons', 'akar-icons', 'iconamoon', 'material-symbols', 'carbon', 'simple-icons', 'ri', 'mdi', 'maki', 'uil']),
+    addIconSelectors(['fa6-solid', 'oui', 'vaadin', 'heroicons', 'akar-icons', 'iconamoon', 'material-symbols', 'carbon', 'simple-icons', 'ri', 'mdi', 'maki', 'uil', 'bi', 'lucide-lab']),
     require('daisyui'),
   ],
   theme: {
@@ -28,7 +28,9 @@ export default {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'border-beam': 'border-beam calc(var(--duration)*1s) infinite linear',
+        'rainbow': 'rainbow var(--speed, 2s) infinite linear',
         'ripple': 'ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite',
+        'shine': 'shine var(--duration) infinite linear',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -37,24 +39,29 @@ export default {
       },
       colors: {
         ...colors,
-        accent: {
+        'accent': {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
         },
-        background: 'hsl(var(--background))',
-        border: 'hsl(var(--border))',
-        card: {
+        'background': 'hsl(var(--background))',
+        'border': 'hsl(var(--border))',
+        'card': {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
-        chart: {
+        'chart': {
           1: 'hsl(var(--chart-1))',
           2: 'hsl(var(--chart-2))',
           3: 'hsl(var(--chart-3))',
           4: 'hsl(var(--chart-4))',
           5: 'hsl(var(--chart-5))',
         },
-        dark: {
+        'color-1': 'hsl(var(--color-1))',
+        'color-2': 'hsl(var(--color-2))',
+        'color-3': 'hsl(var(--color-3))',
+        'color-4': 'hsl(var(--color-4))',
+        'color-5': 'hsl(var(--color-5))',
+        'dark': {
           prism: {
             'attrName': '#bf87ba',
             'attrValue': '#a8e2a8',
@@ -88,17 +95,17 @@ export default {
             'var': '#b3bac5',
           },
         },
-        destructive: {
+        'destructive': {
           DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))',
         },
-        foreground: 'hsl(var(--foreground))',
-        input: 'hsl(var(--input))',
-        muted: {
+        'foreground': 'hsl(var(--foreground))',
+        'input': 'hsl(var(--input))',
+        'muted': {
           DEFAULT: 'hsl(var(--muted))',
           foreground: 'hsl(var(--muted-foreground))',
         },
-        palette: {
+        'palette': {
           accent: 'rgb(var(--color-accent) / <alpha-value>)',
           bg: 'rgb(var(--color-bg) / <alpha-value>)',
           bgAlt: 'rgb(var(--color-bg-alt) / <alpha-value>)',
@@ -111,15 +118,15 @@ export default {
           success: 'rgb(var(--color-success) / <alpha-value>)',
           warn: 'rgb(var(--color-warn) / <alpha-value>)',
         },
-        popover: {
+        'popover': {
           DEFAULT: 'hsl(var(--popover))',
           foreground: 'hsl(var(--popover-foreground))',
         },
-        primary: {
+        'primary': {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
         },
-        prism: {
+        'prism': {
           'attrName': '#91b3e0',
           'attrValue': '#448c27',
           'background': '#f5f5f5',
@@ -151,8 +158,8 @@ export default {
           'token': '#000',
           'var': '#7a3e9d',
         },
-        ring: 'hsl(var(--ring))',
-        secondary: {
+        'ring': 'hsl(var(--ring))',
+        'secondary': {
           DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))',
         },
@@ -184,12 +191,31 @@ export default {
             'offset-distance': '100%',
           },
         },
+        'rainbow': {
+          '0%': {
+            'background-position': '0%',
+          },
+          '100%': {
+            'background-position': '200%',
+          },
+        },
         'ripple': {
           '0%, 100%': {
             transform: 'translate(-50%, -50%) scale(1)',
           },
           '50%': {
             transform: 'translate(-50%, -50%) scale(0.9)',
+          },
+        },
+        'shine': {
+          '0%': {
+            'background-position': '0% 0%',
+          },
+          '50%': {
+            'background-position': '100% 100%',
+          },
+          'to': {
+            'background-position': '0% 0%',
           },
         },
       },

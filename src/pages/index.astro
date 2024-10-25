@@ -11,6 +11,7 @@ import PageLayout from '@layouts/PageLayout.astro';
 import { algolia } from '@lib/algolia';
 import { getEntry, getImage, getReadInfo } from '@lib/html';
 import { cn } from '@lib/utils';
+import EvervaultCard from '@react/components/EvervaultCard';
 import ImageGallery from '@react/components/photo/ImageGallery';
 import articleStyles from '@styles/article.module.css';
 import { getImage as transform } from 'astro:assets';
@@ -179,18 +180,17 @@ document.addEventListener('astro:page-load', () => {
         </div>
       ))}
       <div
-        class={cn('colorModeTransition break-inside-avoid-column text-palette-primary')}
+        class={cn('colorModeTransition break-inside-avoid-column')}
       >
         <a
           class={cn(
             'journalCard',
-            'flex h-32 w-full items-center justify-center rounded-2xl bg-palette-card',
-            'colorModeTransition  max-h-[640px]  overflow-hidden',
+            'flex h-56 w-full items-center justify-center rounded-2xl bg-palette-card',
+            'colorModeTransition overflow-hidden',
           )}
           href="/journals"
         >
-          查看更多随笔
-          <span class="ml-4 iconify fa6-solid--angles-right" />
+          <EvervaultCard client:only="react" text="查看更多随笔" />
         </a>
       </div>
     </div>

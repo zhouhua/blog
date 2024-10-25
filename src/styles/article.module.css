@@ -305,6 +305,7 @@
   iframe {
     margin-bottom: 40px;
     width: 100%;
+    position: relative;
   }
   svg[id|='mermaid'] {
     margin: 0 auto;

@@ -48,6 +48,11 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --color-1: 0 100% 63%;
+    --color-2: 270 100% 63%;
+    --color-3: 210 100% 63%;
+    --color-4: 195 100% 63%;
+    --color-5: 90 100% 63%;
   }
 
   .dark {
@@ -83,6 +88,11 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --color-1: 0 100% 63%;
+    --color-2: 270 100% 63%;
+    --color-3: 210 100% 63%;
+    --color-4: 195 100% 63%;
+    --color-5: 90 100% 63%;
   }
 }
 
@@ -272,34 +282,34 @@ html {
 }
 
 .mix-light {
-  .gatsby-resp-image-wrapper {
+  img {
     @apply mix-blend-darken;
   }
 }
 .mix-dark {
-  .gatsby-resp-image-wrapper {
+  img {
     @apply mix-blend-normal;
   }
 }
 .mix-dark.mix-both {
-  .gatsby-resp-image-wrapper {
+  img {
     @apply mix-blend-darken invert;
   }
 }
 
 .dark {
   .mix-dark {
-    .gatsby-resp-image-wrapper {
+    img {
       @apply mix-blend-lighten;
     }
   }
   .mix-light {
-    .gatsby-resp-image-wrapper {
+    img {
       @apply mix-blend-normal;
     }
   }
   .mix-light.mix-both {
-    .gatsby-resp-image-wrapper {
+    img {
       @apply mix-blend-lighten invert;
     }
   }
@@ -334,6 +344,6 @@ svg .label {
 }
 
 .swup-transition-overlay {
-  --swup-overlay-theme-color: theme(colors.palette.bgRevert) !important;
+  --swup-overlay-theme-color: theme(colors.palette.accent) !important;
   --swup-overlay-theme-duration: 0.3s !important;
 }

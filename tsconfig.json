@@ -7,7 +7,8 @@
     "paths": {
       "@*": ["./src/*"]
     },
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "verbatimModuleSyntax": true
   },
   "include": ["./src/**/*.ts", "./src/**/*.tsx", "./*.mjs", "./src/**/*.astro", "src/lib/algolia.mjs"],
   "exclude": ["src/react/ui/"]

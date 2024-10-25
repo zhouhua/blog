@@ -1,0 +1,29 @@
+---
+import Head from '@components/Head.astro';
+import { SITE } from '@consts';
+import Docker from '@react/components/Docker';
+
+type Props = {
+  title: string;
+  description: string;
+};
+
+const { description, title } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <Head description={description} title={title ? `${title} | ${SITE.NAME}` : SITE.NAME} />
+  </head>
+  <body>
+    <slot />
+    <Docker client:only="react" />
+    <footer class="fixed bottom-0 left-0 bg-black text-white w-full h-10">
+      <div class="leading-10 text-center">
+        <div>Copyright © {year} | <a class="underline" href="/">周骅</a></div>
+      </div>
+    </footer>
+  </body>
+</html>

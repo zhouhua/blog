@@ -4,6 +4,7 @@ import { dirname, join } from 'node:path';
 import dayjs from '@lib/dayjs';
 import { getEntry, getExcerpt, getImage, getReadInfo } from '@lib/html';
 import { cn } from '@lib/utils';
+import HoverEffect from '@react/components/HoverEffect';
 import { Image } from 'astro:assets';
 
 
@@ -147,6 +148,7 @@ const hasOverflow = narrow && post.data.title.length > 35;
   )}
   href={`/${post.slug}`}
 >
+  <HoverEffect />
   <div class={gridLayout === 'rows' ? 'listItemRow' : 'listItemTile'}>
     <div
       class={cn('ImageContainer', { narrow })}
