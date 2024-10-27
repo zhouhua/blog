@@ -20,6 +20,7 @@ function HoverEffect() {
         parent.removeEventListener('mouseleave', mouseOut);
       };
     }
+    return undefined;
   }, [setHovered]);
   return (
     <>
