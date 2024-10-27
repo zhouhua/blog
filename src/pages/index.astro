@@ -41,7 +41,7 @@ const pairs: [CollectionEntry<'blog'>, CollectionEntry<'blog'>][] = featuredBlog
   [],
 );
 type Temp = { path: string } & Omit<CustomPhotoType, 'height' | 'transformed' | 'width'>;
-const featuredImages = photos.reduce<Temp[]>((list, item) => [
+const featuredImages = photos.reduce((list, item) => [
   ...list,
   ...item.data.list.filter(({ featured }) => featured).map(({ picture }) => ({
     alt: item.data.title,
@@ -50,7 +50,7 @@ const featuredImages = photos.reduce<Temp[]>((list, item) => [
     path: join('content/photos/', dirname(item.id), picture),
     slug: dirname(item.id),
   })),
-], []);
+], [] as Temp[]);
 const pickedList = sampleSize(featuredImages, 50);
 const transformedPickedList: CustomPhotoType[] = [];
 for (const item of pickedList) {
