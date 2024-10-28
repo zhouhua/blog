@@ -34,6 +34,7 @@ export default defineConfig({
       accessibility: false,
       cache: true,
       globalInstance: true,
+      reloadScripts: true,
       theme: [Theme.overlay, { color: '#000', direction: 'to-right', duration: '0.2s' }],
       updateHead: false,
     }),

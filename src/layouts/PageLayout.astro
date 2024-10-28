@@ -35,7 +35,8 @@ import mermaid from 'mermaid';
 import { annotate } from 'rough-notation';
 import 'medium-zoom/dist/style.css';
 
-document.addEventListener('astro:page-load', async () => {
+function initPageEffect() {
+  console.log('initPageEffect');
   const callouts = document.querySelectorAll<HTMLDivElement>('article .callout');
   callouts.forEach(callout =>
     annotate(callout, {
@@ -84,5 +85,8 @@ document.addEventListener('astro:page-load', async () => {
     item.classList.add('hidden');
     item.insertAdjacentHTML('afterend', `<p>${svg}</p>`);
   });
-}, { once: false });
+}
+
+document.addEventListener('astro:page-load', initPageEffect, { once: false });
+setTimeout(() => window.swup.hooks.on('page:view', initPageEffect), 1000);
 </script>
