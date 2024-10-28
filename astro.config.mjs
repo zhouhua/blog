@@ -35,7 +35,7 @@ export default defineConfig({
       cache: true,
       globalInstance: true,
       theme: [Theme.overlay, { color: '#000', direction: 'to-right', duration: '0.2s' }],
-      updateHead: true,
+      updateHead: false,
     }),
     sitemap(),
     tailwind({
