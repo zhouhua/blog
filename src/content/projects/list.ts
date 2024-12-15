@@ -93,5 +93,11 @@ const list: Project[] = [
     name: 'Gradient Collection',
     type: 'tool',
   },
+  {
+    description: '日期图片/图标生成器',
+    link: 'https://github.com/zhouhua/image-generator',
+    name: 'Date Image Generator',
+    type: 'github',
+  },
 ];
 export default list;
