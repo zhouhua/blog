@@ -40,7 +40,6 @@
     "@rwh/keystrokes": "^1.5.6",
     "@sentry/astro": "^8.35.0",
     "@shikijs/transformers": "^1.22.1",
-    "@swup/astro": "^1.4.1",
     "@tailwindcss/typography": "^0.5.15",
     "@tanstack/match-sorter-utils": "^8.19.4",
     "@tanstack/react-table": "^8.20.5",

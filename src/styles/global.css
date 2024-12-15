@@ -342,8 +342,3 @@ svg .label {
     @apply border-border;
   }
 }
-
-.swup-transition-overlay {
-  --swup-overlay-theme-color: theme(colors.palette.accent) !important;
-  --swup-overlay-theme-duration: 0.3s !important;
-}

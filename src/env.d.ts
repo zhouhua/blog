@@ -7,5 +7,4 @@ type GtagEvent = 'open_search_box' | 'search_hit' | 'search_query';
 
 declare interface Window {
   gtag: (type: 'event', name: GtagEvent, data?: unknown) => void;
-  swup: import('swup').Swup;
 }

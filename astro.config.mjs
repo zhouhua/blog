@@ -7,7 +7,6 @@ import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel/serverless';
 import sentry from '@sentry/astro';
 import { transformerMetaHighlight } from '@shikijs/transformers';
-import swup, { Theme } from '@swup/astro';
 import mediaCard from '@zhouhua-dev/remark-media-card';
 import { defineConfig } from 'astro/config';
 import devtoolBreakpoints from 'astro-devtool-breakpoints';
@@ -30,14 +29,6 @@ export default defineConfig({
   base: '/',
   integrations: [
     mdx(),
-    swup({
-      accessibility: false,
-      cache: true,
-      globalInstance: true,
-      reloadScripts: true,
-      theme: [Theme.overlay, { color: '#000', direction: 'to-right', duration: '0.2s' }],
-      updateHead: true,
-    }),
     sitemap(),
     tailwind({
       applyBaseStyles: false,

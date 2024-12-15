@@ -87,12 +87,14 @@ for (const journal of journals) {
 algolia();
 ---
 <script>
+import { navigate } from 'astro:transitions/client';
+
 document.addEventListener('astro:page-load', () => {
   document.querySelectorAll('.journalCard').forEach((item) => {
     item.addEventListener('click', () => {
       const href = item.getAttribute('data-href');
       if (href) {
-        window.swup.navigate(href);
+        navigate(href);
       }
     });
   });
