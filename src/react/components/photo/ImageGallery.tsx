@@ -3,7 +3,7 @@ import type { ComponentType, FC } from 'react';
 import type { RenderImageProps } from 'react-photo-gallery';
 import { cn } from '@lib/utils';
 import { motion } from 'framer-motion';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import Gallery from 'react-photo-gallery';
 import { useMedia } from 'use-media';
 import styles from './index.module.css';
@@ -12,11 +12,6 @@ const sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 500px';
 
 const ImageGallery: FC<{ photos: CustomPhotoType[] }> = ({ photos }) => {
   const isNarrow = useMedia({ maxWidth: '640px' }, false);
-  const [loaded, setLoaded] = useState<boolean>(false);
-
-  useEffect(() => {
-    setLoaded(true);
-  }, []);
 
   const renderImage = useCallback(
     ({
@@ -42,7 +37,7 @@ const ImageGallery: FC<{ photos: CustomPhotoType[] }> = ({ photos }) => {
             srcSet={image.srcSet.attribute}
           />
           {
-            !!alt && loaded && isNarrow && (
+            !!alt && isNarrow && (
               <div
                 className={cn(
                   { [styles.fullMask!]: !!count, [styles.mask!]: !count },
@@ -62,7 +57,7 @@ const ImageGallery: FC<{ photos: CustomPhotoType[] }> = ({ photos }) => {
               </div>
             )
           }
-          {!(alt && loaded && isNarrow) && (
+          {!(alt && isNarrow) && (
             <motion.div
               className={cn(
                 { [styles.fullMask!]: !!count, [styles.mask!]: !count },
@@ -86,9 +81,9 @@ const ImageGallery: FC<{ photos: CustomPhotoType[] }> = ({ photos }) => {
         </a>
       );
     },
-    [loaded, isNarrow],
+    [isNarrow],
   );
-  return loaded && (
+  return (
     <div className={cn({ '-m-0.5': isNarrow, '-m-1': !isNarrow })}>
       <Gallery
         margin={isNarrow ? 4 : 8}
@@ -98,6 +93,7 @@ const ImageGallery: FC<{ photos: CustomPhotoType[] }> = ({ photos }) => {
           src: item.transformed.src,
           srcSet: item.transformed.srcSet.attribute,
         }))}
+        direction="row"
         renderImage={renderImage as unknown as ComponentType<RenderImageProps>}
         targetRowHeight={isNarrow ? 180 : 320}
       />

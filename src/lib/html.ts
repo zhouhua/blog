@@ -1,16 +1,6 @@
-import type { ImageMetadata, MarkdownInstance } from 'astro';
+import type { ImageMetadata } from 'astro';
 import { load } from 'cheerio';
 import { words } from 'lodash-es';
-
-export function getEntry(id: string) {
-  const posts = import.meta.glob<MarkdownInstance<any>>(`../content/**/*.md`, { eager: true });
-  for (const key of Object.keys(posts)) {
-    if (key.endsWith(id)) {
-      return posts[key];
-    }
-  }
-  return null;
-}
 
 export function getReadInfo(html: string) {
   const $ = load(html);
@@ -26,9 +16,11 @@ export function getReadInfo(html: string) {
 }
 
 export function getImage(path: string) {
+  const i = path.indexOf('content');
+  const imagePath = path.slice(i);
   const images = import.meta.glob<{ default: ImageMetadata }>(`../content/**/*.{jpeg,jpg,png,gif}`, { eager: true });
   for (const key of Object.keys(images)) {
-    if (key.endsWith(path)) {
+    if (key.endsWith(imagePath)) {
       return images[key]!.default;
     }
   }

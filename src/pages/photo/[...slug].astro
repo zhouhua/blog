@@ -37,11 +37,11 @@ const { post } = Astro.props;
 const photos: PhotoImage[] = [];
 for (const item of post.data.list) {
   const { description, picture } = item;
-  const relativePath = join('content/photos/', dirname(post.id), picture);
+  const relativePath = join(post.filePath || '.', '..', picture);
   const root = await getRoot();
   let exifData: Exif = undefined;
   try{
-    exifData = await exif.read(resolve(root, 'src', relativePath), true);
+    exifData = await exif.read(resolve(root, relativePath), true);
   }catch(e) {
     console.log(e);
   }
@@ -67,7 +67,7 @@ const featuredImages = data.reduce<Temp[]>((list, item) => [
     count: item.data.list.length,
     date: item.data.date,
     slug: dirname(item.id),
-    path: join('content/photos/', dirname(item.id), picture),
+    path: join(item.filePath || '.', '..', picture),
   })),
 ], []);
 const extraList = sampleSize(featuredImages, 16);
@@ -108,7 +108,7 @@ for (const item of extraList) {
     {post.data.list.length} 张图
   </ArticleTitle>
   <Container class="min-w-[360px] max-w-full px-20 sm:px-5 md:px-8 lg:px-8 xl:px-8">
-    <GroupSection client:load photoPosts={photos} />
+    <GroupSection client:only="react" photoPosts={photos} />
   </Container>
   <Comment client:only="react" />
   {transformedExtraList.length > 0 && (

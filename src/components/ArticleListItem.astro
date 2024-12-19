@@ -2,10 +2,11 @@
 import type { CollectionEntry } from 'astro:content';
 import { dirname, join } from 'node:path';
 import dayjs from '@lib/dayjs';
-import { getEntry, getExcerpt, getImage, getReadInfo } from '@lib/html';
+import { getExcerpt, getImage, getReadInfo } from '@lib/html';
 import { cn } from '@lib/utils';
 import HoverEffect from '@react/components/HoverEffect';
 import { Image } from 'astro:assets';
+import { getEntry } from 'astro:content';
 
 
 interface Props {
@@ -15,10 +16,10 @@ interface Props {
 }
 
 const { gridLayout, narrow, post } = Astro.props;
-const entry = getEntry(post.id);
+const entry = await getEntry({ collection: 'blog', id: post.id });
 const hero = getImage(join('content/blog/', dirname(post.id), post.data.hero));
-const excerpt = getExcerpt(await entry!.compiledContent());
-const { timeToRead, wordCount } = getReadInfo(await entry!.compiledContent());
+const excerpt = getExcerpt(entry!.body!);
+const { timeToRead, wordCount } = getReadInfo(entry!.body!);
 const hasOverflow = narrow && post.data.title.length > 35;
 ---
 
@@ -146,7 +147,7 @@ const hasOverflow = narrow && post.data.title.length > 35;
     'ArticleLink',
     'relative left-0 top-0 z-[1] block h-full w-full rounded-[5px]',
   )}
-  href={`/${post.slug}`}
+  href={`/${post.id}`}
 >
   <HoverEffect />
   <div class={gridLayout === 'rows' ? 'listItemRow' : 'listItemTile'}>

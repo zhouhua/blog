@@ -8,13 +8,13 @@ import PageLayout from '@layouts/PageLayout.astro';
 import { getImage } from '@lib/html';
 import Gallery from '@react/components/photo/ImageGallery';
 import { getImage as transform } from 'astro:assets';
-import { type CollectionEntry, getCollection } from 'astro:content';
+import { getCollection } from 'astro:content';
 
-const data: CollectionEntry<'photos'>[] = (await getCollection('photos')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const data = (await getCollection('photos')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const photos: CustomPhotoType[] = [];
 for (const item of data) {
   const [{ picture }] = [...item.data.list.filter(({ featured }) => !!featured), item.data.list[0]!];
-  const image = getImage(join('content/photos/', dirname(item.id), picture))!;
+  const image = getImage(join(item.filePath || '.', '..', picture))!;
   photos.push({
     alt: item.data.title,
     count: item.data.list.length,
@@ -38,6 +38,6 @@ for (const item of data) {
     title="周骅的博客 - 所有照片"
   />
   <Container class="min-w-[360px] max-w-full px-20 sm:px-5 md:px-8 lg:px-8 xl:px-8">
-    <Gallery client:load photos={photos} />
+    <Gallery client:only="react" photos={photos} />
   </Container>
 </PageLayout>

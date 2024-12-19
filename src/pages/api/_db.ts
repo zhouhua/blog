@@ -11,6 +11,12 @@ interface Database {
   links: Link;
 }
 
-const db = createKysely<Database>();
+const db = createKysely<Database>(
+  import.meta.env.DEV
+    ? {
+        connectionString: import.meta.env.POSTGRES_URL,
+      }
+    : undefined,
+);
 
 export default db;

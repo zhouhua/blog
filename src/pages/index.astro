@@ -9,13 +9,13 @@ import ListTitle from '@components/ListTitle.astro';
 import { HOME } from '@consts';
 import PageLayout from '@layouts/PageLayout.astro';
 import { algolia } from '@lib/algolia';
-import { getEntry, getImage, getReadInfo } from '@lib/html';
+import { getImage, getReadInfo } from '@lib/html';
 import { cn } from '@lib/utils';
 import EvervaultCard from '@react/components/EvervaultCard';
 import ImageGallery from '@react/components/photo/ImageGallery';
 import articleStyles from '@styles/article.module.css';
 import { getImage as transform } from 'astro:assets';
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import dayjs from 'dayjs';
 import sampleSize from 'lodash-es/sampleSize';
 
@@ -25,7 +25,7 @@ const journals = (await getCollection('journals'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const latestJournals: { journal: CollectionEntry<'journals'>; Content: AstroComponentFactory }[] = [];
 for (const journal of journals.slice(0, 5)) {
-  const { Content } = await journal.render();
+  const { Content } = await render(journal);
   latestJournals.push({ Content, journal });
 }
 const featuredBlogs = blogs
@@ -47,7 +47,7 @@ const featuredImages = photos.reduce((list, item) => [
     alt: item.data.title,
     count: item.data.list.length,
     date: item.data.date,
-    path: join('content/photos/', dirname(item.id), picture),
+    path: join(item.filePath || '.', '..', picture),
     slug: dirname(item.id),
   })),
 ], [] as Temp[]);
@@ -73,14 +73,14 @@ photos.forEach((photo) => {
   photoPictureCount += photo.data.list.length;
 });
 for (const blog of blogs) {
-  const entry = getEntry(blog.id);
-  const html = await entry?.compiledContent() || '';
+  const entry = await getEntry({ collection: 'blog', id: blog.id });
+  const html = entry!.body!;
   const { wordCount } = getReadInfo(html);
   blogWordCount += wordCount;
 }
 for (const journal of journals) {
-  const entry = getEntry(journal.id);
-  const html = await entry?.compiledContent() || '';
+  const entry = await getEntry({ collection: 'journals', id: journal.id });
+  const html = entry!.body!;
   const { wordCount } = getReadInfo(html);
   journalWordCount += wordCount;
 }
@@ -198,11 +198,11 @@ document.addEventListener('astro:page-load', () => {
     </div>
   </Container>
   <Container narrow>
-      <h3 class={cn('lineTitle', 'mt-20')}>精彩照片</h3>
+    <h3 class={cn('lineTitle', 'mt-20')}>精彩照片</h3>
   </Container>
   <section class="min-w-[360px] max-w-full mx-auto">
     <ImageGallery
-      client:load
+      client:only="react"
       photos={transformedPickedList}
     />
   </section>

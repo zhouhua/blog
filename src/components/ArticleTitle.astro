@@ -73,7 +73,7 @@ const { isJournal = false, tags = [], time, title } = Astro.props;
     <div class="flex">
       <Author />
       <div>
-        <FormatDate client:load time={time} />
+        <FormatDate client:only="react" time={time} />
         &bull;
         <slot />
       </div>

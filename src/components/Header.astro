@@ -58,8 +58,8 @@ import { Image } from 'astro:assets';
     </div>
     <div class="flex items-center gap-2">
       <SearchButton
-        appId={process.env.GATSBY_ALGOLIA_APP_ID!}
-        appKey={process.env.GATSBY_ALGOLIA_SEARCH_KEY!}
+        appId={import.meta.env.GATSBY_ALGOLIA_APP_ID!}
+        appKey={import.meta.env.GATSBY_ALGOLIA_SEARCH_KEY!}
         client:only="react"
       />
       <ColorMode client:only="react" />

@@ -280,7 +280,7 @@ function ShortLink() {
             ))}
           </TableHeader>
           <TableBody>
-            {rows?.length && !loading && (
+            {!!rows?.length && !loading && (
               rows.map(row => (
                 <TableRow
                   key={row.original.key}

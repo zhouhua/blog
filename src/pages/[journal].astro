@@ -1,12 +1,13 @@
 ---
+import type { CollectionEntry } from 'astro:content';
 import ArticleTitle from '@components/ArticleTitle.astro';
 import Container from '@components/Container.astro';
 import PageLayout from '@layouts/PageLayout.astro';
-import { getEntry, getExcerpt, getReadInfo } from '@lib/html';
+import { getExcerpt, getReadInfo } from '@lib/html';
 import { cn } from '@lib/utils';
 import Comment from '@react/components/Comment';
 import styles from '@styles/article.module.css';
-import { type CollectionEntry, getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import dayjs from 'dayjs';
 
 export const prerender = true;
@@ -26,11 +27,9 @@ interface Props {
 }
 
 const { date, post } = Astro.props;
-const { Content } = await post.render();
-const entry = getEntry(post.id);
-const html = await entry?.compiledContent() || '';
-const { timeToRead, wordCount } = getReadInfo(html);
-const excerpt = getExcerpt(await entry!.compiledContent());
+const { Content } = await render(post);
+const { timeToRead, wordCount } = getReadInfo(post.body || '');
+const excerpt = getExcerpt(post.body || '');
 ---
 <style lang="postcss">
 .hero {

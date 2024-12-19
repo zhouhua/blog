@@ -16,16 +16,6 @@ const blog = defineCollection({
   }),
 });
 
-const work = defineCollection({
-  loader: glob({ base: './src/content/journals', pattern: '**\/[^_]*.md' }),
-  schema: z.object({
-    company: z.string(),
-    dateEnd: z.union([z.coerce.date(), z.string()]),
-    dateStart: z.coerce.date(),
-    role: z.string(),
-  }),
-});
-
 const photos = defineCollection({
   loader: glob({ base: './src/content/photos', pattern: '**\/[^_]*.yaml' }),
   schema: z.object({
@@ -58,4 +48,4 @@ const projects = defineCollection({
   type: 'content',
 });
 
-export const collections = { blog, journals, photos, projects, work };
+export const collections = { blog, journals, photos, projects };

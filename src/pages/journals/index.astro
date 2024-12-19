@@ -4,10 +4,10 @@ import Container from '@components/Container.astro';
 import ListTitle from '@components/ListTitle.astro';
 import { BLOG } from '@consts';
 import PageLayout from '@layouts/PageLayout.astro';
-import { getEntry, getReadInfo } from '@lib/html';
+import { getReadInfo } from '@lib/html';
 import { cn } from '@lib/utils';
 import articleStyles from '@styles/article.module.css';
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import dayjs from 'dayjs';
 
 const data = (await getCollection('journals')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -20,10 +20,10 @@ const yearsList = new Map<number, {
 for (const item of data) {
   const year = item.data.date.getFullYear();
   const dateString = dayjs(item.data.date).format('MM-DD');
-  const entry = getEntry(item.id);
-  const { timeToRead, wordCount } = getReadInfo(await entry!.compiledContent());
+  const entry = await getEntry({ collection: 'journals', id: item.id });
+  const { timeToRead, wordCount } = getReadInfo(entry.body || '');
   const value = {
-    Content: entry!.Content,
+    Content: (await render(item)).Content,
     dateString,
     timeToRead,
     wordCount,
