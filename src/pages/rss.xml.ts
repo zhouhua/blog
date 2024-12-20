@@ -7,7 +7,7 @@ interface Context {
 }
 
 export async function GET(context: Context) {
-  const blog = (await getCollection('blog'));
+  const blog = await getCollection('blog');
 
   const items = blog
     .sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf());
@@ -16,7 +16,7 @@ export async function GET(context: Context) {
     description: HOME.DESCRIPTION,
     items: items.map(item => ({
       description: item.data.description,
-      link: `/${item.collection}/${item.slug}/`,
+      link: `/${item.id}/`,
       pubDate: item.data.date,
       title: item.data.title,
     })),
