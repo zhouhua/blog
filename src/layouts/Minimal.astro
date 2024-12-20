@@ -1,4 +1,5 @@
 ---
+import kofi from '@assets/images/kofi.png';
 import Head from '@components/Head.astro';
 import { SITE } from '@consts';
 import Docker from '@react/components/Docker';
@@ -23,7 +24,10 @@ const year = new Date().getFullYear();
     <footer class="fixed bottom-0 left-0 bg-black text-white w-full h-10">
       <div class="leading-10 flex items-center justify-between max-w-[1200px] mx-auto px-8">
         <div>Copyright © {year} | <a class="underline" href="/">周骅</a></div>
-        <a href='https://ko-fi.com/O5O2VXBAE' target='_blank'><img height='24' style='border:0px;height:24px;' src='https://storage.ko-fi.com/cdn/kofi4.png?v=6' alt='Buy Me a Coffee at ko-fi.com' /></a>
+        {/* eslint-disable-next-line react-dom/no-unsafe-target-blank */}
+        <a href="https://ko-fi.com/O5O2VXBAE" target="_blank">
+          <img height="24" style="border:0px;height:24px;" src={kofi.src} alt="Buy Me a Coffee at ko-fi.com" />
+        </a>
       </div>
     </footer>
   </body>

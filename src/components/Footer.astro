@@ -1,4 +1,5 @@
 ---
+import kofi from '@assets/images/kofi.png';
 import Container from '@components/Container.astro';
 import { SITE } from '@consts';
 
@@ -14,7 +15,10 @@ const year = new Date().getFullYear();
     <div class="flex gap-4 text-palette-secondary/80 items-center">
       <a href="mailto:zhou--hua@163.com" class="flex items-center"><span class="iconify mdi--gmail size-6" /></a>
       <a href="https://github.com/zhouhua" class="flex items-center"><span class="iconify mdi--github size-6" /></a>
-      <a href='https://ko-fi.com/O5O2VXBAE' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi4.png?v=6' alt='Buy Me a Coffee at ko-fi.com' /></a>
+      {/* eslint-disable-next-line react-dom/no-unsafe-target-blank */}
+      <a href="https://ko-fi.com/O5O2VXBAE" target="_blank">
+        <img height="36" style="border:0px;height:36px;" src={kofi.src} alt="Buy Me a Coffee at ko-fi.com" />
+      </a>
     </div>
   </div>
 </Container>
