@@ -41,13 +41,17 @@ const List: Component = ({ className, data, description, filterFields, renderIte
           <div className="mt-4 flex gap-4">
             {filterFields!.map((filter) => {
               const name = typeof filter === 'string' ? filter : filter[0];
-              const options: Record<string, string> = typeof filter === 'string'
-                ? data.reduce((map, item) => {
+              let options: Record<string, string>;
+              if (typeof filter === 'string') {
+                options = data.reduce((map, item) => {
                   const value = item[name];
                   map[value] = value;
                   return map;
-                }, {})
-                : filter[1];
+                }, {});
+              }
+              else {
+                options = filter[1];
+              }
               return (
                 <div className="flex-1" key={name}>
                   <div className="opacity-75 mb-1 text-xs">
@@ -75,7 +79,7 @@ const List: Component = ({ className, data, description, filterFields, renderIte
         )}
       </CardHeader>
       <CardContent className="p-2">
-        <ScrollArea className="w-full h-60">
+        <ScrollArea className="w-full h-40">
           <div className="flex flex-wrap gap-3.5 p-2">
             {filteredData.map((item, index) => renderItem(item, index))}
           </div>

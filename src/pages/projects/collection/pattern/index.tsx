@@ -1,16 +1,21 @@
 import type { IPattern } from './collection';
 import { cn } from '@lib/utils';
+import { Button } from '@react/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@react/ui/card';
 import { Label } from '@react/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@react/ui/popover';
 import { RadioGroup, RadioGroupItem } from '@react/ui/radio-group';
 import { Slider } from '@react/ui/slider';
+import { Toaster } from '@react/ui/sonner';
 import { Chrome } from '@uiw/react-color';
 import { colord, extend } from 'colord';
 import minifyPlugin from 'colord/plugins/minify';
 import namesPlugin from 'colord/plugins/names';
 import { last, pick, random } from 'lodash-es';
 import { useMemo, useState } from 'react';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { toast } from 'sonner';
 import parse from 'style-to-js';
 
 import List from '../List';
@@ -34,8 +39,52 @@ function Pattern() {
     const [start, end] = [gradient === '1' ? '#00000000 50%' : '#0000009e 0%', gradient === '1' ? '#0000009e 100%' : '#00000000 50%'];
     return `radial-gradient(circle at 50% 50%, ${start}, ${end})`;
   }, [gradient]);
+
+  const cssCode = useMemo(() => {
+    const props = {
+      colors,
+      rotate,
+      stroke,
+      translate: [translateX, translateY] as [number, number],
+      zoom,
+    };
+
+    if (pickedItem!.type === 'svg') {
+      const svgString = pickedItem!.render(props);
+      const dataUrl = `data:image/svg+xml;base64,${window.btoa(svgString)}`;
+      return [
+        'background-color: transparent;',
+        `background-image: url('${dataUrl}');`,
+        'background-repeat: repeat;',
+      ].filter(Boolean).join('\n');
+    }
+    else {
+      const rawCss = pickedItem!.render(props);
+      const formattedCss = rawCss
+        .replace(/;\s*/g, ';\n  ')
+        // eslint-disable-next-line regexp/strict
+        .replace(/\s*{\s*/g, ' {\n  ')
+        // eslint-disable-next-line regexp/strict
+        .replace(/\s*}\s*/g, '\n}\n')
+        .replace(/,\s*/g, ',\n    ')
+        .replace(/:\s*/g, ': ')
+        .replace(/\s*;\s*$/, ';')
+        .trim();
+
+      return [
+        formattedCss,
+      ].filter(Boolean).join('\n');
+    }
+  }, [pickedItem, colors, rotate, stroke, translateX, translateY, zoom]);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(cssCode);
+    toast.success('复制成功！');
+  };
+
   return (
     <div className="w-screen h-screen" style={{ background: last(colors) }}>
+      <Toaster position="bottom-right" />
       {pickedItem!.type === 'svg' && (
         // eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
         <div
@@ -68,7 +117,7 @@ function Pattern() {
           }}
         />
       )}
-      <div className="fixed right-12 top-12 w-[400px] z-10">
+      <div className="fixed right-8 top-8 bottom-[72px] w-[400px] z-10 flex flex-col gap-4 flex-wrap-reverse">
         <List
           className="bg-white"
           title={`Pattern 列表（共 ${collections.length} 个）`}
@@ -117,11 +166,11 @@ function Pattern() {
           }}
         />
 
-        <Card className="mt-6 bg-white">
+        <Card className="bg-white">
           <CardHeader>
             <CardTitle>Pattern 设置</CardTitle>
           </CardHeader>
-          <CardContent className="flex flex-col gap-6">
+          <CardContent className="flex flex-col gap-2">
             {pickedItem?.type === 'svg' && !pickedItem?.disabled?.includes('rotate') && (
               <div className="flex gap-2 items-center">
                 <Label className="w-[70px]">旋转：</Label>
@@ -273,6 +322,17 @@ function Pattern() {
                 </div>
               </RadioGroup>
             </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-white w-full">
+          <CardContent className="flex flex-col gap-4 pt-6">
+            <SyntaxHighlighter language="css" style={oneLight} className="text-xs font-monospace max-h-28 w-full overflow-auto">
+              {cssCode}
+            </SyntaxHighlighter>
+            <Button onClick={handleCopy}>
+              复制到剪贴板
+            </Button>
           </CardContent>
         </Card>
       </div>

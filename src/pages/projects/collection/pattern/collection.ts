@@ -33,7 +33,7 @@ const collections: [IPattern, ...IPattern[]] = [
     group: 'brick',
     render: ({ colors, rotate = 0, stroke = 1, translate = [0, 0], zoom = 1 }) => {
       const [front = defaultFront, back = defaultBack] = colors || [];
-      return `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path data-color="outline" fill="none" stroke="${front}" stroke-width="${stroke}" d="M0 0h100v50H0zM-50 50h100v50h-100zM50 50h100v50h-100z"></path><rect opacity="0" x="-500" y="-500" width="1000" height="1000"></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path data-color="outline" fill="none" stroke="${front}" stroke-width="${stroke}" d="M0 0h100v50H0zM-50 50h100v50h-100zM50 50h100v50h-100z"></path></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
     },
     type: 'svg',
   },
@@ -43,7 +43,7 @@ const collections: [IPattern, ...IPattern[]] = [
     group: 'shape',
     render: ({ colors, rotate = 0, translate = [0, 0], zoom = 1 }) => {
       const [front = defaultFront, back = defaultBack] = colors || [];
-      return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path id="a" data-color="fill" fill="${front}" stroke="${front}" stroke-width="0" d="M50 50h50v50H50zM0 0h50v50H0z"></path><use xlink:href="#a" x="50" y="-50"></use><use xlink:href="#a" x="-50" y="50"></use><rect opacity="0" x="-500" y="-500" width="1000" height="1000"></rect></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
+      return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path id="a" data-color="fill" fill="${front}" stroke="${front}" stroke-width="0" d="M50 50h50v50H50zM0 0h50v50H0z"></path><use xlink:href="#a" x="50" y="-50"></use><use xlink:href="#a" x="-50" y="50"></use></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
     },
     type: 'svg',
   },
@@ -53,7 +53,7 @@ const collections: [IPattern, ...IPattern[]] = [
     group: 'zigzag',
     render: ({ colors, rotate = 0, translate = [0, 0], zoom = 1 }) => {
       const [front = defaultFront, back = defaultBack] = colors || [];
-      return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path id="a" data-color="fill" fill="${front}" stroke="${front}" stroke-width="0" d="M50 100L0 50V0l50 50 50-50h0v50l-50 50z"></path><use xlink:href="#a" y="-100"></use><use xlink:href="#a" y="100"></use><rect opacity="0" x="-500" y="-500" width="1000" height="1000"></rect></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
+      return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path id="a" data-color="fill" fill="${front}" stroke="${front}" stroke-width="0" d="M50 100L0 50V0l50 50 50-50h0v50l-50 50z"></path><use xlink:href="#a" y="-100"></use><use xlink:href="#a" y="100"></use></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
     },
     type: 'svg',
   },
@@ -63,7 +63,7 @@ const collections: [IPattern, ...IPattern[]] = [
     group: 'shape',
     render: ({ colors, rotate = 0, translate = [0, 0], zoom = 1 }) => {
       const [front = defaultFront, back = defaultBack] = colors || [];
-      return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path id="a" data-color="fill" fill="${front}" stroke="${front}" stroke-width="0" d="M50 0C22 0 0 22 0 50c28 0 50 22 50 50 0-28 22-50 50-50 0-28-22-50-50-50z"></path><use xlink:href="#a" y="-100"></use><use xlink:href="#a" y="100"></use><rect opacity="0" x="-500" y="-500" width="1000" height="1000"></rect></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
+      return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path id="a" data-color="fill" fill="${front}" stroke="${front}" stroke-width="0" d="M50 0C22 0 0 22 0 50c28 0 50 22 50 50 0-28 22-50 50-50 0-28-22-50-50-50z"></path><use xlink:href="#a" y="-100"></use><use xlink:href="#a" y="100"></use></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
     },
     type: 'svg',
   },
@@ -73,7 +73,7 @@ const collections: [IPattern, ...IPattern[]] = [
     group: 'shape',
     render: ({ colors, rotate = 0, translate = [0, 0], zoom = 1 }) => {
       const [front = defaultFront, back = defaultBack] = colors || [];
-      return `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path data-color="outline" fill="${front}" stroke="${front}" stroke-width="0" d="M50 0C22.4 0 0 22.4 0 50c27.6 0 50-22.4 50-50zM0 50c0 27.6 22.4 50 50 50 0-27.6-22.4-50-50-50zM100 50c-27.6 0-50 22.4-50 50 27.6 0 50-22.4 50-50zM100 50c0-27.6-22.4-50-50-50 0 27.6 22.4 50 50 50z"></path><rect opacity="0" x="-500" y="-500" width="1000" height="1000"></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path data-color="outline" fill="${front}" stroke="${front}" stroke-width="0" d="M50 0C22.4 0 0 22.4 0 50c27.6 0 50-22.4 50-50zM0 50c0 27.6 22.4 50 50 50 0-27.6-22.4-50-50-50zM100 50c-27.6 0-50 22.4-50 50 27.6 0 50-22.4 50-50zM100 50c0-27.6-22.4-50-50-50 0 27.6 22.4 50 50 50z"></path></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
     },
     type: 'svg',
   },
@@ -83,7 +83,7 @@ const collections: [IPattern, ...IPattern[]] = [
     group: 'shape',
     render: ({ colors, rotate = 0, translate = [0, 0], zoom = 1 }) => {
       const [front = defaultFront, back = defaultBack] = colors || [];
-      return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path id="a" data-color="fill" fill="${front}" stroke="${front}" stroke-width="0" d="M0 50v50h50C22.386 100 0 77.614 0 50zM50 0c27.614 0 50 22.386 50 50V0H50zM50 0C22.386 0 0 22.386 0 50h50V0zM50 100c27.614 0 50-22.386 50-50H50v50z"></path><use xlink:href="#a" y="-100"></use><use xlink:href="#a" y="100"></use><use xlink:href="#a" x="-100"></use><use xlink:href="#a" x="100"></use><rect opacity="0" x="-500" y="-500" width="1000" height="1000"></rect></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
+      return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path id="a" data-color="fill" fill="${front}" stroke="${front}" stroke-width="0" d="M0 50v50h50C22.386 100 0 77.614 0 50zM50 0c27.614 0 50 22.386 50 50V0H50zM50 0C22.386 0 0 22.386 0 50h50V0zM50 100c27.614 0 50-22.386 50-50H50v50z"></path><use xlink:href="#a" y="-100"></use><use xlink:href="#a" y="100"></use><use xlink:href="#a" x="-100"></use><use xlink:href="#a" x="100"></use></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
     },
     type: 'svg',
   },
@@ -103,7 +103,7 @@ const collections: [IPattern, ...IPattern[]] = [
     group: 'shape',
     render: ({ colors, rotate = 0, translate = [0, 0], zoom = 1 }) => {
       const [front = defaultFront, back = defaultBack] = colors || [];
-      return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path id="a" data-color="fill" fill="${front}" stroke="${front}" stroke-width="0" d="M50 50H0V0h50v50zM35 35V15H15v20h20zM100 100H50V50h50v50zM85 85V65H65v20h20zM35 64.9571v20H15v-20zM85 14.9571v20H65v-20z"></path><use xlink:href="#a" y="-100"></use><use xlink:href="#a" y="100"></use><use xlink:href="#a" x="-100"></use><use xlink:href="#a" x="100"></use><rect opacity="0" x="-500" y="-500" width="1000" height="1000"></rect></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
+      return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path id="a" data-color="fill" fill="${front}" stroke="${front}" stroke-width="0" d="M50 50H0V0h50v50zM35 35V15H15v20h20zM100 100H50V50h50v50zM85 85V65H65v20h20zM35 64.9571v20H15v-20zM85 14.9571v20H65v-20z"></path><use xlink:href="#a" y="-100"></use><use xlink:href="#a" y="100"></use><use xlink:href="#a" x="-100"></use><use xlink:href="#a" x="100"></use></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
     },
     type: 'svg',
   },
@@ -113,7 +113,7 @@ const collections: [IPattern, ...IPattern[]] = [
     group: 'shape',
     render: ({ colors, rotate = 0, stroke = 25, translate = [0, 0], zoom = 1 }) => {
       const [front = defaultFront, back = defaultBack] = colors || [];
-      return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><circle id="a" data-color="outline" fill="none" stroke="${front}" stroke-width="${stroke}" r=".5"></circle><use xlink:href="#a" y="100"></use><use xlink:href="#a" x="100"></use><use xlink:href="#a" x="100" y="100"></use><use xlink:href="#a" x="50" y="50"></use><rect opacity="0" x="-500" y="-500" width="1000" height="1000"></rect></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
+      return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><circle id="a" data-color="outline" fill="none" stroke="${front}" stroke-width="${stroke}" r=".5"></circle><use xlink:href="#a" y="100"></use><use xlink:href="#a" x="100"></use><use xlink:href="#a" x="100" y="100"></use><use xlink:href="#a" x="50" y="50"></use></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
     },
     stroke: 25,
     type: 'svg',
@@ -123,7 +123,7 @@ const collections: [IPattern, ...IPattern[]] = [
     group: 'shape',
     render: ({ colors, rotate = 0, stroke = 10, translate = [0, 0], zoom = 1 }) => {
       const [front = defaultFront, back = defaultBack] = colors || [];
-      return `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path data-color="outline" fill="none" stroke="${front}" stroke-width="${stroke}" d="M50 0v100M100 50H0"></path><rect opacity="0" x="-500" y="-500" width="1000" height="1000"></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path data-color="outline" fill="none" stroke="${front}" stroke-width="${stroke}" d="M50 0v100M100 50H0"></path></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
     },
     stroke: 10,
     type: 'svg',
@@ -134,7 +134,7 @@ const collections: [IPattern, ...IPattern[]] = [
     group: 'shape',
     render: ({ colors, rotate = 0, translate = [0, 0], zoom = 1 }) => {
       const [front = defaultFront, back = defaultBack] = colors || [];
-      return `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><defs><pattern id="p" width="50" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path data-color="outline" fill="${front}" stroke="${front}" stroke-width="0" d="M50 50c0 24.1-25 25-25 50C25 75 0 74.1 0 50S25 25 25 0c0 25 25 25.9 25 50z"></path><rect opacity="0" x="-500" y="-500" width="1000" height="1000"></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><defs><pattern id="p" width="50" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path data-color="outline" fill="${front}" stroke="${front}" stroke-width="0" d="M50 50c0 24.1-25 25-25 50C25 75 0 74.1 0 50S25 25 25 0c0 25 25 25.9 25 50z"></path></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
     },
     type: 'svg',
   },
@@ -144,7 +144,7 @@ const collections: [IPattern, ...IPattern[]] = [
     group: 'shape',
     render: ({ colors, rotate = 0, translate = [0, 0], zoom = 1 }) => {
       const [front = defaultFront, back = defaultBack] = colors || [];
-      return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><g data-color="fill" fill="${front}" stroke="${front}" stroke-width="0"><path id="a" d="M50-37S28-15 28 0s22 37 22 37S72 15 72 0 50-37 50-37z"></path><path id="b" d="M37 50S15 28 0 28s-37 22-37 22 22 22 37 22 37-22 37-22z"></path><use xlink:href="#a" y="100"></use><use xlink:href="#b" x="100"></use></g><rect opacity="0" x="-500" y="-500" width="1000" height="1000"></rect></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
+      return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><g data-color="fill" fill="${front}" stroke="${front}" stroke-width="0"><path id="a" d="M50-37S28-15 28 0s22 37 22 37S72 15 72 0 50-37 50-37z"></path><path id="b" d="M37 50S15 28 0 28s-37 22-37 22 22 22 37 22 37-22 37-22z"></path><use xlink:href="#a" y="100"></use><use xlink:href="#b" x="100"></use></g></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
     },
     type: 'svg',
   },
@@ -154,7 +154,7 @@ const collections: [IPattern, ...IPattern[]] = [
     group: 'shape',
     render: ({ colors, rotate = 0, stroke = 5, translate = [0, 0], zoom = 1 }) => {
       const [front = defaultFront, back = defaultBack] = colors || [];
-      return `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path data-color="outline" fill="none" stroke="${front}" stroke-width="${stroke}" d="M33.5 100V66.5H0v-33h33.5V0h33v33.5H100v33H66.5V100z"></path><rect opacity="0" x="-500" y="-500" width="1000" height="1000"></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path data-color="outline" fill="none" stroke="${front}" stroke-width="${stroke}" d="M33.5 100V66.5H0v-33h33.5V0h33v33.5H100v33H66.5V100z"></path></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
     },
     stroke: 5,
     type: 'svg',
@@ -165,7 +165,7 @@ const collections: [IPattern, ...IPattern[]] = [
     group: 'shape',
     render: ({ colors, rotate = 0, stroke = 48, translate = [0, 0], zoom = 1 }) => {
       const [front = defaultFront, back = defaultBack] = colors || [];
-      return `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path data-color="outline" fill="none" stroke="${front}" stroke-width="${stroke}" d="M49-1h2v102h-2z"></path><rect opacity="0" x="-500" y="-500" width="1000" height="1000"></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="translate(${translate[0]} ${translate[1]}) rotate(${rotate}) scale(${zoom})"><path data-color="outline" fill="none" stroke="${front}" stroke-width="${stroke}" d="M49-1h2v102h-2z"></path></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="${back}"/><rect fill="url(#p)" width="100%" height="100%"></rect></svg>`;
     },
     stroke: 48,
     type: 'svg',

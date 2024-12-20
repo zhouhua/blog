@@ -127,7 +127,7 @@ function Blurry() {
         <defs>
           <filter id="blur" x="-10%" y="-10%" width="120%" height="120%" filterUnits="userSpaceOnUse">
             <feFlood floodOpacity="0" result="BackgroundImageFix" />
-            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+            <feBlend mode="luminosity" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
             <feGaussianBlur
               stdDeviation={Math.floor(blurLength * formValues.blur)}
               result="effect1_foregroundBlur"

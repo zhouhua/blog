@@ -86,7 +86,7 @@ export async function algolia(): Promise<void> {
       layout: 'photo',
       objectID: MD5(slug),
       slug,
-      text: photo.data.list.map(item => item.description).join('\n'),
+      text: photo.data.list.map((item: { description: string }) => item.description).join('\n'),
       title: photo.data.title,
     });
   }
