@@ -36,7 +36,6 @@ const Panel: FC<{
   useEffect(() => {
     if (show) {
       document.body.classList.add('no-scroll');
-      // window.gtag('event', 'open_search_box')
     }
     else {
       document.body.classList.remove('no-scroll');
@@ -62,6 +61,7 @@ const Panel: FC<{
             initial={{ opacity: 0, y: 200 }}
             ref={ref}
           >
+            { /** @ts-expect-error deps version */}
             <InstantSearch indexName="blog" searchClient={searchClient}>
               <Configure
                 advancedSyntax

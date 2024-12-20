@@ -59,7 +59,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
     hide();
   }
   const [selectIndex, setSelectIndex] = useState<number>(-1);
-  const selectedDom = useRef<HTMLLIElement>();
+  const selectedDom = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
     setSelectIndex(-1);
@@ -185,9 +185,11 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                         'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap text-palette-primary',
                       )}
                     >
+                      { /** @ts-expect-error deps version */}
                       <Highlight attribute="title" className="max-w-full" hit={hit} />
                     </h2>
                     <p className="line-clamp-2 overflow-ellipsis whitespace-normal text-sm leading-6">
+                      { /** @ts-expect-error deps version */}
                       <Snippet attribute="text" hit={hit} />
                     </p>
                   </a>
@@ -204,9 +206,11 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                           'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap text-palette-primary',
                         )}
                       >
+                        { /** @ts-expect-error deps version */}
                         <Highlight attribute="title" className="max-w-full" hit={hit} />
                       </h2>
                       <p className="line-clamp-2 overflow-ellipsis whitespace-normal text-sm leading-6">
+                        { /** @ts-expect-error deps version */}
                         <Snippet attribute="text" hit={hit} />
                       </p>
                     </a>
@@ -224,6 +228,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                           'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap text-palette-primary',
                         )}
                       >
+                        { /** @ts-expect-error deps version */}
                         <Highlight attribute="title" className="max-w-full" hit={hit} />
                       </h2>
                     </a>

@@ -132,7 +132,7 @@ export default config(
     files: ['**/*.astro'],
     rules: {
       'antfu/no-top-level-await': 'off',
-      'perfectionist/sort-astro-attributes': 'warn',
+      // 'perfectionist/sort-astro-attributes': 'warn',
       'react-naming-convention/filename-extension': 'off',
     },
   },
