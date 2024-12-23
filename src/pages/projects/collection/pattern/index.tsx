@@ -306,7 +306,7 @@ function Pattern() {
               <RadioGroup
                 value={gradient}
                 onValueChange={t => setGradient(t as '0' | '1' | '2')}
-                className="flex gap-2"
+                className="flex gap-4"
               >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="0" id="o0" />

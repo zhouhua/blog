@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { sizeOptions } from '@lib/projects';
 import { PopoverTrigger } from '@radix-ui/react-popover';
 import { Button } from '@react/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@react/ui/card';
@@ -32,34 +33,6 @@ const formSchema = z.object({
   noiseFrequency: z.number().min(0.3).max(1),
   opacity: z.number().min(0).max(1),
 });
-
-const sizeOptions = [
-  { category: '图标', height: 16, label: '16x16 - 网站图标', width: 16 },
-  { category: '图标', height: 32, label: '32x32 - 图标', width: 32 },
-  { category: '图标', height: 48, label: '48x48 - 应用图标', width: 48 },
-  { category: '图标', height: 64, label: '64x64 - 大图标', width: 64 },
-  { category: '图标', height: 128, label: '128x128 - 大图标', width: 128 },
-  { category: '图标', height: 256, label: '256x256 - 高清图标', width: 256 },
-  { category: '手机壁纸', height: 1136, label: '640x1136 - iPhone SE', width: 640 },
-  { category: '手机壁纸', height: 1334, label: '750x1334 - iPhone 8', width: 750 },
-  { category: '手机壁纸', height: 1792, label: '828x1792 - iPhone XR', width: 828 },
-  { category: '手机壁纸', height: 1920, label: '1080x1920 - 手机壁纸', width: 1080 },
-  { category: '手机壁纸', height: 2532, label: '1170x2532 - iPhone 12/13', width: 1170 },
-  { category: '手机壁纸', height: 2778, label: '1284x2778 - iPhone 12/13 Pro Max', width: 1284 },
-  { category: '桌面壁纸', height: 768, label: '1366x768 - 笔记本', width: 1366 },
-  { category: '桌面壁纸', height: 1080, label: '1920x1080 - FHD', width: 1920 },
-  { category: '桌面壁纸', height: 1440, label: '2560x1440 - 2K', width: 2560 },
-  { category: '桌面壁纸', height: 2160, label: '3840x2160 - 4K', width: 3840 },
-  { category: '社交媒体', height: 800, label: '800x800 - 微信朋友圈', width: 800 },
-  { category: '社交媒体', height: 1080, label: '1080x1080 - Instagram', width: 1080 },
-  { category: '社交媒体', height: 630, label: '1200x630 - Facebook', width: 1200 },
-  { category: '社交媒体', height: 500, label: '1500x500 - Twitter 封面', width: 1500 },
-  { category: '社交媒体', height: 1152, label: '2048x1152 - YouTube 封面', width: 2048 },
-  { category: '常用比例', height: 800, label: '1:1 - 800x800', width: 800 },
-  { category: '常用比例', height: 768, label: '4:3 - 1024x768', width: 1024 },
-  { category: '常用比例', height: 720, label: '16:9 - 1280x720', width: 1280 },
-  { category: '常用比例', height: 1080, label: '21:9 - 2560x1080', width: 2560 },
-];
 
 function Gradient() {
   const { height, width } = useWindowSize();
