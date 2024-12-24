@@ -16,6 +16,7 @@ import { Switch } from '@react/ui/switch';
 import { Chrome } from '@uiw/react-color';
 import { colord, extend, random as randomColor } from 'colord';
 import harmoniesPlugin from 'colord/plugins/harmonies';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useWindowSize } from 'react-use';
 import { z } from 'zod';
@@ -24,28 +25,33 @@ extend([harmoniesPlugin]);
 const blendModes = ['multiply', 'screen', 'overlay', 'darken', 'lighten', 'color-dodge', 'color-burn', 'hard-light', 'soft-light', 'difference', 'exclusion', 'hue', 'saturation', 'color', 'luminosity'] as const;
 const formSchema = z.object({
   animate: z.boolean(),
+  // zoom: z.number().min(0.2).max(5),
+  animationDuration: z.number().min(5).max(60),
   background: z.string(),
   blendMode: z.enum(blendModes),
   blur: z.number().min(1).max(20),
   colors: z.array(z.string()),
   interactive: z.boolean(),
+  opacity: z.number().min(0).max(1),
   pointerColor: z.string(),
   size: z.number().min(0.1).max(1.2),
-  // zoom: z.number().min(0.2).max(5),
 });
 
 function Blurry() {
   const { height, width } = useWindowSize();
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
+      animate: true,
+      animationDuration: 30,
       background: '#ffffff',
       blendMode: 'hard-light',
       blur: 10,
       colors: randomColor().harmonies('double-split-complementary').map(c => c.toHex()),
       interactive: true,
+      opacity: 0.8,
       pointerColor: randomColor().toHex(),
       size: 0.8,
-      // zoom: 1,
     },
     resolver: zodResolver(formSchema),
   });
@@ -55,9 +61,25 @@ function Blurry() {
     form.setValue('pointerColor', randomColor().toHex());
   }
   const circleSize = `${formValues.size * 100}%`;
+
+  useEffect(() => {
+    if (!formValues.interactive)
+      return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: e.clientX,
+        y: e.clientY,
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [formValues.interactive]);
+
   return (
     <div
-      className="w-sceen h-screen flex flex-col items-center justify-center relative gap-10"
+      className="w-screen h-screen flex flex-col items-center justify-center relative gap-10"
       data-vaul-drawer-wrapper
     >
       <svg xmlns="http://www.w3.org/2000/svg" className="fixed w-full h-full left-0 top-0" width={width} height={height}>
@@ -71,7 +93,7 @@ function Blurry() {
               result="point"
             />
             <feBlend in="SourceGraphic" in2="point" />
-            <feGaussianBlur stdDeviation="40" result="blur" />
+            <feGaussianBlur stdDeviation="40" result="finalBlur" />
           </filter>
           <feBlend mode={formValues.blendMode} id="blend" />
           {[...formValues.colors, ...formValues.colors].map((color, index) => (
@@ -81,15 +103,61 @@ function Blurry() {
               <stop offset="50%" stopColor={colord(color).alpha(0).toHex()} />
             </radialGradient>
           ))}
+          {formValues.interactive && (
+            <radialGradient id="cursorColor" cx={mousePosition.x} cy={mousePosition.y} r={circleSize} fx={mousePosition.x} fy={mousePosition.y} gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor={colord(formValues.pointerColor).alpha(0.8).toHex()} />
+              <stop offset="50%" stopColor={colord(formValues.pointerColor).alpha(0).toHex()} />
+            </radialGradient>
+          )}
+          <animateTransform
+            id="rotate"
+            attributeName="transform"
+            type="rotate"
+            from="0 50 50"
+            to="360 50 50"
+            dur="30s"
+            repeatCount="indefinite"
+          />
         </defs>
         <rect width="100%" height="100%" fill={formValues.background} />
-        <g filter="url(#point)">
-          <circle filter="url(#blend)" fill="url(#color0)" r={circleSize} cx="50%" cy="50%" transform-origin="50% 50%">
-            <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="20s" repeatCount="indefinite" />
+        <g filter="url(#point)" style={{ opacity: formValues.opacity }}>
+          <circle
+            filter="url(#blend)"
+            fill="url(#color0)"
+            r={circleSize}
+            cx="50%"
+            cy="50%"
+            transform-origin="center center"
+          >
+            <animateTransform
+              attributeName="transform"
+              type="translate"
+              values="-50% -10%; 50% 10%; -50% -10%"
+              keyTimes="0; 0.5; 1"
+              dur={`${formValues.animationDuration}s`}
+              repeatCount="indefinite"
+            />
           </circle>
-          <circle filter="url(#blend)" fill="url(#color1)" r={circleSize} cx="50%" cy="50%" transform-origin={[width / 2 - 400, height / 2 - 400].join(' ')}>
-            <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="20s" repeatCount="indefinite" />
+
+          <circle
+            filter="url(#blend)"
+            fill="url(#color1)"
+            r={circleSize}
+            cx="50%"
+            cy="50%"
+            transform-origin="calc(50% - 400px)"
+            opacity="0.8"
+          >
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="0"
+              to="360"
+              dur="20s"
+              repeatCount="indefinite"
+            />
           </circle>
+
           <circle filter="url(#blend)" fill="url(#color2)" r={circleSize} cx="50%" cy="50%" transform-origin={[width / 2 + 400, height / 2 + 400].join(' ')}>
             <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="40s" repeatCount="indefinite" />
           </circle>
@@ -99,6 +167,19 @@ function Blurry() {
           <circle filter="url(#blend)" fill="url(#color4)" r={circleSize} cx="50%" cy="50%" transform-origin={[width / 2 - 800, height / 2 + 200].join(' ')}>
             <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="20s" repeatCount="indefinite" />
           </circle>
+
+          {formValues.interactive && (
+            <circle
+              filter="url(#blend)"
+              fill="url(#cursorColor)"
+              r={circleSize}
+              cx={mousePosition.x}
+              cy={mousePosition.y}
+              style={{
+                transition: 'cx 0.2s ease-out, cy 0.2s ease-out',
+              }}
+            />
+          )}
         </g>
       </svg>
       <div className="fixed right-24 top-24 w-[400px] z-10">
@@ -278,6 +359,54 @@ function Blurry() {
                             />
                           </PopoverContent>
                         </Popover>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  name="animationDuration"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem className="flex gap-1 items-center h-12">
+                      <FormLabel className="w-20 shrink-0">动画速度：</FormLabel>
+                      <FormControl>
+                        <Slider
+                          max={60}
+                          step={1}
+                          min={5}
+                          value={[field.value]}
+                          onValueChange={e => field.onChange(e[0])}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  name="opacity"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem className="flex gap-1 items-center h-12">
+                      <FormLabel className="w-20 shrink-0">整透明度：</FormLabel>
+                      <FormControl>
+                        <Slider
+                          max={1}
+                          step={0.01}
+                          min={0}
+                          value={[field.value]}
+                          onValueChange={e => field.onChange(e[0])}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  name="animate"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem className="flex gap-1 items-center h-12">
+                      <FormLabel className="w-20 shrink-0">动画：</FormLabel>
+                      <FormControl>
+                        <Switch checked={field.value} onCheckedChange={field.onChange} />
                       </FormControl>
                     </FormItem>
                   )}
