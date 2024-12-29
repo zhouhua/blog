@@ -36,6 +36,11 @@ const data: DockerItem[][] = [
       name: 'Blurry Generator',
     },
     {
+      icon: <span className="size-4 iconify ph--intersect-three-duotone" />,
+      link: '/projects/animateBlurry',
+      name: 'Animated Blurry',
+    },
+    {
       icon: <span className="size-4 iconify mdi--gradient" />,
       link: '/projects/collection/gradient',
       name: 'Gradient Collection',
