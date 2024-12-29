@@ -46,7 +46,6 @@ function Blurry() {
   const [{ height, width }, setSize] = useState(size);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const offscreenCanvasRef = useRef<HTMLCanvasElement | null>(null);
-  const throttledGenerateRef = useRef<ReturnType<typeof throttle>>(undefined);
   const containerRef = useRef<HTMLDivElement>(null);
   const generateRef = useRef<(() => void) | undefined>(undefined);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -60,7 +59,13 @@ function Blurry() {
     },
     resolver: zodResolver(formSchema),
   });
-  const formValues = form.watch();
+  const formType = form.watch('type');
+  const formBackground = form.watch('background');
+  const formColors = form.watch('colors');
+  const formNum = form.watch('num');
+  const formZoom = form.watch('zoom');
+  const formBlur = form.watch('blur');
+
   const [imageWidth, setImageWidth] = useState(800);
   const [imageHeight, setImageHeight] = useState(600);
   const [imageFormat, setImageFormat] = useState('png');
@@ -128,7 +133,7 @@ function Blurry() {
     const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
     const c = colord(color);
 
-    if (formValues.type === 'type1') {
+    if (formType === 'type1') {
       // 为 type1 模式优化渐变效果
       const alpha = c.alpha();
       gradient.addColorStop(0, c.toRgbString());
@@ -149,7 +154,7 @@ function Blurry() {
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, Math.PI * 2);
     ctx.fill();
-  }, [formValues.type]);
+  }, [formType]);
 
   // 渲染到指定的 canvas 上下文
   const renderToContext = useCallback((
@@ -163,7 +168,7 @@ function Blurry() {
 
     const offscreenCtx = offscreenCanvasRef.current.getContext('2d')!;
     const length = Math.min(targetWidth, targetHeight);
-    const blur = length / (formValues.type === 'type1' ? 8 : 12);
+    const blur = length / (formType === 'type1' ? 8 : 12);
     const blurAmount = random(blur * 0.9, blur * 1.1);
 
     // 设置画布尺寸
@@ -172,7 +177,7 @@ function Blurry() {
 
     // 清除画布
     if (!options?.skipBackground) {
-      ctx.fillStyle = formValues.background;
+      ctx.fillStyle = formBackground;
       ctx.fillRect(0, 0, targetWidth, targetHeight);
     }
     offscreenCtx.clearRect(0, 0, targetWidth, targetHeight);
@@ -185,115 +190,95 @@ function Blurry() {
 
     // 设置混合模式
     offscreenCtx.globalCompositeOperation = 'source-over';
-    blurCtx.globalCompositeOperation = formValues.type === 'type1' ? 'soft-light' : 'color-burn';
+    blurCtx.globalCompositeOperation = formType === 'type1' ? 'soft-light' : 'color-burn';
 
-    if (formValues.type === 'type1') {
-      const actualNum = formValues.num * 2;
+    if (formType === 'type1') {
+      const actualNum = formNum * 2;
       for (let i = 0; i < actualNum; i++) {
         const x = random(targetWidth);
         const y = random(targetHeight);
-        const radius = random(length * 1.2, length * 1.4) / 2 * formValues.zoom;
+        const radius = random(length * 1.2, length * 1.4) / 2 * formZoom;
         // 先在离屏 canvas 上绘制
-        drawCircle(offscreenCtx, x, y, radius, formValues.colors[i % 2]!);
+        drawCircle(offscreenCtx, x, y, radius, formColors[i % 2]!);
       }
     }
     else {
       const angel = random(0, Math.PI * 2);
       const x = random(targetWidth * 0.4, targetWidth * 0.6);
       const y = random(targetHeight * 0.4, targetHeight * 0.6);
-      const r1 = random(length * 0.95, length * 1.05) / 4.5 * formValues.zoom;
-      const r2 = random(length * 0.95, length * 1.05) / 5 * formValues.zoom;
+      const r1 = random(length * 0.95, length * 1.05) / 4.5 * formZoom;
+      const r2 = random(length * 0.95, length * 1.05) / 5 * formZoom;
       const deltaX = Math.cos(angel) * r1 * 0.8;
       const deltaY = Math.sin(angel) * r1 * 0.8;
 
-      drawCircle(offscreenCtx, x, y, r1, formValues.colors[0]!);
-      drawCircle(offscreenCtx, x + deltaX, y + deltaY, r2, formValues.colors[1]!);
+      drawCircle(offscreenCtx, x, y, r1, formColors[0]!);
+      drawCircle(offscreenCtx, x + deltaX, y + deltaY, r2, formColors[1]!);
     }
 
     // 应用模糊效果
-    blurCtx.filter = `blur(${Math.floor(blurAmount * formValues.blur)}px)`;
+    blurCtx.filter = `blur(${Math.floor(blurAmount * formBlur)}px)`;
     blurCtx.drawImage(offscreenCanvasRef.current, 0, 0);
 
     // 将模糊后的图像绘制到主画布
     ctx.drawImage(blurCanvas, 0, 0);
-  }, [formValues, drawCircle]);
+  }, [formType, formBackground, formColors, formNum, formZoom, formBlur, drawCircle]);
 
-  const generateImpl = useCallback(() => {
+  const throttledGenerate = useCallback(
+    throttle((ctx: CanvasRenderingContext2D, w: number, h: number) => {
+      if (!ctx)
+        return;
+      renderToContext(ctx, w, h);
+    }, 100, { leading: true, trailing: true }),
+    [renderToContext],
+  );
+
+  const generate = useCallback(() => {
     if (!canvasRef.current)
       return;
     const ctx = canvasRef.current.getContext('2d')!;
-    renderToContext(ctx, width, height);
-  }, [width, height, renderToContext]);
-
-  const generate = useCallback(() => {
-    // 取消之前的 throttled 调用
-    throttledGenerateRef.current?.cancel();
-
-    // 创建新的 throttled 函数
-    throttledGenerateRef.current = throttle(() => generateImpl(), 100, { leading: true, trailing: true });
-
-    // 立即执行
-    throttledGenerateRef.current();
-  }, [generateImpl]);
+    throttledGenerate(ctx, width, height);
+  }, [width, height, throttledGenerate]);
 
   // 保存 generate 函数的引用
   useEffect(() => {
     generateRef.current = generate;
   }, [generate]);
 
-  // 组件卸载时清理
-  useEffect(() => {
-    return () => {
-      throttledGenerateRef.current?.cancel();
-    };
-  }, []);
-
   const setDefaultBg = useCallback(() => {
-    form.setValue('background', form.getValues().type !== 'type2' ? form.getValues().colors[0]! : '#ffffffff');
-  }, [form]);
+    form.setValue('background', formType !== 'type2' ? formColors[0]! : '#ffffffff');
+  }, [form, formType, formColors]);
 
   const generateColors = useCallback((e?: React.MouseEvent<HTMLButtonElement>) => {
     const color2 = randomColor();
     const color1 = color2.rotate(
-      random(formValues.type === 'type1' ? 50 : 60, formValues.type === 'type1' ? 70 : 140) * (Math.random() > 0.5 ? 1 : -1),
+      random(formType === 'type1' ? 50 : 60, formType === 'type1' ? 70 : 140) * (Math.random() > 0.5 ? 1 : -1),
     ).saturate(random(0.15, 0.2)).lighten(random(0, 0.5));
     form.setValue('colors', [color1.toHex(), color2.toHex()]);
-    form.setValue('background', form.getValues().type !== 'type2' ? color1.toHex() : '#ffffffff');
+    form.setValue('background', formType !== 'type2' ? color1.toHex() : '#ffffffff');
     generate();
     e?.preventDefault();
-  }, [form, formValues.type, generate]);
+  }, [form, formType, generate]);
 
+  // 初始化
   useEffect(() => {
     if (canvasRef.current) {
-      setSize(canvasRef.current.getBoundingClientRect());
-      canvasRef.current.width = width;
-      canvasRef.current.height = height;
+      const rect = canvasRef.current.getBoundingClientRect();
+      setSize(rect);
+      canvasRef.current.width = rect.width;
+      canvasRef.current.height = rect.height;
+      generateColors();
     }
-  }, [canvasRef, size, width, height]);
-
-  useLayoutEffect(() => {
-    generateColors();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    setDefaultBg();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formValues.type]);
-
+  // 监听表单变化
   useEffect(() => {
     generate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    formValues.num,
-    formValues.type,
-    formValues.colors,
-    formValues.blur,
-    formValues.zoom,
-    width,
-    height,
-    formValues.background,
-  ]);
+  }, [formType, formBackground, formColors, formNum, formZoom, formBlur, generate]);
+
+  // 监听类型变化
+  useEffect(() => {
+    setDefaultBg();
+  }, [formType, setDefaultBg]);
 
   const handleExportImage = () => {
     if (!canvasRef.current)
@@ -385,7 +370,7 @@ function Blurry() {
                       </FormItem>
                     )}
                   />
-                  {formValues.type !== 'type2' && (
+                  {formType !== 'type2' && (
                     <FormField
                       name="num"
                       control={form.control}
@@ -430,7 +415,7 @@ function Blurry() {
                     <FormControl>
                       <div className="flex gap-2 items-center justify-between w-full !mt-0">
                         <div className="flex gap-2">
-                          {formValues.colors.map((color, index) => (
+                          {formColors.map((color, index) => (
                             // eslint-disable-next-line react/no-array-index-key
                             <Popover key={index}>
                               <PopoverTrigger>
