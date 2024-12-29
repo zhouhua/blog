@@ -21,7 +21,7 @@ import { Toaster } from '@react/ui/sonner';
 import { Chrome } from '@uiw/react-color';
 import { colord, random as randomColor } from 'colord';
 import { random, throttle } from 'lodash-es';
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useWindowSize } from 'react-use';
 import { toast } from 'sonner';
