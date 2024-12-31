@@ -169,12 +169,13 @@ const Font: FC = () => {
   }, []);
 
   const copy = useCallback(() => {
-    copyToClipboard(`font-feature-settings: ${feature || 'unset'};`, {
+    copyToClipboard(`font-variant-ligatures: ${ligatures};
+font-feature-settings: ${feature || 'unset'};`, {
       onCopy() {
         toast.success('复制成功!');
       },
     });
-  }, [feature]);
+  }, [feature, ligatures]);
   return (
     <>
       <div className="colorModeTransition daisy-mockup-window mt-20 border border-palette-gray/40 bg-palette-gray/10 text-palette-secondary">
@@ -327,10 +328,20 @@ const Font: FC = () => {
       </div>
       <div className="colorModeTransition daisy-mockup-code relative mt-10 overflow-visible border border-palette-gray/40 bg-palette-gray/10 text-palette-secondary">
         <pre data-prefix="1">
-          font-feature-settings:
-          {' '}
-          <i>{feature || 'unset'}</i>
-          ;
+          <code>
+            font-variant-ligatures:
+            {' '}
+            <i>{ligatures}</i>
+            ;
+          </code>
+        </pre>
+        <pre data-prefix="2">
+          <code>
+            font-feature-settings:
+            {' '}
+            <i>{feature || 'unset'}</i>
+            ;
+          </code>
         </pre>
         <div className={cn('absolute right-4 top-2')}>
           <Tooltip content="复制代码">
