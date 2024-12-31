@@ -1,6 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { sizeOptions } from '@lib/projects';
 import { PopoverTrigger } from '@radix-ui/react-popover';
+import { HelpDrawer } from '@react/components/HelpDrawer';
+import { LanguageSwitch } from '@react/components/LanguageSwitch';
 import { Button } from '@react/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@react/ui/card';
 import {
@@ -25,6 +27,7 @@ import html2canvas from 'html2canvas';
 import { random } from 'lodash-es';
 import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useWindowSize } from 'react-use';
 import { z } from 'zod';
 
@@ -35,6 +38,7 @@ const formSchema = z.object({
 });
 
 function Gradient() {
+  const { t } = useTranslation();
   const { height, width } = useWindowSize();
   const [color, setColor] = useState<string>(randomColor().toHex());
   const [colorMode, setColorMode] = useState<'gradient' | 'solid'>('gradient');
@@ -144,6 +148,10 @@ function Gradient() {
       className="w-sceen h-screen flex pb-24 flex-col items-center justify-center relative gap-10"
       data-vaul-drawer-wrapper
     >
+      <div className="fixed top-4 right-4 flex gap-2 z-50">
+        <HelpDrawer namespace="gradient" />
+        <LanguageSwitch />
+      </div>
       <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} className="absolute z-0 left-0 top-0 w-full h-full">
         <defs>
           <linearGradient id="lineGradient" gradientTransform={`rotate(${rotate})`}>
@@ -186,7 +194,10 @@ function Gradient() {
         <Form {...form}>
           <form>
             <div className="flex gap-4 items-center h-8">
-              <Label className="w-40">颜色模式：</Label>
+              <Label className="w-40">
+                {t('gradient.gradientType')}
+                ：
+              </Label>
               <RadioGroup
                 value={colorMode}
                 onValueChange={value => setColorMode(value as 'gradient' | 'solid')}
@@ -194,11 +205,11 @@ function Gradient() {
               >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="solid" id="solid" />
-                  <Label htmlFor="solid">纯色</Label>
+                  <Label htmlFor="solid">{t('gradient.solid')}</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="gradient" id="gradient" />
-                  <Label htmlFor="gradient">渐变色</Label>
+                  <Label htmlFor="gradient">{t('gradient.gradient')}</Label>
                 </div>
               </RadioGroup>
             </div>
@@ -207,7 +218,10 @@ function Gradient() {
               control={form.control}
               render={({ field }) => (
                 <FormItem className="flex gap-4 items-center h-8 m-0">
-                  <FormLabel className="w-40">添加噪点：</FormLabel>
+                  <FormLabel className="w-40">
+                    {t('gradient.enableNoise')}
+                    ：
+                  </FormLabel>
                   <FormControl>
                     <Switch checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
@@ -221,7 +235,10 @@ function Gradient() {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem className="flex gap-4 items-center h-8 m-0">
-                      <FormLabel className="w-40">噪点数量：</FormLabel>
+                      <FormLabel className="w-40">
+                        {t('gradient.noiseFrequency')}
+                        ：
+                      </FormLabel>
                       <FormControl className="w-72">
                         <div className="flex gap-3 items-center">
                           <Slider
@@ -242,7 +259,10 @@ function Gradient() {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem className="flex gap-4 items-center h-8 m-0">
-                      <FormLabel className="w-40">噪点强度：</FormLabel>
+                      <FormLabel className="w-40">
+                        {t('gradient.opacity')}
+                        ：
+                      </FormLabel>
                       <FormControl className="w-72">
                         <div className="flex gap-3 items-center">
                           <Slider
@@ -264,12 +284,12 @@ function Gradient() {
         </Form>
         <Card className="bg-white/40">
           <CardHeader>
-            <CardTitle>导出图片</CardTitle>
+            <CardTitle>{t('gradient.exportImageSettings')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-4 mt-4">
               <div className="flex flex-col gap-2">
-                <Label className="text-xs">预设尺寸</Label>
+                <Label className="text-xs">{t('gradient.presetSize')}</Label>
                 <Select
                   value={selectedPreset}
                   onValueChange={(value) => {
@@ -304,7 +324,7 @@ function Gradient() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <Label className="text-xs">导出格式</Label>
+                <Label className="text-xs">{t('gradient.exportFormat')}</Label>
                 <Select value={imageFormat} onValueChange={setImageFormat}>
                   <SelectTrigger className="h-8 text-xs">
                     <SelectValue />
@@ -319,7 +339,7 @@ function Gradient() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <Label className="text-xs">宽度</Label>
+                <Label className="text-xs">{t('gradient.width')}</Label>
                 <Input
                   type="number"
                   value={imageWidth}
@@ -332,7 +352,7 @@ function Gradient() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <Label className="text-xs">高度</Label>
+                <Label className="text-xs">{t('gradient.height')}</Label>
                 <Input
                   type="number"
                   value={imageHeight}
@@ -349,7 +369,7 @@ function Gradient() {
                 className="col-span-2"
                 onClick={handleExportImage}
               >
-                导出图片
+                {t('gradient.exportImage')}
               </Button>
             </div>
           </CardContent>

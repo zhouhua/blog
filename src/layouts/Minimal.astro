@@ -3,6 +3,7 @@ import kofi from '@assets/image/kofi.png';
 import Head from '@components/Head.astro';
 import { SITE } from '@consts';
 import Docker from '@react/components/Docker';
+import { I18nProvider } from '@react/components/I18nProvider';
 
 type Props = {
   title: string;
@@ -19,7 +20,9 @@ const year = new Date().getFullYear();
     <Head description={description} title={title ? `${title} | ${SITE.NAME}` : SITE.NAME} />
   </head>
   <body>
-    <slot />
+    <I18nProvider client:only="react">
+      <slot />
+    </I18nProvider>
     <Docker client:only="react" />
     <footer class="fixed bottom-0 left-0 bg-black text-white w-full h-10">
       <div class="leading-10 flex items-center justify-between max-w-[1200px] mx-auto px-8">

@@ -1,5 +1,7 @@
 import type { IPattern } from './collection';
 import { cn } from '@lib/utils';
+import { HelpDrawer } from '@react/components/HelpDrawer';
+import { LanguageSwitch } from '@react/components/LanguageSwitch';
 import { Button } from '@react/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@react/ui/card';
 import { Label } from '@react/ui/label';
@@ -13,6 +15,7 @@ import minifyPlugin from 'colord/plugins/minify';
 import namesPlugin from 'colord/plugins/names';
 import { last, pick, random } from 'lodash-es';
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { toast } from 'sonner';
@@ -24,6 +27,7 @@ import collections, { groups } from './collection';
 extend([namesPlugin, minifyPlugin]);
 
 function Pattern() {
+  const { t } = useTranslation();
   const [pickedItem, setPickedItem] = useState(() => collections[random(0, collections.length - 1)]);
   const [colors, setColors] = useState<string[]>(pickedItem!.colors);
   const [rotate, setRotate] = useState(pickedItem!.rotate || 0);
@@ -79,12 +83,16 @@ function Pattern() {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(cssCode);
-    toast.success('复制成功！');
+    toast.success(t('common.copied'));
   };
 
   return (
     <div className="w-screen h-screen" style={{ background: last(colors) }}>
       <Toaster position="bottom-right" />
+      <div className="fixed top-4 right-4 flex gap-2 z-50">
+        <HelpDrawer namespace="pattern" />
+        <LanguageSwitch />
+      </div>
       {pickedItem!.type === 'svg' && (
         // eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
         <div
@@ -120,8 +128,8 @@ function Pattern() {
       <div className="fixed right-8 top-8 bottom-[72px] w-[400px] z-10 flex flex-col gap-4 flex-wrap-reverse">
         <List
           className="bg-white"
-          title={`Pattern 列表（共 ${collections.length} 个）`}
-          description="点击列表可以预览并微调"
+          title={`${t('pattern.patternList')} ${t('pattern.totalCount', { count: collections.length })}`}
+          description={t('pattern.patternListDescription')}
           data={collections}
           filterFields={['type', ['group', groups]]}
           renderItem={(item: IPattern, index) => {
@@ -168,12 +176,15 @@ function Pattern() {
 
         <Card className="bg-white">
           <CardHeader>
-            <CardTitle>Pattern 设置</CardTitle>
+            <CardTitle>{t('pattern.patternSettings')}</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-2">
             {pickedItem?.type === 'svg' && !pickedItem?.disabled?.includes('rotate') && (
               <div className="flex gap-2 items-center">
-                <Label className="w-[70px]">旋转：</Label>
+                <Label className="w-[70px]">
+                  {t('pattern.rotate')}
+                  ：
+                </Label>
                 <Slider
                   className="flex-1"
                   value={[rotate]}
@@ -191,7 +202,10 @@ function Pattern() {
 
             {!pickedItem?.disabled?.includes('zoom') && (
               <div className="flex gap-2 items-center">
-                <Label className="w-[70px]">缩放：</Label>
+                <Label className="w-[70px]">
+                  {t('pattern.zoom')}
+                  ：
+                </Label>
                 <Slider
                   className="flex-1"
                   value={[zoom]}
@@ -208,7 +222,10 @@ function Pattern() {
             )}
             {!pickedItem?.disabled?.includes('translate') && (
               <div className="flex gap-2 items-center">
-                <Label className="w-[70px]">水平位移：</Label>
+                <Label className="w-[70px]">
+                  {t('pattern.horizontalOffset')}
+                  ：
+                </Label>
                 <Slider
                   className="flex-1"
                   value={[translateX]}
@@ -227,7 +244,10 @@ function Pattern() {
             )}
             {!pickedItem?.disabled?.includes('translate') && (
               <div className="flex gap-2 items-center">
-                <Label className="w-[70px]">垂直位移：</Label>
+                <Label className="w-[70px]">
+                  {t('pattern.verticalOffset')}
+                  ：
+                </Label>
                 <Slider
                   className="flex-1"
                   value={[translateY]}
@@ -246,7 +266,10 @@ function Pattern() {
             )}
             {pickedItem?.type === 'svg' && !pickedItem?.disabled?.includes('stroke') && (
               <div className="flex gap-2 items-center">
-                <Label className="w-[70px]">线宽：</Label>
+                <Label className="w-[70px]">
+                  {t('pattern.strokeWidth')}
+                  ：
+                </Label>
                 <Slider
                   className="flex-1"
                   value={[stroke]}
@@ -263,7 +286,10 @@ function Pattern() {
             )}
             {!pickedItem?.disabled?.includes('colors') && (
               <div className="flex gap-2 items-center">
-                <Label className="w-[70px]">颜色调整：</Label>
+                <Label className="w-[70px]">
+                  {t('pattern.adjustColors')}
+                  ：
+                </Label>
                 <div
                   className="flex gap-2"
                 >
@@ -302,7 +328,10 @@ function Pattern() {
               </div>
             )}
             <div className="flex gap-2 items-center">
-              <Label className="w-[70px]">渐变：</Label>
+              <Label className="w-[70px]">
+                {t('pattern.gradient')}
+                ：
+              </Label>
               <RadioGroup
                 value={gradient}
                 onValueChange={t => setGradient(t as '0' | '1' | '2')}
@@ -310,15 +339,15 @@ function Pattern() {
               >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="0" id="o0" />
-                  <Label htmlFor="o0">无</Label>
+                  <Label htmlFor="o0">{t('pattern.none')}</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="1" id="o1" />
-                  <Label htmlFor="o1">中心透明</Label>
+                  <Label htmlFor="o1">{t('pattern.centerTransparent')}</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="2" id="o2" />
-                  <Label htmlFor="o2">四周透明</Label>
+                  <Label htmlFor="o2">{t('pattern.edgeTransparent')}</Label>
                 </div>
               </RadioGroup>
             </div>
@@ -331,7 +360,7 @@ function Pattern() {
               {cssCode}
             </SyntaxHighlighter>
             <Button onClick={handleCopy}>
-              复制到剪贴板
+              {t('pattern.copyToClipboard')}
             </Button>
           </CardContent>
         </Card>

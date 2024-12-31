@@ -1,5 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PopoverTrigger } from '@radix-ui/react-popover';
+import { HelpDrawer } from '@react/components/HelpDrawer';
+import { LanguageSwitch } from '@react/components/LanguageSwitch';
 import { Button } from '@react/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@react/ui/card';
 import {
@@ -18,6 +20,7 @@ import { colord, extend, random as randomColor } from 'colord';
 import harmoniesPlugin from 'colord/plugins/harmonies';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useWindowSize } from 'react-use';
 import { z } from 'zod';
 
@@ -38,6 +41,7 @@ const formSchema = z.object({
 });
 
 function Blurry() {
+  const { t } = useTranslation();
   const { height, width } = useWindowSize();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const form = useForm<z.infer<typeof formSchema>>({
@@ -82,6 +86,10 @@ function Blurry() {
       className="w-screen h-screen flex flex-col items-center justify-center relative gap-10"
       data-vaul-drawer-wrapper
     >
+      <div className="fixed top-4 right-4 flex gap-2 z-50">
+        <HelpDrawer namespace="animateBlurry" />
+        <LanguageSwitch />
+      </div>
       <svg xmlns="http://www.w3.org/2000/svg" className="fixed w-full h-full left-0 top-0" width={width} height={height}>
         <defs>
           <filter id="point">
@@ -185,7 +193,7 @@ function Blurry() {
       <div className="fixed right-24 top-24 w-[400px] z-10">
         <Card className="bg-white/40">
           <CardHeader>
-            <CardTitle>动态模糊背景生成</CardTitle>
+            <CardTitle>{t('animateBlurry.title')}</CardTitle>
           </CardHeader>
           <CardContent>
             <Form {...form}>
@@ -195,7 +203,10 @@ function Blurry() {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem className="flex gap-1 items-center h-12">
-                      <FormLabel className="w-20  shrink-0">交互：</FormLabel>
+                      <FormLabel className="w-20  shrink-0">
+                        {t('animateBlurry.interactive')}
+                        ：
+                      </FormLabel>
                       <FormControl>
                         <Switch checked={field.value} onCheckedChange={field.onChange} />
                       </FormControl>
@@ -207,7 +218,10 @@ function Blurry() {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem className="flex gap-1 items-center h-12">
-                      <FormLabel className="w-20  shrink-0">模糊程度：</FormLabel>
+                      <FormLabel className="w-20  shrink-0">
+                        {t('animateBlurry.blurLevel')}
+                        ：
+                      </FormLabel>
                       <FormControl>
                         <Slider
                           max={20}
@@ -220,31 +234,15 @@ function Blurry() {
                     </FormItem>
                   )}
                 />
-                {/* <FormField
-                  name="zoom"
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem className="flex gap-1 items-center h-12">
-                      <FormLabel className="w-20  shrink-0">光点大小：</FormLabel>
-                      <FormControl>
-                        <Slider
-                          className="flex-shrink"
-                          max={3}
-                          step={0.1}
-                          min={0.2}
-                          value={[field.value]}
-                          onValueChange={e => field.onChange(e[0])}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                /> */}
                 <FormField
                   name="size"
                   control={form.control}
                   render={({ field }) => (
                     <FormItem className="flex gap-1 items-center h-12">
-                      <FormLabel className="w-20  shrink-0">光点大小：</FormLabel>
+                      <FormLabel className="w-20  shrink-0">
+                        {t('animateBlurry.dotsSize')}
+                        ：
+                      </FormLabel>
                       <FormControl>
                         <Slider
                           className="flex-shrink"
@@ -263,7 +261,10 @@ function Blurry() {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem className="flex gap-1 items-center h-12">
-                      <FormLabel className="w-20  shrink-0">混合模式：</FormLabel>
+                      <FormLabel className="w-20  shrink-0">
+                        {t('animateBlurry.blendMode')}
+                        ：
+                      </FormLabel>
                       <FormControl>
                         <Select onValueChange={field.onChange} value={field.value}>
                           <SelectTrigger>
@@ -282,7 +283,10 @@ function Blurry() {
                   )}
                 />
                 <FormItem className="flex gap-1 items-center h-12">
-                  <FormLabel className="w-20  shrink-0">调整颜色：</FormLabel>
+                  <FormLabel className="w-20  shrink-0">
+                    {t('animateBlurry.adjustColors')}
+                    ：
+                  </FormLabel>
                   <FormControl>
                     <div className="flex gap-2 items-center justify-between w-full">
                       <div className="flex gap-2">
@@ -310,7 +314,7 @@ function Blurry() {
                           e.preventDefault();
                         }}
                       >
-                        随机颜色
+                        {t('animateBlurry.randomColor')}
                       </Button>
                     </div>
                   </FormControl>
@@ -321,7 +325,10 @@ function Blurry() {
                     control={form.control}
                     render={({ field }) => (
                       <FormItem className="flex gap-1 items-center h-12">
-                        <FormLabel className="w-20  shrink-0">焦点颜色：</FormLabel>
+                        <FormLabel className="w-20  shrink-0">
+                          {t('animateBlurry.focusColor')}
+                          ：
+                        </FormLabel>
                         <FormControl>
                           <Popover>
                             <PopoverTrigger>
@@ -345,7 +352,10 @@ function Blurry() {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem className="flex gap-1 items-center h-12">
-                      <FormLabel className="w-20  shrink-0">背景色：</FormLabel>
+                      <FormLabel className="w-20  shrink-0">
+                        {t('animateBlurry.backgroundColor')}
+                        ：
+                      </FormLabel>
                       <FormControl>
                         <Popover>
                           <PopoverTrigger>
@@ -368,7 +378,10 @@ function Blurry() {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem className="flex gap-1 items-center h-12">
-                      <FormLabel className="w-20 shrink-0">动画速度：</FormLabel>
+                      <FormLabel className="w-20 shrink-0">
+                        {t('animateBlurry.animationSpeed')}
+                        ：
+                      </FormLabel>
                       <FormControl>
                         <Slider
                           max={60}
@@ -386,7 +399,10 @@ function Blurry() {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem className="flex gap-1 items-center h-12">
-                      <FormLabel className="w-20 shrink-0">整透明度：</FormLabel>
+                      <FormLabel className="w-20 shrink-0">
+                        {t('animateBlurry.opacity')}
+                        ：
+                      </FormLabel>
                       <FormControl>
                         <Slider
                           max={1}
@@ -404,7 +420,10 @@ function Blurry() {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem className="flex gap-1 items-center h-12">
-                      <FormLabel className="w-20 shrink-0">动画：</FormLabel>
+                      <FormLabel className="w-20 shrink-0">
+                        {t('animateBlurry.animation')}
+                        ：
+                      </FormLabel>
                       <FormControl>
                         <Switch checked={field.value} onCheckedChange={field.onChange} />
                       </FormControl>

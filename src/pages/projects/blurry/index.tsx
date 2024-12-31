@@ -1,6 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { sizeOptions } from '@lib/projects';
 import { PopoverTrigger } from '@radix-ui/react-popover';
+import { HelpDrawer } from '@react/components/HelpDrawer';
+import { LanguageSwitch } from '@react/components/LanguageSwitch';
 import { Button } from '@react/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@react/ui/card';
 import {
@@ -23,6 +25,7 @@ import { colord, random as randomColor } from 'colord';
 import { random, throttle } from 'lodash-es';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useWindowSize } from 'react-use';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -37,11 +40,12 @@ const formSchema = z.object({
 });
 
 const TYPE_LABELS: Record<z.infer<typeof formSchema>['type'], string> = {
-  type1: '融合',
-  type2: '交错',
+  type1: 'blurry.merge',
+  type2: 'blurry.interlace',
 } as const;
 
 function Blurry() {
+  const { t } = useTranslation();
   const size = useWindowSize();
   const [{ height, width }, setSize] = useState(size);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -306,6 +310,10 @@ function Blurry() {
         className="p-2 bg-border h-[calc(100vh-40px)] w-screen flex gap-2"
         data-vaul-drawer-wrapper
       >
+        <div className="fixed top-4 right-4 flex gap-2 z-50">
+          <HelpDrawer namespace="blurry" />
+          <LanguageSwitch />
+        </div>
         <div
           ref={containerRef}
           className="w-full h-full grow shrink rounded-md overflow-hidden"
@@ -319,7 +327,7 @@ function Blurry() {
         <div className="flex flex-col gap-2 bottom-16">
           <Card className="bg-white">
             <CardHeader>
-              <CardTitle>模糊背景生成</CardTitle>
+              <CardTitle>{t('blurry.title')}</CardTitle>
             </CardHeader>
             <CardContent>
               <Form {...form}>
@@ -329,7 +337,10 @@ function Blurry() {
                     control={form.control}
                     render={({ field }) => (
                       <FormItem className="flex gap-1 items-center h-10">
-                        <FormLabel className="w-20  shrink-0">效果类型：</FormLabel>
+                        <FormLabel className="w-20  shrink-0">
+                          {t('blurry.effectType')}
+                          ：
+                        </FormLabel>
                         <FormControl>
                           <RadioGroup
                             onValueChange={field.onChange}
@@ -342,7 +353,7 @@ function Blurry() {
                                   <RadioGroupItem value={value} />
                                 </FormControl>
                                 <FormLabel className="font-normal !mt-0">
-                                  {label}
+                                  {t(label)}
                                 </FormLabel>
                               </FormItem>
                             ))}
@@ -356,7 +367,10 @@ function Blurry() {
                     control={form.control}
                     render={({ field }) => (
                       <FormItem className="flex gap-1 items-center h-10">
-                        <FormLabel className="w-20  shrink-0">模糊程度：</FormLabel>
+                        <FormLabel className="w-20  shrink-0">
+                          {t('blurry.blurLevel')}
+                          ：
+                        </FormLabel>
                         <FormControl>
                           <Slider
                             max={2}
@@ -376,7 +390,10 @@ function Blurry() {
                       control={form.control}
                       render={({ field }) => (
                         <FormItem className="flex gap-1 items-center h-10">
-                          <FormLabel className="w-20  shrink-0">光点数量：</FormLabel>
+                          <FormLabel className="w-20  shrink-0">
+                            {t('blurry.dotsNumber')}
+                            ：
+                          </FormLabel>
                           <FormControl>
                             <Slider
                               className="relative flex items-center w-full h-5 touch-none select-none !mt-0"
@@ -396,7 +413,10 @@ function Blurry() {
                     control={form.control}
                     render={({ field }) => (
                       <FormItem className="flex gap-1 items-center h-10">
-                        <FormLabel className="w-20  shrink-0">光点大小：</FormLabel>
+                        <FormLabel className="w-20  shrink-0">
+                          {t('blurry.dotsSize')}
+                          ：
+                        </FormLabel>
                         <FormControl>
                           <Slider
                             className="flex-shrink !mt-0"
@@ -411,7 +431,10 @@ function Blurry() {
                     )}
                   />
                   <FormItem className="flex gap-1 items-center h-10">
-                    <FormLabel className="w-20  shrink-0">调整颜色：</FormLabel>
+                    <FormLabel className="w-20  shrink-0">
+                      {t('blurry.adjustColors')}
+                      ：
+                    </FormLabel>
                     <FormControl>
                       <div className="flex gap-2 items-center justify-between w-full !mt-0">
                         <div className="flex gap-2">
@@ -431,7 +454,7 @@ function Blurry() {
                             </Popover>
                           ))}
                         </div>
-                        <Button variant="ghost" size="sm" onClick={generateColors}>随机颜色</Button>
+                        <Button variant="ghost" size="sm" onClick={generateColors}>{t('blurry.randomColor')}</Button>
                       </div>
                     </FormControl>
                   </FormItem>
@@ -440,7 +463,10 @@ function Blurry() {
                     control={form.control}
                     render={({ field }) => (
                       <FormItem className="flex gap-1 items-center h-10 !mt-0">
-                        <FormLabel className="w-20  shrink-0">背景色：</FormLabel>
+                        <FormLabel className="w-20  shrink-0">
+                          {t('blurry.backgroundColor')}
+                          ：
+                        </FormLabel>
                         <FormControl>
                           <Popover>
                             <PopoverTrigger>
@@ -461,19 +487,18 @@ function Blurry() {
                 </form>
               </Form>
               <div className="flex justify-center mt-4">
-                <RainbowButton onClick={generate}>重新生成</RainbowButton>
+                <RainbowButton onClick={generate}>{t('blurry.regenerate')}</RainbowButton>
               </div>
             </CardContent>
           </Card>
           <Card className="bg-white">
             <CardHeader>
-              <CardTitle>导出图片</CardTitle>
+              <CardTitle>{t('blurry.exportImage')}</CardTitle>
             </CardHeader>
             <CardContent>
-
               <div className="grid grid-cols-2 gap-4 mt-4">
                 <div className="flex flex-col gap-2">
-                  <Label className="text-xs">预设尺寸</Label>
+                  <Label className="text-xs">{t('blurry.presetSize')}</Label>
                   <Select
                     value={selectedPreset}
                     onValueChange={(value) => {
@@ -508,7 +533,7 @@ function Blurry() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <Label className="text-xs">导出格式</Label>
+                  <Label className="text-xs">{t('blurry.exportFormat')}</Label>
                   <Select value={imageFormat} onValueChange={setImageFormat}>
                     <SelectTrigger className="h-8 text-xs">
                       <SelectValue />
@@ -522,7 +547,7 @@ function Blurry() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <Label className="text-xs">宽度</Label>
+                  <Label className="text-xs">{t('blurry.width')}</Label>
                   <Input
                     type="number"
                     value={imageWidth}
@@ -535,7 +560,7 @@ function Blurry() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <Label className="text-xs">高度</Label>
+                  <Label className="text-xs">{t('blurry.height')}</Label>
                   <Input
                     type="number"
                     value={imageHeight}
@@ -547,9 +572,13 @@ function Blurry() {
                   />
                 </div>
 
-              </div>
-              <div className="flex justify-center mt-4">
-                <RainbowButton onClick={handleExportImage}>导出图片</RainbowButton>
+                <Button
+                  size="sm"
+                  className="col-span-2"
+                  onClick={handleExportImage}
+                >
+                  {t('blurry.exportImage')}
+                </Button>
               </div>
             </CardContent>
           </Card>

@@ -1,5 +1,7 @@
 import { sizeOptions } from '@lib/projects';
 import { cn } from '@lib/utils';
+import { HelpDrawer } from '@react/components/HelpDrawer';
+import { LanguageSwitch } from '@react/components/LanguageSwitch';
 import { Button } from '@react/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@react/ui/card';
 import { Input } from '@react/ui/input';
@@ -16,6 +18,7 @@ import namesPlugin from 'colord/plugins/names';
 import html2canvas from 'html2canvas';
 import { random } from 'lodash-es';
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { toast } from 'sonner';
@@ -52,6 +55,7 @@ collections.sort((a, b) => {
 });
 
 function Gradient() {
+  const { t } = useTranslation();
   const [pickedIndex, setPickedIndex] = useState(() => random(0, collections.length - 1));
   const [colors, setColors] = useState<string[]>(collections[pickedIndex]!.colors);
   const [rotate, setRotate] = useState(collections[pickedIndex]!.rotate || 0);
@@ -94,10 +98,14 @@ function Gradient() {
   return (
     <div className="w-screen h-screen" style={{ backgroundImage: gradientString }}>
       <Toaster position="bottom-right" />
+      <div className="fixed top-4 right-4 flex gap-2 z-50">
+        <HelpDrawer namespace="collection.gradient" />
+        <LanguageSwitch />
+      </div>
       <div className="fixed right-8 top-8 bottom-16 w-[435px] flex flex-col gap-4 flex-wrap-reverse">
         <List
-          title={`渐变效果（共 ${collections.length} 个）`}
-          description="点击列表可预览并微调"
+          title={`${t('collection.gradient.title')}（共 ${collections.length} 个）`}
+          description={t('collection.gradient.description')}
           data={collections}
           renderItem={({ colors, rotate, type }, index) => (
             <div
@@ -121,11 +129,14 @@ function Gradient() {
         />
         <Card className="bg-white/40">
           <CardHeader>
-            <CardTitle>渐变设置</CardTitle>
+            <CardTitle>{t('collection.gradient.gradientSettings')}</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <div className="flex gap-2 items-center">
-              <Label className="w-20">渐变方式：</Label>
+              <Label className="w-20">
+                {t('collection.gradient.gradientType')}
+                ：
+              </Label>
               <RadioGroup
                 value={type}
                 onValueChange={t => setType(t as 'linear' | 'radial')}
@@ -143,7 +154,10 @@ function Gradient() {
             </div>
             {type !== 'radial' && (
               <div className="flex gap-2 items-center">
-                <Label className="w-20">渐变角度：</Label>
+                <Label className="w-20">
+                  {t('collection.gradient.gradientAngle')}
+                  ：
+                </Label>
                 <Slider
                   className="flex-1"
                   value={[rotate]}
@@ -159,7 +173,10 @@ function Gradient() {
               </div>
             )}
             <div className="flex gap-2 items-center">
-              <Label className="w-20">颜色调整：</Label>
+              <Label className="w-20">
+                {t('collection.gradient.adjustColors')}
+                ：
+              </Label>
               <div
                 className="flex-grow min-w-20 rounded-md group flex h-6 overflow-hidden shadow-sm"
                 style={{ backgroundImage: generateGradientString({ colors, rotate: 90 }) }}
@@ -199,8 +216,8 @@ function Gradient() {
           <CardContent>
             <Tabs defaultValue="css">
               <TabsList>
-                <TabsTrigger value="css">导出 CSS</TabsTrigger>
-                <TabsTrigger value="image">导出图片</TabsTrigger>
+                <TabsTrigger value="css">{t('collection.gradient.exportCSS')}</TabsTrigger>
+                <TabsTrigger value="image">{t('collection.gradient.exportImage')}</TabsTrigger>
               </TabsList>
               <TabsContent value="css">
                 <div className="flex flex-col gap-2 mt-4">
@@ -211,14 +228,14 @@ function Gradient() {
                     className="mt-2"
                     onClick={handleCopy}
                   >
-                    复制到剪贴板
+                    {t('gradient.copyToClipboard')}
                   </Button>
                 </div>
               </TabsContent>
               <TabsContent value="image">
                 <div className="grid grid-cols-2 gap-4 mt-4">
                   <div className="flex flex-col gap-2">
-                    <Label className="text-xs">预设尺寸</Label>
+                    <Label className="text-xs">{t('gradient.presetSize')}</Label>
                     <Select
                       value={selectedPreset}
                       onValueChange={(value) => {
@@ -253,7 +270,7 @@ function Gradient() {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <Label className="text-xs">导出格式</Label>
+                    <Label className="text-xs">{t('gradient.exportFormat')}</Label>
                     <Select value={imageFormat} onValueChange={setImageFormat}>
                       <SelectTrigger className="h-8 text-xs">
                         <SelectValue />
@@ -267,7 +284,7 @@ function Gradient() {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <Label className="text-xs">宽度</Label>
+                    <Label className="text-xs">{t('gradient.width')}</Label>
                     <Input
                       type="number"
                       value={imageWidth}
@@ -280,7 +297,7 @@ function Gradient() {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <Label className="text-xs">高度</Label>
+                    <Label className="text-xs">{t('gradient.height')}</Label>
                     <Input
                       type="number"
                       value={imageHeight}
@@ -297,7 +314,7 @@ function Gradient() {
                     className="col-span-2"
                     onClick={handleExportImage}
                   >
-                    导出图片
+                    {t('collection.gradient.exportImage')}
                   </Button>
                 </div>
               </TabsContent>
