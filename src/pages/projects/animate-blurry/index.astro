@@ -1,0 +1,10 @@
+---
+import { HOME } from '@consts';
+import Minimal from '@layouts/Minimal.astro';
+import AnimateBlurry from './_index';
+
+---
+
+<Minimal description="" title={`${HOME.TITLE} - Calendar`}>
+  <div class="w-sceen h-screen relative"><AnimateBlurry client:only="react" /></div>
+</Minimal>
