@@ -71,11 +71,11 @@ const { gridLayout, posts, reverse, showAllLink } = Astro.props;
           class={cn(
             'moreLink',
             'flex items-center justify-center text-palette-primary rounded-2xl',
-            'sm:mb-20 sm:h-28 bg-palette-card',
+            'sm:mb-20 bg-palette-card',
           )}
           href="/articles"
         >
-          <EvervaultCard client:only="react" text="查看所有文章" />
+          <EvervaultCard className="h-[430px] sm:h-28" client:only="react" text="查看所有文章" />
         </a>
       )}
 </div>
