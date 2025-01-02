@@ -37,7 +37,7 @@ const data: DockerItem[][] = [
     },
     {
       icon: <span className="size-4 iconify ph--intersect-three-duotone" />,
-      link: '/projects/animateBlurry',
+      link: '/projects/animate-blurry',
       name: 'Animated Blurry',
     },
     {

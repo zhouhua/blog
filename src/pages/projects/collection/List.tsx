@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@reac
 import { ScrollArea } from '@react/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@react/ui/select';
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface IPorps<T> {
   title: string;
@@ -17,6 +18,7 @@ interface IPorps<T> {
 type Component<U = any> = FC<IPorps<U>>;
 
 const List: Component = ({ className, data, description, filterFields, renderItem, title }) => {
+  const { t } = useTranslation();
   const [filter, setFilter] = useState<Record<string, string>>({});
   const filteredData = useMemo(() => {
     const keys = Object.keys(filter);
@@ -35,7 +37,7 @@ const List: Component = ({ className, data, description, filterFields, renderIte
   return (
     <Card className={cn('bg-white/40', className)}>
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="text-sm">{title}</CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
         {Boolean(filterFields?.length) && (
           <div className="mt-4 flex gap-4">
@@ -55,13 +57,13 @@ const List: Component = ({ className, data, description, filterFields, renderIte
               return (
                 <div className="flex-1" key={name}>
                   <div className="opacity-75 mb-1 text-xs">
-                    选择
+                    {t('common.select')}
                     {name}
                     :
                   </div>
                   <Select onValueChange={value => setFilter(f => ({ ...f, [name]: value }))}>
                     <SelectTrigger className="p-1 h-7">
-                      <SelectValue className="!text-xs" placeholder="全部" />
+                      <SelectValue className="!text-xs" placeholder={t('common.all')} />
                     </SelectTrigger>
                     <SelectContent>
                       {Object.keys(options).map(key => (
@@ -69,7 +71,7 @@ const List: Component = ({ className, data, description, filterFields, renderIte
                           {options[key]}
                         </SelectItem>
                       ))}
-                      <SelectItem value="-" className="h-6">所有</SelectItem>
+                      <SelectItem value="-" className="h-6">{t('common.all')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

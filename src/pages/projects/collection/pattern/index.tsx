@@ -1,5 +1,6 @@
 import type { IPattern } from './collection';
 import { cn } from '@lib/utils';
+import NumberFlow from '@number-flow/react';
 import { HelpDrawer } from '@react/components/HelpDrawer';
 import { LanguageSwitch } from '@react/components/LanguageSwitch';
 import { Button } from '@react/ui/button';
@@ -19,8 +20,8 @@ import { useTranslation } from 'react-i18next';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { toast } from 'sonner';
-import parse from 'style-to-js';
 
+import parse from 'style-to-js';
 import List from '../List';
 import collections, { groups } from './collection';
 
@@ -89,7 +90,7 @@ function Pattern() {
   return (
     <div className="w-screen h-screen" style={{ background: last(colors) }}>
       <Toaster position="bottom-right" />
-      <div className="fixed top-4 right-4 flex gap-2 z-50">
+      <div className="fixed top-9 right-9 flex gap-2 z-50">
         <HelpDrawer namespace="pattern" />
         <LanguageSwitch />
       </div>
@@ -125,9 +126,9 @@ function Pattern() {
           }}
         />
       )}
-      <div className="fixed right-8 top-8 bottom-[72px] w-[400px] z-10 flex flex-col gap-4 flex-wrap-reverse">
+      <div className="fixed right-6 top-6 bottom-[64px] w-[400px] z-10 flex flex-col gap-4 flex-wrap-reverse">
         <List
-          className="bg-white"
+          className="bg-white w-full"
           title={`${t('pattern.patternList')} ${t('pattern.totalCount', { count: collections.length })}`}
           description={t('pattern.patternListDescription')}
           data={collections}
@@ -174,14 +175,14 @@ function Pattern() {
           }}
         />
 
-        <Card className="bg-white">
+        <Card className="bg-white w-full">
           <CardHeader>
-            <CardTitle>{t('pattern.patternSettings')}</CardTitle>
+            <CardTitle className="text-sm">{t('pattern.patternSettings')}</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-2">
             {pickedItem?.type === 'svg' && !pickedItem?.disabled?.includes('rotate') && (
               <div className="flex gap-2 items-center">
-                <Label className="w-[70px]">
+                <Label className="w-[70px] text-xs">
                   {t('pattern.rotate')}
                   ：
                 </Label>
@@ -193,16 +194,15 @@ function Pattern() {
                   step={5}
                   onValueChange={value => setRotate(value[0]!)}
                 />
-                <span className="w-8 text-right">
-                  {rotate}
-                  &deg;
+                <span className="w-8 text-right text-sm">
+                  <NumberFlow value={rotate} suffix="°" />
                 </span>
               </div>
             )}
 
             {!pickedItem?.disabled?.includes('zoom') && (
               <div className="flex gap-2 items-center">
-                <Label className="w-[70px]">
+                <Label className="w-[70px] text-xs">
                   {t('pattern.zoom')}
                   ：
                 </Label>
@@ -214,15 +214,14 @@ function Pattern() {
                   step={0.1}
                   onValueChange={value => setZoom(value[0]!)}
                 />
-                <span className="w-8 text-right">
-                  {zoom}
-                  x
+                <span className="w-8 text-right text-sm">
+                  <NumberFlow value={zoom} suffix="x" />
                 </span>
               </div>
             )}
             {!pickedItem?.disabled?.includes('translate') && (
               <div className="flex gap-2 items-center">
-                <Label className="w-[70px]">
+                <Label className="w-[70px] text-xs">
                   {t('pattern.horizontalOffset')}
                   ：
                 </Label>
@@ -236,15 +235,14 @@ function Pattern() {
                     setTranslateX(value[0]!);
                   }}
                 />
-                <span className="w-8 text-right">
-                  {translateX}
-                  px
+                <span className="w-8 text-right text-sm">
+                  <NumberFlow value={translateX} suffix="px" />
                 </span>
               </div>
             )}
             {!pickedItem?.disabled?.includes('translate') && (
               <div className="flex gap-2 items-center">
-                <Label className="w-[70px]">
+                <Label className="w-[70px] text-xs">
                   {t('pattern.verticalOffset')}
                   ：
                 </Label>
@@ -258,15 +256,14 @@ function Pattern() {
                     setTranslateY(value[0]!);
                   }}
                 />
-                <span className="w-8 text-right">
-                  {translateY}
-                  px
+                <span className="w-8 text-right text-sm">
+                  <NumberFlow value={translateY} suffix="px" />
                 </span>
               </div>
             )}
             {pickedItem?.type === 'svg' && !pickedItem?.disabled?.includes('stroke') && (
               <div className="flex gap-2 items-center">
-                <Label className="w-[70px]">
+                <Label className="w-[70px] text-xs">
                   {t('pattern.strokeWidth')}
                   ：
                 </Label>
@@ -278,15 +275,14 @@ function Pattern() {
                   step={1}
                   onValueChange={value => setStroke(value[0]!)}
                 />
-                <span className="w-8 text-right">
-                  {stroke}
-                  px
+                <span className="w-8 text-right text-sm">
+                  <NumberFlow value={stroke} suffix="px" />
                 </span>
               </div>
             )}
             {!pickedItem?.disabled?.includes('colors') && (
               <div className="flex gap-2 items-center">
-                <Label className="w-[70px]">
+                <Label className="w-[70px] text-xs">
                   {t('pattern.adjustColors')}
                   ：
                 </Label>
@@ -328,7 +324,7 @@ function Pattern() {
               </div>
             )}
             <div className="flex gap-2 items-center">
-              <Label className="w-[70px]">
+              <Label className="w-[70px] text-xs">
                 {t('pattern.gradient')}
                 ：
               </Label>
@@ -339,15 +335,21 @@ function Pattern() {
               >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="0" id="o0" />
-                  <Label htmlFor="o0">{t('pattern.none')}</Label>
+                  <Label htmlFor="o0" className="text-xs">
+                    {t('pattern.none')}
+                  </Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="1" id="o1" />
-                  <Label htmlFor="o1">{t('pattern.centerTransparent')}</Label>
+                  <Label htmlFor="o1" className="text-xs">
+                    {t('pattern.centerTransparent')}
+                  </Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="2" id="o2" />
-                  <Label htmlFor="o2">{t('pattern.edgeTransparent')}</Label>
+                  <Label htmlFor="o2" className="text-xs">
+                    {t('pattern.edgeTransparent')}
+                  </Label>
                 </div>
               </RadioGroup>
             </div>
@@ -355,7 +357,10 @@ function Pattern() {
         </Card>
 
         <Card className="bg-white w-full">
-          <CardContent className="flex flex-col gap-4 pt-6">
+          <CardHeader>
+            <CardTitle className="text-sm">{t('pattern.exportCSS')}</CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-4">
             <SyntaxHighlighter language="css" style={oneLight} className="text-xs font-monospace max-h-28 w-full overflow-auto">
               {cssCode}
             </SyntaxHighlighter>

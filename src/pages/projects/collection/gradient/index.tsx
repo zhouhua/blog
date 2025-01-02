@@ -1,5 +1,6 @@
 import { sizeOptions } from '@lib/projects';
 import { cn } from '@lib/utils';
+import NumberFlow from '@number-flow/react';
 import { HelpDrawer } from '@react/components/HelpDrawer';
 import { LanguageSwitch } from '@react/components/LanguageSwitch';
 import { Button } from '@react/ui/button';
@@ -74,7 +75,7 @@ function Gradient() {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(`background-image: ${gradientString};`);
-    toast.success('复制成功！');
+    toast.success(t('common.copySuccess'));
   };
 
   const handleExportImage = () => {
@@ -98,14 +99,14 @@ function Gradient() {
   return (
     <div className="w-screen h-screen" style={{ backgroundImage: gradientString }}>
       <Toaster position="bottom-right" />
-      <div className="fixed top-4 right-4 flex gap-2 z-50">
+      <div className="fixed top-9 right-9 flex gap-2 z-50">
         <HelpDrawer namespace="collection.gradient" />
         <LanguageSwitch />
       </div>
-      <div className="fixed right-8 top-8 bottom-16 w-[435px] flex flex-col gap-4 flex-wrap-reverse">
+      <div className="fixed right-6 top-6 bottom-16 w-[435px] flex flex-col gap-4 flex-wrap-reverse">
         <List
-          title={`${t('collection.gradient.title')}（共 ${collections.length} 个）`}
-          description={t('collection.gradient.description')}
+          className="w-full bg-white"
+          title={t('collection.gradient.title') + t('common.totalCount', { count: collections.length })}
           data={collections}
           renderItem={({ colors, rotate, type }, index) => (
             <div
@@ -127,9 +128,9 @@ function Gradient() {
             />
           )}
         />
-        <Card className="bg-white/40">
+        <Card className="bg-white w-full">
           <CardHeader>
-            <CardTitle>{t('collection.gradient.gradientSettings')}</CardTitle>
+            <CardTitle className="text-sm">{t('collection.gradient.gradientSettings')}</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <div className="flex gap-2 items-center">
@@ -167,8 +168,7 @@ function Gradient() {
                   onValueChange={value => setRotate(value[0]!)}
                 />
                 <span className="w-8 text-right">
-                  {rotate}
-                  &deg;
+                  <NumberFlow value={rotate} suffix="°" />
                 </span>
               </div>
             )}
@@ -212,7 +212,7 @@ function Gradient() {
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-white/40 pt-6">
+        <Card className="bg-white w-full pt-6">
           <CardContent>
             <Tabs defaultValue="css">
               <TabsList>
@@ -221,7 +221,7 @@ function Gradient() {
               </TabsList>
               <TabsContent value="css">
                 <div className="flex flex-col gap-2 mt-4">
-                  <SyntaxHighlighter language="css" style={oneLight} className="text-xs font-monospace max-h-32 overflow-auto">
+                  <SyntaxHighlighter language="css" style={oneLight} className="text-xs font-monospace max-h-32 overflow-auto max-w-[385px]">
                     {`background-image:\n  ${gradientString};`}
                   </SyntaxHighlighter>
                   <Button
@@ -235,12 +235,12 @@ function Gradient() {
               <TabsContent value="image">
                 <div className="grid grid-cols-2 gap-4 mt-4">
                   <div className="flex flex-col gap-2">
-                    <Label className="text-xs">{t('gradient.presetSize')}</Label>
+                    <Label className="text-xs pl-3">{t('gradient.presetSize')}</Label>
                     <Select
                       value={selectedPreset}
                       onValueChange={(value) => {
                         setSelectedPreset(value);
-                        const selectedSize = sizeOptions.find(option => option.label === value);
+                        const selectedSize = sizeOptions.find(option => option.labelKey === value);
                         if (selectedSize) {
                           setImageWidth(selectedSize.width);
                           setImageHeight(selectedSize.height);
@@ -248,19 +248,19 @@ function Gradient() {
                       }}
                     >
                       <SelectTrigger className="h-8 text-xs">
-                        <SelectValue placeholder="选择尺寸模板" />
+                        <SelectValue placeholder={t('size.selectSize')} />
                       </SelectTrigger>
                       <SelectContent>
                         {Array.from(new Set(sizeOptions.map(option => option.category))).map(category => (
                           <div key={category}>
                             <div className="px-2 py-1.5 text-sm font-semibold text-muted-foreground">
-                              {category}
+                              {t(category)}
                             </div>
                             {sizeOptions
                               .filter(option => option.category === category)
                               .map(option => (
-                                <SelectItem key={option.label} value={option.label}>
-                                  {option.label}
+                                <SelectItem key={option.labelKey} value={option.labelKey}>
+                                  {t(option.labelKey)}
                                 </SelectItem>
                               ))}
                           </div>
@@ -270,7 +270,7 @@ function Gradient() {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <Label className="text-xs">{t('gradient.exportFormat')}</Label>
+                    <Label className="text-xs pl-3">{t('gradient.exportFormat')}</Label>
                     <Select value={imageFormat} onValueChange={setImageFormat}>
                       <SelectTrigger className="h-8 text-xs">
                         <SelectValue />
@@ -284,7 +284,7 @@ function Gradient() {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <Label className="text-xs">{t('gradient.width')}</Label>
+                    <Label className="text-xs pl-3">{t('gradient.width')}</Label>
                     <Input
                       type="number"
                       value={imageWidth}
@@ -297,7 +297,7 @@ function Gradient() {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <Label className="text-xs">{t('gradient.height')}</Label>
+                    <Label className="text-xs pl-3">{t('gradient.height')}</Label>
                     <Input
                       type="number"
                       value={imageHeight}

@@ -6,21 +6,28 @@ export default {
     backgroundColor: 'Background Color',
     blendMode: 'Blend Mode',
     blurLevel: 'Blur Level',
-    description: 'Create stunning animated blurry background effects. Features include:\n- Interactive mouse tracking\n- Adjustable animation speed\n- Multiple blend modes\n- Custom colors and opacity',
     dotsSize: 'Dot Size',
     focusColor: 'Focus Color',
     interactive: 'Interactive',
     opacity: 'Opacity',
+    randomColor: 'Random',
     title: 'Animated Blurry Background Generator',
   },
   blurry: {
     adjustColors: 'Adjust Colors',
     backgroundColor: 'Background Color',
     blurLevel: 'Blur Level',
-    description: 'A simple yet powerful blurry background generator. You can:\n- Adjust blur level and dot size\n- Customize background and dot colors\n- Choose different effect types\n- Export images in various formats',
-    dotsNumber: 'Number of Dots',
+    description: `Advanced blurry background generator, compared to the common linear or radial gradient background, it can generate more modern background effects.
+Features:
+- Support two color mixing modes
+- Support noise effect
+- Support exporting in multiple formats
+- Support custom colors and parameters
+    `,
+    dotsNumber: 'Dots Number',
     dotsSize: 'Dot Size',
     effectType: 'Effect Type',
+    enableNoise: 'Enable Noise',
     exportFormat: 'Export Format',
     exportImage: 'Export Image',
     height: 'Height',
@@ -35,7 +42,11 @@ export default {
   collection: {
     gradient: {
       adjustColors: 'Adjust Colors',
-      description: 'A curated collection of gradient effects. You can:\n- Browse multiple preset effects\n- Adjust gradient parameters\n- Export as CSS or image\n- Save your favorite effects',
+      description: `Collected many gradient effects, you can:
+- Quickly preview multiple preset effects
+- Fine-tune gradient parameters
+- Export as CSS or image
+      `,
       exportCSS: 'Export CSS',
       exportImage: 'Export Image',
       gradientAngle: 'Gradient Angle',
@@ -45,15 +56,21 @@ export default {
     },
   },
   common: {
+    all: 'All',
     copied: 'Copied successfully!',
     copyFailed: 'Copy failed',
     help: 'Help',
+    select: 'Select',
     switchLanguage: 'Switch Language',
+    totalCount: ' (Total {count} items)',
   },
   gradient: {
     adjustColors: 'Adjust Colors',
     copyToClipboard: 'Copy to Clipboard',
-    description: 'Powerful gradient background generator. Features include:\n- Linear and radial gradients\n- Custom angles and colors\n- Export in multiple formats\n- Built-in preset styles',
+    description: `Random gradient background + noise generation tool. Features include:
+- Randomly generate pure color or gradient background, always find your favorite
+- Randomly calculate noise effect, generate a modern background effect
+- Support exporting in multiple formats and multiple sizes of images`,
     enableNoise: 'Enable Noise',
     exportCSS: 'Export CSS',
     exportFormat: 'Export Format',
@@ -74,8 +91,13 @@ export default {
     adjustColors: 'Adjust Colors',
     centerTransparent: 'Center Transparent',
     copyToClipboard: 'Copy to Clipboard',
-    description: 'A powerful pattern generation tool. Features include:\n- Multiple preset pattern styles\n- Custom colors and parameters\n- Support for SVG and CSS patterns\n- Export in various formats',
+    description: `Collected many background patterns, including css or svg patterns, you can:
+- Quickly preview multiple preset effects
+- Fine-tune pattern parameters
+- Export as CSS
+    `,
     edgeTransparent: 'Edge Transparent',
+    exportCSS: 'Export CSS',
     gradient: 'Gradient',
     horizontalOffset: 'Horizontal Offset',
     none: 'None',
@@ -88,5 +110,38 @@ export default {
     totalCount: 'Total {count} items',
     verticalOffset: 'Vertical Offset',
     zoom: 'Zoom',
+  },
+  size: {
+    '1_1': '1:1 - 800x800',
+    '1080x1080_ins': '1080x1080 - Instagram',
+    '1080x1920': '1080x1920 - Mobile Wallpaper',
+    '1170x2532': '1170x2532 - iPhone 12/13',
+    '1200x630_fb': '1200x630 - Facebook',
+    '1284x2778': '1284x2778 - iPhone 12/13 Pro Max',
+    '128x128': '128x128 - Large Icon',
+    '1366x768': '1366x768 - Laptop',
+    '1500x500_twitter': '1500x500 - Twitter Cover',
+    '16_9': '16:9 - 1280x720',
+    '16x16': '16x16 - Website Icon',
+    '1920x1080': '1920x1080 - FHD',
+    '2048x1152_youtube': '2048x1152 - YouTube Cover',
+    '21_9': '21:9 - 2560x1080',
+    '2560x1440': '2560x1440 - 2K',
+    '256x256': '256x256 - HD Icon',
+    '32x32': '32x32 - Icon',
+    '3840x2160': '3840x2160 - 4K',
+    '4_3': '4:3 - 1024x768',
+    '48x48': '48x48 - App Icon',
+    '640x1136': '640x1136 - iPhone SE',
+    '64x64': '64x64 - Large Icon',
+    '750x1334': '750x1334 - iPhone 8',
+    '800x800_wechat': '800x800 - WeChat Moments',
+    '828x1792': '828x1792 - iPhone XR',
+    'desktop': 'Desktop Wallpapers',
+    'icon': 'Icons',
+    'mobile': 'Mobile Wallpapers',
+    'ratio': 'Common Ratios',
+    'selectSize': 'Select size template',
+    'social': 'Social Media',
   },
 };

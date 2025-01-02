@@ -26,7 +26,7 @@ export function HelpDrawer({ namespace }: HelpDrawerProps) {
         </Button>
       </DrawerTrigger>
       <DrawerContent>
-        <div className="mx-auto w-full max-w-lg">
+        <div className="mx-auto w-full max-w-2xl pb-20 pt-10">
           <DrawerHeader>
             <DrawerTitle className="text-2xl font-bold">{t(`${namespace}.title`)}</DrawerTitle>
             <DrawerDescription className="mt-6 whitespace-pre-line text-base">
