@@ -18,8 +18,8 @@ interface Props {
 const { gridLayout, narrow, post } = Astro.props;
 const entry = await getEntry({ collection: 'blog', id: post.id });
 const hero = getImage(join('content/blog/', dirname(post.id), post.data.hero));
-const excerpt = getExcerpt(entry!.rendered.html!);
-const { timeToRead, wordCount } = getReadInfo(entry!.rendered.html!);
+const excerpt = getExcerpt(entry!.rendered!.html!);
+const { timeToRead, wordCount } = getReadInfo(entry!.rendered!.html!);
 const hasOverflow = narrow && post.data.title.length > 35;
 ---
 
