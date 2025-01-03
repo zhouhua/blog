@@ -57,7 +57,6 @@ function Blurry() {
       pointerColor: randomColor().toHex(),
       size: 0.8,
     },
-    // @ts-expect-error zod 类型错误
     resolver: zodResolver(formSchema),
   });
   const formValues = form.watch();

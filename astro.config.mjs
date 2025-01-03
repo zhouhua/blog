@@ -8,11 +8,10 @@ import vercel from '@astrojs/vercel/serverless';
 import sentry from '@sentry/astro';
 import { transformerMetaHighlight } from '@shikijs/transformers';
 import mediaCard from '@zhouhua-dev/remark-media-card';
-import { defineConfig } from 'astro/config';
-import devtoolBreakpoints from 'astro-devtool-breakpoints';
 import pageInsight from 'astro-page-insight';
 import remarkDescription from 'astro-remark-description';
 import tailwindConfigViewer from 'astro-tailwind-config-viewer';
+import { defineConfig } from 'astro/config';
 import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math';
 
@@ -37,7 +36,6 @@ export default defineConfig({
       include: ['**/react/*'],
     }),
     pageInsight(),
-    devtoolBreakpoints(),
     tailwindConfigViewer(),
     sentry({
       dsn: 'https://3980dc24dd4a6cbe00ad71338a2f834c@o56440.ingest.us.sentry.io/4508126150656000',

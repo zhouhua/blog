@@ -64,7 +64,6 @@ function Gradient() {
       noiseFrequency: 0.65,
       opacity: 0.5,
     },
-    // @ts-expect-error ignore
     resolver: zodResolver(formSchema),
   });
   const formValues = form.watch();

@@ -19,16 +19,16 @@ import { getCollection, getEntry, render } from 'astro:content';
 import dayjs from 'dayjs';
 import sampleSize from 'lodash-es/sampleSize';
 
-const blogs = (await getCollection('blog'));
-const photos = (await getCollection('photos'));
-const journals = (await getCollection('journals'))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const blogs: CollectionEntry<'blog'>[] = await getCollection('blog');
+const photos: CollectionEntry<'photos'>[] = await getCollection('photos');
+const journals: CollectionEntry<'journals'>[] = (await getCollection('journals'))
+  .sort((a: CollectionEntry<'journals'>, b: CollectionEntry<'journals'>) => b.data.date.valueOf() - a.data.date.valueOf());
 const latestJournals: { journal: CollectionEntry<'journals'>; Content: AstroComponentFactory }[] = [];
 for (const journal of journals.slice(0, 5)) {
   const { Content } = await render(journal);
   latestJournals.push({ Content, journal });
 }
-const featuredBlogs = blogs
+const featuredBlogs: CollectionEntry<'blog'>[] = blogs
   .filter(blog => blog.data.featured)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const pairs: [CollectionEntry<'blog'>, CollectionEntry<'blog'>][] = featuredBlogs.reduce(
@@ -41,7 +41,7 @@ const pairs: [CollectionEntry<'blog'>, CollectionEntry<'blog'>][] = featuredBlog
   [],
 );
 type Temp = { path: string } & Omit<CustomPhotoType, 'height' | 'transformed' | 'width'>;
-const featuredImages = photos.reduce((list, item) => [
+const featuredImages: Temp[] = photos.reduce((list, item) => [
   ...list,
   ...item.data.list.filter(({ featured }) => featured).map(({ picture }) => ({
     alt: item.data.title,

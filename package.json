@@ -59,7 +59,6 @@
     "ahooks": "^3.8.4",
     "algoliasearch": "^5.18.0",
     "astro": "5.1.1",
-    "astro-devtool-breakpoints": "^0.3.0",
     "astro-page-insight": "^0.10.0",
     "astro-remark-description": "^1.1.2",
     "astro-tailwind-config-viewer": "^2.0.1",

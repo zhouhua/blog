@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Children, cloneElement, Fragment, isValidElement, type PropsWithChildren, useRef, type ReactNode } from "react";
+import React, { Children, Fragment, isValidElement, type PropsWithChildren, useRef, type ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
@@ -40,16 +40,18 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
           return child;
         }
         if (child.type === DockIcon) {
-          return cloneElement(child, {
-            ...child.props,
-            mouseX: mouseX,
-            magnification: magnification,
-            distance: distance,
+          const dockChild = child as React.ReactElement<DockIconProps>;
+          return React.cloneElement(dockChild, {
+            ...dockChild.props,
+            mouseX,
+            magnification,
+            distance,
           });
         } else if (child.type === Fragment) {
-          return cloneElement(child, {
-            ...child.props,
-            children: renderChildren(child.props.children),
+          const fragmentChild = child as React.ReactElement<{ children: React.ReactNode }>;
+          return React.cloneElement(fragmentChild, {
+            ...fragmentChild.props,
+            children: renderChildren(fragmentChild.props.children),
           });
         }
         return child;

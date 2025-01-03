@@ -76,7 +76,6 @@ function Blurry() {
       type: 'type1',
       zoom: 1,
     },
-    // @ts-expect-error ignore
     resolver: zodResolver(formSchema),
   });
   const formType = form.watch('type');

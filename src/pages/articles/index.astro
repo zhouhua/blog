@@ -1,12 +1,13 @@
 ---
+import type { CollectionEntry } from 'astro:content';
 import ArticlesPair from '@components/ArticlesPair.astro';
 import Container from '@components/Container.astro';
 import ListTitle from '@components/ListTitle.astro';
 import { BLOG } from '@consts';
 import PageLayout from '@layouts/PageLayout.astro';
-import { type CollectionEntry, getCollection } from 'astro:content';
+import { getCollection } from 'astro:content';
 
-const data = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const data: CollectionEntry<'blog'>[] = (await getCollection('blog')).sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => b.data.date.valueOf() - a.data.date.valueOf());
 const pairs: [CollectionEntry<'blog'>, CollectionEntry<'blog'>][] = data.reduce(
     (result: [CollectionEntry<'blog'>, CollectionEntry<'blog'>][], _, index, array) => {
       if (index % 2 === 0) {
