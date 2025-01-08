@@ -66,14 +66,22 @@ const excerpt = getExcerpt(html);
     {wordCount}个字 &bull; {timeToRead}分钟读完
   </ArticleTitle>
   {hero && (
-    <Picture
-      alt="hero"
-      class="hero relative z-10"
-      formats={['webp', 'jpg']}
-      sizes={`(max-width: 480px) 360px, (max-width: 720px) 640px, (max-width: 1280px) 1000px, (max-width: 1600px) 1280px, ${hero.width}px`}
-      src={hero}
-      widths={[360, 640, 1000, 1280, hero.width]}
-    />
+    <div class="relative w-fit h-fit">
+      <Picture
+        alt="hero"
+        class="hero relative z-10"
+        formats={['webp', 'jpg']}
+        sizes={`(max-width: 480px) 360px, (max-width: 720px) 640px, (max-width: 1280px) 1000px, (max-width: 1600px) 1280px, ${hero.width}px`}
+        src={hero}
+        widths={[360, 640, 1000, 1280, hero.width]}
+      />
+      {post.data.heroCopyright && (
+        <div
+          class="absolute bottom-0 right-0 bg-black text-white px-4 py-2 text-xs z-10 rounded-tl-lg"
+          set:html={post.data.heroCopyright}
+        />
+      )}
+    </div>
   )}
     <TracingBeam client:only="react" />
     <article class={cn(styles.ArticleBody)} id="ArticleContent">
