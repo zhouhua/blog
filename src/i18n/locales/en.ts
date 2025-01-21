@@ -62,7 +62,7 @@ Features:
     help: 'Help',
     select: 'Select',
     switchLanguage: 'Switch Language',
-    totalCount: ' (Total {count} items)',
+    totalCount: ' (Total {{count}} items)',
   },
   gradient: {
     adjustColors: 'Adjust Colors',
@@ -107,7 +107,7 @@ Features:
     rotate: 'Rotate',
     strokeWidth: 'Stroke Width',
     title: 'Pattern Generator',
-    totalCount: 'Total {count} items',
+    totalCount: 'Total {{count}} items',
     verticalOffset: 'Vertical Offset',
     zoom: 'Zoom',
   },

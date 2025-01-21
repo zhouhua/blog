@@ -63,7 +63,7 @@ export default {
     help: '帮助',
     select: '选择',
     switchLanguage: '切换语言',
-    totalCount: '（共 {count} 个）',
+    totalCount: '（共 {{count}} 个）',
   },
   gradient: {
     adjustColors: '调整颜色',
@@ -109,7 +109,7 @@ export default {
     rotate: '旋转',
     strokeWidth: '线宽',
     title: '图案生成器',
-    totalCount: '共 {count} 个',
+    totalCount: '共 {{count}} 个',
     verticalOffset: '垂直位移',
     zoom: '缩放',
   },
