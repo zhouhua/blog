@@ -144,6 +144,7 @@ function Blurry() {
   }, [width, height]);
 
   // 渲染圆形渐变
+  // eslint-disable-next-line react-hooks-extra/no-unnecessary-use-callback
   const drawCircle = useCallback((
     ctx: CanvasRenderingContext2D,
     x: number,
@@ -154,28 +155,15 @@ function Blurry() {
     const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
     const c = colord(color);
 
-    if (formType === 'type1') {
-      // 为 type1 模式优化渐变效果
-      const alpha = c.alpha();
-      gradient.addColorStop(0, c.toRgbString());
-      gradient.addColorStop(0.2, c.alpha(0.8 * alpha).toRgbString());
-      gradient.addColorStop(0.4, c.alpha(0.6 * alpha).toRgbString());
-      gradient.addColorStop(0.6, c.alpha(0.4 * alpha).toRgbString());
-      gradient.addColorStop(0.8, c.alpha(0.2 * alpha).toRgbString());
-      gradient.addColorStop(1, c.alpha(0).toRgbString());
-    }
-    else {
-      // type2 保持原有效果
-      gradient.addColorStop(0, color);
-      gradient.addColorStop(0.8, color);
-      gradient.addColorStop(1, c.alpha(0).toRgbString());
-    }
+    gradient.addColorStop(0, color);
+    gradient.addColorStop(0.8, color);
+    gradient.addColorStop(1, c.alpha(0).toRgbString());
 
     ctx.fillStyle = gradient;
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, Math.PI * 2);
     ctx.fill();
-  }, [formType]);
+  }, []);
 
   // 修改 renderToContext 函数，接收并返回生成参数
   const renderToContext = useCallback((
