@@ -6,6 +6,7 @@ tags:
   - 动画
 category: 技术
 hero: ./vedio-editing.jpg
+heroCopyright: Photo by <a href="https://unsplash.com/@_sanjeev_ngrj_?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Sanjeev Nagaraj</a> on <a href="https://unsplash.com/photos/black-laptop-computer-turned-on-displaying-music-player-u4bvBOOpZB4?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
 type: post
 featured: true
 date: 2024-04-24 10:00:00

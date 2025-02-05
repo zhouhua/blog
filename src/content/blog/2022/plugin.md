@@ -6,6 +6,7 @@ tags:
 category: 技术
 type: post
 hero: ./plugin.jpg
+heroCopyright: Photo by <a href="https://unsplash.com/@brina_blum?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Brina Blum</a> on <a href="https://unsplash.com/photos/black-usb-flash-drive-Bb_X4JgSqIM?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
 date: 2022-10-12 10:00:00
 ---
 
