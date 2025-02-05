@@ -5,6 +5,7 @@ tags:
   - 产品思维
 category: 产品
 hero: ./octalysis.jpg
+heroCopyright: Photo by <a href="https://unsplash.com/@kamil_switalski?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Kamil Switalski</a> on <a href="https://unsplash.com/photos/person-holding-white-and-black-game-controller-RDcJK13fu-k?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
 type: post
 featured: true
 date: 2023-04-07 10:00:00

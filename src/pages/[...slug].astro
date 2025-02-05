@@ -66,7 +66,7 @@ const excerpt = getExcerpt(html);
     {wordCount}个字 &bull; {timeToRead}分钟读完
   </ArticleTitle>
   {hero && (
-    <div class="relative w-fit h-fit">
+    <div class="flex flex-col items-center gap-2 relative">
       <Picture
         alt="hero"
         class="hero relative z-10"
@@ -77,7 +77,7 @@ const excerpt = getExcerpt(html);
       />
       {post.data.heroCopyright && (
         <div
-          class="text-palette-secondary leading-5 text-xs text-center mt-2"
+          class="text-palette-secondary leading-5 text-xs"
           set:html={post.data.heroCopyright}
         />
       )}

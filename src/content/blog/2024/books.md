@@ -4,6 +4,7 @@ tags:
   - 读书
 category: 阅读
 hero: ./books.jpg
+heroCopyright: Photo by <a href="https://unsplash.com/@esmiloenak?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Ishaq Robin</a> on <a href="https://unsplash.com/photos/the-letters-read-read-are-made-out-of-bookshelves-caND1D-Kh9Y?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
 type: post
 featured: true
 date: 2024-02-15 10:00:00
