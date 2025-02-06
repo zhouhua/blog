@@ -61,7 +61,6 @@ const Panel: FC<{
             initial={{ opacity: 0, y: 200 }}
             ref={ref}
           >
-            { /** @ts-expect-error deps version */}
             <InstantSearch indexName="blog" searchClient={searchClient}>
               <Configure
                 advancedSyntax

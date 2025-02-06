@@ -67,7 +67,6 @@ const Footer: FC = () => {
         'border-palette-bgAlt border-t-[1px] border-solid px-6 py-4',
       )}
     >
-      { /** @ts-expect-error deps version */}
       <PoweredBy
         classNames={{
           logo: 'h-[18px] mt-[3px] sm:h-3 md:h-4',

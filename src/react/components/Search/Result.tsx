@@ -189,7 +189,6 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                       <Highlight attribute="title" className="max-w-full" hit={hit} />
                     </h2>
                     <p className="line-clamp-2 overflow-ellipsis whitespace-normal text-sm leading-6">
-                      { /** @ts-expect-error deps version */}
                       <Snippet attribute="text" hit={hit} />
                     </p>
                   </a>
@@ -210,7 +209,6 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                         <Highlight attribute="title" className="max-w-full" hit={hit} />
                       </h2>
                       <p className="line-clamp-2 overflow-ellipsis whitespace-normal text-sm leading-6">
-                        { /** @ts-expect-error deps version */}
                         <Snippet attribute="text" hit={hit} />
                       </p>
                     </a>
