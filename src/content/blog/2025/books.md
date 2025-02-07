@@ -4,6 +4,7 @@ tags:
   - 读书
 category: 阅读
 type: post
+featured: true
 hero: ./books.jpg
 heroCopyright: Photo by <a href="https://unsplash.com/@sixteenmilesout?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Sixteen Miles Out</a> on <a href="https://unsplash.com/photos/white-ceramic-mug-on-white-book-GVhAezjtX-4?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
 date: 2025-01-30 10:00:00
