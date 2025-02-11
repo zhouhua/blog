@@ -362,23 +362,23 @@ feTurbulence 是 SVG 滤镜中用于生成噪点效果的核心元素。它内�
   `);
   ```
 
-  <iframe 
-    sandbox="allow-scripts allow-same-origin allow-presentation allow-forms allow-popups"
-    src="https://noise-examples.vercel.app/svg-turbulence" 
-    frameborder="0" 
-    dragable="false" 
-    allowfullscreen 
-    allow="encrypted-media" 
-    referrerpolicy 
-    style="border-radius:8px;height:1000px;width:750px;"
-  ></iframe>
+<iframe 
+  sandbox="allow-scripts allow-same-origin allow-presentation allow-forms allow-popups"
+  src="https://noise-examples.vercel.app/svg-turbulence" 
+  frameborder="0" 
+  dragable="false" 
+  allowfullscreen 
+  allow="encrypted-media" 
+  referrerpolicy 
+  style="border-radius:8px;height:1000px;width:750px;"
+></iframe>
 
-  对比说明：
+对比说明：
 
-  | 噪声类型 | 特点 | 适合模拟的效果 |
-  | -------- | ---- | -------------- |
-  | 分形噪声（fractalNoise） | 产生更平滑、连续的噪声图案，各个尺度的细节过渡自然 | 云层、雾气效果，地形起伏，大理石纹理，磨砂玻璃，纸张纹理 |
-  | 湍流噪声（turbulence） | 产生更锐利、不规则的噪声图案，具有明显的方向性和流动感 | 火焰、烟雾效果，水波纹，电流、闪电，能量场，动态纹理 |
+| 噪声类型 | 特点 | 适合模拟的效果 |
+| -------- | ---- | -------------- |
+| 分形噪声（fractalNoise） | 产生更平滑、连续的噪声图案，各个尺度的细节过渡自然 | 云层、雾气效果，地形起伏，大理石纹理，磨砂玻璃，纸张纹理 |
+| 湍流噪声（turbulence） | 产生更锐利、不规则的噪声图案，具有明显的方向性和流动感 | 火焰、烟雾效果，水波纹，电流、闪电，能量场，动态纹理 |
 
 
 > 上述效果可以通过调整 baseFrequency、numOctaves 等参数，以及配合其他 SVG 滤镜（如 feColorMatrix、feDisplacementMap 等）来获得更丰富的视觉效果。
@@ -418,12 +418,12 @@ feTurbulence 是 SVG 滤镜中用于生成噪点效果的核心元素。它内�
   allowfullscreen 
   allow="encrypted-media" 
   referrerpolicy 
-  style="border-radius:8px;height:1000px;width:750px;"
+  style="border-radius:8px;height:1280px;width:750px;"
 ></iframe>
 
 ### 更多示例
 
-#### 毛玻璃效果：
+#### 毛玻璃效果
 
 <iframe 
   sandbox="allow-scripts allow-same-origin allow-presentation allow-forms allow-popups"
@@ -433,7 +433,20 @@ feTurbulence 是 SVG 滤镜中用于生成噪点效果的核心元素。它内�
   allowfullscreen 
   allow="encrypted-media" 
   referrerpolicy 
-  style="border-radius:8px;height:1000px;width:750px;"
+  style="border-radius:8px;height:1400px;width:750px;"
+></iframe>
+
+#### 纸张纹理效果
+
+<iframe 
+  sandbox="allow-scripts allow-same-origin allow-presentation allow-forms allow-popups"
+  src="https://noise-examples.vercel.app/paper-texture" 
+  frameborder="0" 
+  dragable="false" 
+  allowfullscreen 
+  allow="encrypted-media" 
+  referrerpolicy 
+  style="border-radius:8px;height:600px;width:750px;"
 ></iframe>
 
 ……
