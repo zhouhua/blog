@@ -12,7 +12,7 @@ export default {
   plugins: [
     require('@tailwindcss/typography'),
     require('tailwindcss-animate'),
-    addIconSelectors(['fa6-solid', 'oui', 'vaadin', 'heroicons', 'akar-icons', 'iconamoon', 'material-symbols', 'carbon', 'simple-icons', 'ri', 'mdi', 'maki', 'uil', 'bi', 'lucide-lab', 'ph']),
+    addIconSelectors(['fa6-solid', 'oui', 'vaadin', 'heroicons', 'akar-icons', 'iconamoon', 'material-symbols', 'carbon', 'simple-icons', 'ri', 'mdi', 'maki', 'uil', 'bi', 'lucide-lab', 'ph', 'lucide']),
     require('daisyui'),
   ],
   theme: {

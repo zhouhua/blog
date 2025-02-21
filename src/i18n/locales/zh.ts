@@ -41,6 +41,20 @@ export default {
     width: '宽度',
   },
   collection: {
+    contrast: {
+      background: '背景色',
+      colorSettings: '颜色设置',
+      copyToClipboard: '复制到剪贴板',
+      description: `收集了许多对比色组合，你可以：
+- 快速预览多种预设效果
+- 微调颜色参数
+- 导出为 CSS
+      `,
+      exportCSS: '导出 CSS',
+      foreground: '前景色',
+      swapColors: '交换颜色',
+      title: '对比色集合',
+    },
     gradient: {
       adjustColors: '调整颜色',
       description: `收集了许多渐变效果，你可以：

@@ -11,7 +11,7 @@ import { HelpCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 interface HelpDrawerProps {
-  namespace: 'animateBlurry' | 'blurry' | 'collection.gradient' | 'gradient' | 'pattern';
+  namespace: 'animateBlurry' | 'blurry' | 'collection.contrast' | 'collection.gradient' | 'gradient' | 'pattern';
 }
 
 export function HelpDrawer({ namespace }: HelpDrawerProps) {

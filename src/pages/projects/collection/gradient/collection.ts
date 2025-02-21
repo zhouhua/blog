@@ -1,3 +1,8 @@
+import { colord, extend } from 'colord';
+import labPlugin from 'colord/plugins/lab';
+
+extend([labPlugin]);
+
 interface GradientCollection {
   colors: [string, ...string[]];
   type?: 'linear' | 'radial';
@@ -9,17 +14,14 @@ const collections: [GradientCollection, ...GradientCollection[]] = [
   { colors: ['#fad0c4', '#ffd1ff'], rotate: 0 },
   { colors: ['#ffecd2', '#fcb69f'], rotate: 90 },
   { colors: ['#ff9a9e', '#fecfef'], rotate: 0 },
-  { colors: ['#f6d365', '#fda085'], rotate: 120 },
+  { colors: ['#FB5B4B', '#FBC726'], rotate: 120 },
   { colors: ['#fbc2eb', '#e6dee9'], rotate: 0 },
   { colors: ['#a1c4fd', '#c2e9fb'], rotate: 120 },
   { colors: ['#84fab0', '#8fd3f4'], rotate: 120 },
   { colors: ['#e0c3fc', '#8ec5fc'], rotate: 120 },
   { colors: ['#f093fb', '#f5576c'], rotate: 120 },
-  { colors: ['#fdfbfb', '#ebedee'], rotate: 120 },
-  { colors: ['#4facfe', '#00f2fe'], rotate: 90 },
   { colors: ['#fa709a', '#fee140'], rotate: 90 },
   { colors: ['#a8edea', '#fed6e3'], rotate: 0 },
-  { colors: ['#f5f7fa', '#c3cfe2'], rotate: 120 },
   { colors: ['#16d9e3', '#30c7ec', '#46aef7'], type: 'radial' },
   { colors: ['#fdfcfb', '#e2d1c3'], rotate: 120 },
   { colors: ['#89f7fe', '#66a6ff'], rotate: 120 },
@@ -34,9 +36,7 @@ const collections: [GradientCollection, ...GradientCollection[]] = [
   { colors: ['#fff1eb', '#ace0f9'], rotate: 0 },
   { colors: ['#eea2a2', '#bbc1bf', '#57c6e1', '#b49fda', '#7ac5d8'], rotate: 90 },
   { colors: ['#c471f5', '#fa71cd'], rotate: 0 },
-  { colors: ['#48c6ef', '#6f86d6'], rotate: 0 },
   { colors: ['#feada6', '#f5efef'], rotate: 0 },
-  { colors: ['#e6e9f0', '#eef1f5'], rotate: 0 },
   { colors: ['#accbee', '#e7f0fd'], rotate: 0 },
   { colors: ['#e9defa', '#fbfcdb'], rotate: 0 },
   { colors: ['#c1dfc4', '#deecdd'], rotate: 0 },
@@ -48,16 +48,13 @@ const collections: [GradientCollection, ...GradientCollection[]] = [
   { colors: ['#88d3ce', '#6e45e2'], rotate: 0 },
   { colors: ['#d9afd9', '#97d9e1'], rotate: 0 },
   { colors: ['#93a5cf', '#e4efe9'], rotate: 45 },
-  { colors: ['#92fe9d', '#00c9ff'], rotate: 0 },
   { colors: ['#ff758c', '#ff7eb3'], rotate: 90 },
   { colors: ['#868f96', '#596164'], rotate: 90 },
   { colors: ['#c79081', '#dfa579'], rotate: 0 },
   { colors: ['#8baaaa', '#ae8b9c'], rotate: 45 },
   { colors: ['#b721ff', '#21d4fd'], rotate: -20 },
-  { colors: ['#d5d4d0', '#eeeeec', '#efeeec', '#e9e9e7'], rotate: 0 },
   { colors: ['#09203f', '#537895'], rotate: 0 },
   { colors: ['#ddd6f3', '#faaca8'], rotate: -20 },
-  { colors: ['#f3e7e9', '#e3eeff'], rotate: 0 },
   { colors: ['#c4c5c7', '#dcdddf', '#ebebeb'], rotate: 0 },
   { colors: ['#dad4ec', '#f3e7e9'], rotate: 0 },
   { colors: ['#e8198b', '#c7eafd'], rotate: 0 },
@@ -81,6 +78,61 @@ const collections: [GradientCollection, ...GradientCollection[]] = [
   { colors: ['#69EACB', '#EACCF8', '#6654F1'], rotate: -225 },
   { colors: ['#231557', '#44107A', '#FF1361', '#FFF800'], rotate: -225 },
   { colors: ['#3D4E81', '#5753C9', '#6E7FF3'], rotate: -225 },
+  { colors: ['#EF6837', '#114468'], rotate: 90 },
+  { colors: ['#217B9C', '#210C52'], rotate: 90 },
+  { colors: ['#EC6476', '#111D68'], rotate: 90 },
+  { colors: ['#7925B0', '#091142'], rotate: 90 },
+  { colors: ['#C8447D', '#005F66'], rotate: 90 },
+  { colors: ['#CCA819', '#0E3457'], rotate: 90 },
+  { colors: ['#89338D', '#072939'], rotate: 90 },
+  { colors: ['#52AB21', '#001516'], rotate: 90 },
+  { colors: ['#740E00', '#051F22'], rotate: 90 },
+  { colors: ['#05E4AB', '#95E061'], rotate: 120 },
+  { colors: ['#4B19AC', '#A2AAF5'], rotate: 120 },
+  { colors: ['#FC9B68', '#FDCD79'], rotate: 120 },
+  { colors: ['#3A1272', '#FF5F3F'], rotate: 120 },
+  { colors: ['#7DAFC2', '#2F4F4F'], rotate: 270 },
+  { colors: ['#CC9999', '#663333'], rotate: 45 },
+  { colors: ['#233A4E', '#9C6DB0'], rotate: 180 },
+  { colors: ['#0D0D1B', '#F88973'], rotate: 45 },
+  { colors: ['#4A3A34', '#C990AB'], rotate: 90 },
+  { colors: ['#F5CB86', '#7E5936'], rotate: 60 },
+  { colors: ['#333333', '#76CCB1'], rotate: 0 },
+  { colors: ['#FD8785', '#8C4351'], rotate: 90 },
 ];
+
+function areGradientsSimilar(a: GradientCollection, b: GradientCollection): [boolean, number] {
+  if (a.colors.length === b.colors.length) {
+    const forwardDeltas = a.colors.map((color, i) => colord(color).delta(b.colors[i]));
+    const reverseDeltas = a.colors.map((color, i) => colord(color).delta(b.colors[b.colors.length - 1 - i]));
+
+    const maxForwardDelta = Math.max(...forwardDeltas);
+    const maxReverseDelta = Math.max(...reverseDeltas);
+
+    const minDelta = Math.min(maxForwardDelta, maxReverseDelta);
+    return [minDelta < 0.09, minDelta];
+  }
+
+  const minLength = Math.min(a.colors.length, b.colors.length);
+  const deltas = a.colors.slice(0, minLength).map((color, i) =>
+    colord(color).delta(b.colors[i]));
+  const maxDelta = Math.max(...deltas);
+
+  return [maxDelta < 0.09, maxDelta];
+}
+
+collections.forEach((gradient1, i) => {
+  collections.slice(i + 1).forEach((gradient2, j) => {
+    const [isSimilar, similarity] = areGradientsSimilar(gradient1, gradient2);
+    if (isSimilar) {
+      const similarityPercent = ((1 - similarity) * 100).toFixed(1);
+      console.warn(
+        `发现相似的渐变组合 (相似度: ${similarityPercent}%):\n`
+        + `组合 ${i + 1}: ${JSON.stringify(gradient1)}\n`
+        + `组合 ${j + i + 2}: ${JSON.stringify(gradient2)}`,
+      );
+    }
+  });
+});
 
 export default collections;

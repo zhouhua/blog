@@ -40,6 +40,20 @@ Features:
     width: 'Width',
   },
   collection: {
+    contrast: {
+      background: 'Background Color',
+      colorSettings: 'Color Settings',
+      copyToClipboard: 'Copy to Clipboard',
+      description: `Collected many contrast color combinations, you can:
+- Quickly preview multiple preset effects
+- Fine-tune color parameters
+- Export as CSS
+      `,
+      exportCSS: 'Export CSS',
+      foreground: 'Foreground Color',
+      swapColors: 'Swap Colors',
+      title: 'Contrast Color Collection',
+    },
     gradient: {
       adjustColors: 'Adjust Colors',
       description: `Collected many gradient effects, you can:

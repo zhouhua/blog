@@ -50,6 +50,11 @@ const data: DockerItem[][] = [
       link: '/projects/collection/pattern',
       name: 'Pattern Collection',
     },
+    {
+      icon: <span className="size-4 iconify lucide--swatch-book" />,
+      link: '/projects/collection/contrast',
+      name: 'Clashing Colors Collection',
+    },
   ],
   [
     {

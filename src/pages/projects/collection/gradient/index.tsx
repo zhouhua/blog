@@ -41,19 +41,19 @@ function generateGradientString({ colors, rotate, type }: {
   }
 }
 
-collections.sort((a, b) => {
-  const color1 = colord(a.colors[0]).toHsl();
-  const color2 = colord(b.colors[0]).toHsl();
-  if (color1.h !== color2.h) {
-    return color1.h - color2.h;
-  }
-  else if (color1.s !== color2.s) {
-    return color1.s - color2.s;
-  }
-  else {
-    return color1.l - color2.l;
-  }
-});
+// collections.sort((a, b) => {
+//   const color1 = colord(a.colors[0]).toHsl();
+//   const color2 = colord(b.colors[0]).toHsl();
+//   if (color1.h !== color2.h) {
+//     return color1.h - color2.h;
+//   }
+//   else if (color1.s !== color2.s) {
+//     return color1.s - color2.s;
+//   }
+//   else {
+//     return color1.l - color2.l;
+//   }
+// });
 
 function Gradient() {
   const { t } = useTranslation();

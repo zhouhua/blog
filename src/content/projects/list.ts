@@ -94,10 +94,22 @@ const list: Project[] = [
     type: 'tool',
   },
   {
+    description: '收集一些撞色配色',
+    link: '/projects/collection/contrast',
+    name: 'Clashing Colors Collection',
+    type: 'tool',
+  },
+  {
     description: '日期图片/图标生成器',
     link: 'https://github.com/zhouhua/image-generator',
     name: 'Date Image Generator',
     type: 'github',
+  },
+  {
+    description: 'SVG FE Turbulence 滤镜效果演示',
+    link: 'https://noise-examples.vercel.app/',
+    name: 'SVG FETurbulence Demo',
+    type: 'web',
   },
 ];
 export default list;
