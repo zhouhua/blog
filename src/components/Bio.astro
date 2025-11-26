@@ -10,6 +10,8 @@ interface Props {
 const { hideText = false } = Astro.props;
 ---
 <style lang="postcss">
+@reference '../styles/global.css';
+
 .BioAvatar {
   background: rgba(0, 0, 0, 0.25);
   margin: 10px 26px 10px 10px;
@@ -38,7 +40,7 @@ const { hideText = false } = Astro.props;
   max-width: 430px;
   line-height: 1.45;
   a {
-    @apply text-palette-gray underline;
+    @apply text-gray underline;
     transition: color 0.25s var(--ease-in-out-quad);
   }
 }
@@ -57,7 +59,7 @@ const { hideText = false } = Astro.props;
       </div>
     </div>
     {!hideText && (
-      <p class={cn('BioText', 'colorModeTransition text-palette-gray text-sm')}>
+      <p class={cn('BioText', 'colorModeTransition text-gray text-sm')}>
         周骅，前端研发，目前就职于字节跳动。
       </p>
     )}

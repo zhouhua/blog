@@ -1,7 +1,9 @@
+@reference './global.css';
+
 .ArticleBody {
   padding: 120px 0 35px;
   transition: background 0.2s linear;
-  @apply sm:px-5 sm:py-14;
+  @apply px-5 py-14;
   @apply font-serif;
   @apply flex flex-col justify-center;
 }
@@ -10,7 +12,7 @@
     @apply block z-0 mx-auto h-auto max-w-full rounded-[5px];
   }
   :global(.fullImage) {
-    @apply pointer-events-none relative mx-auto mb-[60px] mt-[25px] max-w-[100vw] sm:-mx-5 sm:w-screen;
+    @apply pointer-events-none relative mx-auto mb-[60px] mt-[25px] max-w-[100vw] -mx-5 w-screen;
     img {
       @apply rounded-none;
     }
@@ -23,33 +25,33 @@
   h4,
   h5,
   h6 {
-    @apply mx-auto my-0 font-sans font-bold text-palette-primary;
+    @apply mx-auto my-0 font-sans font-bold text-primary;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
   }
   h1 {
     @apply break-words text-[52px] leading-[1.15];
-    @apply md:text-[38px] md:leading-[1.2];
-    @apply sm:text-[32px] sm:leading-[1.3];
+    @apply sm:text-[38px] sm:leading-[1.2];
+    @apply text-[32px] leading-[1.3];
   }
   h2 {
     @apply break-words text-[32px] leading-[1.33];
-    @apply md:text-[21px];
-    @apply sm:text-2xl sm:leading-[1.45];
+    @apply sm:text-[21px];
+    @apply text-2xl leading-[1.45];
   }
   h3 {
     @apply break-words text-2xl leading-[1.45];
-    @apply sm:text-[22px];
+    @apply text-[22px];
   }
   h4,
   h5 {
     @apply break-words text-xl leading-[1.75];
-    @apply sm:text-base;
+    @apply text-base;
   }
   h6 {
     @apply break-words text-base leading-[1.6];
-    @apply sm:text-sm;
+    @apply text-sm;
   }
   h1,
   h1 *,
@@ -73,13 +75,13 @@
   h4,
   h5,
   h6 {
-    @apply w-full max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
+    @apply w-full max-w-[486px] sm:max-w-[507px];
   }
 }
 .ArticleBody {
   a {
-    @apply text-palette-accent no-underline;
-    @apply visited:text-palette-accent visited:opacity-80;
+    @apply text-accent no-underline;
+    @apply visited:text-accent visited:opacity-80;
     @apply hover:underline focus:underline;
     transition:
       background 0.25s var(--ease-in-out-quad),
@@ -88,8 +90,8 @@
 }
 .ArticleBody {
   blockquote {
-    @apply relative mx-auto mb-12 mt-2.5 w-full italic text-palette-secondary sm:mb-9;
-    @apply max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
+    @apply relative mx-auto mb-9 mt-2.5 w-full italic text-secondary;
+    @apply max-w-[486px] sm:max-w-[507px];
     @apply px-4;
     transition:
       background 0.25s var(--ease-in-out-quad),
@@ -105,7 +107,7 @@
     }
     &::after {
       content: '\201D';
-      @apply absolute left-full top-full -ml-6 -mt-12 text-[96px] text-palette-bgAlt sm:-ml-8 sm:-mt-8 sm:text-[72px];
+      @apply absolute left-full top-full -ml-8 -mt-8 text-[72px] text-bg-alt;
     }
   }
 }
@@ -114,27 +116,27 @@
   dl,
   ol {
     padding: 15px 0 30px 40px;
-    @apply relative mx-auto my-0 w-full list-none text-lg text-palette-primary;
-    @apply max-w-[680px] sm:max-w-[486px] sm:pl-7 md:max-w-[507px];
+    @apply relative mx-auto my-0 w-full list-none text-lg text-primary;
+    @apply max-w-[486px] pl-7 sm:max-w-[507px];
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
     & > li {
-      @apply relative pb-3 sm:pl-2;
+      @apply relative pb-3 pl-2;
       p {
-        @apply sm:p-0;
+        @apply p-0;
       }
     }
     li::before {
-      @apply absolute left-[-30px] top-2.5 inline-block sm:pl-0;
-      @apply text-palette-primary;
+      @apply absolute left-[-30px] top-2.5 inline-block pl-0;
+      @apply text-primary;
       transition:
         background 0.25s var(--ease-in-out-quad),
         color 0.25s var(--ease-in-out-quad);
     }
   }
   ul > li::before {
-    @apply h-2 w-2 bg-palette-secondary content-[''];
+    @apply h-2 w-2 bg-secondary content-[''];
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -143,12 +145,12 @@
     counter-reset: list;
   }
   ol > li::before {
-    @apply top-0 font-semibold w-10 sm:w-7 -left-10 sm:-left-7;
+    @apply top-0 font-semibold w-7 -left-7;
     counter-increment: list;
     content: counter(list) '.';
   }
   dl {
-    @apply mb-10 bg-palette-card;
+    @apply mb-10 bg-card;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -157,9 +159,9 @@
 .ArticleBody {
   p:not(:where(svg p)),
   :global(.math-display) {
-    @apply w-full text-lg leading-[1.756] text-palette-primary;
-    @apply max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
-    @apply mx-auto mb-[35px] mt-0 sm:mb-[25px] sm:py-0 sm:text-base sm:leading-7;
+    @apply w-full text-lg leading-[1.756] text-primary;
+    @apply max-w-[486px] sm:max-w-[507px];
+    @apply mx-auto mb-[25px] mt-0 py-0 text-base leading-7;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -173,8 +175,9 @@
     pre.astro-code {
       @apply mx-auto w-full max-w-[744px];
       @apply daisy-mockup-code;
-      @apply my-0 overflow-auto p-8 pl-16 md:pl-10 sm:pl-8 pt-6 text-[14px] leading-[20px];
-      @apply bg-prism-background dark:bg-dark-prism-background font-monospace;
+      @apply my-0 overflow-auto p-8 pl-8 sm:pl-10 pt-6 text-[14px] leading-[20px];
+      @apply bg-prism-background dark:bg-dark-prism-background;
+      font-family: var(--font-family-monospace);
       @apply mb-[50px] mt-[15px];
       transition:
         background 0.25s var(--ease-in-out-quad),
@@ -191,7 +194,7 @@
       .line {
         &::before,
         &::after {
-          @apply absolute top-0 h-full w-16 md:w-10 sm:w-8;
+          @apply absolute top-0 h-full w-8 sm:w-10;
         }
         &::before {
           @apply left-0 -translate-x-full;
@@ -203,10 +206,10 @@
           @apply right-0 translate-x-full;
         }
         &.highlighted {
-          @apply bg-palette-bgAlt/20 w-full;
+          @apply bg-bg-alt/20 w-full;
           &::before,
           &::after {
-            @apply bg-palette-bgAlt/20;
+            @apply bg-bg-alt/20;
           }
           &::after {
             content: '';
@@ -218,8 +221,9 @@
       }
     }
     :not(pre.astro-code) > code {
-      @apply rounded px-1 py-0.5 bg-palette-accent/20;
-      @apply font-monospace font-normal text-palette-accent text-[0.9em];
+      @apply rounded px-1 py-0.5 bg-accent/20;
+      @apply font-normal text-accent text-[0.9em];
+      font-family: var(--font-family-monospace);
       transition:
         background 0.25s var(--ease-in-out-quad),
         color 0.25s var(--ease-in-out-quad);
@@ -231,15 +235,15 @@
     @apply table;
     @apply relative mx-auto mb-[85px] mt-[45px] w-auto overflow-hidden;
     @apply border-separate rounded-[5px] border border-solid;
-    @apply border-palette-bgAlt bg-palette-card text-palette-secondary;
-    @apply border-collapse sm:mb-[55px] sm:mt-[15px] sm:max-w-[480px] md:mb-[65px] md:mt-[25px];
+    @apply border-bg-alt bg-card text-secondary;
+    @apply border-collapse mb-[55px] mt-[15px] max-w-[480px] sm:mb-[65px] sm:mt-[25px];
     line-height: 1.65;
     max-width: 960px;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
     thead {
-      @apply relative border-collapse text-left font-sans font-semibold text-palette-primary;
+      @apply relative border-collapse text-left font-sans font-semibold text-primary;
       line-height: 1.756;
       transition:
         background 0.25s var(--ease-in-out-quad),
@@ -247,17 +251,17 @@
     }
     thead td,
     th {
-      @apply bg-palette-card px-[30px] py-[18px] text-base;
-      @apply sm:px-5 sm:py-3.5 sm:text-sm md:px-5 md:py-3.5;
+      @apply bg-card px-[30px] py-[18px] text-base;
+      @apply px-5 py-3.5 text-sm sm:px-5 sm:py-3.5;
       transition:
         background 0.25s var(--ease-in-out-quad),
         color 0.25s var(--ease-in-out-quad);
     }
     tbody {
       td {
-        @apply border border-solid border-palette-bgAlt;
-        @apply break-words bg-palette-card px-[30px] py-[15px] text-base;
-        @apply sm:px-5 sm:py-3.5 sm:text-sm md:px-5 md:py-3.5;
+        @apply border border-solid border-bg-alt;
+        @apply break-words bg-card px-[30px] py-[15px] text-base;
+        @apply px-5 py-3.5 text-sm sm:px-5 sm:py-3.5;
         transition:
           background 0.25s var(--ease-in-out-quad),
           color 0.25s var(--ease-in-out-quad);
@@ -269,7 +273,7 @@
   :global(.captain),
   figcaption,
   caption {
-    @apply -mt-6 mb-6 w-full pt-1.5 text-center text-sm text-palette-gray;
+    @apply -mt-6 mb-6 w-full pt-1.5 text-center text-sm text-gray;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -296,8 +300,8 @@
     @apply mb-4;
   }
   hr {
-    @apply relative mx-auto my-12 w-full max-w-[680px] text-palette-bgAlt;
-    @apply sm:max-w-[486px] sm:px-5 sm:py-0 md:max-w-[507px];
+    @apply relative mx-auto my-12 w-full max-w-[680px] text-bg-alt;
+    @apply max-w-[486px] px-5 py-0 sm:max-w-[507px];
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -313,9 +317,9 @@
 }
 .ArticleBody {
   :global(.callout) {
-    @apply mx-auto mb-[35px] mt-0 p-4 pl-12 sm:mb-[25px];
-    @apply w-full max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
-    @apply bg-palette-bgAlt/20;
+    @apply mx-auto mb-[35px] mt-0 p-4 pl-12 mb-[25px];
+    @apply w-full max-w-[486px] sm:max-w-[507px];
+    @apply bg-bg-alt/20;
     h2,
     h3,
     h4,

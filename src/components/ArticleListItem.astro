@@ -7,6 +7,7 @@ import { cn } from '@lib/utils';
 import HoverEffect from '@react/components/HoverEffect';
 import { Image } from 'astro:assets';
 import { getEntry } from 'astro:content';
+import '../styles/global.css';
 
 
 interface Props {
@@ -24,6 +25,8 @@ const hasOverflow = narrow && post.data.title.length > 35;
 ---
 
 <style lang="postcss">
+@reference '../styles/global.css';
+
 .ArticleLink {
   transition: transform 0.33s var(--ease-out-quart);
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
@@ -36,12 +39,12 @@ const hasOverflow = narrow && post.data.title.length > 35;
   }
   &:hover h2,
   &:focus h2 {
-    @apply text-palette-accent;
+    @apply text-accent;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
   }
-  @media (max-width: theme(screens.sm.max)) {
+  @media (max-width: 640px) {
     &:hover .ImageContainer {
       transform: none;
       box-shadow: initial;
@@ -58,24 +61,24 @@ const hasOverflow = narrow && post.data.title.length > 35;
   grid-column-gap: 96px;
   grid-template-rows: 1;
   margin-bottom: 50px;
-  @media (max-width: theme(screens.lg.max)) and (min-width: theme(screens.lg.min)) {
+  @media (max-width: 1024px) and (min-width: 769px) {
     grid-column-gap: 24px;
     grid-template-columns: 1fr 1fr;
   }
-  @media (max-width: theme(screens.md.max)) and (min-width: theme(screens.md.min)) {
+  @media (max-width: 768px) and (min-width: 640px) {
     grid-column-gap: 24px;
     grid-template-columns: 2fr 3fr;
   }
-  @media (max-width: theme(screens.sm.max)) {
+  @media (max-width: 640px) {
     box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
     grid-template-columns: 1fr;
   }
 }
-@media (max-width: theme(screens.sm.max)) {
+@media (max-width: 640px) {
   .listItemRow {
-    @apply bg-palette-card;
+    @apply bg-card;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -83,7 +86,7 @@ const hasOverflow = narrow && post.data.title.length > 35;
 }
 .listItemTile {
   @apply relative;
-  @media (max-width: theme(screens.sm.max)) {
+  @media (max-width: 640px) {
     margin-bottom: 60px;
     margin-bottom: 40px;
     box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
@@ -91,9 +94,9 @@ const hasOverflow = narrow && post.data.title.length > 35;
     border-bottom-left-radius: 5px;
   }
 }
-@media (max-width: theme(screens.sm.max)) {
+@media (max-width: 640px) {
   .listItemTile {
-    @apply bg-palette-card;
+    @apply bg-card;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -110,7 +113,7 @@ const hasOverflow = narrow && post.data.title.length > 35;
   & > div {
     height: 100%;
   }
-  @media (max-width: theme(screens.sm.max)) {
+  @media (max-width: 640px) {
     overflow: hidden;
     margin-bottom: 0;
     box-shadow: none;
@@ -124,19 +127,19 @@ const hasOverflow = narrow && post.data.title.length > 35;
   }
 }
 .limitToTwoLines {
-  @apply line-clamp-2 text-ellipsis whitespace-normal sm:line-clamp-3;
+  @apply line-clamp-3 text-ellipsis whitespace-normal;
   overflow-wrap: normal;
 }
 .Title {
-  @apply text-palette-primary font-sans font-bold;
+  @apply text-primary font-sans font-bold;
   @apply leading-[1.33];
-  @apply md:text-[21px];
-  @apply sm:text-2xl sm:leading-[1.45];
-  @apply text-[21px] sm:mb-[10px] sm:px-5 sm:pb-0 sm:pt-[30px] md:mb-[15px];
+  @apply sm:text-[21px];
+  @apply text-2xl leading-[1.45];
+  @apply text-[21px] mb-[10px] px-5 pb-0 pt-[30px] sm:mb-[15px];
   transition: color 0.3s ease-in-out;
 }
 .Excerpt {
-  @media (max-width: theme(screens.sm.max)) {
+  @media (max-width: 640px) {
     display: -webkit-box;
   }
 }
@@ -145,7 +148,7 @@ const hasOverflow = narrow && post.data.title.length > 35;
 <a
   class={cn(
     'ArticleLink',
-    'relative left-0 top-0 z-[1] block h-full w-full rounded-[5px]',
+    'relative left-0 top-0 z-1 block h-full w-full rounded-[5px]',
   )}
   href={`/${post.id}`}
 >
@@ -173,8 +176,8 @@ const hasOverflow = narrow && post.data.title.length > 35;
         class={cn(
           'Excerpt',
           'limitToTwoLines',
-          'mb-2.5 font-serif text-base text-palette-gray',
-          'colorModeTransition sm:mb-5 sm:max-w-full sm:px-5 sm:py-0',
+          'mb-2.5 font-serif text-base text-gray',
+          'colorModeTransition mb-5 max-w-full px-5 py-0',
         )}
         style={{
           display: `${hasOverflow && gridLayout === 'tiles' ? 'none' : 'box'}`,
@@ -182,7 +185,7 @@ const hasOverflow = narrow && post.data.title.length > 35;
       >
         {excerpt}
       </p>
-      <div class="colorModeTransition text-base text-palette-gray opacity-60 sm:max-w-full sm:px-5 sm:pb-[30px] sm:pt-0">
+      <div class="colorModeTransition text-base text-gray opacity-60 max-w-full px-5 pb-[30px] pt-0">
         {dayjs(post.data.date).fromNow()} · {wordCount} 个字 ·{' '}
         {timeToRead} 分钟读完
       </div>

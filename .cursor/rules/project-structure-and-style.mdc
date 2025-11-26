@@ -1,0 +1,37 @@
+# 项目结构与代码风格说明
+
+## 项目结构
+
+- 本项目为 [https://zhouhua.site](https://zhouhua.site) 的源码，采用 monorepo 风格，主要目录如下：
+  - `src/`：主代码目录，包含 assets、components、content、layouts、lib、pages、react、styles 等子目录。
+  - `public/`：静态资源目录。
+  - `components.json`、`astro.config.mjs`、`package.json` 等为配置文件。
+- 内容型页面和文章主要位于 `src/content/`，支持多年份、分类。
+- React 相关组件位于 `src/react/`，Astro 组件位于 `src/components/`。
+- 配置和工具相关文件集中在根目录和 `src/lib/`。
+
+## 代码风格
+
+- 统一使用 Prettier 进行格式化，主要规则：
+  - 单引号（singleQuote: true）
+  - 结尾分号（semi: true）
+  - 每行最大长度 120 字符（printWidth: 120）
+  - 使用 2 空格缩进（tabWidth: 2，useTabs: false）
+  - 对象属性加逗号（trailingComma: 'all'）
+  - 支持 Astro、TailwindCSS 插件
+- ESLint 规则基于 `@antfu/eslint-config`，主要风格包括：
+  - 禁止未使用变量（unused-imports/no-unused-vars）
+  - React 组件命名采用 PascalCase
+  - 强制分号、单引号、对象属性排序等
+  - 最大行宽 120，数组、对象、函数参数等格式化风格严格
+  - 针对 Astro、React、TypeScript 均有专门规则
+
+## 其他
+
+- 推荐遵循已有目录结构和风格进行开发。
+- 详细规则见 [prettier.config.mjs](mdc:prettier.config.mjs) 和 [eslint.config.mjs](mdc:eslint.config.mjs)。
+description:
+globs:
+alwaysApply: false
+
+---

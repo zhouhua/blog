@@ -1,4 +1,3 @@
----
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import Container from '@components/Container.astro';
 import ListTitle from '@components/ListTitle.astro';
@@ -41,10 +40,10 @@ const orderedYears = Array.from(yearsList.keys()).sort((a, b) => b - a);
 <style lang="postcss">
 .note.note.note {
   @apply my-0 py-8 pl-52;
-  @apply sm:pl-8 sm:pr-0 md:pl-24 lg:pl-40;
+  @apply pl-8 pr-0 sm:pl-24 sm:pl-40;
   &::before {
-    @apply bg-palette-accent absolute block h-full w-1;
-    @apply left-28 sm:left-1 sm:ml-px sm:w-0.5 md:left-16 lg:left-20;
+    @apply bg-accent absolute block h-full w-1;
+    @apply left-1 ml-px w-0.5 sm:left-16 sm:left-20;
     transition:
       background 0.25s var(--ease-in-out-quad),
       border 0.25s var(--ease-in-out-quad),
@@ -58,10 +57,10 @@ const orderedYears = Array.from(yearsList.keys()).sort((a, b) => b - a);
     @apply rounded-t;
   }
   &::after {
-    @apply border-palette-secondary absolute left-28 top-24 ml-6 mt-[13px] h-px w-[72px] border-b border-solid;
-    @apply sm:hidden lg:left-20 lg:w-14;
-    @apply md:border-palette-card/0 md:border-r-palette-card;
-    @apply md:left-12 md:top-20 md:mt-6 md:h-4 md:w-6 md:border-x-[12px] md:border-y-8;
+    @apply border-secondary absolute left-28 top-24 ml-6 mt-[13px] h-px w-[72px] border-b border-solid;
+    @apply hidden sm:left-20 sm:w-14;
+    @apply sm:border-card/0 sm:border-r-card;
+    @apply sm:left-12 sm:top-20 sm:mt-6 sm:h-4 sm:w-6 sm:border-x-12 sm:border-y-8;
     @media screen(md) {
       box-shadow:
         0 30px 60px -10px rgba(0, 0, 0, 0.2),
@@ -84,7 +83,7 @@ const orderedYears = Array.from(yearsList.keys()).sort((a, b) => b - a);
     0 18px 36px -18px rgba(0, 0, 0, 0.22);
   &::before {
     @apply absolute left-0 top-5 h-28 w-px;
-    @apply sm:hidden md:hidden;
+    @apply hidden;
     transition:
       background 0.25s var(--ease-in-out-quad),
       border 0.25s var(--ease-in-out-quad),
@@ -92,9 +91,9 @@ const orderedYears = Array.from(yearsList.keys()).sort((a, b) => b - a);
     content: '';
     background: linear-gradient(
       180deg,
-      theme(colors.palette.secondary/0) 0,
-      theme(colors.palette.secondary/100) 50%,
-      theme(colors.palette.secondary/0) 100%
+      rgb(var(--color-secondary) / 0) 0,
+      rgb(var(--color-secondary) / 1) 50%,
+      rgb(var(--color-secondary) / 0) 100%
     );
   }
 }
@@ -106,9 +105,9 @@ const orderedYears = Array.from(yearsList.keys()).sort((a, b) => b - a);
 
 .date {
   &::before {
-    @apply border-palette-secondary absolute h-4 w-4 rounded-lg border;
-    @apply bg-palette-bg left-24 top-1.5 ml-2.5;
-    @apply sm:-left-11 md:left-20;
+    @apply border-secondary absolute h-4 w-4 rounded-lg border;
+    @apply bg-background left-24 top-1.5 ml-2.5;
+    @apply -left-11 sm:left-20;
     transition:
       background 0.25s var(--ease-in-out-quad),
       border 0.25s var(--ease-in-out-quad),
@@ -116,9 +115,9 @@ const orderedYears = Array.from(yearsList.keys()).sort((a, b) => b - a);
     content: '';
   }
   &::after {
-    @apply bg-palette-secondary absolute h-2 w-2 rounded-lg;
+    @apply bg-secondary absolute h-2 w-2 rounded-lg;
     @apply left-24 top-1.5 ml-3.5 mt-1;
-    @apply sm:-left-11 md:left-20;
+    @apply -left-11 sm:left-20;
     transition:
       background 0.25s var(--ease-in-out-quad),
       border 0.25s var(--ease-in-out-quad),
@@ -134,13 +133,13 @@ const orderedYears = Array.from(yearsList.keys()).sort((a, b) => b - a);
     title="周骅的博客 - 所有随笔"
   />
   <Container>
-    <ul class="colorModeTransition text-palette-primary">
+    <ul class="colorModeTransition text-primary">
       {orderedYears.map(year => (
         <li class="relative mb-20">
           <div
             class={cn(
-              'absolute -top-9 left-16 ml-3 sm:left-0 md:left-0 md:ml-1 lg:left-2',
-              'font-monospace text-3xl font-semibold text-palette-accent',
+              'absolute -top-9 left-0 ml-3 sm:ml-1 sm:left-2',
+              'font-monospace text-3xl font-semibold text-accent',
               'colorModeTransition',
             )}
             id={`journals${year}`}
@@ -158,13 +157,13 @@ const orderedYears = Array.from(yearsList.keys()).sort((a, b) => b - a);
                 )}
                 id={`journal${year}-${dateString}`}
               >
-                <div class="absolute right-4 top-12 z-10 h-4 font-monospace text-sm text-palette-gray sm:top-9">
+                <div class="absolute right-4 top-9 z-10 h-4 font-monospace text-sm text-gray">
                   共 {wordCount} 字，预计 {timeToRead} 分钟读完
                 </div>
                 <a
                   class={cn(
                     'absolute left-0 top-24 w-20 text-right font-monospace text-lg',
-                    'sm:relative sm:top-0 sm:mb-4 sm:text-left md:-left-8 lg:-left-8',
+                    'relative top-0 mb-4 text-left sm:-left-8',
                     'colorModeTransition',
                     'date',
                   )}
@@ -174,7 +173,7 @@ const orderedYears = Array.from(yearsList.keys()).sort((a, b) => b - a);
                 </a>
                 <article
                   class={cn(
-                    'relative rounded-2xl bg-palette-card px-10 pb-2 pt-12 sm:px-4 sm:pt-8 md:px-8',
+                    'relative rounded-2xl bg-card px-4 pb-2 pt-8 sm:px-8',
                     'colorModeTransition',
                     'noteContent',
                   )}

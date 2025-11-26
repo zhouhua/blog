@@ -44,7 +44,6 @@ export default config(
       'react-hooks/exhaustive-deps': 'warn',
       'react-naming-convention/component-name': ['error', 'PascalCase'],
       'react-naming-convention/filename-extension': ['error', 'as-needed'],
-      'react/ensure-forward-ref-using-ref': 'error',
       'react/no-children-prop': 'error',
       'react/no-class-component': 'error',
       'react/no-clone-element': 'off',

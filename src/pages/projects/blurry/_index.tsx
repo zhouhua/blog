@@ -468,14 +468,14 @@ function Blurry() {
                           <RadioGroup
                             onValueChange={field.onChange}
                             defaultValue={field.value}
-                            className="flex items-center gap-4 !mt-0"
+                            className="flex items-center gap-4 mt-0!"
                           >
                             {(Object.entries(TYPE_LABELS) as [z.infer<typeof formSchema>['type'], string][]).map(([value, label]) => (
                               <FormItem key={value} className="flex items-center gap-2">
                                 <FormControl>
                                   <RadioGroupItem value={value} />
                                 </FormControl>
-                                <FormLabel className="font-normal !mt-0">
+                                <FormLabel className="font-normal mt-0!">
                                   {t(label)}
                                 </FormLabel>
                               </FormItem>
@@ -495,7 +495,7 @@ function Blurry() {
                           ：
                         </FormLabel>
                         <FormControl>
-                          <div className="flex gap-2 w-full items-center !mt-0">
+                          <div className="flex gap-2 w-full items-center mt-0!">
                             <Slider
                               max={2}
                               step={0.1}
@@ -520,9 +520,9 @@ function Blurry() {
                             ：
                           </FormLabel>
                           <FormControl>
-                            <div className="flex gap-2 w-full items-center !mt-0">
+                            <div className="flex gap-2 w-full items-center mt-0!">
                               <Slider
-                                className="relative flex items-center w-full h-5 touch-none select-none !mt-0"
+                                className="relative flex items-center w-full h-5 touch-none select-none mt-0!"
                                 max={10}
                                 step={1}
                                 min={2}
@@ -546,9 +546,9 @@ function Blurry() {
                           ：
                         </FormLabel>
                         <FormControl>
-                          <div className="flex gap-2 w-full items-center !mt-0">
+                          <div className="flex gap-2 w-full items-center mt-0!">
                             <Slider
-                              className="flex-shrink !mt-0"
+                              className="shrink mt-0!"
                               max={5}
                               step={0.1}
                               min={0.2}
@@ -575,7 +575,7 @@ function Blurry() {
                           <Switch
                             checked={field.value}
                             onCheckedChange={field.onChange}
-                            className="!mt-0"
+                            className="mt-0!"
                           />
                         </FormControl>
                       </FormItem>
@@ -588,7 +588,7 @@ function Blurry() {
                       ：
                     </FormLabel>
                     <FormControl>
-                      <div className="flex gap-2 items-center justify-between w-full !mt-0">
+                      <div className="flex gap-2 items-center justify-between w-full mt-0!">
                         <div className="flex gap-2">
                           {formColors.map((color, index) => (
                             // eslint-disable-next-line react/no-array-index-key
@@ -622,7 +622,7 @@ function Blurry() {
                         <FormControl>
                           <Popover>
                             <PopoverTrigger asChild>
-                              <div className="size-8 rounded-md shadow-md !mt-0" style={{ background: field.value }} />
+                              <div className="size-8 rounded-md shadow-md mt-0!" style={{ background: field.value }} />
                             </PopoverTrigger>
                             <PopoverContent className="flex justify-center p-0 w-auto border-0 shadow-none" side="top" sideOffset={12}>
                               <Chrome

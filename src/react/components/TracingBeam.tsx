@@ -58,7 +58,7 @@ function TracingBeam({
   );
   return (
     <motion.div
-      className={cn('fixed max-w-4xl mx-auto h-[80vh] top-[10vh] sm:hidden md:left-3 left-[calc((100vw-680px)/4-28px)]', className)}
+      className={cn('fixed max-w-4xl mx-auto h-[80vh] top-[10vh] hidden sm:left-3 left-[calc((100vw-680px)/4-28px)]', className)}
       style={{
         opacity,
       }}

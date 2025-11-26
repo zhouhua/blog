@@ -178,14 +178,14 @@ function Gradient() {
                 ：
               </Label>
               <div
-                className="flex-grow min-w-20 rounded-md group flex h-6 overflow-hidden shadow-sm"
+                className="grow min-w-20 rounded-md group flex h-6 overflow-hidden shadow-sm"
                 style={{ backgroundImage: generateGradientString({ colors, rotate: 90 }) }}
               >
                 {colors.map((color, index) => (
                   // eslint-disable-next-line react/no-array-index-key
                   <Popover key={index}>
                     <PopoverTrigger
-                      className="flex-1 flex-shrink flex-grow hover:flex-[1.5] transition-all duration-200 overflow-hidden min-w-2 w-4"
+                      className="flex-1 shrink grow hover:flex-[1.5] transition-all duration-200 overflow-hidden min-w-2 w-4"
                     >
                       <div
                         className={cn(

@@ -1,9 +1,228 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+@plugin 'tailwindcss-animate';
+@plugin 'daisyui' {
+  prefix: 'daisy-';
+  themes: false;
+  logs: false;
+}
 @import 'lxgw-wenkai-lite-webfont/style.css';
 @import url(https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css);
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+  /* Font Families */
+  --font-family-monospace:
+    'Fira Code', 'Operator Mono', 'Consolas', 'Menlo', 'Monaco',
+    'source-code-pro', 'Courier New', monospace;
+  --font-family-sans:
+    apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'helvetica neue', helvetica, ubuntu, roboto, noto,
+    'segoe ui', Arial, sans-serif;
+  --font-family-serif:
+    'LXGW WenKai Lite', apple-system, BlinkMacSystemFont, 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', 'helvetica neue', helvetica, ubuntu,
+    roboto, noto, 'segoe ui', Arial, sans-serif;
+
+  /* Border Radius */
+  --radius: 0.5rem;
+  --radius-lg: 0.5rem;
+  --radius-md: calc(0.5rem - 2px);
+  --radius-sm: calc(0.5rem - 4px);
+
+  /* Breakpoints - Custom breakpoints matching original config:
+   * Original: sm: max 640px, md: 640px-768px, lg: 769px-1024px, xl: 1025px-1280px, 2xl: 1281px-1536px, 3xl: >=1537px
+   * Tailwind v4 default: sm: >=640px, md: >=768px, lg: >=1024px, xl: >=1280px, 2xl: >=1536px
+   * 
+   * Since Tailwind v4 uses min-width by default, we need to adjust the usage:
+   * - Original sm: (<=640px) -> Use base styles or max-sm: (not available, need custom)
+   * - Original md: (640px-768px) -> Use sm: (>=640px) with max-md: (<=768px) or custom media
+   * - Original lg: (769px-1024px) -> Use md: (>=768px) with max-lg: (<=1024px) or custom media
+   * 
+   * For now, we'll use Tailwind's default min-width breakpoints and adjust class usage accordingly.
+   */
+  --breakpoint-sm: 40rem; /* 640px - min-width */
+  --breakpoint-md: 48rem; /* 768px - min-width */
+  --breakpoint-lg: 64rem; /* 1024px - min-width */
+  --breakpoint-xl: 80rem; /* 1280px - min-width */
+  --breakpoint-2xl: 96rem; /* 1536px - min-width */
+  --breakpoint-3xl: 96.0625rem; /* 1537px - min-width */
+
+  /* Container */
+  --container-center: true;
+  --container-padding: 2rem;
+  --container-screen-2xl: 87.5rem; /* 1400px */
+
+  /* Additional Theme Colors (merged from palette) - using oklch with default light theme values */
+  /* These will be overridden by CSS variables in :root and html.dark for runtime theme switching */
+  --color-gray: oklch(52.1% 0.062 217.5 / <alpha-value>);
+  --color-bg-alt: oklch(85.3% 0.039 213.3 / <alpha-value>);
+  --color-bg-revert: oklch(22.1% 0.060 221.1 / <alpha-value>);
+  --color-error: oklch(64.5% 0.400 351.1 / <alpha-value>);
+  --color-success: oklch(85.6% 0.378 138.9 / <alpha-value>);
+  --color-warn: oklch(74.9% 0.400 38.7 / <alpha-value>);
+
+  /* Colors - Theme Colors (merged with palette colors) - using oklch with default light theme values */
+  /* These will be overridden by CSS variables in :root and html.dark for runtime theme switching */
+  --color-accent: oklch(59.4% 0.400 209.6 / <alpha-value>);
+  --color-accent-foreground: hsl(0 0% 9% / <alpha-value>);
+  --color-background: oklch(97.9% 0.004 210.0 / <alpha-value>);
+  --color-border: hsl(0 0% 89.8% / <alpha-value>);
+  --color-card: oklch(100.0% 0.000 0.0 / <alpha-value>);
+  --color-card-foreground: hsl(0 0% 3.9% / <alpha-value>);
+  --color-destructive: hsl(0 84.2% 60.2% / <alpha-value>);
+  --color-destructive-foreground: hsl(0 0% 98% / <alpha-value>);
+  --color-foreground: hsl(0 0% 3.9% / <alpha-value>);
+  --color-input: hsl(0 0% 89.8% / <alpha-value>);
+  --color-muted: hsl(0 0% 96.1% / <alpha-value>);
+  --color-muted-foreground: hsl(0 0% 45.1% / <alpha-value>);
+  --color-popover: hsl(0 0% 100% / <alpha-value>);
+  --color-popover-foreground: hsl(0 0% 3.9% / <alpha-value>);
+  --color-primary: oklch(0.0% 0.000 0.0 / <alpha-value>);
+  --color-primary-foreground: hsl(0 0% 98% / <alpha-value>);
+  --color-ring: hsl(0 0% 3.9% / <alpha-value>);
+  --color-secondary: oklch(22.1% 0.060 221.1 / <alpha-value>);
+  --color-secondary-foreground: hsl(0 0% 9% / <alpha-value>);
+
+  /* Chart Colors */
+  --color-chart-1: hsl(12 76% 61% / <alpha-value>);
+  --color-chart-2: hsl(173 58% 39% / <alpha-value>);
+  --color-chart-3: hsl(197 37% 24% / <alpha-value>);
+  --color-chart-4: hsl(43 74% 66% / <alpha-value>);
+  --color-chart-5: hsl(27 87% 67% / <alpha-value>);
+
+  /* Prism Colors - Light */
+  --color-prism-attr-name: #91b3e0;
+  --color-prism-attr-value: #448c27;
+  --color-prism-background: #f5f5f5;
+  --color-prism-boolean: #ab6526;
+  --color-prism-class-name: #aa3731;
+  --color-prism-comment: #aaa;
+  --color-prism-constant: #ab6526;
+  --color-prism-doctype: #aaa;
+  --color-prism-dom: #4b83cd;
+  --color-prism-function: #aa3731;
+  --color-prism-highlight: #e4f6d4;
+  --color-prism-highlight-border: #c1f5b0;
+  --color-prism-interpolation: #ab6526;
+  --color-prism-javascript: #724198;
+  --color-prism-keyword: #4b83cd;
+  --color-prism-language-javascript: #724198;
+  --color-prism-line-number: #6e705d;
+  --color-prism-maybe-class-name: #000;
+  --color-prism-namespace: #4b83cd;
+  --color-prism-number: #ab6526;
+  --color-prism-operator: #777;
+  --color-prism-parameter: #333;
+  --color-prism-plain: #000;
+  --color-prism-property: #ab6526;
+  --color-prism-property-access: #448c27;
+  --color-prism-punctuation: #777;
+  --color-prism-string: #448c27;
+  --color-prism-tag: #91b3e0;
+  --color-prism-token: #000;
+  --color-prism-var: #7a3e9d;
+
+  /* Dark Prism Colors */
+  --color-dark-prism-attr-name: #bf87ba;
+  --color-dark-prism-attr-value: #a8e2a8;
+  --color-dark-prism-background: #292c34;
+  --color-dark-prism-boolean: #ff5874;
+  --color-dark-prism-class-name: #ffcf74;
+  --color-dark-prism-comment: #5e6a76;
+  --color-dark-prism-constant: #b3bac5;
+  --color-dark-prism-doctype: #e8696b;
+  --color-dark-prism-dom: #5f8dc3;
+  --color-dark-prism-function: #5f8dc3;
+  --color-dark-prism-highlight: rgba(233, 218, 172, 0.2);
+  --color-dark-prism-highlight-border: rgba(232, 105, 107, 0.4);
+  --color-dark-prism-interpolation: #fff;
+  --color-dark-prism-javascript: #e8696b;
+  --color-dark-prism-keyword: #d49fd4;
+  --color-dark-prism-language-javascript: #e8696b;
+  --color-dark-prism-line-number: #dcd9e6;
+  --color-dark-prism-maybe-class-name: #fff;
+  --color-dark-prism-namespace: #b2ccd6;
+  --color-dark-prism-number: #e4854d;
+  --color-dark-prism-operator: #5fa8aa;
+  --color-dark-prism-parameter: #f9965d;
+  --color-dark-prism-plain: #fff;
+  --color-dark-prism-property: #80cbc4;
+  --color-dark-prism-property-access: #fff;
+  --color-dark-prism-punctuation: #5fa8aa;
+  --color-dark-prism-string: #a8e2a8;
+  --color-dark-prism-tag: #e8696b;
+  --color-dark-prism-token: #fff;
+  --color-dark-prism-var: #b3bac5;
+
+  /* Animations */
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-border-beam: border-beam calc(2s * 1s) infinite linear;
+  --animate-rainbow: rainbow 2s infinite linear;
+  --animate-ripple: ripple 2s ease calc(0 * 0.2s) infinite;
+  --animate-shine: shine 2s infinite linear;
+
+  /* Keyframes */
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+
+  @keyframes border-beam {
+    100% {
+      offset-distance: 100%;
+    }
+  }
+
+  @keyframes rainbow {
+    0% {
+      background-position: 0%;
+    }
+    100% {
+      background-position: 200%;
+    }
+  }
+
+  @keyframes ripple {
+    0%,
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(0.9);
+    }
+  }
+
+  @keyframes shine {
+    0% {
+      background-position: 0% 0%;
+    }
+    50% {
+      background-position: 100% 100%;
+    }
+    to {
+      background-position: 0% 0%;
+    }
+  }
+
+  /* Container */
+  --container-center: true;
+  --container-padding: 2rem;
+  --container-screen-2xl: 1400px;
+}
 
 @layer base {
   :root {
@@ -96,33 +315,37 @@
   }
 }
 
+:root {
+  /* Override @theme colors for runtime theme switching - Light theme (default) */
+  --color-primary: oklch(0.0% 0.000 0.0);
+  --color-secondary: oklch(22.1% 0.060 221.1);
+  --color-background: oklch(97.9% 0.004 210.0);
+  --color-card: oklch(100.0% 0.000 0.0);
+  --color-accent: oklch(59.4% 0.400 209.6);
+  --color-error: oklch(64.5% 0.400 351.1);
+  --color-success: oklch(85.6% 0.378 138.9);
+  --color-warn: oklch(74.9% 0.400 38.7);
+  --color-bg-alt: oklch(85.3% 0.039 213.3);
+  --color-bg-revert: oklch(22.1% 0.060 221.1);
+}
+
 html {
   color-scheme: light;
-  --color-primary: 0 0 0;
-  --color-secondary: 47 53 66;
-  --color-bg: 248 249 250;
-  --color-card: 255 255 255;
-  --color-accent: 30 144 255;
-  --color-gray: 116 125 140;
-  --color-error: 255 107 129;
-  --color-success: 123 237 159;
-  --color-warn: 255 165 2;
-  --color-bg-alt: 206 214 224;
-  --color-bg-revert: 47 53 66;
 }
+
 html.dark {
   color-scheme: dark;
-  --color-primary: 255 255 255;
-  --color-secondary: 223 228 234;
-  --color-bg: 47 53 66;
-  --color-card: 0 0 0;
-  --color-accent: 236 204 104;
-  --color-gray: 116 125 140;
-  --color-error: 255 71 87;
-  --color-success: 46 213 115;
-  --color-warn: 255 127 80;
-  --color-bg-alt: 164 176 190;
-  --color-bg-revert: 241 242 246;
+  /* Override @theme colors for runtime theme switching - Dark theme */
+  --color-primary: oklch(100.0% 0.000 0.0);
+  --color-secondary: oklch(90.4% 0.024 212.7);
+  --color-background: oklch(22.1% 0.060 221.1);
+  --color-card: oklch(0.0% 0.000 0.0);
+  --color-accent: oklch(82.9% 0.355 45.5);
+  --color-error: oklch(58.5% 0.400 354.8);
+  --color-success: oklch(75.7% 0.400 144.8);
+  --color-warn: oklch(67.3% 0.400 16.1);
+  --color-bg-alt: oklch(71.3% 0.058 212.3);
+  --color-bg-revert: oklch(95.5% 0.014 228.0);
 }
 
 body {
@@ -184,7 +407,7 @@ code,
 kbd,
 pre,
 samp {
-  @apply font-monospace;
+  font-family: var(--font-family-monospace);
   font-feature-settings: 'calt';
 }
 
@@ -219,7 +442,7 @@ img.Image__Zoom ~ div {
 }
 
 .article-columns {
-  @apply w-full text-lg leading-[1.756] text-palette-primary;
+  @apply w-full text-lg leading-[1.756] text-primary;
   @apply mx-auto sm:px-0 sm:py-0;
   @apply max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
   @apply grid items-center gap-x-5;
@@ -269,15 +492,15 @@ svg.iconify {
 }
 
 html {
-  background-color: theme(colors.palette.bg);
+  background-color: var(--color-background);
   @media (screen(sm)) {
-    background: theme(colors.palette.bgRevert);
+    background: var(--color-bg-revert);
   }
 }
 .mix-light,
 .mix-dark {
   p {
-    @apply bg-palette-bg;
+    @apply bg-background;
   }
 }
 

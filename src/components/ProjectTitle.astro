@@ -1,5 +1,6 @@
 ---
 import { cn } from '@lib/utils';
+import '../styles/global.css';
 
 interface Props {
   title: string;
@@ -10,22 +11,24 @@ const { description, title } = Astro.props;
 ---
 
 <style lang="postcss">
+@reference '../styles/global.css';
+
 .Header {
   margin: 100px auto 120px;
   min-width: 360px;
   padding-left: 68px;
   max-width: 749px;
-  @media (max-width: theme(screens.lg.max)) {
+  @media (max-width: 1024px) {
     padding-left: 53px;
     max-width: 560px;
     margin: 100px auto 70px;
   }
-  @media (max-width: theme(screens.md.max)) {
+  @media (max-width: 768px) {
     padding-left: 0;
     margin: 100px auto 70px;
     max-width: 450px;
   }
-  @media (max-width: theme(screens.sm.max)) {
+  @media (max-width: 640px) {
     margin: 80px auto 50px;
     padding: 0 20px;
   }
@@ -34,11 +37,11 @@ const { description, title } = Astro.props;
   }
 }
 .HeroHeading {
-  @apply font-sans font-bold text-palette-primary;
-  @apply break-words text-[48px] leading-[1.32];
-  @apply md:text-[38px] md:leading-[1.2];
-  @apply sm:text-[36px] sm:leading-[1.3];
-  @apply mb-[25px] sm:mb-5;
+  @apply font-sans font-bold text-primary;
+  @apply wrap-break-word text-[48px] leading-[1.32];
+  @apply sm:text-[38px] sm:leading-[1.2];
+  @apply text-[36px] leading-[1.3];
+  @apply mb-5;
   transition:
     background 0.25s var(--ease-in-out-quad),
     color 0.25s var(--ease-in-out-quad);
@@ -48,7 +51,7 @@ const { description, title } = Astro.props;
 <header class={cn('Header', 'relative z-10')}>
   <h1 class="HeroHeading">{title}</h1>
   {description && (
-    <div class="leading-6 text-palette-secondary/80 flex items-center">
+    <div class="leading-6 text-secondary/80 flex items-center">
       <span class="mr-2 iconify maki--information" />
       {description}
     </div>

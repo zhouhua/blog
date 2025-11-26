@@ -31,31 +31,6 @@ const { Content } = await render(post);
 const { timeToRead, wordCount } = getReadInfo(post.body || '');
 const excerpt = getExcerpt(post.body || '');
 ---
-<style lang="postcss">
-.hero {
-  max-width: calc(min(1560px, 100%));
-  box-shadow:
-    0 30px 60px -10px rgba(0, 0, 0, 0.2),
-    0 18px 36px -18px rgba(0, 0, 0, 0.22);
-  @media (max-width: theme(screens.sm.max)) {
-    height: 220px;
-    object-fit: cover;
-  }
-}
-.lineTitle {
-  @apply text-palette-primary relative pb-20 font-normal opacity-25 md:pb-[60px];
-  transition:
-    background 0.25s var(--ease-in-out-quad),
-    color 0.25s var(--ease-in-out-quad);
-  &::after {
-    @apply absolute left-40 right-0 top-[11px] h-px content-[''];
-    @apply bg-palette-gray;
-    transition:
-      background 0.25s var(--ease-in-out-quad),
-      color 0.25s var(--ease-in-out-quad);
-  }
-}
-</style>
 <PageLayout description={excerpt} title={`随笔 🗓️ ${date}`}>
   <ArticleTitle isJournal time={post.data.date} title={`随笔 🗓️ ${date}`}>
     {wordCount}个字 &bull; {timeToRead}分钟读完

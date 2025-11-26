@@ -48,15 +48,15 @@ const Panel: FC<{
           animate={{ opacity: 1 }}
           className={cn(
             styles.mask,
-            'fixed left-0 top-0 z-50 h-screen w-screen min-w-[360px]  bg-palette-primary/10 backdrop-blur',
-            'px-[10vw] py-[10vh] text-palette-secondary sm:px-[2vw] sm:py-[5vh] md:px-[5vw]',
+            'fixed left-0 top-0 z-50 h-screen w-screen min-w-[360px]  bg-primary/10 backdrop-blur',
+            'px-[2vw] py-[5vh] text-secondary sm:px-[5vw]',
           )}
           exit={{ opacity: 0 }}
           initial={{ opacity: 0 }}
         >
           <motion.div
             animate={{ opacity: 1, y: 0 }}
-            className="mx-auto flex min-h-0 w-full max-w-2xl flex-col rounded-lg bg-palette-card"
+            className="mx-auto flex min-h-0 w-full max-w-2xl flex-col rounded-lg bg-card"
             exit={{ opacity: 0, y: -200 }}
             initial={{ opacity: 0, y: 200 }}
             ref={ref}

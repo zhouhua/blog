@@ -208,7 +208,7 @@ function Blurry() {
                         ：
                       </FormLabel>
                       <FormControl>
-                        <Switch checked={field.value} onCheckedChange={field.onChange} className="!mt-0" />
+                        <Switch checked={field.value} onCheckedChange={field.onChange} className="mt-0!" />
                       </FormControl>
                     </FormItem>
                   )}
@@ -223,7 +223,7 @@ function Blurry() {
                         ：
                       </FormLabel>
                       <FormControl>
-                        <div className="flex gap-2 w-full items-center !mt-0">
+                        <div className="flex gap-2 w-full items-center mt-0!">
                           <Slider
                             max={20}
                             step={1}
@@ -247,7 +247,7 @@ function Blurry() {
                         ：
                       </FormLabel>
                       <FormControl>
-                        <div className="flex gap-2 w-full items-center !mt-0">
+                        <div className="flex gap-2 w-full items-center mt-0!">
                           <Slider
                             max={1.2}
                             step={0.01}
@@ -272,7 +272,7 @@ function Blurry() {
                       </FormLabel>
                       <FormControl>
                         <Select onValueChange={field.onChange} value={field.value}>
-                          <SelectTrigger className="!mt-0">
+                          <SelectTrigger className="mt-0!">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
@@ -293,7 +293,7 @@ function Blurry() {
                     ：
                   </FormLabel>
                   <FormControl>
-                    <div className="flex gap-2 items-center justify-between w-full !mt-0">
+                    <div className="flex gap-2 items-center justify-between w-full mt-0!">
                       <div className="flex gap-2">
                         {formValues.colors.map((color, index) => (
                           // eslint-disable-next-line react/no-array-index-key
@@ -337,7 +337,7 @@ function Blurry() {
                         <FormControl>
                           <Popover>
                             <PopoverTrigger asChild>
-                              <div className="size-8 rounded-md shadow-md !mt-0" style={{ background: field.value }} />
+                              <div className="size-8 rounded-md shadow-md mt-0!" style={{ background: field.value }} />
                             </PopoverTrigger>
                             <PopoverContent className="flex justify-center p-0 w-auto border-0 shadow-none" side="top" sideOffset={12}>
                               <Chrome
@@ -364,7 +364,7 @@ function Blurry() {
                       <FormControl>
                         <Popover>
                           <PopoverTrigger asChild>
-                            <div className="size-8 rounded-md shadow-md !mt-0" style={{ background: field.value }} />
+                            <div className="size-8 rounded-md shadow-md mt-0!" style={{ background: field.value }} />
                           </PopoverTrigger>
                           <PopoverContent className="flex justify-center p-0 w-auto border-0 shadow-none" side="top" sideOffset={12}>
                             <Chrome
@@ -394,7 +394,7 @@ function Blurry() {
                           min={5}
                           value={[field.value]}
                           onValueChange={e => field.onChange(e[0])}
-                          className="!mt-0"
+                          className="mt-0!"
                         />
                       </FormControl>
                     </FormItem>
@@ -416,7 +416,7 @@ function Blurry() {
                           min={0}
                           value={[field.value]}
                           onValueChange={e => field.onChange(e[0])}
-                          className="!mt-0"
+                          className="mt-0!"
                         />
                       </FormControl>
                     </FormItem>
@@ -432,7 +432,7 @@ function Blurry() {
                         ：
                       </FormLabel>
                       <FormControl>
-                        <Switch checked={field.value} onCheckedChange={field.onChange} className="!mt-0" />
+                        <Switch checked={field.value} onCheckedChange={field.onChange} className="mt-0!" />
                       </FormControl>
                     </FormItem>
                   )}

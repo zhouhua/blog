@@ -1,8 +1,18 @@
 import type { APIRoute } from 'astro';
 import dayjs from '@lib/dayjs';
-import { murmurHash } from 'ohash';
+import { hash } from 'ohash';
 import db from './_db';
 import { base62 } from './_utils';
+
+// Convert hash string to number for base62 encoding
+function hashToNumber(str: string): number {
+  let num = 0;
+  for (let i = 0; i < str.length; i++) {
+    num = ((num << 5) - num) + str.charCodeAt(i);
+    num = num & num; // Convert to 32-bit integer
+  }
+  return Math.abs(num);
+}
 
 export const GET: APIRoute = async ({ request }) => {
   const url = new URL(request.url);
@@ -42,7 +52,7 @@ export const POST: APIRoute = async ({ request }) => {
       let padding = '';
       let key = '';
       while (maxRety) {
-        key = base62(+murmurHash(value + padding));
+        key = base62(hashToNumber(hash(value + padding)));
         const item = await db.selectFrom('links').selectAll().where('key', '=', key).executeTakeFirst();
         if (!item) {
           await db.insertInto('links').values({ key, last_use: new Date(), value }).execute();

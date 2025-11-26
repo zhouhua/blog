@@ -73,7 +73,7 @@ const Battery: FC = () => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-80 rounded-md bg-white">
           <DotPattern
             className={cn(
-              '[mask-image:radial-gradient(200px_circle_at_center,white,transparent)]',
+              'mask-[radial-gradient(200px_circle_at_center,white,transparent)]',
             )}
           />
           <AnimatedCircularProgressBar

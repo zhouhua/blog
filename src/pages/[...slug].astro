@@ -10,6 +10,7 @@ import { cn } from '@lib/utils';
 import Comment from '@react/components/Comment';
 import TracingBeam from '@react/components/TracingBeam';
 import styles from '@styles/article.module.css';
+import pageStyles from '@styles/pages.module.css';
 import { Picture } from 'astro:assets';
 import { getCollection, getEntry, render } from 'astro:content';
 import { sampleSize } from 'lodash-es';
@@ -35,32 +36,6 @@ const { timeToRead, wordCount } = getReadInfo(html);
 const hero = getImage(join('content/blog/', dirname(post.id), post.data.hero));
 const excerpt = getExcerpt(html);
 ---
-<style lang="postcss">
-.hero {
-  max-width: calc(min(1560px, 100%));
-  margin: 0 auto;
-  box-shadow:
-    0 30px 60px -10px rgba(0, 0, 0, 0.2),
-    0 18px 36px -18px rgba(0, 0, 0, 0.22);
-  @media (max-width: theme(screens.sm.max)) {
-    height: 220px;
-    object-fit: cover;
-  }
-}
-.lineTitle {
-  @apply text-palette-primary relative pb-20 font-normal opacity-25 md:pb-[60px];
-  transition:
-    background 0.25s var(--ease-in-out-quad),
-    color 0.25s var(--ease-in-out-quad);
-  &::after {
-    @apply absolute left-40 right-0 top-[11px] h-px content-[''];
-    @apply bg-palette-gray;
-    transition:
-      background 0.25s var(--ease-in-out-quad),
-      color 0.25s var(--ease-in-out-quad);
-  }
-}
-</style>
 <PageLayout description={excerpt} title={post.data.title}>
   <ArticleTitle tags={post.data.tags} time={post.data.date} title={post.data.title}>
     {wordCount}个字 &bull; {timeToRead}分钟读完
@@ -69,7 +44,7 @@ const excerpt = getExcerpt(html);
     <div class="flex flex-col items-center gap-2 relative">
       <Picture
         alt="hero"
-        class="hero relative z-10"
+        class={pageStyles.hero + ' relative z-10'}
         formats={['webp', 'jpg']}
         sizes={`(max-width: 480px) 360px, (max-width: 720px) 640px, (max-width: 1280px) 1000px, (max-width: 1600px) 1280px, ${hero.width}px`}
         src={hero}
@@ -77,7 +52,7 @@ const excerpt = getExcerpt(html);
       />
       {post.data.heroCopyright && (
         <div
-          class="text-palette-secondary leading-5 text-xs"
+          class="text-secondary leading-5 text-xs"
           set:html={post.data.heroCopyright}
         />
       )}
@@ -89,7 +64,7 @@ const excerpt = getExcerpt(html);
     </article>
   <Comment client:only="react" />
   <Container>
-      <h3 class="lineTitle">看看其他的文章</h3>
+      <h3 class={pageStyles.lineTitle}>看看其他的文章</h3>
       <ArticlesPair gridLayout="tiles" posts={next} reverse={false} />
       <div class="mb-[65px]" />
   </Container>

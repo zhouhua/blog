@@ -29,24 +29,24 @@ import { RoughNotation } from 'react-rough-notation';
       <div
         class={cn(
           'cardShadow',
-          'absolute -top-5 left-1/2 z-[9] ml-[-18px] h-10 w-10 -translate-x-1/2 rounded-full sm:hidden',
+          'absolute -top-5 left-1/2 z-9 ml-[-18px] h-10 w-10 -translate-x-1/2 rounded-full hidden',
         )}
       />
       <div
         class={cn(
           'relative z-10 my-36 rounded-3xl',
-          'colorModeTransition bg-palette-card',
+          'colorModeTransition bg-card',
           'card',
         )}
       >
-        <div class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 sm:top-24 sm:-translate-x-32">
+        <div class="absolute left-1/2 top-24 -translate-x-1/2 -translate-y-1/2 sm:-translate-x-32">
           <Bio hideText />
         </div>
         <article
-          class={cn('flex items-center justify-between px-8 py-6 sm:flex-col sm:px-6')}
+          class={cn('flex items-center justify-between px-6 py-6 flex-col')}
         >
-          <div class="flex h-80 flex-col justify-between leading-10 sm:justify-around">
-            <div class="colorModeTransition text-palette-primary sm:ml-16">
+          <div class="flex h-80 flex-col justify-between leading-10 justify-around">
+            <div class="colorModeTransition text-primary ml-16">
               <h2 class="mb-4 mt-6 text-4xl">周骅</h2>
               <a href="mailto:zhou--hua@163.com">
                 <span class="mr-3 iconify fa6-solid--envelope" />
@@ -62,7 +62,7 @@ import { RoughNotation } from 'react-rough-notation';
                 </RoughNotation>
               </a>
             </div>
-            <div class="font-serif text-sm leading-6 text-palette-secondary sm:text-center">
+            <div class="font-serif text-sm leading-6 text-secondary text-center">
               想成为⼀个有趣的⼈。
               <br />
               爱足球，爱桌游，
@@ -76,7 +76,7 @@ import { RoughNotation } from 'react-rough-notation';
           </div>
           <Image
             alt="微信二维码"
-            class="rounded-lg sm:my-8 h-80 w-[241px]"
+            class="rounded-lg my-8 h-80 w-[241px]"
             height={640}
             src={weixin}
           />

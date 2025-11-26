@@ -12,7 +12,7 @@ const PhotoGroupSection: FC<{ photoPosts: PhotoImage[] }> = ({ photoPosts }) => 
   const [loaded, setLoaded] = useState<boolean>(false);
   useEffect(() => setLoaded(true), []);
   return (
-    <section className="min-w-[360px] max-w-full px-20 sm:px-5 md:px-8 lg:px-8 xl:px-8">
+    <section className="min-w-[360px] max-w-full px-5 sm:px-8">
       {loaded && !isNarrow && <LightBoxSection photoPosts={photoPosts} />}
       {loaded && isNarrow && photoPosts.map((photo) => {
         const exif = photo.exif;
@@ -22,7 +22,7 @@ const PhotoGroupSection: FC<{ photoPosts: PhotoImage[] }> = ({ photoPosts }) => 
             className="mb-12"
           >
             <div
-              className={cn('bg-palette-card relative px-4 pt-4', styles.photoCard, {
+              className={cn('bg-card relative px-4 pt-4', styles.photoCard, {
                 'pb-[72px]': !!exif,
                 'pb-4': !exif,
               })}
@@ -35,7 +35,7 @@ const PhotoGroupSection: FC<{ photoPosts: PhotoImage[] }> = ({ photoPosts }) => 
               />
               {exif && <Meta exif={exif} />}
             </div>
-            <p className="text-palette-primary mb-10 px-4 py-10">{photo.title}</p>
+            <p className="text-primary mb-10 px-4 py-10">{photo.title}</p>
           </div>
         );
       })}

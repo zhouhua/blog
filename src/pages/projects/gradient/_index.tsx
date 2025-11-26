@@ -187,7 +187,7 @@ function Gradient() {
         <input
           value={color}
           onChange={e => setColor(e.target.value)}
-          className="flex-grow h-11 text-2xl bg-transparent border-none focus:outline-none focus:ring-0"
+          className="grow h-11 text-2xl bg-transparent border-none focus:outline-none focus:ring-0"
         />
         <RainbowButton onClick={() => setColor(randomColor().toHex())}>RANDOM</RainbowButton>
       </div>
@@ -224,7 +224,7 @@ function Gradient() {
                     ：
                   </FormLabel>
                   <FormControl>
-                    <Switch checked={field.value} onCheckedChange={field.onChange} className="!mt-0" />
+                    <Switch checked={field.value} onCheckedChange={field.onChange} className="mt-0!" />
                   </FormControl>
                 </FormItem>
               )}
@@ -241,7 +241,7 @@ function Gradient() {
                         ：
                       </FormLabel>
                       <FormControl className="w-72">
-                        <div className="flex gap-3 items-center !mt-0">
+                        <div className="flex gap-3 items-center mt-0!">
                           <Slider
                             value={[field.value]}
                             min={0.3}
@@ -265,7 +265,7 @@ function Gradient() {
                         ：
                       </FormLabel>
                       <FormControl className="w-72">
-                        <div className="flex gap-3 items-center !mt-0">
+                        <div className="flex gap-3 items-center mt-0!">
                           <Slider
                             value={[field.value]}
                             min={0}

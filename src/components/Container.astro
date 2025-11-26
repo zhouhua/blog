@@ -4,6 +4,6 @@ import { cn } from '@lib/utils';
 const { as: Component = 'div' } = Astro.props;
 ---
 
-<Component class={cn('max-w-screen-sm mx-auto min-w-[360px] max-w-[1220px] px-10 py-0 sm:px-5', Astro.props.class)}>
+<Component class={cn('mx-auto min-w-[360px] max-w-[1220px] px-5 py-0', Astro.props.class)}>
   <slot />
 </Component>

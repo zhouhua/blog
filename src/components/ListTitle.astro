@@ -3,6 +3,7 @@ import { cn } from '@lib/utils';
 import { RoughNotation } from 'react-rough-notation';
 import Bio from './Bio.astro';
 import Container from './Container.astro';
+import '../styles/global.css';
 
 
 interface Props {
@@ -15,9 +16,11 @@ const { description, tag, title } = Astro.props;
 ---
 
 <style lang="postcss">
+@reference '../styles/global.css';
+
 .HeroHeading {
   a {
-    @apply text-palette-accent;
+    @apply text-accent;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -28,18 +31,18 @@ const { description, tag, title } = Astro.props;
 <Container class="relative">
   { tag
 ? (
-    <div class="my-28 flex items-center justify-between sm:my-10 md:my-16">
+    <div class="my-10 flex items-center justify-between sm:my-16">
       <h1
         class={cn(
           'HeroHeading',
           'colorModeTransition text-[36px] font-semibold not-italic leading-[1.15]',
-          'text-palette-primary sm:text-[24px] md:text-[30px]',
+          'text-primary text-[24px] sm:text-[30px]',
         )}
       >
         关于
         <small>
           <span
-            class="ml-2 mr-1 text-palette-accent opacity-70 iconify heroicons--hashtag-solid"
+            class="ml-2 mr-1 text-accent opacity-70 iconify heroicons--hashtag-solid"
           />
         </small>
         <RoughNotation
@@ -54,7 +57,7 @@ const { description, tag, title } = Astro.props;
         的文章：
       </h1>
       <a
-        class="hover:text-palette-accent hover:underline hover:underline-offset-4 sm:hidden"
+        class="hover:text-accent hover:underline hover:underline-offset-4 hidden"
         href="/articles"
       >
         <span class="mr-2 iconify fa6-solid--angle-right" />
@@ -64,14 +67,14 @@ const { description, tag, title } = Astro.props;
   )
 : (
     <div
-      class={cn('mx-0 my-[100px] text-palette-primary sm:w-full md:w-4/5')}
+      class={cn('mx-0 my-[100px] text-primary w-full sm:w-4/5')}
       style={{ maxWidth: `800px` }}
     >
       <h1
         class={cn(
           'HeroHeading',
           'colorModeTransition text-[52px] font-semibold not-italic leading-[1.15]',
-          'mb-10 sm:text-[32px] md:text-[38px]',
+          'mb-10 text-[32px] sm:text-[38px]',
         )}
       >
         {title || '周骅的博客'}
@@ -104,7 +107,7 @@ const { description, tag, title } = Astro.props;
       )}
     </div>
   )}
-  <div class="mb-[100px] flex items-center justify-between sm:hidden md:mb-20">
+  <div class="mb-[100px] flex items-center justify-between hidden sm:mb-20">
     <Bio />
   </div>
 </Container>

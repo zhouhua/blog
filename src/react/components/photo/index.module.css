@@ -1,14 +1,14 @@
 .fullMask {
   background: linear-gradient(
     0,
-    theme(colors.palette.bgRevert/20) 0%,
-    theme(colors.palette.bgRevert/0) 40%,
-    theme(colors.palette.bgRevert/0) 70%,
-    theme(colors.palette.bgRevert/10) 100%
+    rgb(var(--color-bg-revert) / 0.2) 0%,
+    rgb(var(--color-bg-revert) / 0) 40%,
+    rgb(var(--color-bg-revert) / 0) 70%,
+    rgb(var(--color-bg-revert) / 0.1) 100%
   );
 }
 .mask {
-  background: linear-gradient(0, theme(colors.palette.bgRevert/20) 0%, theme(colors.palette.bgRevert/0) 60%);
+  background: linear-gradient(0, rgb(var(--color-bg-revert) / 0.2) 0%, rgb(var(--color-bg-revert) / 0) 60%);
 }
 
 .cell {
