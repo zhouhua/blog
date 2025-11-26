@@ -27,28 +27,28 @@ import { Image } from 'astro:assets';
   }
 </style>
 
-<header class="sticky! -top-16 flex pt-16 backdrop-blur-sm z-10 pt-10 -top-10 header bg-background/0 hover:bg-background/40 transition-colors duration-300">
-  <Container class="flex w-full items-center justify-between gap-8 sm:gap-2 px-5 ">
+<header class="!sticky -top-16 flex pt-16 backdrop-blur-sm z-10 sm:pt-10 sm:-top-10 header bg-palette-bg/0 hover:bg-palette-bg/40 transition-colors duration-300">
+  <Container class="flex w-full items-center justify-between gap-8 md:gap-2 sm:px-5 md:px-5 ">
     <a href="/">
       <div class="logo-container relative">
         <Image
           alt="logo"
-          class="hidden dark:invert svg-image size-20 text-primary opacity-100 absolute left-0 top-0"
+          class="sm:hidden dark:invert svg-image size-20 text-palette-primary opacity-100 absolute left-0 top-0"
           src={logoSvg}
         />
         <Image
           alt="logo"
-          class="size-6 png-image size-20 object-contain opacity-100"
+          class="sm:size-6 png-image size-20 object-contain opacity-100"
           src={logoImage}
         />
       </div>
     </a>
-    <div class="hidden sm:flex items-center justify-center gap-10 sm:gap-6">
+    <div class="flex items-center justify-center gap-10 md:gap-6 lg:gap-8 sm:hidden">
       {
         menu.map(item => (
           <a href={item.path}>
-            <div class="flex items-center sm:flex-col h-20 justify-evenly">
-              <span class={cn('mr-2 opacity-75 sm:mr-0 iconify', item.icon.replace(':', '--'))} />
+            <div class="flex items-center md:flex-col lg:flex-col h-20 justify-evenly">
+              <span class={cn('mr-2 opacity-75 md:mr-0 lg:mr-0 iconify', item.icon.replace(':', '--'))} />
               <div>{item.name}</div>
             </div>
           </a>

@@ -178,12 +178,12 @@ font-feature-settings: ${feature || 'unset'};`, {
   }, [feature, ligatures]);
   return (
     <>
-      <div className="colorModeTransition daisy-mockup-window mt-20 border border-gray/40 bg-gray/10 text-secondary">
-        <div className="text colorModeTransition bg-background px-4 py-10">
+      <div className="colorModeTransition daisy-mockup-window mt-20 border border-palette-gray/40 bg-palette-gray/10 text-palette-secondary">
+        <div className="text colorModeTransition bg-palette-bg px-4 py-10">
           <div className={cn(styles.box, 'mb-8')}>
             <h3 className={cn(styles.title, 'colorModeTransition')}>控制：</h3>
             <div className="flex cursor-pointer justify-between">
-              <span className="colorModeTransition mb-1 mt-2 text-secondary/80">
+              <span className="colorModeTransition mb-1 mt-2 text-palette-secondary/80">
                 连字特性
               </span>
               <Select value={ligatures} onValueChange={value => setLigatures(value as LigaturesType)}>
@@ -202,7 +202,7 @@ font-feature-settings: ${feature || 'unset'};`, {
               ({ features, group, needLigatures }) =>
                 (!needLigatures || ligatures === 'normal') && (
                   <div key={group}>
-                    <h4 className="colorModeTransition mb-1 mt-2 text-secondary/80">
+                    <h4 className="colorModeTransition mb-1 mt-2 text-palette-secondary/80">
                       {group}
                     </h4>
                     <div className="flex flex-wrap">
@@ -252,7 +252,7 @@ font-feature-settings: ${feature || 'unset'};`, {
                         <div
                           className={cn(
                             styles.code,
-                            'colorModeTransition text-secondary/80',
+                            'colorModeTransition text-palette-secondary/80',
                           )}
                           style={{
                             fontFeatureSettings: feature,
@@ -281,7 +281,7 @@ font-feature-settings: ${feature || 'unset'};`, {
                     {contents.map(content => (
                       <div
                         key={content}
-                        className="colorModeTransition font-monospace text-sm text-secondary/80"
+                        className="colorModeTransition font-monospace text-sm text-palette-secondary/80"
                       >
                         <div style={{ fontVariantLigatures: 'normal' }}>{content}</div>
                         <div className=" opacity-40" style={{ fontVariantLigatures: 'none' }}>
@@ -298,7 +298,7 @@ font-feature-settings: ${feature || 'unset'};`, {
                   {variant.map(v => (
                     <div
                       key={`${title}${v}`}
-                      className="colorModeTransition font-monospace text-sm text-secondary/80"
+                      className="colorModeTransition font-monospace text-sm text-palette-secondary/80"
                     >
                       <div style={{ fontVariantLigatures: 'normal' }}>
                         {[0, 1, 2]
@@ -326,7 +326,7 @@ font-feature-settings: ${feature || 'unset'};`, {
           </div>
         </div>
       </div>
-      <div className="colorModeTransition daisy-mockup-code relative mt-10 overflow-visible border border-gray/40 bg-gray/10 text-secondary">
+      <div className="colorModeTransition daisy-mockup-code relative mt-10 overflow-visible border border-palette-gray/40 bg-palette-gray/10 text-palette-secondary">
         <pre data-prefix="1">
           <code>
             font-variant-ligatures:
@@ -346,7 +346,7 @@ font-feature-settings: ${feature || 'unset'};`, {
         <div className={cn('absolute right-4 top-2')}>
           <Tooltip content="复制代码">
             <div
-              className="colorModeTransition cursor-pointer rounded-md bg-gray/20 px-5 py-1"
+              className="colorModeTransition cursor-pointer rounded-md bg-palette-gray/20 px-5 py-1"
               onClick={copy}
             >
               <span className="uil--copy iconify" />

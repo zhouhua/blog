@@ -15,24 +15,22 @@ const { gridLayout, posts, reverse, showAllLink } = Astro.props;
 ---
 
 <style lang="postcss">
-@reference '../styles/global.css';
-
 .listTile {
   @apply relative grid;
-  @apply grid-cols-[1fr];
+  @apply sm:grid-cols-[1fr];
   grid-template-columns: 1fr 457px;
   grid-template-rows: 2;
   column-gap: 30px;
   &:not(last-child) {
-    @apply mb-0;
+    @apply mb-[75px] sm:mb-0;
   }
-  @media (max-width: 1024px) and (min-width: 640px) {
+  @media (max-width: theme(screens.lg.max)) and (min-width: theme(screens.md.min)) {
     grid-template-columns: 1fr 1fr !important;
     a {
       max-width: calc(50vw - 55px);
     }
   }
-  @media (max-width: 640px) {
+  @media (max-width: theme(screens.sm.max)) {
     grid-template-columns: 1fr !important;
   }
 }
@@ -49,7 +47,7 @@ const { gridLayout, posts, reverse, showAllLink } = Astro.props;
 }
 .moreLink {
   border-radius: 5px;
-  @media (max-width: 640px) {
+  @media (max-width: theme(screens.sm.max)) {
     box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
   }
 }
@@ -72,12 +70,12 @@ const { gridLayout, posts, reverse, showAllLink } = Astro.props;
         <a
           class={cn(
             'moreLink',
-            'flex items-center justify-center text-primary rounded-2xl',
-            'mb-20 bg-card',
+            'flex items-center justify-center text-palette-primary rounded-2xl',
+            'sm:mb-20 bg-palette-card',
           )}
           href="/articles"
         >
-          <EvervaultCard className="h-28" client:only="react" text="查看所有文章" />
+          <EvervaultCard className="h-[430px] sm:h-28" client:only="react" text="查看所有文章" />
         </a>
       )}
 </div>

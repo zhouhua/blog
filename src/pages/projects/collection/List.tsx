@@ -63,7 +63,7 @@ const List: Component = ({ className, data, description, filterFields, renderIte
                   </div>
                   <Select onValueChange={value => setFilter(f => ({ ...f, [name]: value }))}>
                     <SelectTrigger className="p-1 h-7">
-                      <SelectValue className="text-xs!" placeholder={t('common.all')} />
+                      <SelectValue className="!text-xs" placeholder={t('common.all')} />
                     </SelectTrigger>
                     <SelectContent>
                       {Object.keys(options).map(key => (

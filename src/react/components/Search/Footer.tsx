@@ -64,16 +64,16 @@ const Footer: FC = () => {
     <footer
       className={cn(
         'flex flex-row-reverse justify-between',
-        'border-bg-alt border-t border-solid px-6 py-4',
+        'border-palette-bgAlt border-t-[1px] border-solid px-6 py-4',
       )}
     >
       <PoweredBy
         classNames={{
-          logo: 'h-3 mt-[3px] sm:h-4',
+          logo: 'h-[18px] mt-[3px] sm:h-3 md:h-4',
         }}
         theme={colorMode}
       />
-      <div className="flex text-sm hidden gap-4 sm:gap-2">
+      <div className="flex text-sm sm:hidden gap-4 md:gap-2">
         {hotKeys.map(
           ({ keys, text }, i) =>
             showMap[i] && (
@@ -82,7 +82,7 @@ const Footer: FC = () => {
                   // eslint-disable-next-line react/no-array-index-key
                   <Kbd key={index}>{key}</Kbd>
                 ))}
-                <span className="sm:text-xs">{text}</span>
+                <span className="md:text-xs">{text}</span>
               </div>
             ),
         )}

@@ -1,5 +1,3 @@
-@reference '../../../styles/global.css';
-
 .Mask {
   box-shadow:
     0 10px 15px -3px #0000001a,
@@ -13,7 +11,7 @@
 }
 .resultItem {
   mark {
-    @apply text-accent px-0.5 font-semibold underline underline-offset-2;
+    @apply text-palette-accent px-0.5 font-semibold underline underline-offset-2;
     background: none;
     transition:
       background 0.25s var(--ease-in-out-quad),
@@ -24,16 +22,16 @@
 
 .selected.recentItem,
 .selected.resultItem {
-  @apply bg-accent text-background;
+  @apply bg-palette-accent text-palette-bg;
   transition:
     background 0.25s var(--ease-in-out-quad),
     border 0.25s var(--ease-in-out-quad),
     color 0.25s var(--ease-in-out-quad);
 }
 .selected.recentItem {
-  @apply text-card;
+  @apply text-palette-card;
   .query {
-    @apply bg-background text-primary;
+    @apply bg-palette-bg text-palette-primary;
     transition:
       background 0.25s var(--ease-in-out-quad),
       border 0.25s var(--ease-in-out-quad),
@@ -43,16 +41,16 @@
 
 .selected.resultItem {
   mark {
-    @apply text-background;
+    @apply text-palette-bg;
   }
   h2 {
-    @apply bg-background text-primary;
+    @apply bg-palette-bg text-palette-primary;
     mark {
-      @apply text-accent;
+      @apply text-palette-accent;
     }
   }
   .icon {
-    @apply border-bg-alt;
+    @apply border-palette-bgAlt;
     transition:
       background 0.25s var(--ease-in-out-quad),
       border 0.25s var(--ease-in-out-quad),

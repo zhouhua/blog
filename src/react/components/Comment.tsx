@@ -6,7 +6,7 @@ const Comment: FC = () => {
   const [colorMode] = useColorMode();
   return (
     <div
-      className="relative z-10 mb-32 mt-10 border-t border-solid border-bg-alt pt-10"
+      className="relative z-10 mb-32 mt-10 border-t border-solid border-palette-bgAlt pt-10"
     >
       <div className="mx-auto max-w-[680px]">
         <Giscus

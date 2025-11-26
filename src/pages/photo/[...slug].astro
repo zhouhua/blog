@@ -1,3 +1,4 @@
+---
 import type { CustomPhotoType, Exif, PhotoImage } from '@types';
 import { dirname, join, resolve } from 'node:path';
 import ArticleTitle from '@components/ArticleTitle.astro';
@@ -6,7 +7,6 @@ import { BLOG } from '@consts';
 import PageLayout from '@layouts/PageLayout.astro';
 import { getImage } from '@lib/html';
 import GroupSection from '@react/components/photo/GroupSection';
-import pageStyles from '@styles/pages.module.css';
 import { getImage as transform } from 'astro:assets';
 import { type CollectionEntry, getCollection } from 'astro:content';
 import exif from 'fast-exif';
@@ -87,18 +87,33 @@ for (const item of extraList) {
 }
 ---
 
+<style lang="postcss">
+.lineTitle {
+  @apply text-palette-primary relative pb-20 font-normal opacity-25 md:pb-[60px];
+  transition:
+    background 0.25s var(--ease-in-out-quad),
+    color 0.25s var(--ease-in-out-quad);
+  &::after {
+    @apply absolute left-40 right-0 top-[11px] h-px content-[''];
+    @apply bg-palette-gray;
+    transition:
+      background 0.25s var(--ease-in-out-quad),
+      color 0.25s var(--ease-in-out-quad);
+  }
+}
+</style>
 
 <PageLayout description={BLOG.DESCRIPTION} title={BLOG.TITLE}>
   <ArticleTitle title={post.data.title} time={post.data.date}>
     {post.data.list.length} 张图
   </ArticleTitle>
-  <Container class="min-w-[360px] max-w-full px-5 sm:px-8">
+  <Container class="min-w-[360px] max-w-full px-20 sm:px-5 md:px-8 lg:px-8 xl:px-8">
     <GroupSection client:only="react" photoPosts={photos} />
   </Container>
   <Comment client:only="react" />
   {transformedExtraList.length > 0 && (
     <Container>
-      <h3 class={pageStyles.lineTitle}>看看更多照片</h3>
+      <h3 class="lineTitle">看看更多照片</h3>
       <ImageGallery client:only="react" photos={transformedExtraList} />
       <div class="mb-[65px]" />
     </Container>

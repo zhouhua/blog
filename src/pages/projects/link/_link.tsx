@@ -171,7 +171,7 @@ function ShortLink() {
       accessorKey: 'value',
       cell: ({ getValue }) => {
         const url = getValue() as string;
-        return <a href={url} className="text-accent hover:underline" target="_blank">{url}</a>;
+        return <a href={url} className="text-palette-accent hover:underline" target="_blank">{url}</a>;
       },
       enableGlobalFilter: true,
       header: 'URL',
@@ -197,7 +197,7 @@ function ShortLink() {
           <div className="flex gap-1">
             <Popover>
               <PopoverTrigger>
-                <Button variant="link" className="text-gray">删除</Button>
+                <Button variant="link" className="text-palette-gray">删除</Button>
               </PopoverTrigger>
               <PopoverContent className="p-6">
                 <div className="mb-5">确认删除？</div>
@@ -215,7 +215,7 @@ function ShortLink() {
             </Popover>
             <Button
               variant="link"
-              className="text-gray"
+              className="text-palette-gray"
               onClick={() => {
                 const url = `${location.origin}/i/${key}`;
                 window.open(url, '_blank');
@@ -318,7 +318,7 @@ function ShortLink() {
               添加短链
             </Button>
           </DrawerTrigger>
-          <DrawerOverlay className="opacity-40!" />
+          <DrawerOverlay className="!opacity-40" />
           <DrawerContent>
             <DrawerHeader className="pt-6">
               <DrawerTitle>创建新的短链</DrawerTitle>
@@ -326,7 +326,7 @@ function ShortLink() {
             </DrawerHeader>
             <div className="w-[80%] flex justify-center items-center mx-auto mt-10 mb-20">
               <label
-                className="bg-gray/10 h-8 rounded-l-md px-2 leading-8 border border-input border-r-0"
+                className="bg-palette-gray/10 h-8 rounded-l-md px-2 leading-8 border border-input border-r-0"
               >
                 URL:
               </label>

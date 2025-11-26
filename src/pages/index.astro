@@ -1,3 +1,4 @@
+---
 import type { CustomPhotoType } from '@types';
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import type { CollectionEntry } from 'astro:content';
@@ -13,7 +14,6 @@ import { cn } from '@lib/utils';
 import EvervaultCard from '@react/components/EvervaultCard';
 import ImageGallery from '@react/components/photo/ImageGallery';
 import articleStyles from '@styles/article.module.css';
-import pageStyles from '@styles/pages.module.css';
 import { getImage as transform } from 'astro:assets';
 import { getCollection, getEntry, render } from 'astro:content';
 import dayjs from 'dayjs';
@@ -101,6 +101,20 @@ document.addEventListener('astro:page-load', () => {
 });
 </script>
 
+<style lang="postcss">
+.lineTitle {
+  @apply text-palette-primary relative pb-20 font-normal opacity-25 md:pb-[60px];
+  transition:
+    background 0.25s var(--ease-in-out-quad),
+    color 0.25s var(--ease-in-out-quad);
+  &::after {
+    @apply absolute left-40 right-0 top-[11px] h-px content-[''];
+    @apply bg-palette-gray;
+    transition:
+      background 0.25s var(--ease-in-out-quad),
+      color 0.25s var(--ease-in-out-quad);
+  }
+}
 
 .journalCard {
   @apply px-0 pt-0 !important;
@@ -121,8 +135,8 @@ document.addEventListener('astro:page-load', () => {
   content: '';
   background: linear-gradient(
     180deg,
-    rgb(var(--color-card) / 0) 0%,
-    rgb(var(--color-card) / 1) 95%
+    theme(colors.palette.card/0) 0%,
+    theme(colors.palette.card) 95%
   );
 }
 </style>
@@ -130,7 +144,7 @@ document.addEventListener('astro:page-load', () => {
 <PageLayout description={HOME.DESCRIPTION} title={HOME.TITLE}>
   <ListTitle />
   <Container>
-    <h3 class={cn(pageStyles.lineTitle, 'mt-20')}>精选文章</h3>
+    <h3 class={cn('lineTitle', 'mt-20')}>精选文章</h3>
     {pairs.map((ap, index) => {
       const isEven = index % 2 !== 0;
       return (
@@ -144,8 +158,8 @@ document.addEventListener('astro:page-load', () => {
     })}
   </Container>
   <Container>
-    <h3 class={cn(pageStyles.lineTitle, 'mt-20')}>最新随笔</h3>
-    <div class="relative z-10 columns-1 gap-x-6">
+    <h3 class={cn('lineTitle', 'mt-20')}>最新随笔</h3>
+    <div class="relative z-10 columns-2 gap-x-6 sm:columns-1">
       {latestJournals.map(({ Content, journal }) => (
         <div
           class={cn(
@@ -159,7 +173,7 @@ document.addEventListener('astro:page-load', () => {
           <article
             class={cn(
               'fade',
-              'relative rounded-2xl bg-card px-10 pb-2 pt-8 sm:px-8',
+              'relative rounded-2xl bg-palette-card px-10 pb-2 pt-12 sm:pt-8 md:px-8',
               'colorModeTransition  max-h-[640px]  overflow-hidden',
             )}
           >
@@ -173,7 +187,7 @@ document.addEventListener('astro:page-load', () => {
         <a
           class={cn(
             'journalCard',
-            'flex h-56 w-full items-center justify-center rounded-2xl bg-card',
+            'flex h-56 w-full items-center justify-center rounded-2xl bg-palette-card',
             'colorModeTransition overflow-hidden',
           )}
           href="/journals"
@@ -184,7 +198,7 @@ document.addEventListener('astro:page-load', () => {
     </div>
   </Container>
   <Container narrow>
-    <h3 class={cn(pageStyles.lineTitle, 'mt-20')}>精彩照片</h3>
+    <h3 class={cn('lineTitle', 'mt-20')}>精彩照片</h3>
   </Container>
   <section class="min-w-[360px] max-w-full mx-auto">
     <ImageGallery
@@ -193,16 +207,16 @@ document.addEventListener('astro:page-load', () => {
     />
   </section>
   <Container class="flex justify-center">
-    <div class="daisy-stats mt-24 bg-card text-secondary shadow -mx-2 mt-12 text-center">
-      <div class="daisy-stat border-gray/20 px-8 py-5 p-3">
-        <div class="daisy-stat-figure ml-2 text-lg hidden">
+    <div class="daisy-stats mt-24 bg-palette-card text-palette-secondary shadow sm:-mx-2 sm:mt-12 sm:text-center">
+      <div class="daisy-stat border-palette-gray/20 px-8 py-5 sm:p-3">
+        <div class="daisy-stat-figure ml-2 text-lg sm:hidden">
           <span class="iconify fa6-solid--pen-fancy" />
         </div>
         <div class="daisy-stat-title">收录文章</div>
         <div class="daisy-stat-value my-1">{blogs.length} 篇</div>
         <div class="daisy-stat-desc">合计 {(blogWordCount / 10000).toFixed(2)} 万字</div>
       </div>
-      <div class="daisy-stat border-gray/20 px-8 py-5 sm:p-3">
+      <div class="daisy-stat border-palette-gray/20 px-8 py-5 sm:p-3">
         <div class="daisy-stat-figure ml-2 text-lg sm:hidden">
           <span class="iconify fa6-solid--message" />
         </div>
@@ -210,7 +224,7 @@ document.addEventListener('astro:page-load', () => {
         <div class="daisy-stat-value my-1">{journals.length} 篇</div>
         <div class="daisy-stat-desc">合计 {(journalWordCount / 10000).toFixed(2)} 万字</div>
       </div>
-      <div class="daisy-stat border-gray/20 px-8 py-5 sm:p-3">
+      <div class="daisy-stat border-palette-gray/20 px-8 py-5 sm:p-3">
         <div class="daisy-stat-figure ml-2 text-lg sm:hidden">
           <span class="iconify fa6-solid--image" />
         </div>

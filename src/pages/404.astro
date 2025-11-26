@@ -5,18 +5,17 @@ import PageLayout from '@layouts/PageLayout.astro';
 
 ---
 <style lang="postcss">
-
 .text {
-  @apply text-primary relative font-monospace leading-[1];
-  @apply h-[200px] text-[200px] sm:h-[280px] sm:text-[280px];
+  @apply text-palette-primary relative font-monospace leading-[1];
+  @apply h-[320px] text-[320px] sm:h-[200px] sm:text-[200px] md:h-[280px] md:text-[280px];
   transition:
     background 0.25s var(--ease-in-out-quad),
     border 0.25s var(--ease-in-out-quad),
     color 0.25s var(--ease-in-out-quad);
 }
 .white {
-  @apply bg-background absolute -left-2.5 -right-2.5;
-  @apply z-4 h-1;
+  @apply bg-palette-bg absolute -left-2.5 -right-2.5;
+  @apply z-[4] h-2 sm:h-1;
   animation: whiteMove 3s ease-out infinite;
   transition:
     background 0.25s var(--ease-in-out-quad),
@@ -25,7 +24,7 @@ import PageLayout from '@layouts/PageLayout.astro';
 }
 
 .text::before {
-  @apply text-primary/90 absolute left-1 top-0 z-2 h-0 overflow-hidden;
+  @apply text-palette-primary/90 absolute left-1 top-0 z-[2] h-0 overflow-hidden;
   content: attr(data-text);
   animation: redShadow 1s ease-in infinite;
   filter: contrast(200%);
@@ -37,7 +36,7 @@ import PageLayout from '@layouts/PageLayout.astro';
 }
 
 .text::after {
-  @apply bg-background/90 text-primary/80 absolute -left-2 top-0 z-3 h-full overflow-hidden;
+  @apply bg-palette-bg/90 text-palette-primary/80 absolute -left-3 top-0 z-[3] h-full overflow-hidden sm:-left-2;
   content: attr(data-text);
   animation: redHeight 1.5s ease-out infinite;
   filter: contrast(200%);
@@ -115,10 +114,10 @@ import PageLayout from '@layouts/PageLayout.astro';
         <div class="white" />
       </div>
     </div>
-    <h1 class="text-primary mt-20 text-center text-lg">找不到你访问的页面</h1>
+    <h1 class="text-palette-primary mt-20 text-center text-lg">找不到你访问的页面</h1>
       <div class="flex justify-center pt-10">
         <a
-          class="text-primary hover:text-accent p-2 underline-offset-4 hover:underline"
+          class="text-palette-primary hover:text-palette-accent p-2 underline-offset-4 hover:underline"
           href="/"
         >
           回到首页

@@ -4,7 +4,7 @@ import { words } from 'lodash-es';
 
 export function getReadInfo(html: string) {
   const $ = load(html);
-  const pureText = $(':root').prop('textContent') || '';
+  const pureText = $(':root').prop('textContent');
   const wordCount = words(pureText).length
     + words(pureText, /[\p{sc=Katakana}\p{sc=Hiragana}\p{sc=Han}]/gu).length;
   const imageCount = $('img').length;
@@ -29,6 +29,6 @@ export function getImage(path: string) {
 
 export function getExcerpt(html: string, cut = 140) {
   const $ = load(html);
-  const pureText = ($(':root').prop('textContent') || '').replace(/\s+/g, ' ');
+  const pureText = $(':root').prop('textContent').replace(/\s+/g, ' ');
   return pureText.slice(0, cut);
 }

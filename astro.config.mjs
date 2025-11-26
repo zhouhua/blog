@@ -3,22 +3,20 @@ import process from 'node:process';
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
-import vercel from '@astrojs/vercel';
+import tailwind from '@astrojs/tailwind';
+import vercel from '@astrojs/vercel/serverless';
 import sentry from '@sentry/astro';
 import { transformerMetaHighlight } from '@shikijs/transformers';
 import mediaCard from '@zhouhua-dev/remark-media-card';
 import pageInsight from 'astro-page-insight';
 import remarkDescription from 'astro-remark-description';
+import tailwindConfigViewer from 'astro-tailwind-config-viewer';
 import { defineConfig } from 'astro/config';
 import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math';
-import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  vite: {
-    plugins: [tailwindcss()],
-  },
   adapter: vercel({
     isr: {
       expiration: 7 * 60 * 60 * 24,
@@ -31,10 +29,14 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap(),
+    tailwind({
+      applyBaseStyles: false,
+    }),
     react({
       include: ['**/react/*'],
     }),
     pageInsight(),
+    tailwindConfigViewer(),
     sentry({
       dsn: 'https://3980dc24dd4a6cbe00ad71338a2f834c@o56440.ingest.us.sentry.io/4508126150656000',
       sourceMapsUploadOptions: {
