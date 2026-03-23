@@ -1,8 +1,16 @@
 import type { APIRoute } from 'astro';
 import dayjs from '@lib/dayjs';
-import { murmurHash } from 'ohash';
+import { hash } from 'ohash';
 import db from './_db';
 import { base62 } from './_utils';
+
+function createLinkKey(value: string) {
+  let num = 0;
+  for (const char of hash(value)) {
+    num = ((num * 33) + char.charCodeAt(0)) >>> 0;
+  }
+  return base62(num || 1);
+}
 
 export const GET: APIRoute = async ({ request }) => {
   const url = new URL(request.url);
@@ -42,7 +50,7 @@ export const POST: APIRoute = async ({ request }) => {
       let padding = '';
       let key = '';
       while (maxRety) {
-        key = base62(+murmurHash(value + padding));
+        key = createLinkKey(value + padding);
         const item = await db.selectFrom('links').selectAll().where('key', '=', key).executeTakeFirst();
         if (!item) {
           await db.insertInto('links').values({ key, last_use: new Date(), value }).execute();
