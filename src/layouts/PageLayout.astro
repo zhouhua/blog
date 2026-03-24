@@ -18,8 +18,8 @@ const { description, title } = Astro.props;
   <head>
     <Head description={description} title={title ? `${title} | ${SITE.NAME}` : SITE.NAME} />
   </head>
-  <body class="colorModeTransition overflow-y-auto scrollbar-both-edges relative h-screen min-w-[360px] bg-palette-bg">
-    <div class="bg-palette-bg text-foreground" data-vaul-drawer-wrapper>
+  <body class="colorModeTransition relative h-screen overflow-y-auto scrollbar-both-edges bg-bg">
+    <div class="bg-bg text-foreground" data-vaul-drawer-wrapper>
       <Header />
       <main transition:animate="slide">
         <slot />
@@ -36,7 +36,6 @@ import { annotate } from 'rough-notation';
 import 'medium-zoom/dist/style.css';
 
 function initPageEffect() {
-  console.log('initPageEffect');
   const callouts = document.querySelectorAll<HTMLDivElement>('article .callout');
   callouts.forEach(callout =>
     annotate(callout, {

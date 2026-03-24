@@ -101,15 +101,17 @@ document.addEventListener('astro:page-load', () => {
 });
 </script>
 
-<style lang="postcss">
+<style>
+@reference '../styles/global.css';
+
 .lineTitle {
-  @apply text-palette-primary relative pb-20 font-normal opacity-25 md:pb-[60px];
+  @apply text-primary relative pb-20 font-normal opacity-25 md:pb-[60px];
   transition:
     background 0.25s var(--ease-in-out-quad),
     color 0.25s var(--ease-in-out-quad);
   &::after {
     @apply absolute left-40 right-0 top-[11px] h-px content-[''];
-    @apply bg-palette-gray;
+    @apply bg-gray;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -117,7 +119,7 @@ document.addEventListener('astro:page-load', () => {
 }
 
 .journalCard {
-  @apply px-0 pt-0 !important;
+  @apply px-0 pt-0!;
   article {
     box-shadow:
       0 30px 60px -10px rgba(0, 0, 0, 0.2),
@@ -135,8 +137,8 @@ document.addEventListener('astro:page-load', () => {
   content: '';
   background: linear-gradient(
     180deg,
-    theme(colors.palette.card/0) 0%,
-    theme(colors.palette.card) 95%
+    theme('colors.card / 0') 0%,
+    theme('colors.card') 95%
   );
 }
 </style>
@@ -145,21 +147,17 @@ document.addEventListener('astro:page-load', () => {
   <ListTitle />
   <Container>
     <h3 class={cn('lineTitle', 'mt-20')}>精选文章</h3>
-    {pairs.map((ap, index) => {
-      const isEven = index % 2 !== 0;
-      return (
-        <ArticlesPair
-          gridLayout="tiles"
-          posts={ap}
-          reverse={isEven}
-          showAllLink={index === pairs.length - 1}
-        />
-      );
-    })}
+    {pairs.map((ap, index) => (
+      <ArticlesPair
+        gridLayout="tiles"
+        posts={ap}
+        showAllLink={index === pairs.length - 1}
+      />
+    ))}
   </Container>
   <Container>
     <h3 class={cn('lineTitle', 'mt-20')}>最新随笔</h3>
-    <div class="relative z-10 columns-2 gap-x-6 sm:columns-1">
+    <div class="relative z-10 columns-1 gap-y-6 sm:columns-2 sm:gap-x-6">
       {latestJournals.map(({ Content, journal }) => (
         <div
           class={cn(
@@ -173,7 +171,7 @@ document.addEventListener('astro:page-load', () => {
           <article
             class={cn(
               'fade',
-              'relative rounded-2xl bg-palette-card px-10 pb-2 pt-12 sm:pt-8 md:px-8',
+              'relative rounded-2xl bg-card px-10 pb-2 pt-12 sm:pt-8 md:px-8',
               'colorModeTransition  max-h-[640px]  overflow-hidden',
             )}
           >
@@ -187,7 +185,7 @@ document.addEventListener('astro:page-load', () => {
         <a
           class={cn(
             'journalCard',
-            'flex h-56 w-full items-center justify-center rounded-2xl bg-palette-card',
+            'flex h-56 w-full items-center justify-center rounded-2xl bg-card',
             'colorModeTransition overflow-hidden',
           )}
           href="/journals"
@@ -200,32 +198,32 @@ document.addEventListener('astro:page-load', () => {
   <Container narrow>
     <h3 class={cn('lineTitle', 'mt-20')}>精彩照片</h3>
   </Container>
-  <section class="min-w-[360px] max-w-full mx-auto">
+  <section class="mx-auto max-w-full">
     <ImageGallery
       client:only="react"
       photos={transformedPickedList}
     />
   </section>
   <Container class="flex justify-center">
-    <div class="daisy-stats mt-24 bg-palette-card text-palette-secondary shadow sm:-mx-2 sm:mt-12 sm:text-center">
-      <div class="daisy-stat border-palette-gray/20 px-8 py-5 sm:p-3">
-        <div class="daisy-stat-figure ml-2 text-lg sm:hidden">
+    <div class="daisy-stats daisy-stats-vertical mt-12 w-full max-w-sm bg-card text-secondary shadow sm:-mx-2 sm:mt-24 sm:max-w-none sm:text-center lg:daisy-stats-horizontal">
+      <div class="daisy-stat border-gray/20 p-3 sm:px-8 sm:py-5">
+        <div class="daisy-stat-figure ml-2 hidden text-lg sm:block">
           <span class="iconify fa6-solid--pen-fancy" />
         </div>
         <div class="daisy-stat-title">收录文章</div>
         <div class="daisy-stat-value my-1">{blogs.length} 篇</div>
         <div class="daisy-stat-desc">合计 {(blogWordCount / 10000).toFixed(2)} 万字</div>
       </div>
-      <div class="daisy-stat border-palette-gray/20 px-8 py-5 sm:p-3">
-        <div class="daisy-stat-figure ml-2 text-lg sm:hidden">
+      <div class="daisy-stat border-gray/20 p-3 sm:px-8 sm:py-5">
+        <div class="daisy-stat-figure ml-2 hidden text-lg sm:block">
           <span class="iconify fa6-solid--message" />
         </div>
         <div class="daisy-stat-title">收录随笔</div>
         <div class="daisy-stat-value my-1">{journals.length} 篇</div>
         <div class="daisy-stat-desc">合计 {(journalWordCount / 10000).toFixed(2)} 万字</div>
       </div>
-      <div class="daisy-stat border-palette-gray/20 px-8 py-5 sm:p-3">
-        <div class="daisy-stat-figure ml-2 text-lg sm:hidden">
+      <div class="daisy-stat border-gray/20 p-3 sm:px-8 sm:py-5">
+        <div class="daisy-stat-figure ml-2 hidden text-lg sm:block">
           <span class="iconify fa6-solid--image" />
         </div>
         <div class="daisy-stat-title">收录图集</div>

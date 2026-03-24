@@ -8,61 +8,37 @@ interface Props {
   posts: [CollectionEntry<'blog'>, CollectionEntry<'blog'>] | [CollectionEntry<'blog'>];
   gridLayout: 'rows' | 'tiles';
   showAllLink?: boolean;
-  reverse: boolean;
 }
 
-const { gridLayout, posts, reverse, showAllLink } = Astro.props;
+const { gridLayout, posts, showAllLink } = Astro.props;
+const pairClassName = gridLayout === 'tiles'
+  ? cn(
+    'relative grid grid-cols-1 gap-y-10 sm:gap-x-6 sm:gap-y-0',
+    'sm:grid-cols-2 lg:grid-cols-[minmax(0,_1fr)_457px]',
+  )
+  : cn('grid grid-cols-1 gap-y-10', {
+    'grid-rows-1': posts.length === 1,
+    'grid-rows-2': posts.length > 1,
+  });
 ---
 
-<style lang="postcss">
-.listTile {
-  @apply relative grid;
-  @apply sm:grid-cols-[1fr];
-  grid-template-columns: 1fr 457px;
-  grid-template-rows: 2;
-  column-gap: 30px;
-  &:not(last-child) {
-    @apply mb-[75px] sm:mb-0;
-  }
-  @media (max-width: theme(screens.lg.max)) and (min-width: theme(screens.md.min)) {
-    grid-template-columns: 1fr 1fr !important;
-    a {
-      max-width: calc(50vw - 55px);
-    }
-  }
-  @media (max-width: theme(screens.sm.max)) {
-    grid-template-columns: 1fr !important;
-  }
-}
-.listTile.reverse {
-  grid-template-columns: 457px 1fr;
-}
-/* If only 1 article, dont create 2 rows.*/
-.listRow {
-  @apply grid;
-  grid-template-rows: 1fr 1fr;
-}
-.listRow.oneArticle {
-  grid-template-rows: 1fr;
-}
+<style>
+@reference '../styles/global.css';
+
 .moreLink {
   border-radius: 5px;
-  @media (max-width: theme(screens.sm.max)) {
-    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
+  @media (width >= 40rem) {
+    box-shadow: none;
   }
 }
 </style>
 
-<div
-  class={cn(`${gridLayout === 'tiles' ? 'listTile' : 'listRow'}`, {
-        oneArticle: posts.length === 1,
-        reverse,
-      })}
->
+<div class={pairClassName}>
       {posts.slice(0, 2).map((article, i) => (
         <ListItem
           gridLayout={gridLayout}
-          narrow={i % 2 ? reverse : !reverse}
+          narrow={gridLayout === 'tiles' && i === 1}
           post={article}
         />
       ))}
@@ -70,12 +46,11 @@ const { gridLayout, posts, reverse, showAllLink } = Astro.props;
         <a
           class={cn(
             'moreLink',
-            'flex items-center justify-center text-palette-primary rounded-2xl',
-            'sm:mb-20 bg-palette-card',
+            'flex items-center justify-center rounded-2xl bg-card text-primary',
           )}
           href="/articles"
         >
-          <EvervaultCard className="h-[430px] sm:h-28" client:only="react" text="查看所有文章" />
+          <EvervaultCard className="h-28 sm:h-[430px]" client:only="react" text="查看所有文章" />
         </a>
       )}
 </div>
