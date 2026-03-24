@@ -19,11 +19,14 @@ export default function MobileMenu() {
         {
           menu.map(item => (
             <DropdownMenuItem
+              asChild
               key={item.name}
               className="my-2 flex h-10 justify-center items-center text-lg hover:bg-bgRevert/10 rounded-lg text-primary gap-6 cursor-pointer"
             >
-              {item.iconComponent}
-              <a href={item.path}>{item.name}</a>
+              <a href={item.path}>
+                {item.iconComponent}
+                <span>{item.name}</span>
+              </a>
             </DropdownMenuItem>
           ))
         }

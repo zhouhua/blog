@@ -19,10 +19,10 @@ function findHeader($) {
   return header;
 }
 
-function collectClasses($, elements) {
-  return elements
-    .map(element => $(element).attr('class'))
-    .filter(Boolean);
+function findHeaderShellContainer($, header) {
+  const shell = header.children('[class]').first();
+  assert.ok(shell.length > 0, 'Expected the header to render a direct shell container');
+  return shell.get(0);
 }
 
 function getMenuContainers($, header) {
@@ -35,7 +35,8 @@ function getMenuContainers($, header) {
         .filter(Boolean),
     );
 
-    return DESKTOP_MENU_HREFS.every(href => hrefs.has(href));
+    return hrefs.size === DESKTOP_MENU_HREFS.length
+      && DESKTOP_MENU_HREFS.every(href => hrefs.has(href));
   });
 }
 
@@ -48,6 +49,21 @@ function expectClassCombination(classNames, requiredTokens, label) {
   assert.ok(
     match,
     `Expected ${label} to include ${requiredTokens.join(' ')}, got:\n${classNames.join('\n')}`,
+  );
+}
+
+function expectClassTokens(className, requiredTokens, label) {
+  expectClassCombination([className], requiredTokens, label);
+}
+
+function expectNoClassTokens(className, forbiddenTokens, label) {
+  const tokens = classTokens(className);
+  const present = forbiddenTokens.filter(token => tokens.has(token));
+
+  assert.equal(
+    present.length,
+    0,
+    `Expected ${label} to exclude ${forbiddenTokens.join(' ')}, got: ${className}`,
   );
 }
 
@@ -72,20 +88,19 @@ test('responsive shell and mobile menu contract', async () => {
     const home = await fetchPage(baseUrl, '/');
     const $ = load(home);
     const header = findHeader($);
-    const headerDescendants = header.find('[class]').toArray();
+    const headerShellContainer = findHeaderShellContainer($, header);
+    const headerShellClassName = $(headerShellContainer).attr('class') ?? '';
 
     const menuContainers = getMenuContainers($, header);
-    const menuClasses = collectClasses($, menuContainers);
     assert.ok(
       menuContainers.length > 0,
       `Expected to find a desktop nav container in the header, got ${header.html().slice(0, 500)}`,
     );
-    expectClassCombination(menuClasses, ['hidden', 'sm:flex'], 'desktop nav container');
-    expectClassCombination(
-      collectClasses($, headerDescendants),
-      ['px-5', 'sm:px-10'],
-      'header shell classes',
-    );
+    const desktopMenuClassName = $(menuContainers[0]).attr('class') ?? '';
+    expectClassTokens(desktopMenuClassName, ['hidden', 'sm:flex'], 'desktop nav container');
+    expectNoClassTokens(desktopMenuClassName, ['sm:hidden'], 'desktop nav container');
+    expectClassTokens(headerShellClassName, ['px-5', 'sm:px-10'], 'header shell classes');
+    expectNoClassTokens(headerShellClassName, ['sm:px-5', 'px-10'], 'header shell classes');
 
     const headerSource = await readFile(HEADER_SOURCE_PATH, 'utf8');
     const mobileMenuTag = extractSelfClosingTag(headerSource, 'MobileMenu');
@@ -105,6 +120,10 @@ test('responsive shell and mobile menu contract', async () => {
     assert.ok(
       triggerTokens.has('sm:hidden'),
       `Expected DropdownMenuTrigger to include sm:hidden, got: ${triggerClassName}`,
+    );
+    assert.ok(
+      !triggerTokens.has('hidden') && !triggerTokens.has('sm:block'),
+      `Expected DropdownMenuTrigger to exclude hidden and sm:block, got: ${triggerClassName}`,
     );
   });
 });
