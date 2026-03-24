@@ -4,14 +4,16 @@ import { cn } from '@lib/utils';
 import { Image } from 'astro:assets';
 ---
 
-<style lang="postcss">
+<style>
+@reference '../styles/global.css';
+
 .AuthorLink {
   color: inherit;
   strong {
     transition: color 0.25s var(--ease-in-out-quad);
   }
   &:hover strong {
-    @apply text-palette-primary;
+    @apply text-primary;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -35,7 +37,7 @@ import { Image } from 'astro:assets';
     <div
       class={cn(
         'AuthorAvatar',
-        'colorModeTransition bg-palette-secondary overflow-hidden sm:hidden',
+        'colorModeTransition bg-secondary overflow-hidden sm:hidden',
       )}
     >
       <Image alt="作者头像" class="RoundedImage" src={photo} />

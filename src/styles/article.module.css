@@ -1,3 +1,5 @@
+@reference './global.css';
+
 .ArticleBody {
   padding: 120px 0 35px;
   transition: background 0.2s linear;
@@ -23,7 +25,7 @@
   h4,
   h5,
   h6 {
-    @apply mx-auto my-0 font-sans font-bold text-palette-primary;
+    @apply mx-auto my-0 font-sans font-bold text-primary;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -78,8 +80,8 @@
 }
 .ArticleBody {
   a {
-    @apply text-palette-accent no-underline;
-    @apply visited:text-palette-accent visited:opacity-80;
+    @apply text-accent no-underline;
+    @apply visited:text-accent visited:opacity-80;
     @apply hover:underline focus:underline;
     transition:
       background 0.25s var(--ease-in-out-quad),
@@ -88,7 +90,7 @@
 }
 .ArticleBody {
   blockquote {
-    @apply relative mx-auto mb-12 mt-2.5 w-full italic text-palette-secondary sm:mb-9;
+    @apply relative mx-auto mb-12 mt-2.5 w-full italic text-secondary sm:mb-9;
     @apply max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
     @apply px-4;
     transition:
@@ -105,7 +107,7 @@
     }
     &::after {
       content: '\201D';
-      @apply absolute left-full top-full -ml-6 -mt-12 text-[96px] text-palette-bgAlt sm:-ml-8 sm:-mt-8 sm:text-[72px];
+      @apply absolute left-full top-full -ml-6 -mt-12 text-[96px] text-bgAlt sm:-ml-8 sm:-mt-8 sm:text-[72px];
     }
   }
 }
@@ -114,7 +116,7 @@
   dl,
   ol {
     padding: 15px 0 30px 40px;
-    @apply relative mx-auto my-0 w-full list-none text-lg text-palette-primary;
+    @apply relative mx-auto my-0 w-full list-none text-lg text-primary;
     @apply max-w-[680px] sm:max-w-[486px] sm:pl-7 md:max-w-[507px];
     transition:
       background 0.25s var(--ease-in-out-quad),
@@ -127,14 +129,14 @@
     }
     li::before {
       @apply absolute left-[-30px] top-2.5 inline-block sm:pl-0;
-      @apply text-palette-primary;
+      @apply text-primary;
       transition:
         background 0.25s var(--ease-in-out-quad),
         color 0.25s var(--ease-in-out-quad);
     }
   }
   ul > li::before {
-    @apply h-2 w-2 bg-palette-secondary content-[''];
+    @apply h-2 w-2 bg-secondary content-[''];
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -148,7 +150,7 @@
     content: counter(list) '.';
   }
   dl {
-    @apply mb-10 bg-palette-card;
+    @apply mb-10 bg-card;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -157,7 +159,7 @@
 .ArticleBody {
   p:not(:where(svg p)),
   :global(.math-display) {
-    @apply w-full text-lg leading-[1.756] text-palette-primary;
+    @apply w-full text-lg leading-[1.756] text-primary;
     @apply max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
     @apply mx-auto mb-[35px] mt-0 sm:mb-[25px] sm:py-0 sm:text-base sm:leading-7;
     transition:
@@ -203,10 +205,10 @@
           @apply right-0 translate-x-full;
         }
         &.highlighted {
-          @apply bg-palette-bgAlt/20 w-full;
+          @apply bg-bgAlt/20 w-full;
           &::before,
           &::after {
-            @apply bg-palette-bgAlt/20;
+            @apply bg-bgAlt/20;
           }
           &::after {
             content: '';
@@ -218,8 +220,8 @@
       }
     }
     :not(pre.astro-code) > code {
-      @apply rounded px-1 py-0.5 bg-palette-accent/20;
-      @apply font-monospace font-normal text-palette-accent text-[0.9em];
+      @apply rounded px-1 py-0.5 bg-accent/20;
+      @apply font-monospace font-normal text-accent text-[0.9em];
       transition:
         background 0.25s var(--ease-in-out-quad),
         color 0.25s var(--ease-in-out-quad);
@@ -231,7 +233,7 @@
     @apply table;
     @apply relative mx-auto mb-[85px] mt-[45px] w-auto overflow-hidden;
     @apply border-separate rounded-[5px] border border-solid;
-    @apply border-palette-bgAlt bg-palette-card text-palette-secondary;
+    @apply border-bgAlt bg-card text-secondary;
     @apply border-collapse sm:mb-[55px] sm:mt-[15px] sm:max-w-[480px] md:mb-[65px] md:mt-[25px];
     line-height: 1.65;
     max-width: 960px;
@@ -239,7 +241,7 @@
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
     thead {
-      @apply relative border-collapse text-left font-sans font-semibold text-palette-primary;
+      @apply relative border-collapse text-left font-sans font-semibold text-primary;
       line-height: 1.756;
       transition:
         background 0.25s var(--ease-in-out-quad),
@@ -247,7 +249,7 @@
     }
     thead td,
     th {
-      @apply bg-palette-card px-[30px] py-[18px] text-base;
+      @apply bg-card px-[30px] py-[18px] text-base;
       @apply sm:px-5 sm:py-3.5 sm:text-sm md:px-5 md:py-3.5;
       transition:
         background 0.25s var(--ease-in-out-quad),
@@ -255,8 +257,8 @@
     }
     tbody {
       td {
-        @apply border border-solid border-palette-bgAlt;
-        @apply break-words bg-palette-card px-[30px] py-[15px] text-base;
+        @apply border border-solid border-bgAlt;
+        @apply break-words bg-card px-[30px] py-[15px] text-base;
         @apply sm:px-5 sm:py-3.5 sm:text-sm md:px-5 md:py-3.5;
         transition:
           background 0.25s var(--ease-in-out-quad),
@@ -269,7 +271,7 @@
   :global(.captain),
   figcaption,
   caption {
-    @apply -mt-6 mb-6 w-full pt-1.5 text-center text-sm text-palette-gray;
+    @apply -mt-6 mb-6 w-full pt-1.5 text-center text-sm text-gray;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -296,7 +298,7 @@
     @apply mb-4;
   }
   hr {
-    @apply relative mx-auto my-12 w-full max-w-[680px] text-palette-bgAlt;
+    @apply relative mx-auto my-12 w-full max-w-[680px] text-bgAlt;
     @apply sm:max-w-[486px] sm:px-5 sm:py-0 md:max-w-[507px];
     transition:
       background 0.25s var(--ease-in-out-quad),
@@ -315,7 +317,7 @@
   :global(.callout) {
     @apply mx-auto mb-[35px] mt-0 p-4 pl-12 sm:mb-[25px];
     @apply w-full max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
-    @apply bg-palette-bgAlt/20;
+    @apply bg-bgAlt/20;
     h2,
     h3,
     h4,

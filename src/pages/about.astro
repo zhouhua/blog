@@ -9,7 +9,7 @@ import { Image } from 'astro:assets';
 import { RoughNotation } from 'react-rough-notation';
 ---
 
-<style lang="postcss">
+<style>
 .card {
   box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
 }
@@ -35,7 +35,7 @@ import { RoughNotation } from 'react-rough-notation';
       <div
         class={cn(
           'relative z-10 my-36 rounded-3xl',
-          'colorModeTransition bg-palette-card',
+          'colorModeTransition bg-card',
           'card',
         )}
       >
@@ -46,7 +46,7 @@ import { RoughNotation } from 'react-rough-notation';
           class={cn('flex items-center justify-between px-8 py-6 sm:flex-col sm:px-6')}
         >
           <div class="flex h-80 flex-col justify-between leading-10 sm:justify-around">
-            <div class="colorModeTransition text-palette-primary sm:ml-16">
+            <div class="colorModeTransition text-primary sm:ml-16">
               <h2 class="mb-4 mt-6 text-4xl">周骅</h2>
               <a href="mailto:zhou--hua@163.com">
                 <span class="mr-3 iconify fa6-solid--envelope" />
@@ -62,7 +62,7 @@ import { RoughNotation } from 'react-rough-notation';
                 </RoughNotation>
               </a>
             </div>
-            <div class="font-serif text-sm leading-6 text-palette-secondary sm:text-center">
+            <div class="font-serif text-sm leading-6 text-secondary sm:text-center">
               想成为⼀个有趣的⼈。
               <br />
               爱足球，爱桌游，

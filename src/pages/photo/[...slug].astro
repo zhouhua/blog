@@ -87,15 +87,17 @@ for (const item of extraList) {
 }
 ---
 
-<style lang="postcss">
+<style>
+@reference '../../../styles/global.css';
+
 .lineTitle {
-  @apply text-palette-primary relative pb-20 font-normal opacity-25 md:pb-[60px];
+  @apply text-primary relative pb-20 font-normal opacity-25 md:pb-[60px];
   transition:
     background 0.25s var(--ease-in-out-quad),
     color 0.25s var(--ease-in-out-quad);
   &::after {
     @apply absolute left-40 right-0 top-[11px] h-px content-[''];
-    @apply bg-palette-gray;
+    @apply bg-gray;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);

@@ -1,9 +1,116 @@
-@import 'lxgw-wenkai-lite-webfont/style.css';
+@import 'tailwindcss';
+@import 'lxgw-wenkai-lite-webfont/lxgwwenkailite-regular.css';
 @import url(https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css);
+@plugin '@iconify/tailwind4';
+@plugin 'daisyui' {
+  prefix: 'daisy-';
+  themes: [];
+}
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+  /* Breakpoints */
+  --breakpoint-sm: 40rem; /* 640px - min-width */
+  --breakpoint-md: 48rem; /* 768px - min-width */
+  --breakpoint-lg: 64rem; /* 1024px - min-width */
+  --breakpoint-xl: 80rem; /* 1280px - min-width */
+  --breakpoint-2xl: 96rem; /* 1536px - min-width */
+
+  /* Font Families */
+  --font-monospace:
+    'Fira Code', 'Operator Mono', 'Consolas', 'Menlo', 'Monaco',
+    'source-code-pro', 'Courier New', monospace;
+  --font-sans:
+    apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'helvetica neue', helvetica, ubuntu, roboto, noto,
+    'segoe ui', Arial, sans-serif;
+  --font-serif:
+    'LXGW WenKai Lite', apple-system, BlinkMacSystemFont, 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', 'helvetica neue', helvetica, ubuntu,
+    roboto, noto, 'segoe ui', Arial, sans-serif;
+
+  /* Custom Colors - using oklch with default light theme values */
+  /* These will be overridden by CSS variables in html and html.dark for runtime theme switching */
+  --color-accent: oklch(59.4% 0.400 209.6 / <alpha-value>);
+  --color-background: oklch(97.9% 0.004 210.0 / <alpha-value>);
+  --color-bg: oklch(97.9% 0.004 210.0 / <alpha-value>);
+  --color-bgAlt: oklch(85.3% 0.039 213.3 / <alpha-value>);
+  --color-bgRevert: oklch(22.1% 0.060 221.1 / <alpha-value>);
+  --color-border: hsl(0 0% 89.8% / <alpha-value>);
+  --color-card: oklch(100.0% 0.000 0.0 / <alpha-value>);
+  --color-error: oklch(64.5% 0.400 351.1 / <alpha-value>);
+  --color-foreground: hsl(0 0% 3.9% / <alpha-value>);
+  --color-gray: oklch(52.1% 0.062 217.5 / <alpha-value>);
+  --color-input: hsl(0 0% 89.8% / <alpha-value>);
+  --color-primary: oklch(0.0% 0.000 0.0 / <alpha-value>);
+  --color-ring: hsl(0 0% 3.9% / <alpha-value>);
+  --color-secondary: oklch(22.1% 0.060 221.1 / <alpha-value>);
+  --color-success: oklch(85.6% 0.378 138.9 / <alpha-value>);
+  --color-warn: oklch(74.9% 0.400 38.7 / <alpha-value>);
+
+  /* Prism Colors - Light */
+  --color-prism-attr-name: #91b3e0;
+  --color-prism-attr-value: #448c27;
+  --color-prism-background: #f5f5f5;
+  --color-prism-boolean: #ab6526;
+  --color-prism-class-name: #aa3731;
+  --color-prism-comment: #aaa;
+  --color-prism-constant: #ab6526;
+  --color-prism-doctype: #aaa;
+  --color-prism-dom: #4b83cd;
+  --color-prism-function: #aa3731;
+  --color-prism-highlight: #e4f6d4;
+  --color-prism-highlight-border: #c1f5b0;
+  --color-prism-interpolation: #ab6526;
+  --color-prism-javascript: #724198;
+  --color-prism-keyword: #4b83cd;
+  --color-prism-language-javascript: #724198;
+  --color-prism-line-number: #6e705d;
+  --color-prism-maybe-class-name: #000;
+  --color-prism-namespace: #4b83cd;
+  --color-prism-number: #ab6526;
+  --color-prism-operator: #777;
+  --color-prism-parameter: #333;
+  --color-prism-plain: #000;
+  --color-prism-property: #ab6526;
+  --color-prism-property-access: #448c27;
+  --color-prism-punctuation: #777;
+  --color-prism-string: #448c27;
+  --color-prism-tag: #91b3e0;
+  --color-prism-token: #000;
+  --color-prism-var: #7a3e9d;
+
+  /* Dark Prism Colors */
+  --color-dark-prism-attr-name: #bf87ba;
+  --color-dark-prism-attr-value: #a8e2a8;
+  --color-dark-prism-background: #292c34;
+  --color-dark-prism-boolean: #ff5874;
+  --color-dark-prism-class-name: #ffcf74;
+  --color-dark-prism-comment: #5e6a76;
+  --color-dark-prism-constant: #b3bac5;
+  --color-dark-prism-doctype: #e8696b;
+  --color-dark-prism-dom: #5f8dc3;
+  --color-dark-prism-function: #5f8dc3;
+  --color-dark-prism-highlight: rgba(233, 218, 172, 0.2);
+  --color-dark-prism-highlight-border: rgba(232, 105, 107, 0.4);
+  --color-dark-prism-interpolation: #fff;
+  --color-dark-prism-javascript: #e8696b;
+  --color-dark-prism-keyword: #d49fd4;
+  --color-dark-prism-language-javascript: #e8696b;
+  --color-dark-prism-line-number: #dcd9e6;
+  --color-dark-prism-maybe-class-name: #fff;
+  --color-dark-prism-namespace: #b2ccd6;
+  --color-dark-prism-number: #e4854d;
+  --color-dark-prism-operator: #5fa8aa;
+  --color-dark-prism-parameter: #f9965d;
+  --color-dark-prism-plain: #fff;
+  --color-dark-prism-property: #80cbc4;
+  --color-dark-prism-property-access: #fff;
+  --color-dark-prism-punctuation: #5fa8aa;
+  --color-dark-prism-string: #a8e2a8;
+  --color-dark-prism-tag: #e8696b;
+  --color-dark-prism-token: #fff;
+  --color-dark-prism-var: #b3bac5;
+}
 
 @layer base {
   :root {
@@ -98,31 +205,33 @@
 
 html {
   color-scheme: light;
-  --color-primary: 0 0 0;
-  --color-secondary: 47 53 66;
-  --color-bg: 248 249 250;
-  --color-card: 255 255 255;
-  --color-accent: 30 144 255;
-  --color-gray: 116 125 140;
-  --color-error: 255 107 129;
-  --color-success: 123 237 159;
-  --color-warn: 255 165 2;
-  --color-bg-alt: 206 214 224;
-  --color-bg-revert: 47 53 66;
+  /* Override @theme colors for runtime theme switching - Light theme */
+  --color-primary: oklch(0.0% 0.000 0.0);
+  --color-secondary: oklch(22.1% 0.060 221.1);
+  --color-bg: oklch(97.9% 0.004 210.0);
+  --color-card: oklch(100.0% 0.000 0.0);
+  --color-accent: oklch(59.4% 0.400 209.6);
+  --color-gray: oklch(52.1% 0.062 217.5);
+  --color-error: oklch(64.5% 0.400 351.1);
+  --color-success: oklch(85.6% 0.378 138.9);
+  --color-warn: oklch(74.9% 0.400 38.7);
+  --color-bgAlt: oklch(85.3% 0.039 213.3);
+  --color-bgRevert: oklch(22.1% 0.060 221.1);
 }
 html.dark {
   color-scheme: dark;
-  --color-primary: 255 255 255;
-  --color-secondary: 223 228 234;
-  --color-bg: 47 53 66;
-  --color-card: 0 0 0;
-  --color-accent: 236 204 104;
-  --color-gray: 116 125 140;
-  --color-error: 255 71 87;
-  --color-success: 46 213 115;
-  --color-warn: 255 127 80;
-  --color-bg-alt: 164 176 190;
-  --color-bg-revert: 241 242 246;
+  /* Override @theme colors for runtime theme switching - Dark theme */
+  --color-primary: oklch(100.0% 0.000 0.0);
+  --color-secondary: oklch(90.4% 0.024 212.7);
+  --color-bg: oklch(22.1% 0.060 221.1);
+  --color-card: oklch(0.0% 0.000 0.0);
+  --color-accent: oklch(82.9% 0.355 45.5);
+  --color-gray: oklch(52.1% 0.062 217.5);
+  --color-error: oklch(58.5% 0.400 354.8);
+  --color-success: oklch(75.7% 0.400 144.8);
+  --color-warn: oklch(67.3% 0.400 16.1);
+  --color-bgAlt: oklch(71.3% 0.058 212.3);
+  --color-bgRevert: oklch(95.5% 0.014 228.0);
 }
 
 body {
@@ -219,7 +328,7 @@ img.Image__Zoom ~ div {
 }
 
 .article-columns {
-  @apply w-full text-lg leading-[1.756] text-palette-primary;
+  @apply w-full text-lg leading-[1.756] text-primary;
   @apply mx-auto sm:px-0 sm:py-0;
   @apply max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
   @apply grid items-center gap-x-5;
@@ -269,15 +378,15 @@ svg.iconify {
 }
 
 html {
-  background-color: theme(colors.palette.bg);
+  background-color: theme('colors.bg');
   @media (screen(sm)) {
-    background: theme(colors.palette.bgRevert);
+    background: theme('colors.bgRevert');
   }
 }
 .mix-light,
 .mix-dark {
   p {
-    @apply bg-palette-bg;
+    @apply bg-bg;
   }
 }
 

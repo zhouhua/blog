@@ -22,7 +22,7 @@ import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { toast } from 'sonner';
 
 import parse from 'style-to-js';
-import List from '../List';
+import List from '../_List';
 import collections, { groups } from './collection';
 
 extend([namesPlugin, minifyPlugin]);

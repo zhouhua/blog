@@ -23,7 +23,7 @@ import { useTranslation } from 'react-i18next';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { toast } from 'sonner';
-import List from '../List';
+import List from '../_List';
 import collections from './collection';
 
 extend([namesPlugin]);

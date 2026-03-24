@@ -4,8 +4,8 @@ import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
-import tailwindcss from '@tailwindcss/vite';
 import { transformerMetaHighlight } from '@shikijs/transformers';
+import tailwindcss from '@tailwindcss/vite';
 import mediaCard from '@zhouhua-dev/remark-media-card';
 import pageInsight from 'astro-page-insight';
 import remarkDescription from 'astro-remark-description';
@@ -13,6 +13,7 @@ import { defineConfig } from 'astro/config';
 import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math';
 
+const DOUBLE_NEWLINE_RE = /\n\n/g;
 const isDev = process.argv.includes('dev');
 
 const integrations = [
@@ -60,17 +61,17 @@ export default defineConfig({
         {
           /** @param {string} code */
           preprocess(code) {
-            return code.trimEnd().replace(/\n\n/g, '\n \n');
+            return code.trimEnd().replace(DOUBLE_NEWLINE_RE, '\n \n');
           },
         },
         transformerMetaHighlight(),
       ],
     },
   },
-  vite: {
-    plugins: [tailwindcss()],
-  },
   output: 'server',
   site: 'https://zhouhua.site/',
   trailingSlash: 'ignore',
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });

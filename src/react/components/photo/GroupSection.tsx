@@ -22,7 +22,7 @@ const PhotoGroupSection: FC<{ photoPosts: PhotoImage[] }> = ({ photoPosts }) => 
             className="mb-12"
           >
             <div
-              className={cn('bg-palette-card relative px-4 pt-4', styles.photoCard, {
+              className={cn('bg-card relative px-4 pt-4', styles.photoCard, {
                 'pb-[72px]': !!exif,
                 'pb-4': !exif,
               })}
@@ -35,7 +35,7 @@ const PhotoGroupSection: FC<{ photoPosts: PhotoImage[] }> = ({ photoPosts }) => 
               />
               {exif && <Meta exif={exif} />}
             </div>
-            <p className="text-palette-primary mb-10 px-4 py-10">{photo.title}</p>
+            <p className="text-primary mb-10 px-4 py-10">{photo.title}</p>
           </div>
         );
       })}

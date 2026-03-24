@@ -38,7 +38,7 @@ const Header: FC<{ hide: () => void }> = ({ hide }) => {
   return (
     <header
       className={clsx(
-        'border-b-[1px] border-solid border-palette-gray',
+        'border-b-[1px] border-solid border-gray',
         'relative flex flex-none items-center',
       )}
     >
@@ -56,7 +56,7 @@ const Header: FC<{ hide: () => void }> = ({ hide }) => {
           autoCapitalize="off"
           autoComplete="off"
           autoCorrect="off"
-          className="h-14 max-w-full grow-[2] appearance-none bg-palette-card px-2"
+          className="h-14 max-w-full grow-[2] appearance-none bg-card px-2"
           maxLength={512}
           placeholder="搜索文章"
           spellCheck={false}

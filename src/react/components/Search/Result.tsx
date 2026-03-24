@@ -135,9 +135,9 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
     <>
       {showHits && (
         <div ref={rootRef} className="overflow-y-overlay max-h-[60vh]">
-          <p className="px-6 pt-4 text-right text-[12px] text-palette-gray">
+          <p className="px-6 pt-4 text-right text-[12px] text-gray">
             搜索
-            <span className="px-1 text-palette-secondary">{query}</span>
+            <span className="px-1 text-secondary">{query}</span>
             共找到
             {' '}
             {nbHits}
@@ -158,7 +158,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                 }}
                 className={cn(
                   styles.resultItem,
-                  'colorModeTransition relative mx-6 mt-2 items-center overflow-hidden rounded-lg bg-palette-bg p-4 sm:mx-2.5',
+                  'colorModeTransition relative mx-6 mt-2 items-center overflow-hidden rounded-lg bg-bg p-4 sm:mx-2.5',
                   { [styles.selected!]: index === selectIndex },
                 )}
                 onMouseEnter={() => setSelectIndex(index)}
@@ -166,7 +166,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                 <div
                   className={cn(
                     styles.icon,
-                    'colorModeTransition rounded border border-solid border-palette-gray',
+                    'colorModeTransition rounded border border-solid border-gray',
                     'absolute left-4 top-1/2 h-6 w-6 shrink-0 -translate-y-1/2 text-center text-[14px]',
                     'flex items-center justify-center',
                   )}
@@ -181,8 +181,8 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                   >
                     <h2
                       className={cn(
-                        'mb-1 inline-block h-6 max-w-[90%] rounded-full bg-palette-card px-2 text-xs leading-6',
-                        'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap text-palette-primary',
+                        'mb-1 inline-block h-6 max-w-[90%] rounded-full bg-card px-2 text-xs leading-6',
+                        'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap text-primary',
                       )}
                     >
                       { /** @ts-expect-error deps version */}
@@ -201,8 +201,8 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                     >
                       <h2
                         className={cn(
-                          'mb-1 inline-block h-6 max-w-[90%] rounded-full bg-palette-card px-2 text-xs leading-6',
-                          'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap text-palette-primary',
+                          'mb-1 inline-block h-6 max-w-[90%] rounded-full bg-card px-2 text-xs leading-6',
+                          'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap text-primary',
                         )}
                       >
                         { /** @ts-expect-error deps version */}
@@ -222,8 +222,8 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                     >
                       <h2
                         className={cn(
-                          'mb-1 inline-block h-6 max-w-[90%] rounded-full bg-palette-card px-2 text-xs leading-6',
-                          'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap text-palette-primary',
+                          'mb-1 inline-block h-6 max-w-[90%] rounded-full bg-card px-2 text-xs leading-6',
+                          'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap text-primary',
                         )}
                       >
                         { /** @ts-expect-error deps version */}

@@ -64,7 +64,7 @@ const Footer: FC = () => {
     <footer
       className={cn(
         'flex flex-row-reverse justify-between',
-        'border-palette-bgAlt border-t-[1px] border-solid px-6 py-4',
+        'border-bgAlt border-t-[1px] border-solid px-6 py-4',
       )}
     >
       <PoweredBy

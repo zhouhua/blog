@@ -86,7 +86,7 @@ const Recent: FC<{ hide: () => void }> = ({ hide }) => {
                 key={`${index}`}
                 className={cn(
                   styles.recentItem,
-                  'colorModeTransition mx-6 mt-4 flex h-16 max-w-full items-center justify-between rounded-lg bg-palette-bg sm:mx-2.5',
+                  'colorModeTransition mx-6 mt-4 flex h-16 max-w-full items-center justify-between rounded-lg bg-bg sm:mx-2.5',
                   { [styles.selected!]: index === selectIndex },
                 )}
                 onMouseEnter={() => setSelectIndex(index)}
@@ -98,8 +98,8 @@ const Recent: FC<{ hide: () => void }> = ({ hide }) => {
                 >
                   <span
                     className={cn(
-                      'colorModeTransition mr-4 h-6 rounded-full bg-palette-card px-2 text-[12px] leading-6 inline-flex items-center justify-center gap-1',
-                      'max-w-[45%] shrink-0 grow-0 overflow-hidden overflow-ellipsis whitespace-nowrap text-palette-secondary',
+                      'colorModeTransition mr-4 h-6 rounded-full bg-card px-2 text-[12px] leading-6 inline-flex items-center justify-center gap-1',
+                      'max-w-[45%] shrink-0 grow-0 overflow-hidden overflow-ellipsis whitespace-nowrap text-secondary',
                       styles.query,
                     )}
                   >

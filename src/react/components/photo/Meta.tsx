@@ -57,7 +57,7 @@ const Meta: FC<{ exif?: Exif; useInLightbox?: boolean }> = ({
   const isFullFrame = FocalLength === FocalLengthIn35mmFormat;
   return (
     <div
-      className={cn('bg-palette-card text-palette-secondary absolute left-0 h-[72px]  w-full', {
+      className={cn('bg-card text-secondary absolute left-0 h-[72px]  w-full', {
         'bottom-0': !useInLightbox,
         'bottom-14': useInLightbox,
       })}
@@ -65,7 +65,7 @@ const Meta: FC<{ exif?: Exif; useInLightbox?: boolean }> = ({
       <div
         className={cn(
           'mx-auto flex max-w-[680px] items-center justify-between',
-          'border-palette-bgAlt h-[72px] border-solid',
+          'border-bgAlt h-[72px] border-solid',
           { 'border-b': useInLightbox },
         )}
       >
@@ -73,7 +73,7 @@ const Meta: FC<{ exif?: Exif; useInLightbox?: boolean }> = ({
           <h3 className="leading-6">
             {[brandMap[Make! as string]!.text, modelMap[Model! as string] || Model].join(' ')}
           </h3>
-          <div className="text-palette-gray text-xs">
+          <div className="text-gray text-xs">
             {dayjs(DateTimeOriginal as number).format('YYYY-MM-DD')}
           </div>
         </div>
@@ -81,7 +81,7 @@ const Meta: FC<{ exif?: Exif; useInLightbox?: boolean }> = ({
           <div className="h-[72px] px-4">
             {brandMap[Make! as string]!.icon}
           </div>
-          <div className="border-l-palette-bgAlt my-3 h-12 border-l px-4">
+          <div className="border-l-bgAlt my-3 h-12 border-l px-4">
             <div className="flex flex-col text-sm">
               <div className="flex h-6 items-center leading-6">
                 <span className="mr-4">
