@@ -8,21 +8,9 @@ const CLASS_SPLIT_RE = /\s+/;
 const DESKTOP_MENU_HREFS = ['/articles', '/projects', '/journals', '/photos', '/about'];
 const MOBILE_MENU_SOURCE_PATH = new URL('../src/react/components/MobileMenu/index.tsx', import.meta.url);
 const HEADER_SOURCE_PATH = new URL('../src/components/Header.astro', import.meta.url);
-const MOBILE_MENU_MOUNT_RE = /<MobileMenu\s+client:only="react"\s*\/>/;
 
 function classTokens(className = '') {
   return new Set(className.split(CLASS_SPLIT_RE).filter(Boolean));
-}
-
-function formatHtmlSnippet(html, pattern) {
-  const index = html.indexOf(pattern);
-  if (index < 0) {
-    return html.slice(0, 300);
-  }
-
-  const start = Math.max(0, index - 120);
-  const end = Math.min(html.length, index + pattern.length + 180);
-  return html.slice(start, end);
 }
 
 function findHeader($) {
@@ -31,21 +19,36 @@ function findHeader($) {
   return header;
 }
 
-function getMenuContainers($, header) {
-  return header
-    .find('div')
-    .toArray()
-    .filter((element) => {
-      const hrefs = new Set(
-        $(element)
-          .find('a[href]')
-          .toArray()
-          .map(link => $(link).attr('href'))
-          .filter(Boolean),
-      );
+function collectClasses($, elements) {
+  return elements
+    .map(element => $(element).attr('class'))
+    .filter(Boolean);
+}
 
-      return DESKTOP_MENU_HREFS.every(href => hrefs.has(href));
-    });
+function getMenuContainers($, header) {
+  return header.find('*').toArray().filter((element) => {
+    const hrefs = new Set(
+      $(element)
+        .find('a[href]')
+        .toArray()
+        .map(link => $(link).attr('href'))
+        .filter(Boolean),
+    );
+
+    return DESKTOP_MENU_HREFS.every(href => hrefs.has(href));
+  });
+}
+
+function expectClassCombination(classNames, requiredTokens, label) {
+  const match = classNames.find((className) => {
+    const tokens = classTokens(className);
+    return requiredTokens.every(token => tokens.has(token));
+  });
+
+  assert.ok(
+    match,
+    `Expected ${label} to include ${requiredTokens.join(' ')}, got:\n${classNames.join('\n')}`,
+  );
 }
 
 function extractClassNameFromSource(source, componentName) {
@@ -54,23 +57,41 @@ function extractClassNameFromSource(source, componentName) {
   return match[1];
 }
 
+function extractSelfClosingTag(source, tagName) {
+  const start = source.indexOf(`<${tagName}`);
+  assert.ok(start >= 0, `Expected to find <${tagName} in source`);
+
+  const end = source.indexOf('/>', start);
+  assert.ok(end >= 0, `Expected <${tagName} to be self closing in source`);
+
+  return source.slice(start, end + 2);
+}
+
 test('responsive shell and mobile menu contract', async () => {
   await withAstroDevServer(async ({ baseUrl }) => {
     const home = await fetchPage(baseUrl, '/');
     const $ = load(home);
     const header = findHeader($);
+    const headerDescendants = header.find('[class]').toArray();
 
     const menuContainers = getMenuContainers($, header);
+    const menuClasses = collectClasses($, menuContainers);
     assert.ok(
       menuContainers.length > 0,
       `Expected to find a desktop nav container in the header, got ${header.html().slice(0, 500)}`,
     );
+    expectClassCombination(menuClasses, ['hidden', 'sm:flex'], 'desktop nav container');
+    expectClassCombination(
+      collectClasses($, headerDescendants),
+      ['px-5', 'sm:px-10'],
+      'header shell classes',
+    );
 
     const headerSource = await readFile(HEADER_SOURCE_PATH, 'utf8');
-    assert.match(
-      headerSource,
-      MOBILE_MENU_MOUNT_RE,
-      `Expected Header.astro to mount MobileMenu, got:\n${formatHtmlSnippet(headerSource, 'MobileMenu')}`,
+    const mobileMenuTag = extractSelfClosingTag(headerSource, 'MobileMenu');
+    assert.ok(
+      mobileMenuTag.includes('client:only="react"'),
+      `Expected Header.astro to mount MobileMenu as client-only, got:\n${mobileMenuTag}`,
     );
 
     const mobileMenuSource = await readFile(MOBILE_MENU_SOURCE_PATH, 'utf8');

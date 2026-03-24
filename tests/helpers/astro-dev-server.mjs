@@ -6,6 +6,8 @@ import { setTimeout as sleep } from 'node:timers/promises';
 
 const cwd = new URL('../..', import.meta.url);
 const lockPath = '/tmp/blog-astro-dev-server.lock';
+const READY_SIGNAL_RE = /\bready in\b/i;
+const LOCAL_URL_RE = /\blocal\s+http:\/\/127\.0\.0\.1:/i;
 
 function getFreePort() {
   return new Promise((resolve, reject) => {
@@ -27,7 +29,7 @@ function getFreePort() {
 }
 
 async function acquireLock() {
-  const deadline = Date.now() + 30000;
+  const deadline = Date.now() + 60000;
 
   while (true) {
     try {
@@ -75,37 +77,54 @@ function waitForExit(child, timeoutMs = 5000) {
   ]);
 }
 
-async function waitForReady(child, baseUrl) {
-  const deadline = Date.now() + 30000;
+function hasReadySignal(output) {
+  return READY_SIGNAL_RE.test(output) && LOCAL_URL_RE.test(output);
+}
+
+function canConnect(port, timeoutMs = 1000) {
+  return new Promise((resolve) => {
+    const socket = net.createConnection({ host: '127.0.0.1', port });
+    const timer = setTimeout(() => {
+      socket.destroy();
+      resolve(false);
+    }, timeoutMs);
+
+    socket.once('connect', () => {
+      clearTimeout(timer);
+      socket.end();
+      resolve(true);
+    });
+
+    socket.once('error', () => {
+      clearTimeout(timer);
+      resolve(false);
+    });
+  });
+}
+
+async function waitForReady(child, port, streams) {
+  const deadline = Date.now() + 60000;
+  let sawReadySignal = false;
 
   while (Date.now() < deadline) {
     if (child.exitCode !== null || child.signalCode !== null) {
-      throw new Error(`astro dev exited early with code ${child.exitCode}`);
+      throw new Error(`astro dev exited early with code ${child.exitCode ?? 'null'} and signal ${child.signalCode ?? 'null'}`);
     }
 
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 2000);
+    sawReadySignal ||= hasReadySignal(streams.text());
 
-    try {
-      const response = await fetch(new URL('/', baseUrl), {
-        signal: controller.signal,
-      });
-
-      if (response.ok) {
-        return;
-      }
-    }
-    catch {
-      // Keep polling until Astro is ready or the process exits.
-    }
-    finally {
-      clearTimeout(timer);
+    if (sawReadySignal && await canConnect(port)) {
+      return;
     }
 
     await sleep(150);
   }
 
-  throw new Error('astro dev did not become ready in time');
+  throw new Error(
+    sawReadySignal
+      ? 'astro dev reported ready but never accepted TCP connections'
+      : 'astro dev did not report ready in time',
+  );
 }
 
 function createStreamBuffer(child) {
@@ -148,7 +167,7 @@ export async function withAstroDevServer(run) {
   const streams = createStreamBuffer(child);
 
   try {
-    await waitForReady(child, `http://127.0.0.1:${port}/`);
+    await waitForReady(child, port, streams);
     return await run({ baseUrl: `http://127.0.0.1:${port}/`, port });
   }
   catch (error) {
