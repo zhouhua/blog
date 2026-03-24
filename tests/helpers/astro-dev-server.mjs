@@ -108,6 +108,23 @@ async function waitForReady(child, baseUrl) {
   throw new Error('astro dev did not become ready in time');
 }
 
+function createStreamBuffer(child) {
+  const chunks = [];
+
+  const append = streamName => (chunk) => {
+    chunks.push(`[${streamName}] ${chunk.toString()}`);
+  };
+
+  child.stdout.on('data', append('stdout'));
+  child.stderr.on('data', append('stderr'));
+
+  return {
+    text() {
+      return chunks.join('');
+    },
+  };
+}
+
 async function stopChild(child) {
   if (child.exitCode !== null || child.signalCode !== null) {
     return;
@@ -128,10 +145,18 @@ export async function withAstroDevServer(run) {
     cwd,
     stdio: ['ignore', 'pipe', 'pipe'],
   });
+  const streams = createStreamBuffer(child);
 
   try {
     await waitForReady(child, `http://127.0.0.1:${port}/`);
     return await run({ baseUrl: `http://127.0.0.1:${port}/`, port });
+  }
+  catch (error) {
+    const logOutput = streams.text().trim();
+    if (logOutput) {
+      error.message = `${error.message}\n\nastro dev output:\n${logOutput}`;
+    }
+    throw error;
   }
   finally {
     await stopChild(child);
@@ -141,5 +166,11 @@ export async function withAstroDevServer(run) {
 
 export async function fetchPage(baseUrl, pathname) {
   const response = await fetch(new URL(pathname, baseUrl));
-  return await response.text();
+  const body = await response.text();
+
+  if (!response.ok) {
+    throw new Error(`request for ${pathname} failed with ${response.status}: ${body.slice(0, 200)}`);
+  }
+
+  return body;
 }
