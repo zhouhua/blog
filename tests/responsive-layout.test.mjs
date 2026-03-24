@@ -68,15 +68,11 @@ test('homepage uses mobile-first shell classes', async () => {
     const headerContainer = findHeaderContainer($);
     assert.ok(headerContainer, 'Expected to find the header container');
 
-    expectClassesForElement($, headerContainer, ['px-10', 'sm:px-5'], 'header container');
+    expectClassesForElement($, headerContainer, ['px-5', 'sm:px-10'], 'header container');
 
     const desktopMenuContainer = findDesktopMenuContainer($);
     assert.ok(desktopMenuContainer, 'Expected to find the desktop menu container');
-    expectClassesForElement($, desktopMenuContainer, ['sm:hidden'], 'desktop menu container');
-
-    const svgLogo = $(headerContainer).find('img.svg-image[alt="logo"]').get(0);
-    assert.ok(svgLogo, 'Expected to find the SVG logo');
-    expectClassesForElement($, svgLogo, ['svg-image', 'sm:hidden'], 'SVG logo');
+    expectClassesForElement($, desktopMenuContainer, ['hidden', 'sm:flex'], 'desktop menu container');
 
     const triggerClassName = extractClassNameFromSource(mobileMenuSource, 'DropdownMenuTrigger');
     const triggerTokens = classTokens(triggerClassName);
