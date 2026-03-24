@@ -27,6 +27,22 @@ import collections, { groups } from './collection';
 
 extend([namesPlugin, minifyPlugin]);
 
+const CSS_DECLARATION_RE = /;\s*/g;
+// eslint-disable-next-line unicorn/better-regex
+const CSS_BLOCK_START_RE = /\s*\{\s*/g;
+// eslint-disable-next-line unicorn/better-regex
+const CSS_BLOCK_END_RE = /\s*\}\s*/g;
+const CSS_COMMA_RE = /,\s*/g;
+const CSS_COLON_RE = /:\s*/g;
+const CSS_TRAILING_SEMICOLON_RE = /\s*;\s*$/g;
+const SVG_ID_RE = /id="(.+?)"/gi;
+const SVG_URL_RE = /\(#(.+?)\)/g;
+const SVG_HREF_RE = /href="#(.+?)"/g;
+
+function createSvgDataUrl(svgString: string) {
+  return `data:image/svg+xml;base64,${window.btoa(svgString)}`;
+}
+
 function Pattern() {
   const { t } = useTranslation();
   const [pickedItem, setPickedItem] = useState(() => collections[random(0, collections.length - 1)]);
@@ -66,14 +82,12 @@ function Pattern() {
     else {
       const rawCss = pickedItem!.render(props);
       const formattedCss = rawCss
-        .replace(/;\s*/g, ';\n  ')
-        // eslint-disable-next-line regexp/strict
-        .replace(/\s*{\s*/g, ' {\n  ')
-        // eslint-disable-next-line regexp/strict
-        .replace(/\s*}\s*/g, '\n}\n')
-        .replace(/,\s*/g, ',\n    ')
-        .replace(/:\s*/g, ': ')
-        .replace(/\s*;\s*$/, ';')
+        .replace(CSS_DECLARATION_RE, ';\n  ')
+        .replace(CSS_BLOCK_START_RE, ' {\n  ')
+        .replace(CSS_BLOCK_END_RE, '\n}\n')
+        .replace(CSS_COMMA_RE, ',\n    ')
+        .replace(CSS_COLON_RE, ': ')
+        .replace(CSS_TRAILING_SEMICOLON_RE, ';')
         .trim();
 
       return [
@@ -87,6 +101,22 @@ function Pattern() {
     toast.success(t('common.copied'));
   };
 
+  const patternProps = {
+    colors,
+    rotate,
+    stroke,
+    translate: [translateX, translateY] as [number, number],
+    zoom,
+  };
+
+  const svgMarkup = pickedItem!.type === 'svg'
+    ? pickedItem!.render(pick(patternProps, 'colors', 'rotate', 'stroke', 'translate', 'zoom'))
+    : null;
+  const svgBackgroundImage = svgMarkup ? `url("${createSvgDataUrl(svgMarkup)}")` : undefined;
+  const cssBackgroundStyle = pickedItem!.type === 'css'
+    ? parse(`${pickedItem!.render(pick(patternProps, 'colors', 'rotate', 'stroke', 'translate', 'zoom'))}mask-image:${mask}`) ?? undefined
+    : undefined;
+
   return (
     <div className="w-screen h-screen" style={{ background: last(colors) }}>
       <Toaster position="bottom-right" />
@@ -95,35 +125,19 @@ function Pattern() {
         <LanguageSwitch />
       </div>
       {pickedItem!.type === 'svg' && (
-        // eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
         <div
-          className="fixed left-0 top-0 w-full h-full"
-          dangerouslySetInnerHTML={{
-            __html: pickedItem!.render(pick({
-              ...pickedItem!,
-              colors,
-              rotate,
-              stroke,
-              translate: [translateX, translateY],
-              zoom,
-            }, 'colors', 'rotate', 'stroke', 'translate', 'zoom')),
+          className="fixed left-0 top-0 h-full w-full"
+          style={{
+            backgroundImage: svgBackgroundImage,
+            backgroundRepeat: 'repeat',
+            maskImage: mask,
           }}
-          style={{ maskImage: mask }}
         />
       )}
       {pickedItem!.type === 'css' && (
-        // eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
         <div
-          dangerouslySetInnerHTML={{
-            __html: `<div class="fixed left-0 top-0 w-full h-full" style="${pickedItem!.render(pick({
-              ...pickedItem!,
-              colors,
-              rotate,
-              stroke,
-              translate: [translateX, translateY],
-              zoom,
-            }, 'colors', 'rotate', 'stroke', 'translate', 'zoom'))}mask-image:${mask}"></div>`,
-          }}
+          className="fixed left-0 top-0 h-full w-full"
+          style={cssBackgroundStyle}
         />
       )}
       <div className="fixed right-6 top-6 bottom-[64px] w-[400px] z-10 flex flex-col gap-4 flex-wrap-reverse">
@@ -135,7 +149,7 @@ function Pattern() {
           filterFields={['type', ['group', groups]]}
           renderItem={(item: IPattern, index) => {
             return (
-              /* eslint-disable-next-line react-dom/no-dangerously-set-innerhtml */
+
               <div
                 key={item.type + item.group + index}
                 className={cn(
@@ -145,22 +159,17 @@ function Pattern() {
                     'ring-2 ': item === pickedItem,
                   },
                 )}
-                dangerouslySetInnerHTML={item.type === 'svg'
+                style={item.type === 'svg'
                   ? {
-                    // eslint-disable-next-line style/indent
-                    __html: item.render(pick({ ...item, zoom: 0.2 }, 'colors', 'rotate', 'stroke', 'translate', 'zoom'))
-                      // eslint-disable-next-line style/indent
-                      .replace(/id="(.+?)"/gi, `id="$1saltsalt${index}"`)
-                      // eslint-disable-next-line style/indent
-                      .replace(/\(#(.+?)\)/g, `(#$1saltsalt${index})`)
-                      // eslint-disable-next-line style/indent
-                      .replace(/href="#(.+?)"/g, `href="#$1saltsalt${index}"`),
-                    // eslint-disable-next-line style/indent
-                  }
-                  : undefined}
-                style={item.type === 'css'
-                  ? parse(item!.render(pick({ ...item, zoom: 0.2 }, 'colors', 'rotate', 'translate', 'zoom')))!
-                  : undefined}
+                      backgroundImage: `url("${createSvgDataUrl(
+                        item.render(pick({ ...item, zoom: 0.2 }, 'colors', 'rotate', 'stroke', 'translate', 'zoom'))
+                          .replace(SVG_ID_RE, `id="$1saltsalt${index}"`)
+                          .replace(SVG_URL_RE, `(#$1saltsalt${index})`)
+                          .replace(SVG_HREF_RE, `href="#$1saltsalt${index}"`),
+                      )}")`,
+                      backgroundRepeat: 'repeat',
+                    }
+                  : parse(item.render(pick({ ...item, zoom: 0.2 }, 'colors', 'rotate', 'translate', 'zoom'))) ?? undefined}
                 onClick={() => {
                   setPickedItem(item);
                   setColors(item.colors);

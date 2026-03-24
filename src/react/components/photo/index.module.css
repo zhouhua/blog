@@ -10,7 +10,11 @@
   );
 }
 .mask {
-  background: linear-gradient(0, color-mix(in oklch, var(--color-bgRevert) 20%, transparent) 0%, color-mix(in oklch, var(--color-bgRevert) 0%, transparent) 60%);
+  background: linear-gradient(
+    0,
+    color-mix(in oklch, var(--color-bgRevert) 20%, transparent) 0%,
+    color-mix(in oklch, var(--color-bgRevert) 0%, transparent) 60%
+  );
 }
 
 .cell {

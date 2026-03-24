@@ -35,7 +35,7 @@ for (const item of data) {
     yearsList.set(year, [value]);
   }
 }
-const orderedYears = Array.from(yearsList.keys()).sort((a, b) => b - a);
+const orderedYears = yearsList.keys().toSorted((a, b) => b - a);
 ---
 
 <style>

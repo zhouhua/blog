@@ -15,6 +15,22 @@ import remarkMath from 'remark-math';
 
 const DOUBLE_NEWLINE_RE = /\n\n/g;
 const isDev = process.argv.includes('dev');
+const VITE_CLIENT_ENV_IMPORT = 'import "@vite/env";';
+const VITE_CLIENT_ENV_RELATIVE_IMPORT = 'import "./env.mjs";';
+
+/** @type {{ enforce: 'pre', name: string, transform: (code: string, id: string) => string | null }} */
+const fixViteClientEnvImport = {
+  enforce: 'pre',
+  name: 'fix-vite-client-env-import',
+  /** @param {string} code @param {string} id */
+  transform(code, id) {
+    if (!id.includes('/vite/dist/client/client.mjs') || !code.includes(VITE_CLIENT_ENV_IMPORT)) {
+      return null;
+    }
+
+    return code.replace(VITE_CLIENT_ENV_IMPORT, VITE_CLIENT_ENV_RELATIVE_IMPORT);
+  },
+};
 
 const integrations = [
   mdx(),
@@ -72,6 +88,24 @@ export default defineConfig({
   site: 'https://zhouhua.site/',
   trailingSlash: 'ignore',
   vite: {
-    plugins: [tailwindcss()],
+    optimizeDeps: {
+      include: [
+        '@giscus/react',
+        'dayjs',
+        'dayjs/locale/zh-cn',
+        'dayjs/plugin/relativeTime',
+        'medium-zoom/dist/pure',
+        'mermaid',
+        'rough-notation',
+        'yet-another-react-lightbox',
+        'yet-another-react-lightbox/plugins/captions',
+        'yet-another-react-lightbox/plugins/counter',
+        'yet-another-react-lightbox/plugins/fullscreen',
+        'yet-another-react-lightbox/plugins/inline',
+        'yet-another-react-lightbox/plugins/thumbnails',
+        'yet-another-react-lightbox/plugins/zoom',
+      ],
+    },
+    plugins: [fixViteClientEnvImport, tailwindcss()],
   },
 });

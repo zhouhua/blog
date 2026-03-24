@@ -11,6 +11,7 @@ function MD5(str: string) {
 }
 
 const indexName = 'blog';
+const TAG_SLUG_RE = /\s+|\//g;
 
 export async function algolia(): Promise<void> {
   if (process.env.NODE_ENV === 'development') {
@@ -51,7 +52,7 @@ export async function algolia(): Promise<void> {
   }
 
   tags.forEach(({ count, name }) => {
-    const slug = `/tag/${name.replace(/\s+|\//g, '-').toLowerCase()}`;
+    const slug = `/tag/${name.replace(TAG_SLUG_RE, '-').toLowerCase()}`;
     records.push({
       count,
       layout: 'tag',
@@ -96,7 +97,7 @@ export async function algolia(): Promise<void> {
     }
     catch (e) {
       console.error(e);
-      console.log(objects);
+      console.error(objects);
     }
   }
 }

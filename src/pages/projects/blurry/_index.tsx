@@ -25,7 +25,7 @@ import { Switch } from '@react/ui/switch';
 import { Chrome } from '@uiw/react-color';
 import { colord, random as randomColor } from 'colord';
 import { random, throttle } from 'lodash-es';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useWindowSize } from 'react-use';
@@ -60,12 +60,17 @@ interface GenerationParams {
 
 function Blurry() {
   const { t } = useTranslation();
-  const size = useWindowSize();
-  const [{ height, width }, setSize] = useState(size);
+  const viewportSize = useWindowSize();
+  const [canvasSize, updateCanvasSizeState] = useReducer(
+    (_: { height: number; width: number }, next: { height: number; width: number }) => next,
+    viewportSize,
+  );
+  const { height, width } = canvasSize;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const offscreenCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const generateRef = useRef<(() => void) | undefined>(undefined);
+  const currentParamsRef = useRef<GenerationParams | null>(null);
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
       background: '#ffffff',
@@ -89,8 +94,6 @@ function Blurry() {
   const [imageHeight, setImageHeight] = useState(600);
   const [imageFormat, setImageFormat] = useState('png');
   const [selectedPreset, setSelectedPreset] = useState<string>('');
-  // 添加一个状态来保存当前渲染的参数
-  const [currentParams, setCurrentParams] = useState<GenerationParams | null>(null);
 
   // 处理容器尺寸变化
   const updateCanvasSize = useCallback(() => {
@@ -103,7 +106,7 @@ function Blurry() {
 
     // 只在尺寸真正变化时更新
     if (newWidth !== width || newHeight !== height) {
-      setSize({ height: newHeight, width: newWidth });
+      updateCanvasSizeState({ height: newHeight, width: newWidth });
 
       // 更新 canvas 尺寸
       canvasRef.current.width = newWidth;
@@ -144,7 +147,6 @@ function Blurry() {
   }, [width, height]);
 
   // 渲染圆形渐变
-  // eslint-disable-next-line react-hooks-extra/no-unnecessary-use-callback
   const drawCircle = useCallback((
     ctx: CanvasRenderingContext2D,
     x: number,
@@ -216,11 +218,14 @@ function Blurry() {
       const actualNum = formNum * 2;
       // 如果没有传入参数，生成新的位置
       if (!params) {
-        generationParams.positions = Array.from({ length: actualNum }, () => ({
-          radius: random(length * 1.2, length * 1.4) / 2 * formZoom,
-          x: random(targetWidth),
-          y: random(targetHeight),
-        }));
+        generationParams.positions = [];
+        for (let index = 0; index < actualNum; index += 1) {
+          generationParams.positions.push({
+            radius: random(length * 1.2, length * 1.4) / 2 * formZoom,
+            x: random(targetWidth),
+            y: random(targetHeight),
+          });
+        }
       }
 
       // 使用保存的位置参数绘制
@@ -255,7 +260,7 @@ function Blurry() {
       return;
     const ctx = canvasRef.current.getContext('2d')!;
     const params = renderToContext(ctx, width, height);
-    setCurrentParams(params);
+    currentParamsRef.current = params;
   }, [width, height, renderToContext]);
 
   // 保存 generate 函数的引用
@@ -282,12 +287,16 @@ function Blurry() {
   useEffect(() => {
     if (canvasRef.current) {
       const rect = canvasRef.current.getBoundingClientRect();
-      setSize(rect);
+      if (offscreenCanvasRef.current) {
+        offscreenCanvasRef.current.width = rect.width;
+        offscreenCanvasRef.current.height = rect.height;
+      }
       canvasRef.current.width = rect.width;
       canvasRef.current.height = rect.height;
+      updateCanvasSize();
       generateColors();
     }
-  }, []);
+  }, [generateColors, updateCanvasSize]);
 
   // 监听表单变化
   useEffect(() => {
@@ -301,6 +310,7 @@ function Blurry() {
 
   // 修改导出函数，使用保存的参数
   const handleExportImage = () => {
+    const currentParams = currentParamsRef.current;
     if (!canvasRef.current || !currentParams)
       return;
 
@@ -666,7 +676,7 @@ function Blurry() {
                       <SelectValue placeholder={t('size.selectSize')} />
                     </SelectTrigger>
                     <SelectContent>
-                      {Array.from(new Set(sizeOptions.map(option => option.category))).map(category => (
+                      {Array.from(new Set(sizeOptions.map(option => option.category)), category => (
                         <div key={category}>
                           <div className="px-2 py-1.5 text-sm font-semibold text-muted-foreground">
                             {t(category)}

@@ -108,7 +108,7 @@ function ShortLink() {
           },
         });
         refreshAsync();
-        setTimeout(() => setUrl(''), 1000);
+        setTimeout(setUrl, 1000, '');
         return res.data.list || [];
       }
       else {
@@ -270,9 +270,9 @@ function ShortLink() {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
                     </TableHead>
                   );
                 })}

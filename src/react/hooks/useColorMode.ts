@@ -40,6 +40,9 @@ const useColorMode: UseColorModeType = () => {
       changeColorMode(e.matches ? 'dark' : 'light');
     }
     darkModeQuery.addEventListener('change', colorModeChangeHandler);
+    return () => {
+      darkModeQuery.removeEventListener('change', colorModeChangeHandler);
+    };
   }, [changeColorMode]);
 
   useEffect(() => {

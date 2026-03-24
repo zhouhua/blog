@@ -13,12 +13,12 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.7",
-    "@astrojs/mdx": "5.0.0",
+    "@astrojs/check": "^0.9.8",
+    "@astrojs/mdx": "5.0.2",
     "@astrojs/rss": "^4.0.17",
     "@astrojs/sitemap": "^3.7.1",
     "@astrojs/tailwind": "^6.0.2",
-    "@astrojs/vercel": "10.0.0",
+    "@astrojs/vercel": "10.0.2",
     "@giscus/react": "^3.1.0",
     "@hookform/resolvers": "^5.2.2",
     "@iconify-json/bi": "^1.2.7",
@@ -58,7 +58,7 @@
     "@zip.js/zip.js": "^2.8.23",
     "ahooks": "^3.9.6",
     "algoliasearch": "^5.49.2",
-    "astro": "6.0.2",
+    "astro": "6.0.8",
     "astro-page-insight": "^0.10.2",
     "astro-remark-description": "^1.1.2",
     "axios": "^1.13.6",
@@ -118,7 +118,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^7.7.0",
-    "@astrojs/react": "^5.0.0",
+    "@astrojs/react": "^5.0.1",
     "@eslint-react/eslint-plugin": "^2.13.0",
     "@iconify-json/akar-icons": "^1.2.7",
     "@iconify-json/carbon": "^1.2.19",

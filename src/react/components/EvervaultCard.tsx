@@ -1,6 +1,6 @@
-import { cn } from '@/lib/utils';
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
 
 function EvervaultCard({
   className,
@@ -12,12 +12,7 @@ function EvervaultCard({
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const [randomString, setRandomString] = useState('');
-
-  useEffect(() => {
-    const str = generateRandomString(1500);
-    setRandomString(str);
-  }, []);
+  const [randomString, setRandomString] = useState(() => generateRandomString(1500));
 
   function onMouseMove({ clientX, clientY, currentTarget }: any) {
     const { left, top } = currentTarget.getBoundingClientRect();

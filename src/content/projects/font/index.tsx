@@ -4,7 +4,7 @@ import Tooltip from '@react/components/Tooltip';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@react/ui/select';
 import { Toaster } from '@react/ui/sonner';
 import copyToClipboard from 'copy-to-clipboard';
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import styles from './index.module.css';
 
@@ -154,19 +154,19 @@ const ligaturesOptions: LigaturesOptionType[] = [
 ];
 
 const Font: FC = () => {
-  const featureValueMap: Record<string, string> = {};
+  const featureValueMapRef = useRef<Record<string, string>>({});
   const [feature, setFeature] = useState('');
   const [ligatures, setLigatures] = useState<LigaturesType>('normal');
   const collect = useCallback((key: string, value: string) => {
-    featureValueMap[key] = value;
+    featureValueMapRef.current[key] = value;
     setFeature(
-      Object.values(featureValueMap)
+      Object.values(featureValueMapRef.current)
         .filter(Boolean)
         .filter(v => v !== 'unset')
         .map(v => `'${v}'`)
         .join(', '),
     );
-  }, []);
+  }, [featureValueMapRef]);
 
   const copy = useCallback(() => {
     copyToClipboard(`font-variant-ligatures: ${ligatures};

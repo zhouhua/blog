@@ -9,18 +9,19 @@ import SearchPanel from './Panel';
 
 export const SearchButton: FC<{ appId: string; appKey: string }> = ({ appId, appKey }) => {
   const [showSearchPanel, setShowSearchPanel] = useState<boolean>(false);
-  const [isMac, setIsMac] = useState<boolean>(true);
-  useEffect(() => {
+  const [isMac] = useState<boolean>(() => {
     const parser = new UAParser();
-    const isMacInner = parser.getOS().name === 'Mac OS';
-    setIsMac(isMacInner);
-    const searchKeyCombo = isMacInner ? 'Meta > k' : 'Control > k';
+    return parser.getOS().name === 'Mac OS';
+  });
+
+  useEffect(() => {
+    const searchKeyCombo = isMac ? 'Meta > k' : 'Control > k';
     const hotkeyHandler = {
       onPressed: () => setShowSearchPanel(true),
     };
     bindKeyCombo(searchKeyCombo, hotkeyHandler);
     return () => unbindKeyCombo(searchKeyCombo, hotkeyHandler);
-  }, []);
+  }, [isMac]);
 
   function hide() {
     setShowSearchPanel(false);

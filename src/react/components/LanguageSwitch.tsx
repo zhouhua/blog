@@ -1,4 +1,3 @@
-import { languages } from '@/i18n/config';
 import { Button } from '@react/ui/button';
 import {
   DropdownMenu,
@@ -8,6 +7,7 @@ import {
 } from '@react/ui/dropdown-menu';
 import { Languages } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { languages } from '@/i18n/config';
 
 export function LanguageSwitch() {
   const { i18n, t } = useTranslation();

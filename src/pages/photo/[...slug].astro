@@ -6,14 +6,14 @@ import Container from '@components/Container.astro';
 import { BLOG } from '@consts';
 import PageLayout from '@layouts/PageLayout.astro';
 import { getImage } from '@lib/html';
+import { getRoot } from '@lib/node';
+import Comment from '@react/components/Comment';
 import GroupSection from '@react/components/photo/GroupSection';
+import ImageGallery from '@react/components/photo/ImageGallery';
 import { getImage as transform } from 'astro:assets';
 import { type CollectionEntry, getCollection } from 'astro:content';
 import exif from 'fast-exif';
 import { sampleSize } from 'lodash-es';
-import Comment from '@react/components/Comment';
-import ImageGallery from '@react/components/photo/ImageGallery';
-import {getRoot} from '@lib/node';
 
 export const prerender = true;
 export async function getStaticPaths() {
@@ -39,11 +39,12 @@ for (const item of post.data.list) {
   const { description, picture } = item;
   const relativePath = join(post.filePath || '.', '..', picture);
   const root = await getRoot();
-  let exifData: Exif = undefined;
-  try{
+  let exifData: Exif;
+  try {
     exifData = await exif.read(resolve(root, relativePath), true);
-  }catch(e) {
-    console.log(e);
+  }
+  catch (error) {
+    console.error(error);
   }
   const image = getImage(relativePath)!;
   photos.push({
@@ -58,16 +59,16 @@ for (const item of post.data.list) {
     width: image.width,
   });
 }
-type Temp = {path: string} & Omit<CustomPhotoType, 'transformed' | 'width' | 'height'>
+type Temp = { path: string } & Omit<CustomPhotoType, 'height' | 'transformed' | 'width'>;
 const data = await getCollection('photos');
 const featuredImages = data.reduce<Temp[]>((list, item) => [
-  ...list, 
-  ...item.data.list.filter(({featured}) => featured).map(({picture}) => ({
+  ...list,
+  ...item.data.list.filter(({ featured }) => featured).map(({ picture }) => ({
     alt: item.data.title,
     count: item.data.list.length,
     date: item.data.date,
-    slug: dirname(item.id),
     path: join(item.filePath || '.', '..', picture),
+    slug: dirname(item.id),
   })),
 ], []);
 const extraList = sampleSize(featuredImages, 16);
@@ -76,19 +77,19 @@ for (const item of extraList) {
   const image = getImage(item.path)!;
   transformedExtraList.push({
     ...item,
+    height: image.height,
     transformed: await transform({
       formats: ['webp', 'jpg'],
       src: image,
       widths: [200, 400, 800, 1200],
     }),
     width: image.width,
-    height: image.height,
   });
 }
 ---
 
 <style>
-@reference '../../../styles/global.css';
+@reference '../../styles/global.css';
 
 .lineTitle {
   @apply text-primary relative pb-20 font-normal opacity-25 md:pb-[60px];
@@ -120,5 +121,4 @@ for (const item of extraList) {
       <div class="mb-[65px]" />
     </Container>
   )}
-  </Layout>
 </PageLayout>

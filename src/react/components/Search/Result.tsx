@@ -26,6 +26,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
   const showRecent = !showHits && !noResult;
   const sentinelRef = useRef<HTMLLIElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
+  const selectedDomRef = useRef<HTMLLIElement>(null);
   const { addRecent } = useRecentList();
 
   useEffect(() => {
@@ -58,16 +59,22 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
     });
     hide();
   }
-  const [selectIndex, setSelectIndex] = useState<number>(-1);
-  const selectedDom = useRef<HTMLLIElement>(null);
+  const [selectionState, setSelectionState] = useState(() => ({
+    index: -1,
+    query: '',
+  }));
+  const selectIndex = selectionState.query === query ? selectionState.index : -1;
+
+  const setSelectIndex = (index: number) => {
+    setSelectionState({
+      index,
+      query,
+    });
+  };
 
   useEffect(() => {
-    setSelectIndex(-1);
-  }, [query]);
-
-  useEffect(() => {
-    if (selectedDom.current) {
-      scrollIntoView(selectedDom.current, {
+    if (selectedDomRef.current) {
+      scrollIntoView(selectedDomRef.current, {
         behavior: 'smooth',
         block: 'nearest',
         scrollMode: 'if-needed',
@@ -153,7 +160,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                 key={hit.objectID}
                 ref={(node) => {
                   if (selectIndex === index) {
-                    selectedDom.current = node!;
+                    selectedDomRef.current = node;
                   }
                 }}
                 className={cn(

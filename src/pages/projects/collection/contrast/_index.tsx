@@ -52,9 +52,9 @@ function Contrast() {
               clipPath: undefined,
               color: background,
             },
-          ].map((style, index) => (
+          ].map(style => (
             <div
-              key={index}
+              key={`${style.className}-${style.background}-${style.color}`}
               className={cn('transition-colors duration-300', style.className)}
               style={{
                 backgroundColor: style.background,

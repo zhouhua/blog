@@ -17,17 +17,21 @@ declare global {
     chargingTime: number;
     dischargingTime: number;
     level: number;
-    addEventListener: (event: string, callback: () => void) => void;
+    onchargingchange: (() => void) | null;
+    onchargingtimechange: (() => void) | null;
+    ondischargingtimechange: (() => void) | null;
+    onlevelchange: (() => void) | null;
   }
 }
 
 const Battery: FC = () => {
+  const supportsBattery = typeof navigator !== 'undefined' && 'getBattery' in navigator;
   const [level, setLevel] = useState<number>(0);
   const [charging, setCharging] = useState<boolean>(false);
   const [chargingTime, setChargingTime] = useState<number>(0);
   const [dischargingTime, setDischargingTime] = useState<number>(0);
   const [fetched, setFetched] = useState<boolean>(false);
-  const [supported, setSupported] = useState<boolean>(true);
+  const [supported, setSupported] = useState<boolean>(supportsBattery);
   const handleBattery = (battery: BatteryManager) => {
     setLevel(battery.level);
     setCharging(battery.charging);
@@ -35,30 +39,39 @@ const Battery: FC = () => {
     setDischargingTime(battery.dischargingTime);
   };
   useEffect(() => {
-    if (navigator.getBattery) {
-      navigator.getBattery().then((batteryManager) => {
-        setFetched(true);
-        handleBattery(batteryManager);
-        batteryManager.addEventListener('chargingchange', () => {
-          handleBattery(batteryManager);
-        });
-        batteryManager.addEventListener('levelchange', () => {
-          handleBattery(batteryManager);
-        });
-        batteryManager.addEventListener('chargingtimechange', () => {
-          handleBattery(batteryManager);
-        });
-        batteryManager.addEventListener('dischargingtimechange', () => {
-          handleBattery(batteryManager);
-        });
-      }).catch(() => {
-        setSupported(false);
-      });
+    if (!supportsBattery) {
+      return;
     }
-    else {
+
+    let batteryManagerInstance: BatteryManager | null = null;
+    const handleBatteryChange = () => {
+      if (batteryManagerInstance) {
+        handleBattery(batteryManagerInstance);
+      }
+    };
+
+    navigator.getBattery().then((batteryManager) => {
+      batteryManagerInstance = batteryManager;
+      setFetched(true);
+      handleBattery(batteryManager);
+      batteryManager.onchargingchange = handleBatteryChange;
+      batteryManager.onlevelchange = handleBatteryChange;
+      batteryManager.onchargingtimechange = handleBatteryChange;
+      batteryManager.ondischargingtimechange = handleBatteryChange;
+    }).catch(() => {
       setSupported(false);
-    }
-  }, []);
+    });
+
+    return () => {
+      if (!batteryManagerInstance) {
+        return;
+      }
+      batteryManagerInstance.onchargingchange = null;
+      batteryManagerInstance.onlevelchange = null;
+      batteryManagerInstance.onchargingtimechange = null;
+      batteryManagerInstance.ondischargingtimechange = null;
+    };
+  }, [supportsBattery]);
   if (!supported) {
     return (
       <div className="text-center text-gray-600">

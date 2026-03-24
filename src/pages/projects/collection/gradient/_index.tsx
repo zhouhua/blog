@@ -251,7 +251,7 @@ function Gradient() {
                         <SelectValue placeholder={t('size.selectSize')} />
                       </SelectTrigger>
                       <SelectContent>
-                        {Array.from(new Set(sizeOptions.map(option => option.category))).map(category => (
+                        {Array.from(new Set(sizeOptions.map(option => option.category)), category => (
                           <div key={category}>
                             <div className="px-2 py-1.5 text-sm font-semibold text-muted-foreground">
                               {t(category)}

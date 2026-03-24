@@ -17,35 +17,32 @@
 
   /* Font Families */
   --font-monospace:
-    'Fira Code', 'Operator Mono', 'Consolas', 'Menlo', 'Monaco',
-    'source-code-pro', 'Courier New', monospace;
+    'Fira Code', 'Operator Mono', 'Consolas', 'Menlo', 'Monaco', 'source-code-pro', 'Courier New', monospace;
   --font-sans:
-    apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB',
-    'Microsoft YaHei', 'helvetica neue', helvetica, ubuntu, roboto, noto,
-    'segoe ui', Arial, sans-serif;
+    apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'helvetica neue', helvetica,
+    ubuntu, roboto, noto, 'segoe ui', Arial, sans-serif;
   --font-serif:
-    'LXGW WenKai Lite', apple-system, BlinkMacSystemFont, 'PingFang SC',
-    'Hiragino Sans GB', 'Microsoft YaHei', 'helvetica neue', helvetica, ubuntu,
-    roboto, noto, 'segoe ui', Arial, sans-serif;
+    'LXGW WenKai Lite', apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
+    'helvetica neue', helvetica, ubuntu, roboto, noto, 'segoe ui', Arial, sans-serif;
 
   /* Custom Colors - using oklch with default light theme values */
   /* These will be overridden by CSS variables in html and html.dark for runtime theme switching */
-  --color-accent: oklch(59.4% 0.400 209.6 / <alpha-value>);
-  --color-background: oklch(97.9% 0.004 210.0 / <alpha-value>);
-  --color-bg: oklch(97.9% 0.004 210.0 / <alpha-value>);
+  --color-accent: oklch(59.4% 0.4 209.6 / <alpha-value>);
+  --color-background: oklch(97.9% 0.004 210 / <alpha-value>);
+  --color-bg: oklch(97.9% 0.004 210 / <alpha-value>);
   --color-bgAlt: oklch(85.3% 0.039 213.3 / <alpha-value>);
-  --color-bgRevert: oklch(22.1% 0.060 221.1 / <alpha-value>);
+  --color-bgRevert: oklch(22.1% 0.06 221.1 / <alpha-value>);
   --color-border: hsl(0 0% 89.8% / <alpha-value>);
-  --color-card: oklch(100.0% 0.000 0.0 / <alpha-value>);
-  --color-error: oklch(64.5% 0.400 351.1 / <alpha-value>);
+  --color-card: oklch(100% 0 0 / <alpha-value>);
+  --color-error: oklch(64.5% 0.4 351.1 / <alpha-value>);
   --color-foreground: hsl(0 0% 3.9% / <alpha-value>);
   --color-gray: oklch(52.1% 0.062 217.5 / <alpha-value>);
   --color-input: hsl(0 0% 89.8% / <alpha-value>);
-  --color-primary: oklch(0.0% 0.000 0.0 / <alpha-value>);
+  --color-primary: oklch(0% 0 0 / <alpha-value>);
   --color-ring: hsl(0 0% 3.9% / <alpha-value>);
-  --color-secondary: oklch(22.1% 0.060 221.1 / <alpha-value>);
+  --color-secondary: oklch(22.1% 0.06 221.1 / <alpha-value>);
   --color-success: oklch(85.6% 0.378 138.9 / <alpha-value>);
-  --color-warn: oklch(74.9% 0.400 38.7 / <alpha-value>);
+  --color-warn: oklch(74.9% 0.4 38.7 / <alpha-value>);
 
   /* Prism Colors - Light */
   --color-prism-attr-name: #91b3e0;
@@ -206,32 +203,32 @@
 html {
   color-scheme: light;
   /* Override @theme colors for runtime theme switching - Light theme */
-  --color-primary: oklch(0.0% 0.000 0.0);
-  --color-secondary: oklch(22.1% 0.060 221.1);
-  --color-bg: oklch(97.9% 0.004 210.0);
-  --color-card: oklch(100.0% 0.000 0.0);
-  --color-accent: oklch(59.4% 0.400 209.6);
+  --color-primary: oklch(0% 0 0);
+  --color-secondary: oklch(22.1% 0.06 221.1);
+  --color-bg: oklch(97.9% 0.004 210);
+  --color-card: oklch(100% 0 0);
+  --color-accent: oklch(59.4% 0.4 209.6);
   --color-gray: oklch(52.1% 0.062 217.5);
-  --color-error: oklch(64.5% 0.400 351.1);
+  --color-error: oklch(64.5% 0.4 351.1);
   --color-success: oklch(85.6% 0.378 138.9);
-  --color-warn: oklch(74.9% 0.400 38.7);
+  --color-warn: oklch(74.9% 0.4 38.7);
   --color-bgAlt: oklch(85.3% 0.039 213.3);
-  --color-bgRevert: oklch(22.1% 0.060 221.1);
+  --color-bgRevert: oklch(22.1% 0.06 221.1);
 }
 html.dark {
   color-scheme: dark;
   /* Override @theme colors for runtime theme switching - Dark theme */
-  --color-primary: oklch(100.0% 0.000 0.0);
+  --color-primary: oklch(100% 0 0);
   --color-secondary: oklch(90.4% 0.024 212.7);
-  --color-bg: oklch(22.1% 0.060 221.1);
-  --color-card: oklch(0.0% 0.000 0.0);
+  --color-bg: oklch(22.1% 0.06 221.1);
+  --color-card: oklch(0% 0 0);
   --color-accent: oklch(82.9% 0.355 45.5);
   --color-gray: oklch(52.1% 0.062 217.5);
-  --color-error: oklch(58.5% 0.400 354.8);
-  --color-success: oklch(75.7% 0.400 144.8);
-  --color-warn: oklch(67.3% 0.400 16.1);
+  --color-error: oklch(58.5% 0.4 354.8);
+  --color-success: oklch(75.7% 0.4 144.8);
+  --color-warn: oklch(67.3% 0.4 16.1);
   --color-bgAlt: oklch(71.3% 0.058 212.3);
-  --color-bgRevert: oklch(95.5% 0.014 228.0);
+  --color-bgRevert: oklch(95.5% 0.014 228);
 }
 
 body {

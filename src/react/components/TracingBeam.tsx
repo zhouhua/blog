@@ -19,18 +19,17 @@ function TracingBeam({
     target: ref,
   });
 
-  const [svgHeight, setSvgHeight] = useState(0);
+  const [svgHeight, setSvgHeight] = useState(() => window.innerHeight * 0.8);
 
   useEffect(() => {
     function getHeight() {
       setSvgHeight(window.innerHeight * 0.8);
     }
-    getHeight();
     window.addEventListener('resize', getHeight);
     return () => {
       window.removeEventListener('resize', getHeight);
     };
-  }, [setSvgHeight]);
+  }, []);
 
   const y1 = useSpring(
     useTransform(scrollYProgress, [0, 0.9], [50, svgHeight]),

@@ -11,6 +11,8 @@ interface Props {
   tag: string;
 }
 
+const TAG_SLUG_RE = /\s+|\//g;
+
 export const prerender = true;
 export async function getStaticPaths() {
   const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -18,7 +20,7 @@ export async function getStaticPaths() {
   posts.forEach((post) => {
     const tags = post.data.tags || [];
     tags.forEach((tag) => {
-      const t = tag.replace(/\s+|\//g, '-').toLowerCase();
+      const t = tag.replace(TAG_SLUG_RE, '-').toLowerCase();
       if (!route[t]) {
         route[t] = [post];
       }

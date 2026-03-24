@@ -1,7 +1,6 @@
 import type { PhotoImage } from '@types';
 import type { FC } from 'react';
 import { cn } from '@lib/utils';
-import { useEffect, useState } from 'react';
 import { useMedia } from 'use-media';
 import styles from './index.module.css';
 import LightBoxSection from './LightBoxSection';
@@ -9,12 +8,10 @@ import Meta from './Meta';
 
 const PhotoGroupSection: FC<{ photoPosts: PhotoImage[] }> = ({ photoPosts }) => {
   const isNarrow = useMedia('(max-width: 1028px)', false);
-  const [loaded, setLoaded] = useState<boolean>(false);
-  useEffect(() => setLoaded(true), []);
   return (
     <section className="min-w-[360px] max-w-full px-20 sm:px-5 md:px-8 lg:px-8 xl:px-8">
-      {loaded && !isNarrow && <LightBoxSection photoPosts={photoPosts} />}
-      {loaded && isNarrow && photoPosts.map((photo) => {
+      {!isNarrow && <LightBoxSection photoPosts={photoPosts} />}
+      {isNarrow && photoPosts.map((photo) => {
         const exif = photo.exif;
         return (
           <div
