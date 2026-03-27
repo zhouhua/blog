@@ -44,7 +44,6 @@ if (!isDev) {
 
   integrations.push(
     sentry({
-      dsn: 'https://3980dc24dd4a6cbe00ad71338a2f834c@o56440.ingest.us.sentry.io/4508126150656000',
       sourceMapsUploadOptions: {
         authToken: process.env.SENTRY_AUTH_TOKEN || '',
         project: 'javascript-astro',

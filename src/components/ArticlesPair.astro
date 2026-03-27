@@ -7,14 +7,17 @@ import ListItem from './ArticleListItem.astro';
 interface Props {
   posts: [CollectionEntry<'blog'>, CollectionEntry<'blog'>] | [CollectionEntry<'blog'>];
   gridLayout: 'rows' | 'tiles';
+  reverse?: boolean;
   showAllLink?: boolean;
 }
 
-const { gridLayout, posts, showAllLink } = Astro.props;
+const { gridLayout, posts, reverse = false, showAllLink } = Astro.props;
 const pairClassName = gridLayout === 'tiles'
   ? cn(
     'relative grid grid-cols-1 gap-y-10 sm:gap-x-6 sm:gap-y-0',
-    'sm:grid-cols-2 lg:grid-cols-[minmax(0,_1fr)_457px]',
+    reverse
+      ? 'sm:grid-cols-2 lg:grid-cols-[457px_minmax(0,_1fr)]'
+      : 'sm:grid-cols-2 lg:grid-cols-[minmax(0,_1fr)_457px]',
   )
   : cn('grid grid-cols-1 gap-y-10', {
     'grid-rows-1': posts.length === 1,
@@ -38,7 +41,7 @@ const pairClassName = gridLayout === 'tiles'
       {posts.slice(0, 2).map((article, i) => (
         <ListItem
           gridLayout={gridLayout}
-          narrow={gridLayout === 'tiles' && i === 1}
+          narrow={gridLayout === 'tiles' && (reverse ? i === 0 : i === 1)}
           post={article}
         />
       ))}
