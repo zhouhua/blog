@@ -14,25 +14,20 @@ import { Picture } from 'astro:assets';
 import { getCollection, getEntry, render } from 'astro:content';
 import { sampleSize } from 'lodash-es';
 
-export const prerender = true;
-export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  return posts.map(post => ({
-    params: { slug: post.id },
-    props: { next: sampleSize(posts, 2), post },
-  }));
-}
-interface Props {
-  post: CollectionEntry<'blog'>;
-  next: [CollectionEntry<'blog'>, CollectionEntry<'blog'>];
+const slug = Astro.params.slug;
+const posts = await getCollection('blog');
+const post = slug ? await getEntry({ collection: 'blog', id: slug }) : undefined;
+
+if (!post) {
+  return Astro.redirect('/404', 404);
 }
 
-const { next, post } = Astro.props;
+const next = sampleSize(posts.filter(item => item.id !== post.id), 2) as [CollectionEntry<'blog'>, CollectionEntry<'blog'>];
 const { Content } = await render(post);
 const entry = await getEntry({ collection: 'blog', id: post.id });
 const html = entry!.body!;
 const { timeToRead, wordCount } = getReadInfo(html);
-const hero = getImage(join('content/blog/', dirname(post.id), post.data.hero));
+const hero = await getImage(join('content/blog/', dirname(post.id), post.data.hero));
 const excerpt = getExcerpt(html);
 ---
 <style>

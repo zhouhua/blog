@@ -1,4 +1,4 @@
-import type { ChangeEvent, FC, SubmitEvent } from 'react';
+import type { ChangeEvent, FC, FormEvent } from 'react';
 import { cn } from '@lib/utils';
 import clsx from 'clsx';
 import { throttle } from 'lodash-es';
@@ -26,7 +26,7 @@ const Header: FC<{ hide: () => void }> = ({ hide }) => {
     setQuery(event.currentTarget.value);
   }
 
-  function onSubmit(event: SubmitEvent<HTMLFormElement>) {
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     event.stopPropagation();
     if (inputRef.current) {

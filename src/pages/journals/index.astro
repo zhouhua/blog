@@ -1,30 +1,29 @@
 ---
-import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import Container from '@components/Container.astro';
 import ListTitle from '@components/ListTitle.astro';
 import { JOURNALS } from '@consts';
 import PageLayout from '@layouts/PageLayout.astro';
-import { getReadInfo } from '@lib/html';
+import { getMarkdownExcerpt, getReadInfo } from '@lib/html';
 import { cn } from '@lib/utils';
 import articleStyles from '@styles/article.module.css';
-import { getCollection, getEntry, render } from 'astro:content';
+import { getCollection } from 'astro:content';
 import dayjs from 'dayjs';
 
 const data = (await getCollection('journals')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const yearsList = new Map<number, {
-  Content: AstroComponentFactory;
   dateString: string;
+  excerpt: string;
   timeToRead: number;
   wordCount: number;
 }[]>();
 for (const item of data) {
   const year = item.data.date.getFullYear();
   const dateString = dayjs(item.data.date).format('MM-DD');
-  const entry = await getEntry({ collection: 'journals', id: item.id });
-  const { timeToRead, wordCount } = getReadInfo(entry.body || '');
+  const body = item.body || '';
+  const { timeToRead, wordCount } = getReadInfo(body);
   const value = {
-    Content: (await render(item)).Content,
     dateString,
+    excerpt: getMarkdownExcerpt(body, 320),
     timeToRead,
     wordCount,
   };
@@ -157,7 +156,7 @@ const orderedYears = [...yearsList.keys()].sort((a, b) => b - a);
             </h2>
           </div>
           <ul class="journalYearList">
-            {yearsList.get(year)?.map(({ Content, dateString, timeToRead, wordCount }) => (
+            {yearsList.get(year)?.map(({ dateString, excerpt, timeToRead, wordCount }) => (
               <li
                 class={cn(
                   'journalCard',
@@ -194,7 +193,7 @@ const orderedYears = [...yearsList.keys()].sort((a, b) => b - a);
                     )}
                     style={{ padding: 0 }}
                   >
-                    <Content />
+                    <p class="line-clamp-[12] whitespace-pre-wrap text-primary leading-8">{excerpt}</p>
                   </div>
                 </article>
               </li>

@@ -26,7 +26,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
   const showRecent = !showHits && !noResult;
   const sentinelRef = useRef<HTMLLIElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
-  const selectedDomRef = useRef<HTMLLIElement>(null);
+  const selectedDomRef = useRef<HTMLLIElement | null>(null);
   const { addRecent } = useRecentList();
 
   useEffect(() => {
@@ -192,7 +192,6 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                         'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap text-primary',
                       )}
                     >
-                      { /** @ts-expect-error deps version */}
                       <Highlight attribute="title" className="max-w-full" hit={hit} />
                     </h2>
                     <p className="line-clamp-2 overflow-ellipsis whitespace-normal text-sm leading-6">
@@ -212,7 +211,6 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                           'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap text-primary',
                         )}
                       >
-                        { /** @ts-expect-error deps version */}
                         <Highlight attribute="title" className="max-w-full" hit={hit} />
                       </h2>
                       <p className="line-clamp-2 overflow-ellipsis whitespace-normal text-sm leading-6">
@@ -233,7 +231,6 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                           'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap text-primary',
                         )}
                       >
-                        { /** @ts-expect-error deps version */}
                         <Highlight attribute="title" className="max-w-full" hit={hit} />
                       </h2>
                     </a>

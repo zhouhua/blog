@@ -15,24 +15,13 @@ import { type CollectionEntry, getCollection } from 'astro:content';
 import exif from 'fast-exif';
 import { sampleSize } from 'lodash-es';
 
-export const prerender = true;
-export async function getStaticPaths() {
-  const data: CollectionEntry<'photos'>[] = await getCollection('photos');
-  return data.map(item => ({
-    params: {
-      slug: `${dirname(item.id)}`,
-    },
-    props: {
-      post: item,
-    },
-  }));
-}
+const photoSlug = Astro.params.slug;
+const data: CollectionEntry<'photos'>[] = await getCollection('photos');
+const post = data.find(item => `${dirname(item.id)}` === photoSlug);
 
-interface Props {
-  post: CollectionEntry<'photos'>;
+if (!post) {
+  return Astro.redirect('/404', 404);
 }
-
-const { post } = Astro.props;
 
 const photos: PhotoImage[] = [];
 for (const item of post.data.list) {
@@ -46,21 +35,20 @@ for (const item of post.data.list) {
   catch (error) {
     console.error(error);
   }
-  const image = getImage(relativePath)!;
+  const image = (await getImage(relativePath))!;
   photos.push({
     exif: exifData,
     height: image.height,
     title: description,
     transformed: await transform({
-      formats: ['webp', 'jpg'],
+      formats: ['webp'],
       src: image,
-      widths: [200, 400, 800, 1200],
+      widths: [400, 800, 1600],
     }),
     width: image.width,
   });
 }
 type Temp = { path: string } & Omit<CustomPhotoType, 'height' | 'transformed' | 'width'>;
-const data = await getCollection('photos');
 const featuredImages = data.reduce<Temp[]>((list, item) => [
   ...list,
   ...item.data.list.filter(({ featured }) => featured).map(({ picture }) => ({
@@ -74,14 +62,14 @@ const featuredImages = data.reduce<Temp[]>((list, item) => [
 const extraList = sampleSize(featuredImages, 16);
 const transformedExtraList: CustomPhotoType[] = [];
 for (const item of extraList) {
-  const image = getImage(item.path)!;
+  const image = (await getImage(item.path))!;
   transformedExtraList.push({
     ...item,
     height: image.height,
     transformed: await transform({
-      formats: ['webp', 'jpg'],
+      formats: ['webp'],
       src: image,
-      widths: [200, 400, 800, 1200],
+      widths: [240, 480, 960],
     }),
     width: image.width,
   });

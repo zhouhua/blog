@@ -474,24 +474,23 @@ function Blurry() {
                           {t('blurry.effectType')}
                           ：
                         </FormLabel>
-                        <FormControl>
+                        <div className="!mt-0">
                           <RadioGroup
+                            name={field.name}
                             onValueChange={field.onChange}
-                            defaultValue={field.value}
-                            className="flex items-center gap-4 !mt-0"
+                            value={field.value}
+                            className="flex items-center gap-4"
                           >
                             {(Object.entries(TYPE_LABELS) as [z.infer<typeof formSchema>['type'], string][]).map(([value, label]) => (
-                              <FormItem key={value} className="flex items-center gap-2">
-                                <FormControl>
-                                  <RadioGroupItem value={value} />
-                                </FormControl>
-                                <FormLabel className="font-normal !mt-0">
+                              <div key={value} className="flex items-center gap-2">
+                                <RadioGroupItem id={`blurry-type-${value}`} value={value} />
+                                <Label htmlFor={`blurry-type-${value}`} className="font-normal !mt-0">
                                   {t(label)}
-                                </FormLabel>
-                              </FormItem>
+                                </Label>
+                              </div>
                             ))}
                           </RadioGroup>
-                        </FormControl>
+                        </div>
                       </FormItem>
                     )}
                   />

@@ -1,6 +1,5 @@
 ---
 import type { CustomPhotoType } from '@types';
-import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import type { CollectionEntry } from 'astro:content';
 import { dirname, join } from 'node:path';
 import ArticlesPair from '@components/ArticlesPair.astro';
@@ -9,13 +8,13 @@ import ListTitle from '@components/ListTitle.astro';
 import { HOME } from '@consts';
 import PageLayout from '@layouts/PageLayout.astro';
 import { algolia } from '@lib/algolia';
-import { getImage, getReadInfo } from '@lib/html';
+import { getImage, getMarkdownExcerpt, getReadInfo } from '@lib/html';
 import { cn } from '@lib/utils';
 import EvervaultCard from '@react/components/EvervaultCard';
 import ImageGallery from '@react/components/photo/ImageGallery';
 import articleStyles from '@styles/article.module.css';
 import { getImage as transform } from 'astro:assets';
-import { getCollection, getEntry, render } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import dayjs from 'dayjs';
 import sampleSize from 'lodash-es/sampleSize';
 
@@ -23,11 +22,10 @@ const blogs: CollectionEntry<'blog'>[] = await getCollection('blog');
 const photos: CollectionEntry<'photos'>[] = await getCollection('photos');
 const journals: CollectionEntry<'journals'>[] = (await getCollection('journals'))
   .sort((a: CollectionEntry<'journals'>, b: CollectionEntry<'journals'>) => b.data.date.valueOf() - a.data.date.valueOf());
-const latestJournals: { journal: CollectionEntry<'journals'>; Content: AstroComponentFactory }[] = [];
-for (const journal of journals.slice(0, 5)) {
-  const { Content } = await render(journal);
-  latestJournals.push({ Content, journal });
-}
+const latestJournals = journals.slice(0, 5).map(journal => ({
+  excerpt: getMarkdownExcerpt(journal.body || '', 220),
+  journal,
+}));
 const featuredBlogs: CollectionEntry<'blog'>[] = blogs
   .filter(blog => blog.data.featured)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -54,14 +52,14 @@ const featuredImages: Temp[] = photos.reduce((list, item) => [
 const pickedList = sampleSize(featuredImages, 50);
 const transformedPickedList: CustomPhotoType[] = [];
 for (const item of pickedList) {
-  const image = getImage(item.path)!;
+  const image = (await getImage(item.path))!;
   transformedPickedList.push({
     ...item,
     height: image.height,
     transformed: await transform({
-      formats: ['webp', 'jpg'],
+      formats: ['webp'],
       src: image,
-      widths: [200, 400, 800, 1200],
+      widths: [240, 480, 960],
     }),
     width: image.width,
   });
@@ -158,7 +156,7 @@ document.addEventListener('astro:page-load', () => {
   <Container>
     <h3 class={cn('lineTitle', 'mt-20')}>最新随笔</h3>
     <div class="relative z-10 columns-1 gap-y-6 sm:columns-2 sm:gap-x-6">
-      {latestJournals.map(({ Content, journal }) => (
+      {latestJournals.map(({ excerpt, journal }) => (
         <div
           class={cn(
             articleStyles.ArticleBody,
@@ -175,7 +173,7 @@ document.addEventListener('astro:page-load', () => {
               'colorModeTransition  max-h-[640px]  overflow-hidden',
             )}
           >
-            <Content />
+            <p class="line-clamp-[12] whitespace-pre-wrap text-primary leading-8">{excerpt}</p>
           </article>
         </div>
       ))}

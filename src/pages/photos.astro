@@ -14,7 +14,7 @@ const data = (await getCollection('photos')).sort((a, b) => b.data.date.valueOf(
 const photos: CustomPhotoType[] = [];
 for (const item of data) {
   const [{ picture }] = [...item.data.list.filter(({ featured }) => !!featured), item.data.list[0]!];
-  const image = getImage(join(item.filePath || '.', '..', picture))!;
+  const image = (await getImage(join(item.filePath || '.', '..', picture)))!;
   photos.push({
     alt: item.data.title,
     count: item.data.list.length,
@@ -23,9 +23,9 @@ for (const item of data) {
     // image,
     slug: dirname(item.id),
     transformed: await transform({
-      formats: ['webp', 'jpg'],
+      formats: ['webp'],
       src: image,
-      widths: [200, 400, 800, 1200],
+      widths: [240, 480, 960],
     }),
     width: image.width,
   });

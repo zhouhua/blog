@@ -1,5 +1,4 @@
 ---
-import type { CollectionEntry } from 'astro:content';
 import ArticleTitle from '@components/ArticleTitle.astro';
 import Container from '@components/Container.astro';
 import PageLayout from '@layouts/PageLayout.astro';
@@ -10,23 +9,15 @@ import styles from '@styles/article.module.css';
 import { getCollection, render } from 'astro:content';
 import dayjs from 'dayjs';
 
-export const prerender = true;
-export async function getStaticPaths() {
-  const posts = await getCollection('journals');
-  return posts.map((post) => {
-    const date = dayjs(post.data.date).format('YYYY-MM-DD');
-    return {
-      params: { journal: `journal${date}` },
-      props: { date, post },
-    };
-  });
-}
-interface Props {
-  post: CollectionEntry<'journals'>;
-  date: string;
+const journalSlug = Astro.params.journal;
+const posts = await getCollection('journals');
+const post = posts.find(item => `journal${dayjs(item.data.date).format('YYYY-MM-DD')}` === journalSlug);
+
+if (!post) {
+  return Astro.redirect('/404', 404);
 }
 
-const { date, post } = Astro.props;
+const date = dayjs(post.data.date).format('YYYY-MM-DD');
 const { Content } = await render(post);
 const { timeToRead, wordCount } = getReadInfo(post.body || '');
 const excerpt = getExcerpt(post.body || '');

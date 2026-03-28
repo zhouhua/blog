@@ -1,7 +1,11 @@
-@import 'tailwindcss';
-@import 'lxgw-wenkai-lite-webfont/lxgwwenkailite-regular.css';
 @import url(https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css);
-@plugin '@iconify/tailwind4';
+@import 'lxgw-wenkai-lite-webfont/lxgwwenkailite-regular.css';
+@import 'tailwindcss';
+@plugin '@iconify/tailwind4' {
+  prefixes:
+    akar-icons, bi, carbon, fa6-solid, heroicons, iconamoon, lucide, lucide-lab, maki, material-symbols, mdi, oui, ph,
+    ri, simple-icons, vaadin;
+}
 @plugin 'daisyui' {
   prefix: 'daisy-';
   themes: [];
@@ -335,7 +339,7 @@ img.Image__Zoom ~ div {
   }
 }
 
-svg.iconify {
+.iconify {
   display: inline-block;
   font-size: inherit;
   height: 1em;
@@ -376,7 +380,7 @@ svg.iconify {
 
 html {
   background-color: theme('colors.bg');
-  @media (screen(sm)) {
+  @media (min-width: 40rem) {
     background: theme('colors.bgRevert');
   }
 }

@@ -4,6 +4,7 @@ import { algoliasearch } from 'algoliasearch';
 import { getCollection } from 'astro:content';
 import crypto from 'crypto-js';
 import { chunk, omit } from 'lodash-es';
+import { shouldRunAlgoliaIndex } from './algolia-utils';
 import { getExcerpt } from './html';
 
 function MD5(str: string) {
@@ -14,7 +15,7 @@ const indexName = 'blog';
 const TAG_SLUG_RE = /\s+|\//g;
 
 export async function algolia(): Promise<void> {
-  if (process.env.NODE_ENV === 'development') {
+  if (!shouldRunAlgoliaIndex()) {
     return;
   }
   const client = algoliasearch(process.env.GATSBY_ALGOLIA_APP_ID || '', process.env.ALGOLIA_ADMIN_KEY || '');
