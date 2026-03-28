@@ -15,7 +15,7 @@ import remarkMath from 'remark-math';
 
 const DOUBLE_NEWLINE_RE = /\n\n/g;
 const isDev = process.argv.includes('dev');
-const isVercelBuild = process.env.BUILD_TARGET === 'vercel' || process.env.VERCEL === '1';
+const isVercelBuild = process.env.VERCEL === '1' || typeof process.env.VERCEL_ENV === 'string';
 const sentryAuthToken = process.env.SENTRY_AUTH_TOKEN;
 const hasSentryAuthToken = typeof sentryAuthToken === 'string' && sentryAuthToken.length > 0;
 const VITE_CLIENT_ENV_IMPORT = 'import "@vite/env";';

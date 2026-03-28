@@ -6,7 +6,6 @@
     "dev": "astro dev",
     "dev:network": "astro dev --host",
     "build": "NODE_OPTIONS=--max-old-space-size=8192 astro check && NODE_OPTIONS=--max-old-space-size=8192 astro build",
-    "build:vercel": "NODE_OPTIONS=--max-old-space-size=8192 BUILD_TARGET=vercel astro check && NODE_OPTIONS=--max-old-space-size=8192 BUILD_TARGET=vercel astro build",
     "preview": "astro preview",
     "preview:network": "astro preview --host",
     "astro": "astro",
