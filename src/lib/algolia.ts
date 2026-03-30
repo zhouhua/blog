@@ -1,9 +1,9 @@
 import type { MarkdownInstance } from 'astro';
 import process from 'node:process';
 import { algoliasearch } from 'algoliasearch';
-import { getCollection } from 'astro:content';
 import crypto from 'crypto-js';
-import { chunk, omit } from 'lodash-es';
+import { chunk } from 'es-toolkit/array';
+import { omit } from 'es-toolkit/object';
 import { shouldRunAlgoliaIndex } from './algolia-utils';
 import { getExcerpt } from './html';
 
@@ -24,9 +24,9 @@ export async function algolia(): Promise<void> {
     name: string;
     count: number;
   }[] = [];
-  const blogs = import.meta.glob<MarkdownInstance<any>>('../content/blog/**/*.md', { eager: true });
+  const blogs = import.meta.glob<MarkdownInstance<any>>('../content/blog/**/*.md');
   for (const key of Object.keys(blogs)) {
-    const blog = blogs[key]!;
+    const blog = await blogs[key]!();
     const slug = key.replace('../content/blog', '').replace('.md', '');
     records.push({
       date: blog.frontmatter.date,
@@ -63,9 +63,9 @@ export async function algolia(): Promise<void> {
     });
   });
 
-  const journals = import.meta.glob<MarkdownInstance<any>>('../content/journals/**/*.md', { eager: true });
+  const journals = import.meta.glob<MarkdownInstance<any>>('../content/journals/**/*.md');
   for (const key of Object.keys(journals)) {
-    const journal = journals[key]!;
+    const journal = await journals[key]!();
     const date = key.replace('../content/journals/', '').replace('.md', '').replace('/', '-');
     const slug = `/journals/#${date}`;
     records.push({
@@ -80,18 +80,6 @@ export async function algolia(): Promise<void> {
     });
   }
 
-  const photos = await getCollection('photos');
-  for (const photo of photos) {
-    const slug = `/photo/${photo.id.replace('/index', '')}`;
-    records.push({
-      date: photo.data.date,
-      layout: 'photo',
-      objectID: MD5(slug),
-      slug,
-      text: photo.data.list.map((item: { description: string }) => item.description).join('\n'),
-      title: photo.data.title,
-    });
-  }
   for (const objects of chunk(records, 20)) {
     try {
       await client.saveObjects({ indexName, objects });

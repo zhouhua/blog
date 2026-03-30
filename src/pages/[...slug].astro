@@ -12,7 +12,12 @@ import TracingBeam from '@react/components/TracingBeam';
 import styles from '@styles/article.module.css';
 import { Picture } from 'astro:assets';
 import { getCollection, getEntry, render } from 'astro:content';
-import { sampleSize } from 'lodash-es';
+import { sampleSize } from 'es-toolkit/array';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({ params: { slug: post.id } }));
+}
 
 const slug = Astro.params.slug;
 const posts = await getCollection('blog');
@@ -44,19 +49,6 @@ const excerpt = getExcerpt(html);
     object-fit: cover;
   }
 }
-.lineTitle {
-  @apply text-primary relative pb-20 font-normal opacity-25 md:pb-[60px];
-  transition:
-    background 0.25s var(--ease-in-out-quad),
-    color 0.25s var(--ease-in-out-quad);
-  &::after {
-    @apply absolute left-40 right-0 top-[11px] h-px content-[''];
-    @apply bg-gray;
-    transition:
-      background 0.25s var(--ease-in-out-quad),
-      color 0.25s var(--ease-in-out-quad);
-  }
-}
 </style>
 <PageLayout description={excerpt} title={post.data.title}>
   <ArticleTitle tags={post.data.tags} time={post.data.date} title={post.data.title}>
@@ -86,7 +78,11 @@ const excerpt = getExcerpt(html);
     </article>
   <Comment client:only="react" />
   <Container>
-      <h3 class="lineTitle">看看其他的文章</h3>
+      <h3
+        class="text-primary relative pb-20 font-normal opacity-25 md:pb-[60px] colorModeTransition after:absolute after:left-40 after:right-0 after:top-[11px] after:h-px after:content-[''] after:bg-gray"
+      >
+        看看其他的文章
+      </h3>
       <ArticlesPair gridLayout="tiles" posts={next} reverse={false} />
       <div class="mb-[65px]" />
   </Container>

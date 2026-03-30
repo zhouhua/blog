@@ -1,13 +1,14 @@
 import type { ChangeEvent, FC, FormEvent } from 'react';
 import { cn } from '@lib/utils';
 import clsx from 'clsx';
-import { throttle } from 'lodash-es';
+import { throttle } from 'es-toolkit/function';
 import { useRef, useState } from 'react';
 import { useInstantSearch, useSearchBox } from 'react-instantsearch';
 
 function beforeQuery(query: string, search: (value: string) => void) {
   search(query);
 }
+
 const throttledSearch = throttle(beforeQuery, 600);
 
 const Header: FC<{ hide: () => void }> = ({ hide }) => {
@@ -38,7 +39,7 @@ const Header: FC<{ hide: () => void }> = ({ hide }) => {
   return (
     <header
       className={clsx(
-        'border-b-[1px] border-solid border-gray',
+        'border-b border-solid border-gray',
         'relative flex flex-none items-center',
       )}
     >
@@ -49,14 +50,14 @@ const Header: FC<{ hide: () => void }> = ({ hide }) => {
         })}
         />
       </div>
-      <form noValidate action="" className="flex max-w-full grow-[2]" onSubmit={onSubmit}>
+      <form noValidate action="" className="flex max-w-full grow-2" onSubmit={onSubmit}>
         <input
           ref={inputRef}
           autoFocus
           autoCapitalize="off"
           autoComplete="off"
           autoCorrect="off"
-          className="h-14 max-w-full grow-[2] appearance-none bg-card px-2"
+          className="h-14 max-w-full grow-2 appearance-none bg-card px-2 text-primary"
           maxLength={512}
           placeholder="搜索文章"
           spellCheck={false}

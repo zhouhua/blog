@@ -8,6 +8,14 @@ import { type CollectionEntry, getCollection } from 'astro:content';
 
 const TAG_SLUG_RE = /\s+|\//g;
 
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  const tags = new Set(
+    allPosts.flatMap(post => (post.data.tags || []).map(t => t.replace(TAG_SLUG_RE, '-').toLowerCase())),
+  );
+  return Array.from(tags, tag => ({ params: { tag } }));
+}
+
 const tag = Astro.params.tag;
 const allPosts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const data = allPosts.filter((post) => {

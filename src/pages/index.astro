@@ -1,25 +1,20 @@
 ---
-import type { CustomPhotoType } from '@types';
 import type { CollectionEntry } from 'astro:content';
-import { dirname, join } from 'node:path';
 import ArticlesPair from '@components/ArticlesPair.astro';
 import Container from '@components/Container.astro';
 import ListTitle from '@components/ListTitle.astro';
 import { HOME } from '@consts';
 import PageLayout from '@layouts/PageLayout.astro';
 import { algolia } from '@lib/algolia';
-import { getImage, getMarkdownExcerpt, getReadInfo } from '@lib/html';
+import dayjs from '@lib/dayjs';
+import { getMarkdownExcerpt } from '@lib/html';
 import { cn } from '@lib/utils';
 import EvervaultCard from '@react/components/EvervaultCard';
-import ImageGallery from '@react/components/photo/ImageGallery';
-import articleStyles from '@styles/article.module.css';
-import { getImage as transform } from 'astro:assets';
-import { getCollection, getEntry } from 'astro:content';
-import dayjs from 'dayjs';
-import sampleSize from 'lodash-es/sampleSize';
+import { getCollection } from 'astro:content';
+
+export const prerender = true;
 
 const blogs: CollectionEntry<'blog'>[] = await getCollection('blog');
-const photos: CollectionEntry<'photos'>[] = await getCollection('photos');
 const journals: CollectionEntry<'journals'>[] = (await getCollection('journals'))
   .sort((a: CollectionEntry<'journals'>, b: CollectionEntry<'journals'>) => b.data.date.valueOf() - a.data.date.valueOf());
 const latestJournals = journals.slice(0, 5).map(journal => ({
@@ -38,50 +33,6 @@ const pairs: [CollectionEntry<'blog'>, CollectionEntry<'blog'>][] = featuredBlog
   },
   [],
 );
-type Temp = { path: string } & Omit<CustomPhotoType, 'height' | 'transformed' | 'width'>;
-const featuredImages: Temp[] = photos.reduce((list, item) => [
-  ...list,
-  ...item.data.list.filter(({ featured }) => featured).map(({ picture }) => ({
-    alt: item.data.title,
-    count: item.data.list.length,
-    date: item.data.date,
-    path: join(item.filePath || '.', '..', picture),
-    slug: dirname(item.id),
-  })),
-], [] as Temp[]);
-const pickedList = sampleSize(featuredImages, 50);
-const transformedPickedList: CustomPhotoType[] = [];
-for (const item of pickedList) {
-  const image = (await getImage(item.path))!;
-  transformedPickedList.push({
-    ...item,
-    height: image.height,
-    transformed: await transform({
-      formats: ['webp'],
-      src: image,
-      widths: [240, 480, 960],
-    }),
-    width: image.width,
-  });
-}
-let blogWordCount = 0;
-let journalWordCount = 0;
-let photoPictureCount = 0;
-photos.forEach((photo) => {
-  photoPictureCount += photo.data.list.length;
-});
-for (const blog of blogs) {
-  const entry = await getEntry({ collection: 'blog', id: blog.id });
-  const html = entry!.body!;
-  const { wordCount } = getReadInfo(html);
-  blogWordCount += wordCount;
-}
-for (const journal of journals) {
-  const entry = await getEntry({ collection: 'journals', id: journal.id });
-  const html = entry!.body!;
-  const { wordCount } = getReadInfo(html);
-  journalWordCount += wordCount;
-}
 algolia();
 ---
 <script>
@@ -102,22 +53,7 @@ document.addEventListener('astro:page-load', () => {
 <style>
 @reference '../styles/global.css';
 
-.lineTitle {
-  @apply text-primary relative pb-20 font-normal opacity-25 md:pb-[60px];
-  transition:
-    background 0.25s var(--ease-in-out-quad),
-    color 0.25s var(--ease-in-out-quad);
-  &::after {
-    @apply absolute left-40 right-0 top-[11px] h-px content-[''];
-    @apply bg-gray;
-    transition:
-      background 0.25s var(--ease-in-out-quad),
-      color 0.25s var(--ease-in-out-quad);
-  }
-}
-
 .journalCard {
-  @apply px-0 pt-0!;
   article {
     box-shadow:
       0 30px 60px -10px rgba(0, 0, 0, 0.2),
@@ -131,8 +67,6 @@ document.addEventListener('astro:page-load', () => {
 }
 
 .fade::after {
-  @apply absolute bottom-0 left-0 right-0 h-12;
-  content: '';
   background: linear-gradient(
     180deg,
     theme('colors.card / 0') 0%,
@@ -144,7 +78,14 @@ document.addEventListener('astro:page-load', () => {
 <PageLayout description={HOME.DESCRIPTION} title={HOME.TITLE}>
   <ListTitle />
   <Container>
-    <h3 class={cn('lineTitle', 'mt-20')}>精选文章</h3>
+    <h3
+      class={cn(
+        'mt-20 text-primary relative pb-20 font-normal opacity-25 md:pb-[60px] colorModeTransition',
+        'after:absolute after:left-40 after:right-0 after:top-[11px] after:h-px after:content-[\'\'] after:bg-gray',
+      )}
+    >
+      精选文章
+    </h3>
     {pairs.map((ap, index) => (
       <ArticlesPair
         gridLayout="tiles"
@@ -154,14 +95,20 @@ document.addEventListener('astro:page-load', () => {
     ))}
   </Container>
   <Container>
-    <h3 class={cn('lineTitle', 'mt-20')}>最新随笔</h3>
+    <h3
+      class={cn(
+        'mt-20 text-primary relative pb-20 font-normal opacity-25 md:pb-[60px] colorModeTransition',
+        'after:absolute after:left-40 after:right-0 after:top-[11px] after:h-px after:content-[\'\'] after:bg-gray',
+      )}
+    >
+      最新随笔
+    </h3>
     <div class="relative z-10 columns-1 gap-y-6 sm:columns-2 sm:gap-x-6">
       {latestJournals.map(({ excerpt, journal }) => (
         <div
           class={cn(
-            articleStyles.ArticleBody,
             'journalCard',
-            'relative z-10 max-w-none justify-center block',
+            'relative z-10 max-w-none block',
             'colorModeTransition break-inside-avoid-column cursor-pointer',
           )}
           data-href={`/journal${dayjs(journal.data.date).format('YYYY-MM-DD')}`}
@@ -170,10 +117,11 @@ document.addEventListener('astro:page-load', () => {
             class={cn(
               'fade',
               'relative rounded-2xl bg-card px-10 pb-2 pt-12 sm:pt-8 md:px-8',
-              'colorModeTransition  max-h-[640px]  overflow-hidden',
+              'after:absolute after:bottom-0 after:left-0 after:right-0 after:h-12 after:content-[\'\']',
+              'colorModeTransition overflow-hidden',
             )}
           >
-            <p class="line-clamp-[12] whitespace-pre-wrap text-primary leading-8">{excerpt}</p>
+            <p class="line-clamp-12 whitespace-pre-wrap text-primary leading-8">{excerpt}</p>
           </article>
         </div>
       ))}
@@ -185,48 +133,12 @@ document.addEventListener('astro:page-load', () => {
             'journalCard',
             'flex h-56 w-full items-center justify-center rounded-2xl bg-card',
             'colorModeTransition overflow-hidden',
+            'px-0! pt-0!',
           )}
           href="/journals"
         >
           <EvervaultCard client:only="react" text="查看更多随笔" />
         </a>
-      </div>
-    </div>
-  </Container>
-  <Container narrow>
-    <h3 class={cn('lineTitle', 'mt-20')}>精彩照片</h3>
-  </Container>
-  <section class="mx-auto max-w-full">
-    <ImageGallery
-      client:only="react"
-      photos={transformedPickedList}
-    />
-  </section>
-  <Container class="flex justify-center">
-    <div class="daisy-stats daisy-stats-vertical mt-12 w-full max-w-sm bg-card text-secondary shadow sm:-mx-2 sm:mt-24 sm:max-w-none sm:text-center lg:daisy-stats-horizontal">
-      <div class="daisy-stat border-gray/20 p-3 sm:px-8 sm:py-5">
-        <div class="daisy-stat-figure ml-2 hidden text-lg sm:block">
-          <span class="iconify fa6-solid--pen-fancy" />
-        </div>
-        <div class="daisy-stat-title">收录文章</div>
-        <div class="daisy-stat-value my-1">{blogs.length} 篇</div>
-        <div class="daisy-stat-desc">合计 {(blogWordCount / 10000).toFixed(2)} 万字</div>
-      </div>
-      <div class="daisy-stat border-gray/20 p-3 sm:px-8 sm:py-5">
-        <div class="daisy-stat-figure ml-2 hidden text-lg sm:block">
-          <span class="iconify fa6-solid--message" />
-        </div>
-        <div class="daisy-stat-title">收录随笔</div>
-        <div class="daisy-stat-value my-1">{journals.length} 篇</div>
-        <div class="daisy-stat-desc">合计 {(journalWordCount / 10000).toFixed(2)} 万字</div>
-      </div>
-      <div class="daisy-stat border-gray/20 p-3 sm:px-8 sm:py-5">
-        <div class="daisy-stat-figure ml-2 hidden text-lg sm:block">
-          <span class="iconify fa6-solid--image" />
-        </div>
-        <div class="daisy-stat-title">收录图集</div>
-        <div class="daisy-stat-value my-1">{photos.length} 组</div>
-        <div class="daisy-stat-desc">合计 {photoPictureCount} 张照片</div>
       </div>
     </div>
   </Container>

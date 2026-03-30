@@ -1,6 +1,10 @@
 shellEmulator: true
+storeDir: ~/.pnpm-store
 
 trustPolicy: no-downgrade
+trustPolicyExclude:
+  - chokidar@4.0.3
+  - semver@6.3.1
 
 onlyBuiltDependencies:
   - '@parcel/watcher'

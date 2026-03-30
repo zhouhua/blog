@@ -30,14 +30,14 @@ const { timeToRead, wordCount } = getReadInfo(entry!.rendered!.html!);
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   &:hover .ImageContainer,
   &:focus .ImageContainer {
-    @apply -translate-y-px;
+    transform: translateY(-1px);
     box-shadow:
       0 50px 80px -20px rgba(0, 0, 0, 0.27),
       0 30px 50px -30px rgba(0, 0, 0, 0.3);
   }
   &:hover h2,
   &:focus h2 {
-    @apply text-accent;
+    color: var(--color-accent-foreground);
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -53,7 +53,12 @@ const { timeToRead, wordCount } = getReadInfo(entry!.rendered!.html!);
   }
 }
 .listItemRow {
-  @apply relative grid grid-cols-1 items-center rounded-[5px] bg-card;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  border-radius: 5px;
+  background-color: var(--color-card);
   box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -74,7 +79,9 @@ const { timeToRead, wordCount } = getReadInfo(entry!.rendered!.html!);
   }
 }
 .listItemTile {
-  @apply relative rounded-[5px] bg-card;
+  position: relative;
+  border-radius: 5px;
+  background-color: var(--color-card);
   margin-bottom: 40px;
   box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
   border-bottom-right-radius: 5px;
@@ -90,7 +97,8 @@ const { timeToRead, wordCount } = getReadInfo(entry!.rendered!.html!);
   }
 }
 .ImageContainer {
-  @apply relative overflow-hidden;
+  position: relative;
+  overflow: hidden;
   height: var(--image-height);
   margin-bottom: 0;
   box-shadow: none;
@@ -117,12 +125,24 @@ const { timeToRead, wordCount } = getReadInfo(entry!.rendered!.html!);
   }
 }
 .limitToTwoLines {
-  @apply line-clamp-2 text-ellipsis whitespace-normal sm:line-clamp-3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
   overflow-wrap: normal;
 }
+@media (min-width: 40rem) {
+  .limitToTwoLines {
+    -webkit-line-clamp: 3;
+  }
+}
 .Title {
-  @apply text-primary font-sans font-bold;
-  @apply leading-[1.33];
+  color: var(--color-primary);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  line-height: 1.33;
   transition: color 0.3s ease-in-out;
 }
 </style>
@@ -130,7 +150,7 @@ const { timeToRead, wordCount } = getReadInfo(entry!.rendered!.html!);
 <a
   class={cn(
     'ArticleLink',
-    'relative left-0 top-0 z-[1] block h-full w-full rounded-[5px]',
+    'relative left-0 top-0 z-1 block h-full w-full rounded-[5px]',
   )}
   href={`/${post.id}`}
 >

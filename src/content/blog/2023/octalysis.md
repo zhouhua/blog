@@ -64,8 +64,11 @@ date: 2023-04-07 10:00:00
 ### 行为模型
 
 $$
-B=M\cdot A\cdot T \\
-B:behavior\quad M:motivation\quad A:ability\quad T:triggers
+B=M\cdot A\cdot T
+$$
+
+$$
+B:\text{behavior}\quad M:\text{motivation}\quad A:\text{ability}\quad T:\text{triggers}
 $$
 
 这是由福格提出的行为模型，即人的行为是由动机、能力、触发器三个要素组成，只有这三者都具备，行为才会发生。能力很好理解，一个人要做某种行为，前提是自己有能力做。动机是一个人做某件事的强烈意愿，是一种内在动力。我们在讲游戏化产品设计时，就是在对用户行为动机在进行设计，希望用户自发地进行我们期望的产品动作。如果有动机，有能力，那么在某些信号的触发下，人们就可能做出特定的行为，比如我突然想吃 KFC，也买得起，那么也许某个周四的中午，在疯狂星期四的活动驱使下，我就会去吃 KFC。

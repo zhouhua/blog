@@ -171,69 +171,11 @@
   }
 }
 .ArticleBody {
-  :global {
-    pre.astro-code {
-      @apply mx-auto w-full max-w-[744px];
-      @apply daisy-mockup-code;
-      @apply my-0 overflow-auto p-8 pl-16 md:pl-10 sm:pl-8 pt-6 text-[14px] leading-[20px];
-      @apply bg-prism-background dark:bg-dark-prism-background font-monospace;
-      @apply mb-[50px] mt-[15px];
-      transition:
-        background 0.25s var(--ease-in-out-quad),
-        color 0.25s var(--ease-in-out-quad);
-      border-radius: 5px;
-      code {
-        counter-reset: step;
-        counter-increment: step 0;
-      }
-
-      code .line {
-        @apply relative pl-4 whitespace-pre-wrap inline-block;
-      }
-      .line {
-        &::before,
-        &::after {
-          @apply absolute top-0 h-full w-16 md:w-10 sm:w-8;
-        }
-        &::before {
-          @apply left-0 -translate-x-full;
-          content: counter(step);
-          counter-increment: step;
-          @apply text-right text-gray-400;
-        }
-        &::after {
-          @apply right-0 translate-x-full;
-        }
-        &.highlighted {
-          @apply bg-bgAlt/20 w-full;
-          &::before,
-          &::after {
-            @apply bg-bgAlt/20;
-          }
-          &::after {
-            content: '';
-          }
-          &::before {
-            @apply border-l-2 border-solid border-success;
-          }
-        }
-      }
-    }
-    :not(pre.astro-code) > code {
-      @apply rounded px-1 py-0.5 bg-accent/20;
-      @apply font-monospace font-normal text-accent text-[0.9em];
-      transition:
-        background 0.25s var(--ease-in-out-quad),
-        color 0.25s var(--ease-in-out-quad);
-    }
-  }
-}
-.ArticleBody {
   table:not(:where([class~='no-style'] table)) {
     @apply table;
     @apply relative mx-auto mb-[85px] mt-[45px] w-auto overflow-hidden;
     @apply border-separate rounded-[5px] border border-solid;
-    @apply border-bgAlt bg-card text-secondary;
+    @apply border-bgAlt bg-card text-secondary-foreground;
     @apply border-collapse sm:mb-[55px] sm:mt-[15px] sm:max-w-[480px] md:mb-[65px] md:mt-[25px];
     line-height: 1.65;
     max-width: 960px;

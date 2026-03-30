@@ -62,16 +62,6 @@ const data: DockerItem[][] = [
       link: '/about',
       name: 'About Me',
     },
-    {
-      icon: <span className="size-4 iconify ri--github-line" />,
-      link: '',
-      name: 'Github',
-    },
-    {
-      icon: <span className="size-4 iconify simple-icons--kofi" />,
-      link: '',
-      name: 'Tip Me',
-    },
   ],
 ];
 

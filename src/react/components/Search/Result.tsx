@@ -3,7 +3,7 @@ import type { FC } from 'react';
 import { cn } from '@lib/utils';
 import useRecentList from '@react/hooks/useRecentList';
 import { bindKey, unbindKey } from '@rwh/keystrokes';
-import { once } from 'lodash-es';
+import { once } from 'es-toolkit/function';
 import { useEffect, useRef, useState } from 'react';
 import { Highlight, Snippet, useInfiniteHits, useStats } from 'react-instantsearch';
 import scrollIntoView from 'scroll-into-view-if-needed';
@@ -13,7 +13,6 @@ import Recent from './Recent';
 
 const icons = {
   journal: <span className="iconify fa6-solid--pen-nib" />,
-  photo: <span className="iconify fa6-solid--images" />,
   post: <span className="iconify fa6-solid--file-lines" />,
   tag: <span className="iconify fa6-solid--tag" />,
 };
@@ -180,7 +179,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                 >
                   {icons[hit.layout as keyof typeof icons]}
                 </div>
-                {(hit.layout === 'post' || hit.layout === 'photo') && (
+                {(hit.layout === 'post') && (
                   <a
                     className="block cursor-pointer px-10 sm:px-8"
                     href={hit.slug as string}

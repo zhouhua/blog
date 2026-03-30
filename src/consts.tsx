@@ -28,11 +28,6 @@ export const PROJECTS: Metadata = {
   TITLE: '项目',
 };
 
-export const PHOTOES: Metadata = {
-  DESCRIPTION: '分享风景、故事与回忆',
-  TITLE: '照片',
-};
-
 export const menu: Menu[] = [
   {
     icon: 'fa6-solid:pen-fancy',
@@ -53,12 +48,6 @@ export const menu: Menu[] = [
     path: '/journals',
   },
   {
-    icon: 'fa6-solid:image',
-    iconComponent: <span className="iconify fa6-solid--image" />,
-    name: '照片',
-    path: '/photos',
-  },
-  {
     icon: 'fa6-solid:address-card',
     iconComponent: <span className="iconify fa6-solid--address-card" />,
     name: '关于我',
@@ -66,17 +55,4 @@ export const menu: Menu[] = [
   },
 ];
 
-export const SOCIALS: Socials = [
-  {
-    HREF: 'https://twitter.com/markhorn_dev',
-    NAME: 'twitter-x',
-  },
-  {
-    HREF: 'https://github.com/markhorn-dev',
-    NAME: 'github',
-  },
-  {
-    HREF: 'https://www.linkedin.com/in/markhorn-dev',
-    NAME: 'linkedin',
-  },
-];
+export const SOCIALS: Socials = [];

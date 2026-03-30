@@ -9,6 +9,13 @@ import styles from '@styles/article.module.css';
 import { getCollection, render } from 'astro:content';
 import dayjs from 'dayjs';
 
+export async function getStaticPaths() {
+  const posts = await getCollection('journals');
+  return posts.map(post => ({
+    params: { journal: `journal${dayjs(post.data.date).format('YYYY-MM-DD')}` },
+  }));
+}
+
 const journalSlug = Astro.params.journal;
 const posts = await getCollection('journals');
 const post = posts.find(item => `journal${dayjs(item.data.date).format('YYYY-MM-DD')}` === journalSlug);
@@ -33,19 +40,6 @@ const excerpt = getExcerpt(post.body || '');
   @media (max-width: 639px) {
     height: 220px;
     object-fit: cover;
-  }
-}
-.lineTitle {
-  @apply text-primary relative pb-20 font-normal opacity-25 md:pb-[60px];
-  transition:
-    background 0.25s var(--ease-in-out-quad),
-    color 0.25s var(--ease-in-out-quad);
-  &::after {
-    @apply absolute left-40 right-0 top-[11px] h-px content-[''];
-    @apply bg-gray;
-    transition:
-      background 0.25s var(--ease-in-out-quad),
-      color 0.25s var(--ease-in-out-quad);
   }
 }
 </style>

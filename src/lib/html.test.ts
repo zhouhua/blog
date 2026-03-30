@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { buildImageIndex, getMarkdownExcerpt, toContentImagePath } from './html';
+import {
+  buildImageIndex,
+  getGalleryImageSrc,
+  getGalleryImageSrcSet,
+  getMarkdownExcerpt,
+  toContentImagePath,
+} from './html';
 
 describe('toContentImagePath', () => {
   it('normalizes supported content image paths', () => {
@@ -51,5 +57,28 @@ const hidden = true;
     expect(getMarkdownExcerpt(markdown, 200)).toContain('link text');
     expect(getMarkdownExcerpt(markdown, 200)).not.toContain('![alt]');
     expect(getMarkdownExcerpt(markdown, 200)).not.toContain('```');
+  });
+});
+
+describe('gallery image helpers', () => {
+  it('reads src and srcSet from transformed images', () => {
+    const transformed = {
+      src: '/_astro/photo.webp',
+      srcSet: {
+        attribute: '/_astro/photo.webp 1x, /_astro/photo@2x.webp 2x',
+      },
+    } as never;
+
+    expect(getGalleryImageSrc(transformed)).toBe('/_astro/photo.webp');
+    expect(getGalleryImageSrcSet(transformed)).toBe('/_astro/photo.webp 1x, /_astro/photo@2x.webp 2x');
+  });
+
+  it('falls back to original metadata when no responsive variants exist', () => {
+    const image = {
+      src: '/_astro/photo.jpg',
+    } as never;
+
+    expect(getGalleryImageSrc(image)).toBe('/_astro/photo.jpg');
+    expect(getGalleryImageSrcSet(image)).toBeUndefined();
   });
 });

@@ -8,7 +8,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@react/ui/popover';
 import { Toaster } from '@react/ui/sonner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@react/ui/tabs';
 import { Chrome } from '@uiw/react-color';
-import { random } from 'lodash-es';
+import { random } from 'es-toolkit/math';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';

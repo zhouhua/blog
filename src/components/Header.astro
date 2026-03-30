@@ -13,21 +13,21 @@ import { Image } from 'astro:assets';
 <style>
   .logo-container:hover {
     .svg-image {
-      @apply opacity-0;
+      opacity: 0;
     }
     .png-image {
-      @apply opacity-100;
+      opacity: 1;
     }
   }
   .svg-image, .png-image {
-    @apply transition-opacity duration-300;
+    transition: opacity 300ms;
   }
   .header {
-    box-shadow: 0 1px 3px 0 rgb(var(--color-bg) / 0.8);
+    box-shadow: 0 1px 3px 0 color-mix(in oklch, var(--color-bg) 80%, transparent);
   }
 </style>
 
-<header class="header !sticky -top-10 z-10 flex pt-10 backdrop-blur-sm bg-bg/0 transition-colors duration-300 hover:bg-bg/40 sm:-top-16 sm:pt-16">
+<header class="header sticky! -top-10 z-10 flex pt-10 backdrop-blur-sm bg-bg/0 transition-colors duration-300 hover:bg-bg/40 sm:-top-16 sm:pt-16">
   <Container class="flex w-full items-center justify-between gap-4 sm:gap-6 lg:gap-8">
     <a href="/">
       <div class="logo-container relative">
@@ -47,8 +47,8 @@ import { Image } from 'astro:assets';
       {
         menu.map(item => (
           <a href={item.path}>
-            <div class="flex items-center md:flex-col h-20 justify-evenly">
-              <span class={cn('mr-2 opacity-75 md:mr-0 iconify', item.icon.replace(':', '--'))} />
+            <div class="flex items-center flex-col md:flex-row h-20 justify-evenly">
+              <span class={cn('mr-0 opacity-75 md:mr-2 iconify', item.icon.replace(':', '--'))} />
               <div>{item.name}</div>
             </div>
           </a>

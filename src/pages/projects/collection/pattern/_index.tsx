@@ -14,7 +14,9 @@ import { Chrome } from '@uiw/react-color';
 import { colord, extend } from 'colord';
 import minifyPlugin from 'colord/plugins/minify';
 import namesPlugin from 'colord/plugins/names';
-import { last, pick, random } from 'lodash-es';
+import { last } from 'es-toolkit/array';
+import { random } from 'es-toolkit/math';
+import { pick } from 'es-toolkit/object';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -110,11 +112,11 @@ function Pattern() {
   };
 
   const svgMarkup = pickedItem!.type === 'svg'
-    ? pickedItem!.render(pick(patternProps, 'colors', 'rotate', 'stroke', 'translate', 'zoom'))
+    ? pickedItem!.render(pick(patternProps, ['colors', 'rotate', 'stroke', 'translate', 'zoom'] as const))
     : null;
   const svgBackgroundImage = svgMarkup ? `url("${createSvgDataUrl(svgMarkup)}")` : undefined;
   const cssBackgroundStyle = pickedItem!.type === 'css'
-    ? parse(`${pickedItem!.render(pick(patternProps, 'colors', 'rotate', 'stroke', 'translate', 'zoom'))}mask-image:${mask}`) ?? undefined
+    ? parse(`${pickedItem!.render(pick(patternProps, ['colors', 'rotate', 'stroke', 'translate', 'zoom'] as const))}mask-image:${mask}`) ?? undefined
     : undefined;
 
   return (
@@ -162,14 +164,14 @@ function Pattern() {
                 style={item.type === 'svg'
                   ? {
                       backgroundImage: `url("${createSvgDataUrl(
-                        item.render(pick({ ...item, zoom: 0.2 }, 'colors', 'rotate', 'stroke', 'translate', 'zoom'))
+                        item.render(pick({ ...item, zoom: 0.2 }, ['colors', 'rotate', 'stroke', 'translate', 'zoom'] as const))
                           .replace(SVG_ID_RE, `id="$1saltsalt${index}"`)
                           .replace(SVG_URL_RE, `(#$1saltsalt${index})`)
                           .replace(SVG_HREF_RE, `href="#$1saltsalt${index}"`),
                       )}")`,
                       backgroundRepeat: 'repeat',
                     }
-                  : parse(item.render(pick({ ...item, zoom: 0.2 }, 'colors', 'rotate', 'translate', 'zoom'))) ?? undefined}
+                  : parse(item.render(pick({ ...item, zoom: 0.2 }, ['colors', 'rotate', 'translate', 'zoom'] as const))) ?? undefined}
                 onClick={() => {
                   setPickedItem(item);
                   setColors(item.colors);

@@ -28,7 +28,7 @@ function HoverEffect() {
       <AnimatePresence mode="wait">
         {hovered && (
           <motion.div
-            className="absolute inset-0 h-full w-full bg-neutral-200 dark:bg-slate-800/[0.8] block rounded-2xl"
+            className="absolute inset-0 h-full w-full bg-bgAlt/60 dark:bg-bgAlt/40 block rounded-2xl"
             layoutId="hoverBackground"
             initial={{ opacity: 0 }}
             animate={{

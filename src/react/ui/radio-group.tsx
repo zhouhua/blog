@@ -99,7 +99,7 @@ const RadioGroupItem = React.forwardRef<HTMLInputElement, RadioGroupItemProps>(
         data-state={checked ? "checked" : "unchecked"}
         className={cn(
           "size-4 shrink-0 cursor-pointer appearance-none rounded-full border border-primary bg-background shadow transition-colors outline-none",
-          "focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+          "disabled:cursor-not-allowed disabled:opacity-50",
           "checked:border-primary checked:bg-primary checked:[box-shadow:inset_0_0_0_3px_hsl(var(--background))]",
           className,
         )}

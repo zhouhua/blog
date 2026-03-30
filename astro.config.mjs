@@ -5,15 +5,14 @@ import node from '@astrojs/node';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
-import { transformerMetaHighlight } from '@shikijs/transformers';
 import tailwindcss from '@tailwindcss/vite';
 import mediaCard from '@zhouhua-dev/remark-media-card';
 import remarkDescription from 'astro-remark-description';
 import { defineConfig } from 'astro/config';
 import rehypeKatex from 'rehype-katex';
+import rehypePrettyCode from 'rehype-pretty-code';
 import remarkMath from 'remark-math';
 
-const DOUBLE_NEWLINE_RE = /\n\n/g;
 const isDev = process.argv.includes('dev');
 const isVercelBuild = process.env.VERCEL === '1' || typeof process.env.VERCEL_ENV === 'string';
 const sentryAuthToken = process.env.SENTRY_AUTH_TOKEN;
@@ -72,38 +71,54 @@ export default defineConfig({
   adapter: isVercelBuild
     ? vercel({
         imageService: true,
-        isr: {
-          expiration: 7 * 60 * 60 * 24,
-        },
         webAnalytics: {
           enabled: true,
         },
       })
-    : node({
-        mode: 'standalone',
-      }),
+    : isDev
+      ? node({ mode: 'standalone' })
+      : undefined,
   base: '/',
+  devToolbar: { enabled: false },
   integrations,
   markdown: {
-    rehypePlugins: [rehypeKatex],
+    rehypePlugins: [
+      rehypeKatex,
+      [
+        rehypePrettyCode,
+        /** @type {import('rehype-pretty-code').Options} */
+        ({
+          defaultLang: 'plaintext',
+          keepBackground: false,
+          langs: [
+            'html',
+            'javascript',
+            'js',
+            'typescript',
+            'tsx',
+            'jsx',
+            'css',
+            'json',
+            'bash',
+            'sh',
+            'cpp',
+            'plaintext',
+          ],
+          theme: {
+            dark: 'github-dark',
+            light: 'github-light',
+          },
+        }),
+      ],
+    ],
     remarkPlugins: [
       mediaCard,
       remarkMath,
       [remarkDescription, { name: 'excerpt' }],
     ],
-    shikiConfig: {
-      transformers: [
-        {
-          /** @param {string} code */
-          preprocess(code) {
-            return code.trimEnd().replace(DOUBLE_NEWLINE_RE, '\n \n');
-          },
-        },
-        transformerMetaHighlight(),
-      ],
-    },
+    syntaxHighlight: false,
   },
-  output: 'server',
+  output: isDev ? 'server' : 'static',
   site: 'https://zhouhua.site/',
   trailingSlash: 'ignore',
   vite: {
@@ -114,7 +129,6 @@ export default defineConfig({
         'dayjs/locale/zh-cn',
         'dayjs/plugin/relativeTime',
         'medium-zoom/dist/pure',
-        'mermaid',
         'rough-notation',
         'yet-another-react-lightbox',
         'yet-another-react-lightbox/plugins/captions',
@@ -126,5 +140,10 @@ export default defineConfig({
       ],
     },
     plugins: [fixViteClientEnvImport, tailwindcss()],
+    server: {
+      watch: {
+        ignored: ['**/.pnpm-store/**', '**/node_modules/**', '**/.git/**'],
+      },
+    },
   },
 });

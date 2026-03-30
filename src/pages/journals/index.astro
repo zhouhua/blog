@@ -4,136 +4,25 @@ import ListTitle from '@components/ListTitle.astro';
 import { JOURNALS } from '@consts';
 import PageLayout from '@layouts/PageLayout.astro';
 import { getMarkdownExcerpt, getReadInfo } from '@lib/html';
-import { cn } from '@lib/utils';
-import articleStyles from '@styles/article.module.css';
+import JournalList from '@react/components/JournalList';
 import { getCollection } from 'astro:content';
 import dayjs from 'dayjs';
 
 const data = (await getCollection('journals')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const yearsList = new Map<number, {
-  dateString: string;
-  excerpt: string;
-  timeToRead: number;
-  wordCount: number;
-}[]>();
-for (const item of data) {
+const items = data.map((item) => {
   const year = item.data.date.getFullYear();
   const dateString = dayjs(item.data.date).format('MM-DD');
   const body = item.body || '';
   const { timeToRead, wordCount } = getReadInfo(body);
-  const value = {
+  return {
     dateString,
     excerpt: getMarkdownExcerpt(body, 320),
     timeToRead,
     wordCount,
+    year,
   };
-  if (yearsList.has(year)) {
-    yearsList.get(year)!.push(value);
-  }
-  else {
-    yearsList.set(year, [value]);
-  }
-}
-// eslint-disable-next-line e18e/prefer-array-to-sorted -- keep runtime compatibility for environments without toSorted
-const orderedYears = [...yearsList.keys()].sort((a, b) => b - a);
+});
 ---
-
-<style>
-@reference '../../styles/global.css';
-
-.journalYearSection {
-  @apply mb-20 last:mb-0;
-}
-
-.journalYearHeader {
-  @apply mx-auto mb-8 flex max-w-[920px] items-center gap-5 px-2 sm:mb-6 sm:gap-3 sm:px-0;
-}
-
-.journalYearHeader::after {
-  @apply bg-secondary/15 block h-px flex-1;
-  content: '';
-}
-
-.journalYearHeading {
-  @apply font-monospace text-[32px] font-semibold tracking-[0.08em] text-accent sm:text-[28px];
-  transition:
-    background 0.25s var(--ease-in-out-quad),
-    border 0.25s var(--ease-in-out-quad),
-    color 0.25s var(--ease-in-out-quad);
-}
-
-.journalYearList {
-  @apply flex flex-col gap-8 sm:gap-6;
-}
-
-.journalCard {
-  @apply mx-auto w-full max-w-[920px] overflow-hidden rounded-[28px] border border-solid border-secondary/10 bg-card;
-  box-shadow:
-    0 24px 50px -24px rgba(15, 23, 42, 0.34),
-    0 12px 24px -18px rgba(15, 23, 42, 0.28);
-  transition:
-    background 0.25s var(--ease-in-out-quad),
-    border-color 0.25s var(--ease-in-out-quad),
-    color 0.25s var(--ease-in-out-quad);
-}
-
-:global(.dark) {
-  .journalCard {
-    box-shadow: inset -1px 1px 0 0 #ffffff40;
-  }
-}
-
-.journalCardHeader {
-  @apply flex items-end justify-between gap-6 border-b border-solid border-secondary/10 px-10 pb-5 pt-7;
-  @apply sm:flex-col sm:items-start sm:gap-3 sm:px-5 sm:pb-4 sm:pt-5 md:px-8;
-}
-
-.journalCardDate {
-  @apply font-monospace text-[26px] font-semibold leading-none tracking-[0.08em] text-accent no-underline;
-  @apply visited:text-accent;
-  transition:
-    background 0.25s var(--ease-in-out-quad),
-    border-color 0.25s var(--ease-in-out-quad),
-    color 0.25s var(--ease-in-out-quad);
-}
-
-.journalCardMeta {
-  @apply flex flex-wrap items-center justify-end gap-x-3 gap-y-1;
-  @apply pt-1 text-right font-monospace text-[13px] uppercase tracking-[0.08em] text-gray;
-  @apply sm:justify-start sm:pt-0 sm:text-left;
-  transition:
-    background 0.25s var(--ease-in-out-quad),
-    border-color 0.25s var(--ease-in-out-quad),
-    color 0.25s var(--ease-in-out-quad);
-}
-
-.journalCardMetaDot {
-  @apply bg-secondary/35 inline-block h-1 w-1 rounded-full;
-}
-
-.journalCardBody {
-  @apply px-10 pb-8 pt-7 sm:px-5 sm:pb-5 sm:pt-5 md:px-8;
-}
-
-.journalCardContent > :global(:first-child) {
-  margin-top: 0 !important;
-}
-
-.journalCardContent :global(.fullImage) {
-  margin-left: auto !important;
-  margin-right: auto !important;
-  max-width: 100% !important;
-  width: 100% !important;
-}
-
-.journalCardContent :global(pre.astro-code) {
-  max-width: 100%;
-}
-
-.journalCardContent :global(table:not(:where([class~='no-style'] table))) {
-  max-width: 100%;
-}
-</style>
 
 <PageLayout description={JOURNALS.DESCRIPTION} title={JOURNALS.TITLE}>
   <ListTitle
@@ -141,66 +30,6 @@ const orderedYears = [...yearsList.keys()].sort((a, b) => b - a);
     title="周骅的博客 - 所有随笔"
   />
   <Container>
-    <ul class="colorModeTransition text-primary">
-      {orderedYears.map(year => (
-        <li class="journalYearSection">
-          <div class="journalYearHeader">
-            <h2
-              class={cn(
-                'journalYearHeading',
-                'colorModeTransition',
-              )}
-              id={`journals${year}`}
-            >
-              {year}
-            </h2>
-          </div>
-          <ul class="journalYearList">
-            {yearsList.get(year)?.map(({ dateString, excerpt, timeToRead, wordCount }) => (
-              <li
-                class={cn(
-                  'journalCard',
-                  'colorModeTransition',
-                )}
-                id={`journal${year}-${dateString}`}
-              >
-                <div class="journalCardHeader">
-                  <a
-                    class={cn(
-                      'journalCardDate',
-                      'colorModeTransition',
-                    )}
-                    href={`/journal${year}-${dateString}`}
-                  >
-                    {dateString}
-                  </a>
-                  <div class="journalCardMeta">
-                    <span>{wordCount} 字</span>
-                    <span aria-hidden="true" class="journalCardMetaDot" />
-                    <span>{timeToRead} 分钟读完</span>
-                  </div>
-                </div>
-                <article
-                  class={cn(
-                    'journalCardBody',
-                    'colorModeTransition',
-                  )}
-                >
-                  <div
-                    class={cn(
-                      articleStyles.ArticleBody,
-                      'journalCardContent',
-                    )}
-                    style={{ padding: 0 }}
-                  >
-                    <p class="line-clamp-[12] whitespace-pre-wrap text-primary leading-8">{excerpt}</p>
-                  </div>
-                </article>
-              </li>
-            ))}
-          </ul>
-        </li>
-      ))}
-    </ul>
+    <JournalList client:only="react" items={items} />
   </Container>
 </PageLayout>

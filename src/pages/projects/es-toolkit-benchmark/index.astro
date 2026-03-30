@@ -1,0 +1,38 @@
+---
+import Container from '@components/Container.astro';
+import ProjectTitle from '@components/ProjectTitle.astro';
+import { HOME, SITE } from '@consts';
+import projectList from '@content/projects/list';
+import PageLayout from '@layouts/PageLayout.astro';
+import Benchmark from './_index';
+import EmbedPage from './EmbedPage.astro';
+
+const embed
+  = Astro.url.searchParams.has('embed') || Astro.url.searchParams.get('embed') === '1';
+
+const project = projectList.find(p => p.link === '/projects/es-toolkit-benchmark');
+const name = project?.name ?? 'es-toolkit vs lodash-es Benchmark';
+const description
+  = project?.description ?? 'es-toolkit 与 lodash-es 的 bundle size 和运行性能对比';
+
+const layoutTitle = `${HOME.TITLE} - ${name}`;
+const headTitle = `${name} | ${SITE.NAME}`;
+---
+
+{embed && (
+  <EmbedPage description={description} title={headTitle}>
+    <div class="min-h-screen w-full p-4 sm:p-6">
+      <Benchmark client:only="react" />
+    </div>
+  </EmbedPage>
+)}
+{!embed && (
+  <PageLayout description={description} title={layoutTitle}>
+    <ProjectTitle description={description} title={name} />
+    <Container>
+      <div class="w-full pb-16">
+        <Benchmark client:only="react" />
+      </div>
+    </Container>
+  </PageLayout>
+)}

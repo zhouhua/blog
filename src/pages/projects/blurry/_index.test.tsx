@@ -18,7 +18,7 @@ function BlurryTypeField() {
         name="type"
         control={form.control}
         render={({ field }) => (
-          <FormItem className="flex gap-1 items-center h-10">
+          <FormItem className="flex items-center gap-1 space-y-0 h-10">
             <FormLabel className="w-24 shrink-0">Effect Type：</FormLabel>
             <div className="!mt-0">
               <RadioGroup

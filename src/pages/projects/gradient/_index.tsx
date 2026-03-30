@@ -24,8 +24,8 @@ import { Toaster } from '@react/ui/sonner';
 import { Switch } from '@react/ui/switch';
 import { Chrome } from '@uiw/react-color';
 import { colord, random as randomColor } from 'colord';
+import { random } from 'es-toolkit/math';
 import html2canvas from 'html2canvas';
-import { random } from 'lodash-es';
 import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -54,7 +54,7 @@ function Gradient() {
     const color2 = colord(color).alpha(1).desaturate(random(0.1, 0.15)).lighten(random(0.1, 0.15));
     const color1 = color2.rotate(random(-50, -70)).saturate(random(0.15, 0.2)).lighten(random(0, 0.5));
     const color3 = color2.rotate(random(50, 70)).saturate(random(0.45, 0.55)).darken(random(0.1, 0.15));
-    const rotate = random(0, 360, false);
+    const rotate = Math.floor(random(0, 360));
     return [color1, color2, color3, rotate];
   }, [color, colorMode]);
 
@@ -218,7 +218,7 @@ function Gradient() {
               name="enableNoise"
               control={form.control}
               render={({ field }) => (
-                <FormItem className="flex gap-4 items-center h-8 m-0">
+                <FormItem className="flex items-center gap-4 space-y-0 h-8 m-0">
                   <FormLabel className="w-40">
                     {t('gradient.enableNoise')}
                     ：
@@ -235,7 +235,7 @@ function Gradient() {
                   name="noiseFrequency"
                   control={form.control}
                   render={({ field }) => (
-                    <FormItem className="flex gap-4 items-center h-8 m-0">
+                    <FormItem className="flex items-center gap-4 space-y-0 h-8 m-0">
                       <FormLabel className="w-40">
                         {t('gradient.noiseFrequency')}
                         ：
@@ -259,7 +259,7 @@ function Gradient() {
                   name="opacity"
                   control={form.control}
                   render={({ field }) => (
-                    <FormItem className="flex gap-4 items-center h-8 m-0">
+                    <FormItem className="flex items-center gap-4 space-y-0 h-8 m-0">
                       <FormLabel className="w-40">
                         {t('gradient.opacity')}
                         ：

@@ -8,16 +8,24 @@ import PageLayout from '@layouts/PageLayout.astro';
 @reference '../styles/global.css';
 
 .text {
-  @apply text-primary relative font-monospace leading-[1];
-  @apply h-[320px] text-[320px] sm:h-[200px] sm:text-[200px] md:h-[280px] md:text-[280px];
+  color: hsl(var(--primary));
+  position: relative;
+  font-family: var(--font-monospace);
+  line-height: 1;
+  height: 320px;
+  font-size: 320px;
   transition:
     background 0.25s var(--ease-in-out-quad),
     border 0.25s var(--ease-in-out-quad),
     color 0.25s var(--ease-in-out-quad);
 }
 .white {
-  @apply bg-bg absolute -left-2.5 -right-2.5;
-  @apply z-[4] h-2 sm:h-1;
+  background-color: var(--color-bg);
+  position: absolute;
+  left: -10px;
+  right: -10px;
+  z-index: 4;
+  height: 8px;
   animation: whiteMove 3s ease-out infinite;
   transition:
     background 0.25s var(--ease-in-out-quad),
@@ -25,8 +33,35 @@ import PageLayout from '@layouts/PageLayout.astro';
     color 0.25s var(--ease-in-out-quad);
 }
 
+@media (min-width: 40rem) {
+  .text {
+    height: 200px;
+    font-size: 200px;
+  }
+
+  .white {
+    height: 4px;
+  }
+  .text::after {
+    left: -8px;
+  }
+}
+
+@media (min-width: 48rem) {
+  .text {
+    height: 280px;
+    font-size: 280px;
+  }
+}
+
 .text::before {
-  @apply text-primary/90 absolute left-1 top-0 z-[2] h-0 overflow-hidden;
+  color: hsl(var(--primary) / 0.9);
+  position: absolute;
+  left: 4px;
+  top: 0;
+  z-index: 2;
+  height: 0;
+  overflow: hidden;
   content: attr(data-text);
   animation: redShadow 1s ease-in infinite;
   filter: contrast(200%);
@@ -38,7 +73,14 @@ import PageLayout from '@layouts/PageLayout.astro';
 }
 
 .text::after {
-  @apply bg-bg/90 text-primary/80 absolute -left-3 top-0 z-[3] h-full overflow-hidden sm:-left-2;
+  background-color: color-mix(in oklch, var(--color-bg) 90%, transparent);
+  color: hsl(var(--primary) / 0.8);
+  position: absolute;
+  left: -12px;
+  top: 0;
+  z-index: 3;
+  height: 100%;
+  overflow: hidden;
   content: attr(data-text);
   animation: redHeight 1.5s ease-out infinite;
   filter: contrast(200%);

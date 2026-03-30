@@ -18,19 +18,21 @@ import { Label } from '@react/ui/label';
 import { Popover, PopoverContent } from '@react/ui/popover';
 import { RadioGroup, RadioGroupItem } from '@react/ui/radio-group';
 import { RainbowButton } from '@react/ui/rainbow-button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@react/ui/select';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@react/ui/select';
 import { Slider } from '@react/ui/slider';
 import { Toaster } from '@react/ui/sonner';
 import { Switch } from '@react/ui/switch';
 import { Chrome } from '@uiw/react-color';
 import { colord, random as randomColor } from 'colord';
-import { random, throttle } from 'lodash-es';
+import { throttle } from 'es-toolkit/function';
+import { random } from 'es-toolkit/math';
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useWindowSize } from 'react-use';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import { getBackgroundValueUpdate } from './_logic';
 
 const formSchema = z.object({
   background: z.string(),
@@ -71,6 +73,7 @@ function Blurry() {
   const containerRef = useRef<HTMLDivElement>(null);
   const generateRef = useRef<(() => void) | undefined>(undefined);
   const currentParamsRef = useRef<GenerationParams | null>(null);
+  const hasInitializedRef = useRef(false);
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
       background: '#ffffff',
@@ -85,7 +88,9 @@ function Blurry() {
   });
   const formType = form.watch('type');
   const formBackground = form.watch('background');
-  const formColors = form.watch('colors');
+  const formPrimaryColor = form.watch('colors.0') ?? '#ffffff';
+  const formSecondaryColor = form.watch('colors.1') ?? '#ffffff';
+  const formColors = [formPrimaryColor, formSecondaryColor] as const;
   const formNum = form.watch('num');
   const formZoom = form.watch('zoom');
   const formBlur = form.watch('blur');
@@ -252,7 +257,7 @@ function Blurry() {
     ctx.drawImage(blurCanvas, 0, 0);
 
     return generationParams;
-  }, [formType, formBackground, formColors, formNum, formZoom, formBlur, drawCircle]);
+  }, [formType, formBackground, formPrimaryColor, formSecondaryColor, formNum, formZoom, formBlur, drawCircle]);
 
   // 修改 generate 函数，保存生成的参数
   const generate = useCallback(() => {
@@ -268,10 +273,6 @@ function Blurry() {
     generateRef.current = generate;
   }, [generate]);
 
-  const setDefaultBg = useCallback(() => {
-    form.setValue('background', formType !== 'type2' ? formColors[0]! : '#ffffffff');
-  }, [form, formType, formColors]);
-
   const generateColors = useCallback((e?: React.MouseEvent<HTMLButtonElement>) => {
     const color2 = randomColor();
     const color1 = color2.rotate(
@@ -285,6 +286,12 @@ function Blurry() {
 
   // 初始化
   useEffect(() => {
+    if (hasInitializedRef.current) {
+      return;
+    }
+
+    hasInitializedRef.current = true;
+
     if (canvasRef.current) {
       const rect = canvasRef.current.getBoundingClientRect();
       if (offscreenCanvasRef.current) {
@@ -301,12 +308,16 @@ function Blurry() {
   // 监听表单变化
   useEffect(() => {
     generate();
-  }, [formType, formBackground, formColors, formNum, formZoom, formBlur, generate]);
+  }, [formType, formBackground, formPrimaryColor, formSecondaryColor, formNum, formZoom, formBlur, generate]);
 
-  // 监听类型变化
+  // 只在背景默认值真的需要同步时更新，避免颜色数组依赖触发无意义的重复重绘
   useEffect(() => {
-    setDefaultBg();
-  }, [formType, setDefaultBg]);
+    const nextBackground = getBackgroundValueUpdate(formBackground, formType, formPrimaryColor);
+
+    if (nextBackground) {
+      form.setValue('background', nextBackground);
+    }
+  }, [form, formBackground, formPrimaryColor, formType]);
 
   // 修改导出函数，使用保存的参数
   const handleExportImage = () => {
@@ -469,7 +480,7 @@ function Blurry() {
                     name="type"
                     control={form.control}
                     render={({ field }) => (
-                      <FormItem className="flex gap-1 items-center h-10">
+                      <FormItem className="flex items-center gap-1 space-y-0 h-10">
                         <FormLabel className="w-24  shrink-0">
                           {t('blurry.effectType')}
                           ：
@@ -498,7 +509,7 @@ function Blurry() {
                     name="blur"
                     control={form.control}
                     render={({ field }) => (
-                      <FormItem className="flex gap-1 items-center h-10">
+                      <FormItem className="flex items-center gap-1 space-y-0 h-10">
                         <FormLabel className="w-24  shrink-0">
                           {t('blurry.blurLevel')}
                           ：
@@ -523,7 +534,7 @@ function Blurry() {
                       name="num"
                       control={form.control}
                       render={({ field }) => (
-                        <FormItem className="flex gap-1 items-center h-10">
+                        <FormItem className="flex items-center gap-1 space-y-0 h-10">
                           <FormLabel className="w-24  shrink-0">
                             {t('blurry.dotsNumber')}
                             ：
@@ -549,7 +560,7 @@ function Blurry() {
                     name="zoom"
                     control={form.control}
                     render={({ field }) => (
-                      <FormItem className="flex gap-1 items-center h-10">
+                      <FormItem className="flex items-center gap-1 space-y-0 h-10">
                         <FormLabel className="w-24  shrink-0">
                           {t('blurry.dotsSize')}
                           ：
@@ -575,7 +586,7 @@ function Blurry() {
                     name="enableNoise"
                     control={form.control}
                     render={({ field }) => (
-                      <FormItem className="flex gap-1 items-center h-10">
+                      <FormItem className="flex items-center gap-1 space-y-0 h-10">
                         <FormLabel className="w-24  shrink-0">
                           {t('blurry.enableNoise')}
                           ：
@@ -591,7 +602,7 @@ function Blurry() {
                     )}
                   />
 
-                  <FormItem className="flex gap-1 items-center h-10">
+                  <FormItem className="flex items-center gap-1 space-y-0 h-10">
                     <FormLabel className="w-24  shrink-0">
                       {t('blurry.adjustColors')}
                       ：
@@ -602,7 +613,7 @@ function Blurry() {
                           {formColors.map((color, index) => (
                             // eslint-disable-next-line react/no-array-index-key
                             <Popover key={index}>
-                              <PopoverTrigger>
+                              <PopoverTrigger asChild>
                                 <div className="size-8 rounded-md shadow-md" style={{ background: color }} />
                               </PopoverTrigger>
                               <PopoverContent className="flex justify-center p-0 w-auto border-0 shadow-none" side="top" sideOffset={12}>
@@ -623,7 +634,7 @@ function Blurry() {
                     name="background"
                     control={form.control}
                     render={({ field }) => (
-                      <FormItem className="flex gap-1 items-center h-10">
+                      <FormItem className="flex items-center gap-1 space-y-0 h-10">
                         <FormLabel className="w-24  shrink-0">
                           {t('blurry.backgroundColor')}
                           ：
@@ -676,10 +687,8 @@ function Blurry() {
                     </SelectTrigger>
                     <SelectContent>
                       {Array.from(new Set(sizeOptions.map(option => option.category)), category => (
-                        <div key={category}>
-                          <div className="px-2 py-1.5 text-sm font-semibold text-muted-foreground">
-                            {t(category)}
-                          </div>
+                        <SelectGroup key={category}>
+                          <SelectLabel>{t(category)}</SelectLabel>
                           {sizeOptions
                             .filter(option => option.category === category)
                             .map(option => (
@@ -687,7 +696,7 @@ function Blurry() {
                                 {t(option.labelKey)}
                               </SelectItem>
                             ))}
-                        </div>
+                        </SelectGroup>
                       ))}
                     </SelectContent>
                   </Select>

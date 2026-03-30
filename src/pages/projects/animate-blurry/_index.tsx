@@ -202,7 +202,7 @@ function Blurry() {
                   name="interactive"
                   control={form.control}
                   render={({ field }) => (
-                    <FormItem className="flex gap-1 items-center h-12">
+                    <FormItem className="flex items-center gap-1 space-y-0 h-12">
                       <FormLabel className="w-20  shrink-0">
                         {t('animateBlurry.interactive')}
                         ：
@@ -217,7 +217,7 @@ function Blurry() {
                   name="blur"
                   control={form.control}
                   render={({ field }) => (
-                    <FormItem className="flex gap-1 items-center h-12">
+                    <FormItem className="flex items-center gap-1 space-y-0 h-12">
                       <FormLabel className="w-20  shrink-0">
                         {t('animateBlurry.blurLevel')}
                         ：
@@ -241,7 +241,7 @@ function Blurry() {
                   name="size"
                   control={form.control}
                   render={({ field }) => (
-                    <FormItem className="flex gap-1 items-center h-12">
+                    <FormItem className="flex items-center gap-1 space-y-0 h-12">
                       <FormLabel className="w-20  shrink-0">
                         {t('animateBlurry.dotsSize')}
                         ：
@@ -265,7 +265,7 @@ function Blurry() {
                   name="blendMode"
                   control={form.control}
                   render={({ field }) => (
-                    <FormItem className="flex gap-1 items-center h-12">
+                    <FormItem className="flex items-center gap-1 space-y-0 h-12">
                       <FormLabel className="w-20  shrink-0">
                         {t('animateBlurry.blendMode')}
                         ：
@@ -287,7 +287,7 @@ function Blurry() {
                     </FormItem>
                   )}
                 />
-                <FormItem className="flex gap-1 items-center h-12">
+                <FormItem className="flex items-center gap-1 space-y-0 h-12">
                   <FormLabel className="w-20  shrink-0">
                     {t('animateBlurry.adjustColors')}
                     ：
@@ -329,7 +329,7 @@ function Blurry() {
                     name="pointerColor"
                     control={form.control}
                     render={({ field }) => (
-                      <FormItem className="flex gap-1 items-center h-12">
+                      <FormItem className="flex items-center gap-1 space-y-0 h-12">
                         <FormLabel className="w-20  shrink-0">
                           {t('animateBlurry.focusColor')}
                           ：
@@ -356,7 +356,7 @@ function Blurry() {
                   name="background"
                   control={form.control}
                   render={({ field }) => (
-                    <FormItem className="flex gap-1 items-center h-12">
+                    <FormItem className="flex items-center gap-1 space-y-0 h-12">
                       <FormLabel className="w-20  shrink-0">
                         {t('animateBlurry.backgroundColor')}
                         ：
@@ -382,7 +382,7 @@ function Blurry() {
                   name="animationDuration"
                   control={form.control}
                   render={({ field }) => (
-                    <FormItem className="flex gap-1 items-center h-12">
+                    <FormItem className="flex items-center gap-1 space-y-0 h-12">
                       <FormLabel className="w-20 shrink-0">
                         {t('animateBlurry.animationSpeed')}
                         ：
@@ -404,7 +404,7 @@ function Blurry() {
                   name="opacity"
                   control={form.control}
                   render={({ field }) => (
-                    <FormItem className="flex gap-1 items-center h-12">
+                    <FormItem className="flex items-center gap-1 space-y-0 h-12">
                       <FormLabel className="w-20 shrink-0">
                         {t('animateBlurry.opacity')}
                         ：
@@ -426,7 +426,7 @@ function Blurry() {
                   name="animate"
                   control={form.control}
                   render={({ field }) => (
-                    <FormItem className="flex gap-1 items-center h-12">
+                    <FormItem className="flex items-center gap-1 space-y-0 h-12">
                       <FormLabel className="w-20 shrink-0">
                         {t('animateBlurry.animation')}
                         ：
