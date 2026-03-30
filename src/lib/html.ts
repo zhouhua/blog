@@ -1,11 +1,13 @@
-import type { ImageMetadata } from 'astro';
+import type { GetImageResult, ImageMetadata } from 'astro';
 import { load } from 'cheerio';
-import { words } from 'lodash-es';
+import { words } from 'es-toolkit/string';
 
 const CJK_WORD_RE = /[\p{sc=Katakana}\p{sc=Hiragana}\p{sc=Han}]/gu;
 const MARKDOWN_BLOCK_CODE_RE = /```[\S\s]*?```/g;
 const MARKDOWN_HEADING_RE = /^#{1,6}\s+/gm;
+
 const MARKDOWN_IMAGE_RE = /!\[.*?\]\(.*?\)/g;
+
 const MARKDOWN_LINK_RE = /\[([^\]]+)\]\((.*?)\)/g;
 const MARKDOWN_LIST_RE = /^\s*(?:[*+-]|\d+\.)\s+/gm;
 const MARKDOWN_QUOTE_RE = /^>\s?/gm;
@@ -51,6 +53,8 @@ export function buildImageIndex<T>(modules: Record<string, T>) {
 const imageIndex = buildImageIndex(imageModules);
 const imageCache = new Map<string, Promise<ImageMetadata | null>>();
 
+type GalleryImageAsset = GetImageResult | Pick<ImageMetadata, 'src'>;
+
 function getPureText(html: string) {
   const $ = load(html);
   return $(':root').prop('textContent') ?? '';
@@ -59,8 +63,11 @@ function getPureText(html: string) {
 export function getReadInfo(html: string) {
   const $ = load(html);
   const pureText = getPureText(html);
-  const wordCount = words(pureText).length
-    + words(pureText, CJK_WORD_RE).length;
+  const cjkWordCount = pureText.match(CJK_WORD_RE)?.length ?? 0;
+  // es-toolkit/string#words 不支持 lodash 的第二个正则参数，
+  // 所以先把 CJK 字符替换为空格，再用 words 统计非 CJK 单词数。
+  const nonCjkText = pureText.replace(CJK_WORD_RE, ' ');
+  const wordCount = words(nonCjkText).length + cjkWordCount;
   const imageCount = $('img').length;
   const timeToRead = Math.ceil(wordCount / 275 + imageCount / 12);
   return {
@@ -88,6 +95,18 @@ export async function getImage(path: string) {
   const imagePromise = loader().then(module => module.default);
   imageCache.set(imagePath, imagePromise);
   return imagePromise;
+}
+
+export function getGalleryImageSrc(image: GalleryImageAsset) {
+  return image.src;
+}
+
+export function getGalleryImageSrcSet(image: GalleryImageAsset) {
+  if ('srcSet' in image) {
+    return image.srcSet.attribute;
+  }
+
+  return undefined;
 }
 
 export function getExcerpt(html: string, cut = 140) {
