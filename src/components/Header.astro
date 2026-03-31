@@ -2,12 +2,16 @@
 import logoSvg from '@assets/icon/logo.svg';
 import logoImage from '@assets/image/logo.png';
 import Container from '@components/Container.astro';
-import { menu } from '@consts';
-import { cn } from '@lib/utils';
 import ColorMode from '@react/components/ColorMode';
 import MobileMenu from '@react/components/MobileMenu';
 import { SearchButton } from '@react/components/Search';
 import { Image } from 'astro:assets';
+import {
+  Code,
+  IdCard,
+  MessageSquareText,
+  PenTool,
+} from 'lucide-react';
 ---
 
 <style>
@@ -33,7 +37,7 @@ import { Image } from 'astro:assets';
       <div class="logo-container relative">
         <Image
           alt="logo"
-          class="svg-image absolute left-0 top-0 hidden size-20 text-primary opacity-100 dark:invert sm:block"
+          class="svg-image absolute left-0 top-0 hidden size-20 opacity-100 dark:invert-100 sm:block"
           src={logoSvg}
         />
         <Image
@@ -43,18 +47,32 @@ import { Image } from 'astro:assets';
         />
       </div>
     </a>
-    <div class="hidden items-center justify-center gap-4 sm:flex lg:gap-8">
-      {
-        menu.map(item => (
-          <a href={item.path}>
-            <div class="flex items-center flex-col md:flex-row h-20 justify-evenly">
-              <span class={cn('mr-0 opacity-75 md:mr-2 iconify', item.icon.replace(':', '--'))} />
-              <div>{item.name}</div>
-            </div>
-          </a>
-        ))
-      }
-    </div>
+    <nav class="hidden items-center justify-center gap-4 sm:flex lg:gap-8">
+      <a href="/articles">
+        <div class="flex items-center flex-col md:flex-row h-20 justify-evenly">
+          <PenTool className="h-4 w-4 mr-0 opacity-75 md:mr-2" client:only="react" />
+          <div>文章</div>
+        </div>
+      </a>
+      <a href="/projects">
+        <div class="flex items-center flex-col md:flex-row h-20 justify-evenly">
+          <Code className="h-4 w-4 mr-0 opacity-75 md:mr-2" client:only="react" />
+          <div>项目</div>
+        </div>
+      </a>
+      <a href="/journals">
+        <div class="flex items-center flex-col md:flex-row h-20 justify-evenly">
+          <MessageSquareText className="h-4 w-4 mr-0 opacity-75 md:mr-2" client:only="react" />
+          <div>随笔</div>
+        </div>
+      </a>
+      <a href="/about">
+        <div class="flex items-center flex-col md:flex-row h-20 justify-evenly">
+          <IdCard className="h-4 w-4 mr-0 opacity-75 md:mr-2" client:only="react" />
+          <div>关于我</div>
+        </div>
+      </a>
+    </nav>
     <div class="flex items-center gap-2">
       <SearchButton
         appId={import.meta.env.GATSBY_ALGOLIA_APP_ID!}

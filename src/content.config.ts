@@ -19,7 +19,7 @@ const blog = defineCollection({
 });
 
 const journals = defineCollection({
-  loader: glob({ base: './src/content/journals', pattern: '**/[^_]*.md' }),
+  loader: glob({ base: './src/content/journals', pattern: '**/[^_]*.{md,mdx}' }),
   schema: z.object({
     date: z.coerce.date(),
     type: z.string().optional(),

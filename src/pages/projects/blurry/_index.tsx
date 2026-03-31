@@ -227,8 +227,8 @@ function Blurry() {
         for (let index = 0; index < actualNum; index += 1) {
           generationParams.positions.push({
             radius: random(length * 1.2, length * 1.4) / 2 * formZoom,
-            x: random(targetWidth),
-            y: random(targetHeight),
+            x: random(0, targetWidth),
+            y: random(0, targetHeight),
           });
         }
       }

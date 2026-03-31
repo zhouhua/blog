@@ -3,12 +3,18 @@ import { cn } from '@lib/utils';
 import Kbd from '@react/components/Keyboard';
 import useColorMode from '@react/hooks/useColorMode';
 import useRecentList from '@react/hooks/useRecentList';
+import {
+  CornerDownLeft,
+  Delete,
+  MoveDown,
+  MoveUp,
+} from 'lucide-react';
 import { useMemo } from 'react';
 import { PoweredBy, useStats } from 'react-instantsearch';
 
 const hotKeys = [
   {
-    keys: [<span key="enter" className="iconify oui--return-key" />],
+    keys: [<CornerDownLeft key="enter" className="size-4" />],
     showIn: {
       always: false,
       recent: true,
@@ -17,7 +23,7 @@ const hotKeys = [
     text: '选择',
   },
   {
-    keys: [<span key="up" className="iconify fa6-solid--arrow-up" />, <span key="down" className="iconify fa6-solid--arrow-down" />],
+    keys: [<MoveUp key="up" className="size-4" />, <MoveDown key="down" className="size-4" />],
     showIn: {
       always: false,
       recent: true,
@@ -26,7 +32,7 @@ const hotKeys = [
     text: '切换',
   },
   {
-    keys: [<span key="delete" className="iconify fa6-solid--delete-left" />],
+    keys: [<Delete key="delete" className="size-4" />],
     showIn: {
       always: false,
       recent: true,
@@ -35,7 +41,7 @@ const hotKeys = [
     text: '删除',
   },
   {
-    keys: [<span key="esc" className="iconify vaadin--esc-a" />],
+    keys: ['Esc'],
     showIn: {
       always: true,
       recent: true,
@@ -73,7 +79,7 @@ const Footer: FC = () => {
         }}
         theme={colorMode}
       />
-      <div className="flex text-sm sm:hidden gap-4 md:gap-2">
+      <div className="text-sm hidden sm:flex gap-4 md:gap-2">
         {hotKeys.map(
           ({ keys, text }, i) =>
             showMap[i] && (

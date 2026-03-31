@@ -1,6 +1,7 @@
 ---
 import { cn } from '@lib/utils';
-import { RoughNotation } from 'react-rough-notation';
+import { ThemedRoughNotation } from '@react/components/ThemedRoughNotation';
+import { ChevronRight, Hash } from 'lucide-react';
 import Bio from './Bio.astro';
 import Container from './Container.astro';
 
@@ -19,7 +20,7 @@ const { description, tag, title } = Astro.props;
 
 .HeroHeading {
   a {
-    color: var(--color-accent);
+    color: var(--color-accent-foreground);
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -28,45 +29,45 @@ const { description, tag, title } = Astro.props;
 </style>
 
 <Container class="relative">
-  { tag
-? (
+  {tag
+    ? (
     <div class="my-10 flex flex-col gap-6 sm:my-16 sm:flex-row sm:items-center sm:justify-between lg:my-28">
       <h1
         class={cn(
-          'HeroHeading',
+          'HeroHeading flex items-center',
           'colorModeTransition text-[24px] font-semibold not-italic leading-[1.2]',
-          'text-primary sm:text-[30px] lg:text-[36px]',
+          'sm:text-[30px] lg:text-[36px]',
         )}
       >
         关于
         <small>
-          <span
-            class="ml-2 mr-1 text-accent opacity-70 iconify heroicons--hashtag-solid"
-          />
+          <Hash className="ml-2 text-accent-foreground opacity-70" client:only="react" />
         </small>
-        <RoughNotation
+        <ThemedRoughNotation
           animate={false}
-          color="rgb(var(--color-accent))"
+          client:only="react"
+          colorVar="--accent-foreground"
+          colorAlpha={0.2}
           show
           strokeWidth={2}
           type="underline"
         >
           {tag}
-        </RoughNotation>{' '}
+        </ThemedRoughNotation>
         的文章：
       </h1>
       <a
-        class="hidden text-sm underline-offset-4 hover:text-accent hover:underline sm:inline-flex sm:items-center"
+        class="hidden text-sm underline-offset-4 hover:text-accent-foreground hover:underline sm:inline-flex sm:items-center"
         href="/articles"
       >
-        <span class="mr-2 iconify fa6-solid--angle-right" />
+        <ChevronRight className="mr-2" client:only="react" />
         所有文章
       </a>
     </div>
   )
 : (
     <div
-      class={cn('mx-0 my-14 w-full text-primary sm:my-[100px] md:w-4/5')}
+      class={cn('mx-0 my-14 w-full sm:my-[100px] md:w-4/5')}
       style={{ maxWidth: `800px` }}
     >
       <h1
@@ -80,28 +81,30 @@ const { description, tag, title } = Astro.props;
       </h1>
       {!title && (
         <p class="colorModeTransition">
-          <RoughNotation
+          <ThemedRoughNotation
             animate={false}
             client:only="react"
-            color="rgb(var(--color-accent) / 0.4)"
+            colorVar="--accent-foreground"
+            colorAlpha={0.2}
             show
             type="highlight"
           >
             有趣的灵魂终会相遇
-          </RoughNotation>
+          </ThemedRoughNotation>
         </p>
       )}
       {description && (
         <p class="colorModeTransition">
-          <RoughNotation
+          <ThemedRoughNotation
             animate={false}
             client:only="react"
-            color="rgb(var(--color-accent) / 0.4)"
+            colorVar="--accent-foreground"
+            colorAlpha={0.2}
             show
             type="highlight"
           >
             {description}
-          </RoughNotation>
+          </ThemedRoughNotation>
         </p>
       )}
     </div>

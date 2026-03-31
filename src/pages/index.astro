@@ -2,6 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import ArticlesPair from '@components/ArticlesPair.astro';
 import Container from '@components/Container.astro';
+import HomeProjects from '@components/HomeProjects.astro';
 import ListTitle from '@components/ListTitle.astro';
 import { HOME } from '@consts';
 import PageLayout from '@layouts/PageLayout.astro';
@@ -23,7 +24,8 @@ const latestJournals = journals.slice(0, 5).map(journal => ({
 }));
 const featuredBlogs: CollectionEntry<'blog'>[] = blogs
   .filter(blog => blog.data.featured)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 9);
 const pairs: [CollectionEntry<'blog'>, CollectionEntry<'blog'>][] = featuredBlogs.reduce(
   (result: [CollectionEntry<'blog'>, CollectionEntry<'blog'>][], _, index, array) => {
     if (index % 2 === 0) {
@@ -80,7 +82,7 @@ document.addEventListener('astro:page-load', () => {
   <Container>
     <h3
       class={cn(
-        'mt-20 text-primary relative pb-20 font-normal opacity-25 md:pb-[60px] colorModeTransition',
+        'mt-20 relative pb-20 font-normal opacity-25 md:pb-[60px] colorModeTransition',
         'after:absolute after:left-40 after:right-0 after:top-[11px] after:h-px after:content-[\'\'] after:bg-gray',
       )}
     >
@@ -97,7 +99,7 @@ document.addEventListener('astro:page-load', () => {
   <Container>
     <h3
       class={cn(
-        'mt-20 text-primary relative pb-20 font-normal opacity-25 md:pb-[60px] colorModeTransition',
+        'mt-20 relative pb-20 font-normal opacity-25 md:pb-[60px] colorModeTransition',
         'after:absolute after:left-40 after:right-0 after:top-[11px] after:h-px after:content-[\'\'] after:bg-gray',
       )}
     >
@@ -107,7 +109,7 @@ document.addEventListener('astro:page-load', () => {
       {latestJournals.map(({ excerpt, journal }) => (
         <div
           class={cn(
-            'journalCard',
+            'journalCard mb-6',
             'relative z-10 max-w-none block',
             'colorModeTransition break-inside-avoid-column cursor-pointer',
           )}
@@ -121,12 +123,12 @@ document.addEventListener('astro:page-load', () => {
               'colorModeTransition overflow-hidden',
             )}
           >
-            <p class="line-clamp-12 whitespace-pre-wrap text-primary leading-8">{excerpt}</p>
+            <p class="line-clamp-12 whitespace-pre-wrap leading-8">{excerpt}</p>
           </article>
         </div>
       ))}
       <div
-        class={cn('colorModeTransition break-inside-avoid-column')}
+        class={cn('colorModeTransition break-inside-avoid-column mb-6')}
       >
         <a
           class={cn(
@@ -141,5 +143,16 @@ document.addEventListener('astro:page-load', () => {
         </a>
       </div>
     </div>
+  </Container>
+  <Container>
+    <h3
+      class={cn(
+        'mt-20 relative pb-10 font-normal opacity-25 md:pb-[40px] colorModeTransition',
+        'after:absolute after:left-40 after:right-0 after:top-[11px] after:h-px after:content-[\'\'] after:bg-gray',
+      )}
+    >
+      项目
+    </h3>
+    <HomeProjects />
   </Container>
 </PageLayout>

@@ -1,0 +1,165 @@
+---
+import projects from '@content/projects/list';
+import { cn } from '@lib/utils';
+import ProjectIcon from '@react/components/ProjectIcon';
+
+const visible = projects.filter(p => !p.hidden && p.group !== '设计工具' && p.group !== 'demo/工具');
+---
+
+<style>
+@reference '../styles/global.css';
+
+.home-projects {
+  margin: 0 0 88px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+
+  @media (width >= 40rem) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (width >= 64rem) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.card {
+  position: relative;
+  padding: 18px 20px 20px;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at -10% -10%, color-mix(in oklch, var(--color-bgRevert) 4%, transparent) 0, transparent 55%),
+    radial-gradient(circle at 110% 120%, color-mix(in oklch, var(--color-gray) 18%, transparent) 0, transparent 55%),
+    color-mix(in oklch, var(--color-bg) 90%, var(--color-card) 10%);
+  box-shadow:
+    0 26px 60px rgba(0, 0, 0, 0.16),
+    0 0 0 1px color-mix(in oklch, var(--color-border) 70%, transparent);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    transform 180ms ease-out,
+    box-shadow 180ms ease-out,
+    background 200ms ease-out;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    conic-gradient(from 220deg,
+      transparent 0 15%,
+      color-mix(in oklch, var(--color-bgRevert) 10%, transparent) 20% 30%,
+      transparent 35% 55%,
+      color-mix(in oklch, var(--color-gray) 18%, transparent) 60% 70%,
+      transparent 75% 100%);
+  opacity: 0;
+  mix-blend-mode: soft-light;
+  transition: opacity 220ms ease-out;
+  pointer-events: none;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.26),
+    0 0 0 1px color-mix(in oklch, var(--color-bgRevert) 35%, transparent);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.pill-row {
+  margin-bottom: 8px;
+}
+
+.name {
+  margin: 0 0 6px;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 0.5rem;
+}
+
+.title-text {
+  margin: 0;
+}
+
+.desc {
+  margin: 2px 0 0;
+  font-family: var(--font-serif);
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: color-mix(in oklch, var(--color-gray) 90%, var(--color-bgRevert) 10%);
+}
+
+.meta {
+  display: none;
+}
+
+.more-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.more-label {
+  font-family: var(--font-monospace);
+  font-size: 0.86rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: color-mix(in oklch, var(--color-gray) 85%, var(--color-bgRevert) 15%);
+}
+</style>
+
+<section class="home-projects">
+  <div class="grid">
+    {visible.map(project => (
+      <a
+        class="card"
+        href={project.link}
+        target={project.link.startsWith('http') ? '_blank' : '_self'}
+      >
+        <div class="title-row">
+          <span class="icon">
+            <ProjectIcon type={project.type} />
+          </span>
+          <h3 class="name title-text">
+            {project.name}
+          </h3>
+        </div>
+        {project.description && (
+          <p class="desc">
+            {project.description}
+          </p>
+        )}
+      </a>
+    ))}
+    <a
+      class={cn('card', 'more-card')}
+      href="/projects"
+    >
+      <span class="more-label">
+        查看全部项目
+      </span>
+    </a>
+  </div>
+</section>
+

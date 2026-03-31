@@ -12,7 +12,7 @@ const Kbd: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({
       'mx-0.5 my-0 inline-block h-6 min-w-[24px]',
       'border-gray/80 rounded border border-b-2 border-solid',
       'text-gray text-center font-monospace text-base',
-      'inline-flex items-center justify-center',
+      'inline-flex items-center justify-center tracking-tighter',
       className,
     )}
     {...props}

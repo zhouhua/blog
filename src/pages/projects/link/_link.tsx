@@ -3,7 +3,6 @@ import type {
   ColumnDef,
   FilterFn,
 } from '@tanstack/react-table';
-import { cn } from '@lib/utils';
 import FormatDate from '@react/components/FormatDate';
 import { Button } from '@react/ui/button';
 import {
@@ -48,6 +47,12 @@ import {
 import { useRequest } from 'ahooks';
 import axios from 'axios';
 import copy from 'copy-to-clipboard';
+import {
+  Ban,
+  CirclePlus,
+  Copy,
+  Link2,
+} from 'lucide-react';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -160,7 +165,7 @@ function ShortLink() {
             }}
           >
             {key}
-            <span className="iconify oui--copy size-3.5" />
+            <Copy className="size-3.5" />
           </div>
         );
       },
@@ -314,7 +319,7 @@ function ShortLink() {
         <Drawer>
           <DrawerTrigger asChild>
             <Button size="sm" variant="ghost" className="gap-1">
-              <span className="h-3.5 w-3.5 iconify mdi--plus-circle-outline" />
+              <CirclePlus className="h-3.5 w-3.5" />
               添加短链
             </Button>
           </DrawerTrigger>
@@ -339,16 +344,14 @@ function ShortLink() {
             </div>
             <DrawerFooter className="flex gap-6 justify-center flex-row pb-10">
               <Button disabled={createLoading} onClick={runAsync}>
-                <span className={cn('size-4', {
-                  'iconify mdi--link-variant-plus': !createLoading,
-                  'loading loading-ring loading-md': createLoading,
-                })}
-                />
+                {!createLoading
+                  ? <Link2 className="size-4" />
+                  : <span className="loading loading-ring loading-md" />}
                 创建
               </Button>
               <DrawerClose>
                 <Button variant="outline">
-                  <span className="iconify mdi--cancel size-4" />
+                  <Ban className="size-4" />
                   取消
                 </Button>
               </DrawerClose>

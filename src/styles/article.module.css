@@ -25,7 +25,7 @@
   h4,
   h5,
   h6 {
-    @apply mx-auto my-0 font-sans font-bold text-primary;
+    @apply mx-auto my-0 font-sans font-bold;
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -75,7 +75,8 @@
   h4,
   h5,
   h6 {
-    @apply w-full max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
+    /* 随断点变大：base < sm < md */
+    @apply w-full max-w-[540px] sm:max-w-[620px] md:max-w-[760px];
   }
 }
 .ArticleBody {
@@ -90,8 +91,8 @@
 }
 .ArticleBody {
   blockquote {
-    @apply relative mx-auto mb-12 mt-2.5 w-full italic text-secondary sm:mb-9;
-    @apply max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
+    @apply relative mx-auto mb-12 mt-2.5 w-full italic text-secondary-foreground sm:mb-9;
+    @apply max-w-[540px] sm:max-w-[620px] md:max-w-[760px];
     @apply px-4;
     transition:
       background 0.25s var(--ease-in-out-quad),
@@ -116,8 +117,8 @@
   dl,
   ol {
     padding: 15px 0 30px 40px;
-    @apply relative mx-auto my-0 w-full list-none text-lg text-primary;
-    @apply max-w-[680px] sm:max-w-[486px] sm:pl-7 md:max-w-[507px];
+    @apply relative mx-auto my-0 w-full list-none text-lg;
+    @apply max-w-[540px] sm:max-w-[620px] sm:pl-7 md:max-w-[760px];
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -129,14 +130,13 @@
     }
     li::before {
       @apply absolute left-[-30px] top-2.5 inline-block sm:pl-0;
-      @apply text-primary;
       transition:
         background 0.25s var(--ease-in-out-quad),
         color 0.25s var(--ease-in-out-quad);
     }
   }
   ul > li::before {
-    @apply h-2 w-2 bg-secondary content-[''];
+    @apply h-2 w-2 bg-secondary-foreground content-[''];
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
@@ -159,8 +159,8 @@
 .ArticleBody {
   p:not(:where(svg p)),
   :global(.math-display) {
-    @apply w-full text-lg leading-[1.756] text-primary;
-    @apply max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
+    @apply w-full text-lg leading-[1.756];
+    @apply max-w-[540px] sm:max-w-[620px] md:max-w-[760px];
     @apply mx-auto mb-[35px] mt-0 sm:mb-[25px] sm:py-0 sm:text-base sm:leading-7;
     transition:
       background 0.25s var(--ease-in-out-quad),
@@ -183,7 +183,7 @@
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
     thead {
-      @apply relative border-collapse text-left font-sans font-semibold text-primary;
+      @apply relative border-collapse text-left font-sans font-semibold;
       line-height: 1.756;
       transition:
         background 0.25s var(--ease-in-out-quad),
@@ -240,13 +240,14 @@
     @apply mb-4;
   }
   hr {
-    @apply relative mx-auto my-12 w-full max-w-[680px] text-bgAlt;
-    @apply sm:max-w-[486px] sm:px-5 sm:py-0 md:max-w-[507px];
+    @apply relative mx-auto my-12 w-full max-w-[540px] text-bgAlt;
+    @apply sm:max-w-[620px] sm:px-5 sm:py-0 md:max-w-[760px];
     transition:
       background 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
   }
   iframe {
+    @apply mx-auto;
     margin-bottom: 40px;
     width: 100%;
     position: relative;
@@ -258,7 +259,7 @@
 .ArticleBody {
   :global(.callout) {
     @apply mx-auto mb-[35px] mt-0 p-4 pl-12 sm:mb-[25px];
-    @apply w-full max-w-[680px] sm:max-w-[486px] md:max-w-[507px];
+    @apply w-full max-w-[540px] sm:max-w-[620px] md:max-w-[760px];
     @apply bg-bgAlt/20;
     h2,
     h3,

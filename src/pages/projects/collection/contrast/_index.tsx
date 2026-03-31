@@ -9,7 +9,7 @@ import { Toaster } from '@react/ui/sonner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@react/ui/tabs';
 import { Chrome } from '@uiw/react-color';
 import { random } from 'es-toolkit/math';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -19,9 +19,25 @@ import collections from './collection';
 
 function Contrast() {
   const { t } = useTranslation();
-  const [pickedIndex, setPickedIndex] = useState(() => random(0, collections.length - 1));
-  const [background, setBackground] = useState(collections[pickedIndex]![0]);
-  const [foreground, setForeground] = useState(collections[pickedIndex]![1]);
+  const [pickedIndex, setPickedIndex] = useState(0);
+  const [background, setBackground] = useState('#000000');
+  const [foreground, setForeground] = useState('#ffffff');
+
+  // 初始化时从 collections 安全地选择一个配色
+  useEffect(() => {
+    if (!collections.length)
+      return;
+    const randomIndex = Math.min(
+      Math.max(0, random(0, collections.length - 1)),
+      collections.length - 1,
+    );
+    const pair = collections[randomIndex];
+    if (!pair)
+      return;
+    setPickedIndex(randomIndex);
+    setBackground(pair[0]);
+    setForeground(pair[1]);
+  }, []);
 
   const handleSwapColors = () => {
     const temp = background;
@@ -118,9 +134,12 @@ function Contrast() {
                 },
               )}
               onClick={() => {
+                const pair = collections[index];
+                if (!pair)
+                  return;
                 setPickedIndex(index);
-                setBackground(item[0]);
-                setForeground(item[1]);
+                setBackground(pair[0]);
+                setForeground(pair[1]);
               }}
             >
               {item.map((color: string) => (

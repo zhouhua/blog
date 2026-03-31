@@ -47,14 +47,26 @@ function createSvgDataUrl(svgString: string) {
 
 function Pattern() {
   const { t } = useTranslation();
-  const [pickedItem, setPickedItem] = useState(() => collections[random(0, collections.length - 1)]);
-  const [colors, setColors] = useState<string[]>(pickedItem!.colors);
-  const [rotate, setRotate] = useState(pickedItem!.rotate || 0);
-  const [zoom, setZoom] = useState(pickedItem!.zoom || 1);
+  const hasPatterns = collections.length > 0;
+  const initialPattern: IPattern | null = hasPatterns
+    ? collections[
+      Math.min(
+        Math.max(0, random(0, collections.length - 1)),
+        collections.length - 1,
+      )
+    ] ?? collections[0]!
+    : null;
+
+  const [pickedItem, setPickedItem] = useState<IPattern | null>(initialPattern);
+  const [colors, setColors] = useState<string[]>(
+    initialPattern ? initialPattern.colors : ['#000000', '#ffffff'],
+  );
+  const [rotate, setRotate] = useState(initialPattern?.rotate ?? 0);
+  const [zoom, setZoom] = useState(initialPattern?.zoom ?? 1);
   const [gradient, setGradient] = useState<'0' | '1' | '2'>('0');
-  const [translateX, setTranslateX] = useState(pickedItem!.translate?.[0] || 0);
-  const [translateY, setTranslateY] = useState(pickedItem!.translate?.[1] || 0);
-  const [stroke, setStroke] = useState(pickedItem!.stroke || 1);
+  const [translateX, setTranslateX] = useState(initialPattern?.translate?.[0] ?? 0);
+  const [translateY, setTranslateY] = useState(initialPattern?.translate?.[1] ?? 0);
+  const [stroke, setStroke] = useState(initialPattern?.stroke ?? 1);
   const mask = useMemo(() => {
     if (gradient === '0') {
       return 'none';
@@ -72,8 +84,11 @@ function Pattern() {
       zoom,
     };
 
-    if (pickedItem!.type === 'svg') {
-      const svgString = pickedItem!.render(props);
+    if (!pickedItem)
+      return '';
+
+    if (pickedItem.type === 'svg') {
+      const svgString = pickedItem.render(props);
       const dataUrl = `data:image/svg+xml;base64,${window.btoa(svgString)}`;
       return [
         'background-color: transparent;',
@@ -82,7 +97,7 @@ function Pattern() {
       ].filter(Boolean).join('\n');
     }
     else {
-      const rawCss = pickedItem!.render(props);
+      const rawCss = pickedItem.render(props);
       const formattedCss = rawCss
         .replace(CSS_DECLARATION_RE, ';\n  ')
         .replace(CSS_BLOCK_START_RE, ' {\n  ')
@@ -111,12 +126,12 @@ function Pattern() {
     zoom,
   };
 
-  const svgMarkup = pickedItem!.type === 'svg'
-    ? pickedItem!.render(pick(patternProps, ['colors', 'rotate', 'stroke', 'translate', 'zoom'] as const))
+  const svgMarkup = pickedItem && pickedItem.type === 'svg'
+    ? pickedItem.render(pick(patternProps, ['colors', 'rotate', 'stroke', 'translate', 'zoom'] as const))
     : null;
   const svgBackgroundImage = svgMarkup ? `url("${createSvgDataUrl(svgMarkup)}")` : undefined;
-  const cssBackgroundStyle = pickedItem!.type === 'css'
-    ? parse(`${pickedItem!.render(pick(patternProps, ['colors', 'rotate', 'stroke', 'translate', 'zoom'] as const))}mask-image:${mask}`) ?? undefined
+  const cssBackgroundStyle = pickedItem && pickedItem.type === 'css'
+    ? parse(`${pickedItem.render(pick(patternProps, ['colors', 'rotate', 'stroke', 'translate', 'zoom'] as const))}mask-image:${mask}`) ?? undefined
     : undefined;
 
   return (
@@ -126,7 +141,7 @@ function Pattern() {
         <HelpDrawer namespace="pattern" />
         <LanguageSwitch />
       </div>
-      {pickedItem!.type === 'svg' && (
+      {pickedItem?.type === 'svg' && (
         <div
           className="fixed left-0 top-0 h-full w-full"
           style={{
@@ -136,7 +151,7 @@ function Pattern() {
           }}
         />
       )}
-      {pickedItem!.type === 'css' && (
+      {pickedItem?.type === 'css' && (
         <div
           className="fixed left-0 top-0 h-full w-full"
           style={cssBackgroundStyle}
@@ -291,7 +306,7 @@ function Pattern() {
                 </span>
               </div>
             )}
-            {!pickedItem?.disabled?.includes('colors') && (
+            {pickedItem && !pickedItem.disabled?.includes('colors') && (
               <div className="flex gap-2 items-center">
                 <Label className="w-[70px] text-xs">
                   {t('pattern.adjustColors')}
@@ -300,7 +315,7 @@ function Pattern() {
                 <div
                   className="flex gap-2"
                 >
-                  {pickedItem!.colors.map((_, index) => (
+                  {pickedItem.colors.map((_, index) => (
                     // eslint-disable-next-line react/no-array-index-key
                     <Popover key={index}>
                       <PopoverTrigger>

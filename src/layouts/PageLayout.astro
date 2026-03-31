@@ -92,12 +92,27 @@ function initPageEffect() {
     const btn = document.createElement('button');
     btn.className = 'copy-code-btn';
     btn.setAttribute('aria-label', '复制代码');
-    btn.innerHTML = '<span class="copy-icon">⎘</span>';
+    btn.innerHTML = `
+      <span class="copy-icon" aria-hidden="true">
+        <svg viewBox="0 0 20 20" focusable="false" aria-hidden="true">
+          <rect x="6" y="4" width="10" height="12" rx="2" ry="2" class="copy-icon-front" />
+          <rect x="3" y="7" width="10" height="12" rx="2" ry="2" class="copy-icon-back" />
+          <path d="M6 11.5 9 14.5 14 9.5" class="copy-icon-check" />
+        </svg>
+      </span>
+      <span class="copy-label">复制</span>
+    `;
     btn.addEventListener('click', async () => {
       const code = pre.querySelector('code')?.textContent ?? '';
       await navigator.clipboard.writeText(code);
       btn.classList.add('copied');
-      setTimeout(() => btn.classList.remove('copied'), 2000);
+      const label = btn.querySelector<HTMLElement>('.copy-label');
+      if (label)
+        label.textContent = '已复制';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        label && (label.textContent = '复制');
+      }, 2000);
     });
     pre.appendChild(btn);
   });

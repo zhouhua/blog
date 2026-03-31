@@ -14,6 +14,8 @@ import { Picture } from 'astro:assets';
 import { getCollection, getEntry, render } from 'astro:content';
 import { sampleSize } from 'es-toolkit/array';
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts.map(post => ({ params: { slug: post.id } }));
@@ -66,7 +68,7 @@ const excerpt = getExcerpt(html);
       />
       {post.data.heroCopyright && (
         <div
-          class="text-secondary leading-5 text-xs"
+          class="text-secondary-foreground leading-5 text-xs"
           set:html={post.data.heroCopyright}
         />
       )}
@@ -79,7 +81,7 @@ const excerpt = getExcerpt(html);
   <Comment client:only="react" />
   <Container>
       <h3
-        class="text-primary relative pb-20 font-normal opacity-25 md:pb-[60px] colorModeTransition after:absolute after:left-40 after:right-0 after:top-[11px] after:h-px after:content-[''] after:bg-gray"
+        class="relative pb-20 font-normal opacity-25 md:pb-[60px] colorModeTransition after:absolute after:left-40 after:right-0 after:top-[11px] after:h-px after:content-[''] after:bg-gray"
       >
         看看其他的文章
       </h3>

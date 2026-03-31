@@ -87,7 +87,50 @@ es-toolkit 性能提升的核心原因，是直接使用了现代 JavaScript 内
 
 ## 原生 TypeScript 支持
 
-lodash 的 TypeScript 类型定义来自社区维护的 `@types/lodash`，质量参差不齐，有些函数的类型推断并不准确。
+### lodash 的类型问题
+
+lodash 的 TypeScript 类型定义来自社区维护的 `@types/lodash`，不随 lodash 本体同步发布，积累了不少问题。
+
+**`_.get` 路径不安全**：路径是普通字符串，返回值一律是 `any`，类型信息完全丢失：
+
+```typescript
+import _ from 'lodash';
+
+const user = { name: 'Alice', age: 30 };
+const name = _.get(user, 'name');  // 类型：any
+const oops = _.get(user, 'typo'); // 不报错，运行时返回 undefined
+```
+
+**`_.omit` / `_.pick` 返回类型不精确**：`_.pick` 的返回类型是 `Pick<T, K>`，但 `_.omit` 在很多版本里直接返回 `Partial<T>`，丢失了具体键的信息：
+
+```typescript
+import _ from 'lodash';
+
+const obj = { a: 1, b: 2, c: 3 };
+const result = _.omit(obj, 'a');
+// 类型：Partial<{ a: number; b: number; c: number }>
+// 而不是 { b: number; c: number }——b 和 c 莫名其妙变成了可选
+result.b?.toFixed(); // 要加 ?. 才不报错
+```
+
+**`_.groupBy` 键类型丢失**：返回类型是 `_.Dictionary<T[]>`，也就是 `{ [index: string]: T[] }`，键的具体取值信息丢失，无法在类型层面区分不同分组：
+
+```typescript
+import _ from 'lodash';
+
+const users = [
+  { name: 'Alice', role: 'admin' as const },
+  { name: 'Bob', role: 'user' as const },
+];
+
+const byRole = _.groupBy(users, 'role');
+// 类型：_.Dictionary<{ name: string; role: 'admin' | 'user' }[]>
+// 访问 byRole.admin 是合法的，访问 byRole.anything 也是合法的——没有约束
+```
+
+**函数重载选择错误**：`@types/lodash` 里很多函数有多个重载，有时 TypeScript 会选中不符合预期的那个，导致推断结果出乎意料，且错误提示难以理解。
+
+### es-toolkit 的改善
 
 es-toolkit 是用 TypeScript 原生编写的，类型定义精确且完整。举个例子，`groupBy` 的返回值类型能被正确推断：
 

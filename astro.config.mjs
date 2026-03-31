@@ -12,6 +12,7 @@ import { defineConfig } from 'astro/config';
 import rehypeKatex from 'rehype-katex';
 import rehypePrettyCode from 'rehype-pretty-code';
 import remarkMath from 'remark-math';
+import { getSingletonHighlighter } from 'shiki';
 
 const isDev = process.argv.includes('dev');
 const isVercelBuild = process.env.VERCEL === '1' || typeof process.env.VERCEL_ENV === 'string';
@@ -66,18 +67,20 @@ if (!isDev) {
   );
 }
 
+const adapter = isVercelBuild
+  ? vercel({
+      imageService: true,
+      webAnalytics: {
+        enabled: true,
+      },
+    })
+  : isDev
+    ? node({ mode: 'standalone' })
+    : null;
+
 // https://astro.build/config
 export default defineConfig({
-  adapter: isVercelBuild
-    ? vercel({
-        imageService: true,
-        webAnalytics: {
-          enabled: true,
-        },
-      })
-    : isDev
-      ? node({ mode: 'standalone' })
-      : undefined,
+  ...(adapter ? { adapter } : {}),
   base: '/',
   devToolbar: { enabled: false },
   integrations,
@@ -89,6 +92,7 @@ export default defineConfig({
         /** @type {import('rehype-pretty-code').Options} */
         ({
           defaultLang: 'plaintext',
+          getHighlighter: options => getSingletonHighlighter(options),
           keepBackground: false,
           langs: [
             'html',
@@ -140,6 +144,10 @@ export default defineConfig({
       ],
     },
     plugins: [fixViteClientEnvImport, tailwindcss()],
+    resolve: {
+      // Ensure all islands and prebundled deps share one React runtime.
+      dedupe: ['react', 'react-dom'],
+    },
     server: {
       watch: {
         ignored: ['**/.pnpm-store/**', '**/node_modules/**', '**/.git/**'],

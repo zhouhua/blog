@@ -2,6 +2,7 @@ import type { FC } from 'react';
 import { cn } from '@lib/utils';
 import useRecentList from '@react/hooks/useRecentList';
 import { bindKey, unbindKey } from '@rwh/keystrokes';
+import { History, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Empty from './Empty';
 import styles from './index.module.css';
@@ -99,11 +100,11 @@ const Recent: FC<{ hide: () => void }> = ({ hide }) => {
                   <span
                     className={cn(
                       'colorModeTransition mr-4 h-6 rounded-full bg-card px-2 text-[12px] leading-6 inline-flex items-center justify-center gap-1',
-                      'max-w-[45%] shrink-0 grow-0 overflow-hidden overflow-ellipsis whitespace-nowrap text-secondary',
+                      'max-w-[45%] shrink-0 grow-0 overflow-hidden overflow-ellipsis whitespace-nowrap text-secondary-foreground',
                       styles.query,
                     )}
                   >
-                    <span className="iconify heroicons--hashtag-solid" />
+                    <History className="size-3.5 opacity-75" />
                     {recent.query}
                   </span>
                   <span className="line-clamp-2 text-ellipsis whitespace-normal text-sm leading-6">
@@ -114,7 +115,7 @@ const Recent: FC<{ hide: () => void }> = ({ hide }) => {
                   className="ml-4 mr-3 h-10 w-10 cursor-pointer p-2 text-center leading-6 opacity-60 hover:opacity-100"
                   onClick={() => removeRecent(index)}
                 >
-                  <span className="iconify akar-icons--trash-can" />
+                  <Trash2 />
                 </div>
               </li>
             ))}

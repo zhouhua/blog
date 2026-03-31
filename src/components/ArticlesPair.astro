@@ -45,11 +45,11 @@ const pairClassName = gridLayout === 'tiles'
           post={article}
         />
       ))}
-      {posts.length === 1 && showAllLink && (
+      {showAllLink && (
         <a
           class={cn(
             'moreLink',
-            'flex items-center justify-center rounded-2xl bg-card text-primary',
+            'flex items-center justify-center rounded-2xl bg-card',
           )}
           href="/articles"
         >

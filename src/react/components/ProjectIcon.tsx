@@ -1,12 +1,21 @@
 import type { Type } from '@content/projects/list';
 import type { ReactNode } from 'react';
+import {
+  MonitorSmartphone,
+  PenTool,
+} from 'lucide-react';
+import {
+  SiGatsby,
+  SiGithub,
+  SiObsidian,
+} from 'react-icons/si';
 
 const iconMap: Record<Type, ReactNode> = {
-  gatsby: <span className="iconify ri--gatsby-fill mr-4" />,
-  github: <span className="iconify mdi--github mr-4" />,
-  obsidian: <span className="iconify simple-icons--obsidian mr-4" />,
-  tool: <span className="iconify mdi--design mr-4" />,
-  web: <span className="iconify mdi--cellphone-link mr-4" />,
+  gatsby: <SiGatsby className="mr-4 size-5" />,
+  github: <SiGithub className="mr-4 size-5" />,
+  obsidian: <SiObsidian className="mr-4 size-5" />,
+  tool: <PenTool className="mr-4 size-5" />,
+  web: <MonitorSmartphone className="mr-4 size-5" />,
 };
 
 const ProjectIcon = ({ type }: { type: Type }) => iconMap[type];

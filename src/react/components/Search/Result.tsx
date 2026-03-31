@@ -4,6 +4,12 @@ import { cn } from '@lib/utils';
 import useRecentList from '@react/hooks/useRecentList';
 import { bindKey, unbindKey } from '@rwh/keystrokes';
 import { once } from 'es-toolkit/function';
+import {
+  ChevronRight,
+  FileText,
+  PenTool,
+  Tag,
+} from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Highlight, Snippet, useInfiniteHits, useStats } from 'react-instantsearch';
 import scrollIntoView from 'scroll-into-view-if-needed';
@@ -12,9 +18,9 @@ import NoResult from './NoResult';
 import Recent from './Recent';
 
 const icons = {
-  journal: <span className="iconify fa6-solid--pen-nib" />,
-  post: <span className="iconify fa6-solid--file-lines" />,
-  tag: <span className="iconify fa6-solid--tag" />,
+  journal: <PenTool className="size-4" />,
+  post: <FileText className="size-4" />,
+  tag: <Tag className="size-4" />,
 };
 
 const Result: FC<{ hide: () => void }> = ({ hide }) => {
@@ -141,9 +147,9 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
     <>
       {showHits && (
         <div ref={rootRef} className="overflow-y-overlay max-h-[60vh]">
-          <p className="px-6 pt-4 text-right text-[12px] text-gray">
+          <p className="px-6 pt-4 text-right text-[12px] text-secondary-foreground">
             搜索
-            <span className="px-1 text-secondary">{query}</span>
+            <span className="px-1 text-accent-foreground underline">{query}</span>
             共找到
             {' '}
             {nbHits}
@@ -172,7 +178,6 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                 <div
                   className={cn(
                     styles.icon,
-                    'colorModeTransition rounded border border-solid border-gray',
                     'absolute left-4 top-1/2 h-6 w-6 shrink-0 -translate-y-1/2 text-center text-[14px]',
                     'flex items-center justify-center',
                   )}
@@ -188,7 +193,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                     <h2
                       className={cn(
                         'mb-1 inline-block h-6 max-w-[90%] rounded-full bg-card px-2 text-xs leading-6',
-                        'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap text-primary',
+                        'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap',
                       )}
                     >
                       <Highlight attribute="title" className="max-w-full" hit={hit} />
@@ -207,7 +212,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                       <h2
                         className={cn(
                           'mb-1 inline-block h-6 max-w-[90%] rounded-full bg-card px-2 text-xs leading-6',
-                          'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap text-primary',
+                          'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap',
                         )}
                       >
                         <Highlight attribute="title" className="max-w-full" hit={hit} />
@@ -227,7 +232,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                       <h2
                         className={cn(
                           'mb-1 inline-block h-6 max-w-[90%] rounded-full bg-card px-2 text-xs leading-6',
-                          'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap text-primary',
+                          'colorModeTransition overflow-hidden overflow-ellipsis whitespace-nowrap',
                         )}
                       >
                         <Highlight attribute="title" className="max-w-full" hit={hit} />
@@ -236,7 +241,7 @@ const Result: FC<{ hide: () => void }> = ({ hide }) => {
                   </div>
                 )}
                 <div className="absolute right-3 top-1/2 h-6 w-6 -translate-y-1/2 text-center">
-                  <span className="iconify fa6-solid--angle-right" />
+                  <ChevronRight className="inline-block" />
                 </div>
               </li>
             ))}

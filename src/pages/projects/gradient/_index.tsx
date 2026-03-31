@@ -52,7 +52,7 @@ function Gradient() {
       return [colord(color), colord(color), colord(color), 0];
     }
     const color2 = colord(color).alpha(1).desaturate(random(0.1, 0.15)).lighten(random(0.1, 0.15));
-    const color1 = color2.rotate(random(-50, -70)).saturate(random(0.15, 0.2)).lighten(random(0, 0.5));
+    const color1 = color2.rotate(random(-70, -50)).saturate(random(0.15, 0.2)).lighten(random(0, 0.5));
     const color3 = color2.rotate(random(50, 70)).saturate(random(0.45, 0.55)).darken(random(0.1, 0.15));
     const rotate = Math.floor(random(0, 360));
     return [color1, color2, color3, rotate];

@@ -6,7 +6,7 @@ const NoResult: FC = () => {
   return (
     <div className="text-gray px-6 py-16 text-center">
       没有关于
-      <span className="text-secondary px-1.5">{query}</span>
+      <span className="text-secondary-foreground px-1.5">{query}</span>
       的搜索结果，耗时
       {' '}
       {processingTimeMS}

@@ -2,13 +2,14 @@
 import Container from '@components/Container.astro';
 import { HOME } from '@consts';
 import PageLayout from '@layouts/PageLayout.astro';
+import { Button } from '@react/ui/button';
 
 ---
 <style>
 @reference '../styles/global.css';
 
 .text {
-  color: hsl(var(--primary));
+  color: var(--primary);
   position: relative;
   font-family: var(--font-monospace);
   line-height: 1;
@@ -20,7 +21,7 @@ import PageLayout from '@layouts/PageLayout.astro';
     color 0.25s var(--ease-in-out-quad);
 }
 .white {
-  background-color: var(--color-bg);
+  background-color: transparent;
   position: absolute;
   left: -10px;
   right: -10px;
@@ -28,7 +29,6 @@ import PageLayout from '@layouts/PageLayout.astro';
   height: 8px;
   animation: whiteMove 3s ease-out infinite;
   transition:
-    background 0.25s var(--ease-in-out-quad),
     border 0.25s var(--ease-in-out-quad),
     color 0.25s var(--ease-in-out-quad);
 }
@@ -55,7 +55,7 @@ import PageLayout from '@layouts/PageLayout.astro';
 }
 
 .text::before {
-  color: hsl(var(--primary) / 0.9);
+  color: color-mix(in oklch, var(--primary) 90%, transparent);
   position: absolute;
   left: 4px;
   top: 0;
@@ -74,7 +74,7 @@ import PageLayout from '@layouts/PageLayout.astro';
 
 .text::after {
   background-color: color-mix(in oklch, var(--color-bg) 90%, transparent);
-  color: hsl(var(--primary) / 0.8);
+  color: color-mix(in oklch, var(--primary) 80%, transparent);
   position: absolute;
   left: -12px;
   top: 0;
@@ -158,14 +158,13 @@ import PageLayout from '@layouts/PageLayout.astro';
         <div class="white" />
       </div>
     </div>
-    <h1 class="text-primary mt-20 text-center text-lg">找不到你访问的页面</h1>
-      <div class="flex justify-center pt-10">
-        <a
-          class="text-primary hover:text-accent p-2 underline-offset-4 hover:underline"
-          href="/"
-        >
+    <h1 class="mt-20 text-center text-lg">找不到你访问的页面</h1>
+    <div class="flex justify-center pt-10">
+      <a href="/" class="cursor-pointer">
+        <Button variant="link">
           回到首页
-        </a>
-      </div>
+        </Button>
+      </a>
+    </div>
   </Container>
 </PageLayout>

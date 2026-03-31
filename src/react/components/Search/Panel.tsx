@@ -49,7 +49,7 @@ const Panel: FC<{
           className={cn(
             styles.mask,
             'fixed left-0 top-0 z-50 h-screen w-screen min-w-[360px]  bg-primary/10 backdrop-blur',
-            'px-[10vw] py-[10vh] text-primary sm:px-[2vw] sm:py-[5vh] md:px-[5vw]',
+            'px-[10vw] py-[10vh] sm:px-[2vw] sm:py-[5vh] md:px-[5vw]',
           )}
           exit={{ opacity: 0 }}
           initial={{ opacity: 0 }}

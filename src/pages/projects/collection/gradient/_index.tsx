@@ -57,10 +57,18 @@ function generateGradientString({ colors, rotate, type }: {
 
 function Gradient() {
   const { t } = useTranslation();
-  const [pickedIndex, setPickedIndex] = useState(() => random(0, collections.length - 1));
-  const [colors, setColors] = useState<string[]>(collections[pickedIndex]!.colors);
-  const [rotate, setRotate] = useState(collections[pickedIndex]!.rotate || 0);
-  const [type, setType] = useState<'linear' | 'radial'>(collections[pickedIndex]!.type || 'linear');
+  const hasGradients = collections.length > 0;
+  const initialIndex = hasGradients
+    ? Math.min(
+        Math.max(0, random(0, collections.length - 1)),
+        collections.length - 1,
+      )
+    : 0;
+  const initial = hasGradients ? collections[initialIndex] ?? collections[0]! : undefined;
+  const [pickedIndex, setPickedIndex] = useState(initialIndex);
+  const [colors, setColors] = useState<string[]>(initial?.colors ?? ['#000000', '#ffffff']);
+  const [rotate, setRotate] = useState(initial?.rotate ?? 0);
+  const [type, setType] = useState<'linear' | 'radial'>(initial?.type ?? 'linear');
   const [imageWidth, setImageWidth] = useState(800);
   const [imageHeight, setImageHeight] = useState(600);
   const [imageFormat, setImageFormat] = useState('png');

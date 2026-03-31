@@ -2,19 +2,25 @@
 import kofi from '@assets/image/kofi.png';
 import Container from '@components/Container.astro';
 import { SITE } from '@consts';
+import { Mail } from 'lucide-react';
+import { SiGithub } from 'react-icons/si';
 
 const year = new Date().getFullYear();
 ---
 
 <Container as="footer">
   <div class="colorModeTransition relative mx-auto mb-5 mt-[120px] border-[1px] border-solid border-bgAlt sm:my-[60px]" />
-  <div class="colorModeTransition relative flex flex-col items-center gap-5 pb-[50px] text-center text-primary sm:flex-row sm:items-center sm:justify-between sm:pb-20 sm:text-left md:pb-[100px]">
+  <div class="colorModeTransition relative flex flex-col items-center gap-5 pb-[50px] text-center sm:flex-row sm:items-center sm:justify-between sm:pb-20 sm:text-left md:pb-[100px]">
     <div>
       Copyright © {year} | {SITE.NAME}
     </div>
-    <div class="flex items-center gap-4 text-secondary/80">
-      <a href="mailto:zhou--hua@163.com" class="flex items-center"><span class="iconify mdi--gmail size-6" /></a>
-      <a href="https://github.com/zhouhua" class="flex items-center"><span class="iconify mdi--github size-6" /></a>
+    <div class="flex items-center gap-4 text-secondary-foreground/80">
+      <a href="mailto:zhou--hua@163.com" class="flex items-center">
+        <Mail className="size-6" client:only="react" />
+      </a>
+      <a href="https://github.com/zhouhua" class="flex items-center">
+        <SiGithub className="size-6" client:only="react" />
+      </a>
       {/* eslint-disable-next-line react-dom/no-unsafe-target-blank */}
       <a href="https://ko-fi.com/O5O2VXBAE" target="_blank">
         <img height="36" style="border:0px;height:36px;" src={kofi.src} alt="Buy Me a Coffee at ko-fi.com" />

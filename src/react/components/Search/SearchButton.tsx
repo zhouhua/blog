@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import { cn } from '@lib/utils';
 import { bindKeyCombo, unbindKeyCombo } from '@rwh/keystrokes';
+import { Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { UAParser } from 'ua-parser-js';
@@ -32,7 +33,7 @@ export const SearchButton: FC<{ appId: string; appKey: string }> = ({ appId, app
       <div
         className={cn(
           'colorModeTransition',
-          'flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-0 p-2 text-2xl text-primary opacity-50',
+          'flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-0 p-2 text-2xl opacity-50',
           'sm:w-40 sm:justify-between sm:border sm:border-solid sm:border-gray sm:px-3 sm:text-sm sm:text-gray sm:opacity-100',
         )}
         onClick={() => {
@@ -40,7 +41,7 @@ export const SearchButton: FC<{ appId: string; appKey: string }> = ({ appId, app
         }}
       >
         <span className="flex items-center gap-1 sm:h-6">
-          <span className="iconify fa6-solid--magnifying-glass" />
+          <Search className="inline-block" />
           <span className="hidden sm:inline"> 搜索</span>
         </span>
         <span className="hidden sm:flex">

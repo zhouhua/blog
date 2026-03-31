@@ -111,5 +111,6 @@ type: post
 }
 .child {
     text-align: center;
+    color: #000;
 }
 </style>

@@ -1,7 +1,7 @@
 import type { ChangeEvent, FC, FormEvent } from 'react';
-import { cn } from '@lib/utils';
 import clsx from 'clsx';
 import { throttle } from 'es-toolkit/function';
+import { Search, X } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useInstantSearch, useSearchBox } from 'react-instantsearch';
 
@@ -44,11 +44,9 @@ const Header: FC<{ hide: () => void }> = ({ hide }) => {
       )}
     >
       <div className="p-4 flex items-center justify-center">
-        <span className={cn({
-          'iconify fa6-solid--magnifying-glass': status !== 'stalled',
-          'loading loading-ring loading-xs': status === 'stalled',
-        })}
-        />
+        {status !== 'stalled'
+          ? <Search className="size-4" />
+          : <span className="loading loading-ring loading-xs" />}
       </div>
       <form noValidate action="" className="flex max-w-full grow-2" onSubmit={onSubmit}>
         <input
@@ -57,7 +55,7 @@ const Header: FC<{ hide: () => void }> = ({ hide }) => {
           autoCapitalize="off"
           autoComplete="off"
           autoCorrect="off"
-          className="h-14 max-w-full grow-2 appearance-none bg-card px-2 text-primary"
+          className="h-14 max-w-full grow-2 appearance-none bg-card px-2"
           maxLength={512}
           placeholder="搜索文章"
           spellCheck={false}
@@ -71,7 +69,7 @@ const Header: FC<{ hide: () => void }> = ({ hide }) => {
         type="button"
         onClick={hide}
       >
-        <span className="iconify fa6-solid--xmark" />
+        <X className="size-4" />
       </button>
     </header>
   );

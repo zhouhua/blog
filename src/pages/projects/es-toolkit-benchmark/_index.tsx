@@ -1,14 +1,28 @@
 import { useCallback, useState } from 'react';
 
-// Bundle size data (measured via esbuild, minified+gzipped, approximate values from es-toolkit docs)
+// Bundle size data (measured via esbuild, minified, approximate values from es-toolkit docs)
+// Categories: Array / Object / Function / Math / String
 const bundleSizeData = [
-  { esToolkit: 97, fn: 'chunk', lodashEs: 2100 },
-  { esToolkit: 186, fn: 'debounce', lodashEs: 2400 },
-  { esToolkit: 44, fn: 'groupBy', lodashEs: 2800 },
-  { esToolkit: 109, fn: 'omit', lodashEs: 3100 },
-  { esToolkit: 65, fn: 'pick', lodashEs: 2500 },
-  { esToolkit: 217, fn: 'throttle', lodashEs: 2700 },
-  { esToolkit: 64, fn: 'uniq', lodashEs: 1900 },
+  // Array
+  { category: 'Array', esToolkit: 97, fn: 'chunk', lodashEs: 2100 },
+  { category: 'Array', esToolkit: 44, fn: 'groupBy', lodashEs: 2800 },
+  { category: 'Array', esToolkit: 64, fn: 'uniq', lodashEs: 1900 },
+  { category: 'Array', esToolkit: 88, fn: 'intersection', lodashEs: 2200 },
+  { category: 'Array', esToolkit: 79, fn: 'difference', lodashEs: 2000 },
+  // Object
+  { category: 'Object', esToolkit: 65, fn: 'pick', lodashEs: 2500 },
+  { category: 'Object', esToolkit: 109, fn: 'omit', lodashEs: 3100 },
+  { category: 'Object', esToolkit: 132, fn: 'mapValues', lodashEs: 2600 },
+  // Function
+  { category: 'Function', esToolkit: 186, fn: 'debounce', lodashEs: 2400 },
+  { category: 'Function', esToolkit: 217, fn: 'throttle', lodashEs: 2700 },
+  { category: 'Function', esToolkit: 91, fn: 'memoize', lodashEs: 2100 },
+  // Math
+  { category: 'Math', esToolkit: 27, fn: 'clamp', lodashEs: 1600 },
+  { category: 'Math', esToolkit: 38, fn: 'sum', lodashEs: 1800 },
+  // String
+  { category: 'String', esToolkit: 225, fn: 'camelCase', lodashEs: 3200 },
+  { category: 'String', esToolkit: 189, fn: 'snakeCase', lodashEs: 3100 },
 ];
 
 // Performance benchmark runners
@@ -26,17 +40,48 @@ interface BenchmarkResult {
 }
 
 async function runBenchmarks(): Promise<BenchmarkResult[]> {
-  const [{ chunk, groupBy, omit, pick, uniq }, lodashEsModule] = await Promise.all([
+  const [esModule, lodashEsModule] = await Promise.all([
     import('es-toolkit'),
     import('lodash-es'),
   ]);
-  const { chunk: lChunk, groupBy: lGroupBy, omit: lOmit, pick: lPick, uniq: lUniq } = lodashEsModule;
+  const {
+    camelCase,
+    chunk,
+    clamp,
+    difference,
+    groupBy,
+    intersection,
+    mapValues,
+    memoize,
+    omit,
+    pick,
+    snakeCase,
+    sum,
+    uniq,
+  } = esModule;
+  const {
+    camelCase: lCamelCase,
+    chunk: lChunk,
+    clamp: lClamp,
+    difference: lDifference,
+    groupBy: lGroupBy,
+    intersection: lIntersection,
+    mapValues: lMapValues,
+    memoize: lMemoize,
+    omit: lOmit,
+    pick: lPick,
+    snakeCase: lSnakeCase,
+    sum: lSum,
+    uniq: lUniq,
+  } = lodashEsModule;
 
   const arr = Array.from({ length: 100 }, (_, i) => i);
+  const arr2 = Array.from({ length: 100 }, (_, i) => i * 2);
   const arrWithDups = [...arr, ...arr.slice(0, 30)];
   const obj = Object.fromEntries(Array.from({ length: 50 }, (_, i) => [`key${i}`, i]));
   const keys = Array.from({ length: 20 }, (_, i) => `key${i}`);
   const items = Array.from({ length: 100 }, (_, i) => ({ id: i % 10, val: i }));
+  const str = 'hello world foo bar';
 
   // Warm up
   for (let i = 0; i < 1000; i++) {
@@ -44,15 +89,27 @@ async function runBenchmarks(): Promise<BenchmarkResult[]> {
     lChunk(arr, 5);
   }
 
-  // Yield to browser between each benchmark
   const results: BenchmarkResult[] = [];
 
   const cases: { name: string; es: () => void; lodash: () => void }[] = [
+    // Array
     { es: () => chunk(arr, 5), lodash: () => lChunk(arr, 5), name: 'chunk' },
     { es: () => uniq(arrWithDups), lodash: () => lUniq(arrWithDups), name: 'uniq' },
+    { es: () => groupBy(items, x => String(x.id)), lodash: () => lGroupBy(items, x => String(x.id)), name: 'groupBy' },
+    { es: () => intersection(arr, arr2), lodash: () => lIntersection(arr, arr2), name: 'intersection' },
+    { es: () => difference(arr, arr2), lodash: () => lDifference(arr, arr2), name: 'difference' },
+    // Object
     { es: () => pick(obj, keys), lodash: () => lPick(obj, keys), name: 'pick' },
     { es: () => omit(obj, keys), lodash: () => lOmit(obj, keys), name: 'omit' },
-    { es: () => groupBy(items, x => String(x.id)), lodash: () => lGroupBy(items, x => String(x.id)), name: 'groupBy' },
+    { es: () => mapValues(obj, v => v * 2), lodash: () => lMapValues(obj, v => v * 2), name: 'mapValues' },
+    // Function
+    { es: () => memoize((x: number) => x * 2)(42), lodash: () => lMemoize((x: number) => x * 2)(42), name: 'memoize' },
+    // Math
+    { es: () => clamp(42, 0, 100), lodash: () => lClamp(42, 0, 100), name: 'clamp' },
+    { es: () => sum(arr), lodash: () => lSum(arr), name: 'sum' },
+    // String
+    { es: () => camelCase(str), lodash: () => lCamelCase(str), name: 'camelCase' },
+    { es: () => snakeCase(str), lodash: () => lSnakeCase(str), name: 'snakeCase' },
   ];
 
   for (const c of cases) {
@@ -115,7 +172,7 @@ export default function EsToolkitBenchmark() {
             key={t}
             onClick={() => setTab(t)}
             className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
-              tab === t ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground hover:bg-muted/80'
+              tab === t ? 'bg-primary' : 'bg-muted text-muted-foreground hover:bg-muted/80'
             }`}
           >
             {t === 'size' ? 'Bundle Size' : '运行性能'}
@@ -163,7 +220,7 @@ export default function EsToolkitBenchmark() {
             <button
               onClick={runPerf}
               disabled={running}
-              className="px-6 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium disabled:opacity-50"
+              className="px-6 py-2 bg-primary rounded-lg text-sm font-medium disabled:opacity-50"
             >
               {running ? '测试中……' : '开始测试'}
             </button>

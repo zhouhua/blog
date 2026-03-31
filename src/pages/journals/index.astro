@@ -3,7 +3,7 @@ import Container from '@components/Container.astro';
 import ListTitle from '@components/ListTitle.astro';
 import { JOURNALS } from '@consts';
 import PageLayout from '@layouts/PageLayout.astro';
-import { getMarkdownExcerpt, getReadInfo } from '@lib/html';
+import { getReadInfo } from '@lib/html';
 import JournalList from '@react/components/JournalList';
 import { getCollection } from 'astro:content';
 import dayjs from 'dayjs';
@@ -16,7 +16,7 @@ const items = data.map((item) => {
   const { timeToRead, wordCount } = getReadInfo(body);
   return {
     dateString,
-    excerpt: getMarkdownExcerpt(body, 320),
+    html: item.rendered?.html ?? '',
     timeToRead,
     wordCount,
     year,

@@ -4,7 +4,17 @@ import { buttonVariants } from '@react/ui/button';
 import { Dock, DockIcon } from '@react/ui/dock';
 import { Separator } from '@react/ui/separator';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@react/ui/tooltip';
+import {
+  BookMarked,
+  CircleUserRound,
+  Grid3X3,
+  Home,
+  Palette,
+} from 'lucide-react';
 import { Fragment } from 'react';
+import { BsNoiseReduction } from 'react-icons/bs';
+import { MdBlurOn, MdGradient } from 'react-icons/md';
+import { PiIntersectThreeDuotone } from 'react-icons/pi';
 
 interface DockerItem {
   name: string;
@@ -14,51 +24,51 @@ interface DockerItem {
 const data: DockerItem[][] = [
   [
     {
-      icon: <span className="size-4 iconify mdi--home-outline" />,
+      icon: <Home className="size-4" />,
       link: '/',
       name: 'Home',
     },
     {
-      icon: <span className="size-4 iconify mdi--journal-outline" />,
+      icon: <BookMarked className="size-4" />,
       link: '/blogs',
       name: 'Blog',
     },
   ],
   [
     {
-      icon: <span className="size-4 iconify bi--noise-reduction" />,
+      icon: <BsNoiseReduction className="size-4" />,
       link: '/projects/gradient',
       name: 'SVG Noise Generator',
     },
     {
-      icon: <span className="size-4 iconify mdi--blur" />,
+      icon: <MdBlurOn className="size-4" />,
       link: '/projects/blurry',
       name: 'Blurry Generator',
     },
     {
-      icon: <span className="size-4 iconify ph--intersect-three-duotone" />,
+      icon: <PiIntersectThreeDuotone className="size-4" />,
       link: '/projects/animate-blurry',
       name: 'Animated Blurry',
     },
     {
-      icon: <span className="size-4 iconify mdi--gradient" />,
+      icon: <MdGradient className="size-4" />,
       link: '/projects/collection/gradient',
       name: 'Gradient Collection',
     },
     {
-      icon: <span className="size-4 iconify lucide-lab--grid-lines-offset" />,
+      icon: <Grid3X3 className="size-4" />,
       link: '/projects/collection/pattern',
       name: 'Pattern Collection',
     },
     {
-      icon: <span className="size-4 iconify lucide--swatch-book" />,
+      icon: <Palette className="size-4" />,
       link: '/projects/collection/contrast',
       name: 'Clashing Colors Collection',
     },
   ],
   [
     {
-      icon: <span className="size-4 iconify carbon--user-avatar" />,
+      icon: <CircleUserRound className="size-4" />,
       link: '/about',
       name: 'About Me',
     },
@@ -68,7 +78,7 @@ const data: DockerItem[][] = [
 const DockerWrap: FC = () => {
   return (
     <TooltipProvider>
-      <Dock direction="middle" className="fixed bottom-16 left-1/2 -translate-x-1/2">
+      <Dock direction="middle" className="fixed bottom-16 left-1/2 -translate-x-1/2 z-50">
         {data.map((list, index) => (
           // eslint-disable-next-line react/no-array-index-key
           <Fragment key={index}>

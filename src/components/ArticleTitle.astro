@@ -2,6 +2,7 @@
 import { cn } from '@lib/utils';
 import FormatDate from '@react/components/FormatDate';
 import { Badge } from '@react/ui/badge';
+import { Hash } from 'lucide-react';
 import Author from './Author.astro';
 
 interface Props {
@@ -46,7 +47,7 @@ const { isJournal = false, tags = [], time, title } = Astro.props;
 <header class={cn('Header', 'relative z-10')}>
   <h1
     class={cn(
-      'colorModeTransition font-sans font-bold text-primary mb-5 wrap-break-word text-[36px] leading-[1.3]',
+      'colorModeTransition font-sans font-bold mb-5 wrap-break-word text-[36px] leading-[1.3]',
       'sm:text-[38px] md:text-[42px] lg:mb-[25px] lg:text-[48px] lg:leading-[1.32]',
     )}
   >
@@ -81,10 +82,8 @@ const { isJournal = false, tags = [], time, title } = Astro.props;
       tags.map(tag => (
         <a href={`/tag/${tag.replace(TAG_SLUG_RE, '-').toLowerCase()}`}>
           <Badge className="text-sm font-monospace border-secondary/80" variant="outline">
-          <span
-            class="mr-1 h-3 w-3 text-accent opacity-80 heroicons--hashtag-solid iconify"
-          />
-          {tag}
+            <Hash className="mr-1 h-3 w-3 text-accent-foreground opacity-80" client:only="react" />
+            {tag}
           </Badge>
         </a>
       ))

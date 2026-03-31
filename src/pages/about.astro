@@ -5,8 +5,8 @@ import Container from '@components/Container.astro';
 import { HOME } from '@consts';
 import PageLayout from '@layouts/PageLayout.astro';
 import { cn } from '@lib/utils';
+import { ThemedRoughNotation } from '@react/components/ThemedRoughNotation';
 import { Image } from 'astro:assets';
-import { RoughNotation } from 'react-rough-notation';
 ---
 
 <style>
@@ -46,23 +46,23 @@ import { RoughNotation } from 'react-rough-notation';
           class={cn('flex items-center justify-between px-8 py-6 sm:flex-col sm:px-6')}
         >
           <div class="flex h-80 flex-col justify-between leading-10 sm:justify-around">
-            <div class="colorModeTransition text-primary sm:ml-16">
+            <div class="colorModeTransition sm:ml-16">
               <h2 class="mb-4 mt-6 text-4xl">周骅</h2>
               <a href="mailto:zhou--hua@163.com">
-                <span class="mr-3 iconify fa6-solid--envelope" />
-                <RoughNotation
+                <ThemedRoughNotation
                   animationDelay={800}
                   client:only="react"
-                  color="rgb(var(--color-accent))"
+                  colorVar="--accent-foreground"
+                  colorAlpha={0.2}
                   show
                   strokeWidth={2}
                   type="underline"
                 >
                   zhou--hua@163.com
-                </RoughNotation>
+                </ThemedRoughNotation>
               </a>
             </div>
-            <div class="font-serif text-sm leading-6 text-primary sm:text-center">
+            <div class="font-serif text-sm leading-6 sm:text-center">
               想成为⼀个有趣的⼈。
               <br />
               爱足球，爱桌游，

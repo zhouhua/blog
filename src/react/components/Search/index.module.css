@@ -13,7 +13,7 @@
 }
 .resultItem {
   mark {
-    @apply text-accent px-0.5 font-semibold underline underline-offset-2;
+    @apply text-accent-foreground px-0.5 font-semibold underline underline-offset-2;
     background: none;
     transition:
       background 0.25s var(--ease-in-out-quad),
@@ -24,7 +24,7 @@
 
 .selected.recentItem,
 .selected.resultItem {
-  @apply bg-accent text-bg;
+  @apply bg-accent/25 text-muted-foreground;
   transition:
     background 0.25s var(--ease-in-out-quad),
     border 0.25s var(--ease-in-out-quad),
@@ -33,7 +33,7 @@
 .selected.recentItem {
   @apply text-card;
   .query {
-    @apply bg-bg text-primary;
+    @apply bg-bg;
     transition:
       background 0.25s var(--ease-in-out-quad),
       border 0.25s var(--ease-in-out-quad),
@@ -42,20 +42,15 @@
 }
 
 .selected.resultItem {
-  mark {
-    @apply text-bg;
-  }
   h2 {
-    @apply bg-bg text-primary;
+    @apply bg-bg;
     mark {
-      @apply text-accent;
+      @apply text-accent-foreground;
     }
   }
   .icon {
-    @apply border-bgAlt;
     transition:
       background 0.25s var(--ease-in-out-quad),
-      border 0.25s var(--ease-in-out-quad),
       color 0.25s var(--ease-in-out-quad);
   }
 }
