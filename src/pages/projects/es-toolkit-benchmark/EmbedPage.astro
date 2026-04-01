@@ -10,11 +10,11 @@ const { description, title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="zh-Hans">
+<html lang="zh-Hans" class="h-full">
   <head>
     <Head description={description} title={title} />
   </head>
-  <body class="colorModeTransition min-h-screen bg-bg text-foreground">
+  <body class="colorModeTransition h-full bg-bg text-foreground">
     <slot />
   </body>
 </html>

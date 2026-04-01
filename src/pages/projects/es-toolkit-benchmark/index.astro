@@ -21,8 +21,10 @@ const headTitle = `${name} | ${SITE.NAME}`;
 
 {embed && (
   <EmbedPage description={description} title={headTitle}>
-    <div class="min-h-screen w-full p-4 sm:p-6">
-      <Benchmark client:only="react" />
+    <div class="flex h-full w-full items-stretch justify-center p-4 sm:p-6">
+      <div class="flex h-full w-full max-w-5xl mx-auto items-stretch">
+        <Benchmark client:only="react" inEmbed={true} />
+      </div>
     </div>
   </EmbedPage>
 )}

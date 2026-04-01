@@ -11,6 +11,10 @@ featured: true
 date: 2026-03-20 10:00:00
 ---
 
+**TL;DR：** 如果你在现代前端项目里还在用 lodash，这篇文章会带你认识一个更适合 2020s 的选择：**es-toolkit**——一个专为 ES2017+ 设计、对 TypeScript 友好的工具库，单个函数体积往往只有 lodash 的几十分之一，性能普遍快 2–3 倍，并且提供了对 lodash 几乎 100% 行为兼容的迁移路径。
+
+这篇文章主要面向已经在生产环境使用 lodash 的前端 / Node.js 开发者，以及正在做性能优化、包体积优化或者 TypeScript 类型治理的人。如果你只是偶尔在小脚本里用用 lodash，迁不迁都问题不大；但如果你的项目是一个长期维护的中大型应用，工具库的选择会在接下来几年里持续影响你的构建时间、运行性能和类型体验。
+
 如果你在前端项目里引入过 lodash，那你一定见过类似这样的写法：
 
 ```typescript
@@ -80,11 +84,82 @@ es-toolkit 性能提升的核心原因，是直接使用了现代 JavaScript 内
   sandbox="allow-scripts allow-same-origin allow-presentation"
   src="/projects/es-toolkit-benchmark?embed"
   frameborder="0"
-  style="border-radius:8px;height:520px;width:100%;max-width:700px;"
+  style="border-radius:8px;height:600px;width:100%;max-width:880px;"
 ></iframe>
 
-性能测试的方法很简单：用 `performance.now()` 计时，分别执行各函数 100,000 次，对比总耗时。结果会因硬件和浏览器而异，但差距的量级通常与官方数据吻合。
+这个 demo 的性能测试逻辑完全跑在一个独立的 Web Worker 里，避免阻塞页面主线程。核心思路是：为常见的 20+ 个函数准备相同规模的测试数据，然后在 worker 中用 `performance.now()` 分别测量 es-toolkit 和 lodash-es 各执行 10,000 次的总耗时，最后把结果通过 `postMessage` 逐条流式回传给页面：
 
+```typescript
+const testCases = [
+  { es: () => chunk(arr, 5), lodash: () => lChunk(arr, 5), name: 'chunk' },
+  { es: () => uniq(arrWithDups), lodash: () => lUniq(arrWithDups), name: 'uniq' },
+  { es: () => groupBy(items, x => String(x.id)), lodash: () => lGroupBy(items, x => String(x.id)), name: 'groupBy' },
+  // ...
+];
+
+const callPerIter = 10_000;
+
+for (const c of testCases) {
+  const s1 = performance.now();
+  for (let j = 0; j < callPerIter; j++) c.es();
+  const esTotal = performance.now() - s1;
+
+  const s2 = performance.now();
+  for (let j = 0; j < callPerIter; j++) c.lodash();
+  const lodashTotal = performance.now() - s2;
+
+  ctx.postMessage({
+    type: 'result',
+    payload: {
+      name: c.name,
+      esToolkitMs: esTotal,
+      lodashMs: lodashTotal,
+      ratio: lodashTotal / esTotal,
+    },
+  });
+}
+```
+
+由于所有测试都在同一个 worker 里顺序执行、使用同一份数据，因此环境噪音相对可控。不同机器、不同浏览器下绝对数值会有差异，但你在本地看到的倍数差距，通常会和官方基准测试的量级比较接近。
+
+打包体积的对比则是通过浏览器里的 `esbuild-wasm` 动态测出来的。我们先枚举出需要测试的函数，以及它们在 es-toolkit 和 lodash-es 中各自对应的模块地址，类似：
+
+```typescript
+export const bundleSizeCases = [
+  {
+    category: 'Array',
+    fn: 'chunk',
+    esToolkitModule: 'https://esm.sh/es-toolkit@1.45.1/es2022/dist/array/chunk.mjs',
+    esToolkitSymbol: 'chunk',
+    lodashModule: 'lodash-es/chunk',
+    lodashIsDefault: true,
+  },
+  // ...
+];
+```
+
+接着会为每个 case 生成一段只包含「导入函数 + `console.log` 一下」的最小入口代码，分别交给 `esbuild-wasm` 打包，然后用 `Blob` 和 `pako.gzip` 计算出未压缩和 gzip 后的体积：
+
+```typescript
+const result = await esbuild.build({
+  bundle: true,
+  format: 'esm',
+  minify: true,
+  treeShaking: true,
+  plugins: [createHttpPlugin()], // 通过 esm.sh 在浏览器中按需拉取依赖
+  stdin: {
+    contents: code, // 例如：import { chunk as fn } from '...'; console.log(fn);
+    loader: 'js',
+  },
+  write: false,
+});
+
+const output = result.outputFiles?.[0]?.text ?? '';
+const raw = new Blob([output]).size;
+const gzipped = gzip(output).byteLength;
+```
+
+这样，页面上展示的每条「体积对比」其实都是在你当前浏览器环境里、基于固定版本（es-toolkit@1.45.1 / lodash-es@4.17.23）实时算出来的。
 ## 原生 TypeScript 支持
 
 ### lodash 的类型问题
