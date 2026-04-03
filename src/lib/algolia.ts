@@ -6,6 +6,7 @@ import { chunk } from 'es-toolkit/array';
 import { omit } from 'es-toolkit/object';
 import { shouldRunAlgoliaIndex } from './algolia-utils';
 import { getExcerpt } from './html';
+import { appLogger } from './logger';
 
 function MD5(str: string) {
   return crypto.MD5(str).toString();
@@ -84,9 +85,11 @@ export async function algolia(): Promise<void> {
     try {
       await client.saveObjects({ indexName, objects });
     }
-    catch (e) {
-      console.error(e);
-      console.error(objects);
+    catch (error) {
+      appLogger.error('Failed to save Algolia objects', error, {
+        count: objects.length,
+        firstObject: objects[0],
+      });
     }
   }
 }

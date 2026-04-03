@@ -6,13 +6,7 @@ import { HelpDrawer } from '@react/components/HelpDrawer';
 import { LanguageSwitch } from '@react/components/LanguageSwitch';
 import { Button } from '@react/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@react/ui/card';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from '@react/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel } from '@react/ui/form';
 import { Input } from '@react/ui/input';
 import { Label } from '@react/ui/label';
 import { Popover, PopoverContent } from '@react/ui/popover';
@@ -117,15 +111,31 @@ function Gradient() {
       noiseSvg.setAttribute('height', '100%');
       noiseSvg.style.position = 'absolute';
       noiseSvg.style.opacity = formValues.enableNoise ? formValues.opacity.toString() : '0';
-      noiseSvg.innerHTML = `
-        <defs>
-          <filter id="noise">
-            <feTurbulence type="fractalNoise" baseFrequency="${formValues.noiseFrequency}" numOctaves="3" stitchTiles="stitch" />
-            <feBlend mode="normal" />
-          </filter>
-        </defs>
-        <rect width="100%" height="100%" filter="url(#noise)" />
-      `;
+
+      const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+      filter.setAttribute('id', 'noise');
+
+      const feTurbulence = document.createElementNS('http://www.w3.org/2000/svg', 'feTurbulence');
+      feTurbulence.setAttribute('type', 'fractalNoise');
+      feTurbulence.setAttribute('baseFrequency', String(formValues.noiseFrequency));
+      feTurbulence.setAttribute('numOctaves', '3');
+      feTurbulence.setAttribute('stitchTiles', 'stitch');
+
+      const feBlend = document.createElementNS('http://www.w3.org/2000/svg', 'feBlend');
+      feBlend.setAttribute('mode', 'normal');
+
+      filter.appendChild(feTurbulence);
+      filter.appendChild(feBlend);
+      defs.appendChild(filter);
+
+      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rect.setAttribute('width', '100%');
+      rect.setAttribute('height', '100%');
+      rect.setAttribute('filter', 'url(#noise)');
+
+      noiseSvg.appendChild(defs);
+      noiseSvg.appendChild(rect);
 
       element.appendChild(gradientSvg);
       element.appendChild(noiseSvg);
@@ -146,14 +156,19 @@ function Gradient() {
 
   return (
     <div
-      className="w-sceen h-screen flex pb-24 flex-col items-center justify-center relative gap-10"
+      className="w-sceen relative flex h-screen flex-col items-center justify-center gap-10 pb-24"
       data-vaul-drawer-wrapper
     >
-      <div className="fixed top-4 right-4 flex gap-2 z-50">
+      <div className="fixed top-4 right-4 z-50 flex gap-2">
         <HelpDrawer namespace="gradient" />
         <LanguageSwitch />
       </div>
-      <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} className="absolute z-0 left-0 top-0 w-full h-full">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={width}
+        height={height}
+        className="absolute top-0 left-0 z-0 h-full w-full"
+      >
         <defs>
           <linearGradient id="lineGradient" gradientTransform={`rotate(${rotate})`}>
             <stop offset="0%" stopColor={color1.toHex()} />
@@ -161,20 +176,30 @@ function Gradient() {
             <stop offset="100%" stopColor={color3.toHex()} />
           </linearGradient>
           <filter id="noise" x="0" y="0">
-            <feTurbulence type="fractalNoise" baseFrequency={formValues.noiseFrequency} numOctaves="3" stitchTiles="stitch" />
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency={formValues.noiseFrequency}
+              numOctaves="3"
+              stitchTiles="stitch"
+            />
             <feBlend mode="normal" />
           </filter>
         </defs>
         <rect x="0" y="0" width={width} height={height} fill="url(#lineGradient)" />
-        {formValues.enableNoise && <rect width={width} height={height} x="0" y="0" filter="url(#noise)" opacity={formValues.opacity} />}
+        {formValues.enableNoise && (
+          <rect width={width} height={height} x="0" y="0" filter="url(#noise)" opacity={formValues.opacity} />
+        )}
       </svg>
       <Toaster position="bottom-right" />
-      <div className="w-full px-8 max-w-[800px] flex items-center gap-4 bg-white/20 backdrop-blur-xl h-20 rounded-3xl shadow-md relative z-10">
+      <div className="relative z-10 flex h-20 w-full max-w-[800px] items-center gap-4 rounded-3xl bg-white/20 px-8 shadow-md backdrop-blur-xl">
         <Popover>
           <PopoverTrigger>
-            <div className="size-6 rounded-md cursor-pointer ring-offset-2 transition-all duration-200 hover:ring-2 hover:ring-white/50" style={{ background: color }} />
+            <div
+              className="size-6 cursor-pointer rounded-md ring-offset-2 transition-all duration-200 hover:ring-2 hover:ring-white/50"
+              style={{ background: color }}
+            />
           </PopoverTrigger>
-          <PopoverContent className="flex justify-center p-0 w-auto border-0 shadow-none" side="top" sideOffset={12}>
+          <PopoverContent className="flex w-auto justify-center border-0 p-0 shadow-none" side="top" sideOffset={12}>
             <Chrome
               color={color}
               onChange={e => setColor(e.hex)}
@@ -187,14 +212,14 @@ function Gradient() {
         <input
           value={color}
           onChange={e => setColor(e.target.value)}
-          className="flex-grow h-11 text-2xl bg-transparent border-none focus:outline-none focus:ring-0"
+          className="h-11 flex-grow border-none bg-transparent text-2xl focus:ring-0 focus:outline-none"
         />
         <RainbowButton onClick={() => setColor(randomColor().toHex())}>RANDOM</RainbowButton>
       </div>
-      <div className="w-full p-8 max-w-[800px] flex flex-col gap-4 bg-white/20 backdrop-blur-xl rounded-xl shadow-md z-10">
+      <div className="z-10 flex w-full max-w-[800px] flex-col gap-4 rounded-xl bg-white/20 p-8 shadow-md backdrop-blur-xl">
         <Form {...form}>
           <form>
-            <div className="flex gap-4 items-center h-8">
+            <div className="flex h-8 items-center gap-4">
               <Label className="w-40">
                 {t('gradient.gradientType')}
                 ：
@@ -218,7 +243,7 @@ function Gradient() {
               name="enableNoise"
               control={form.control}
               render={({ field }) => (
-                <FormItem className="flex items-center gap-4 space-y-0 h-8 m-0">
+                <FormItem className="m-0 flex h-8 items-center gap-4 space-y-0">
                   <FormLabel className="w-40">
                     {t('gradient.enableNoise')}
                     ：
@@ -235,13 +260,13 @@ function Gradient() {
                   name="noiseFrequency"
                   control={form.control}
                   render={({ field }) => (
-                    <FormItem className="flex items-center gap-4 space-y-0 h-8 m-0">
+                    <FormItem className="m-0 flex h-8 items-center gap-4 space-y-0">
                       <FormLabel className="w-40">
                         {t('gradient.noiseFrequency')}
                         ：
                       </FormLabel>
                       <FormControl className="w-72">
-                        <div className="flex gap-3 items-center !mt-0">
+                        <div className="!mt-0 flex items-center gap-3">
                           <Slider
                             value={[field.value]}
                             min={0.3}
@@ -249,7 +274,9 @@ function Gradient() {
                             step={0.05}
                             onValueChange={value => field.onChange(value[0])}
                           />
-                          <span className="w-16"><NumberFlow value={field.value} /></span>
+                          <span className="w-16">
+                            <NumberFlow value={field.value} />
+                          </span>
                         </div>
                       </FormControl>
                     </FormItem>
@@ -259,13 +286,13 @@ function Gradient() {
                   name="opacity"
                   control={form.control}
                   render={({ field }) => (
-                    <FormItem className="flex items-center gap-4 space-y-0 h-8 m-0">
+                    <FormItem className="m-0 flex h-8 items-center gap-4 space-y-0">
                       <FormLabel className="w-40">
                         {t('gradient.opacity')}
                         ：
                       </FormLabel>
                       <FormControl className="w-72">
-                        <div className="flex gap-3 items-center !mt-0">
+                        <div className="!mt-0 flex items-center gap-3">
                           <Slider
                             value={[field.value]}
                             min={0}
@@ -273,7 +300,9 @@ function Gradient() {
                             step={0.01}
                             onValueChange={value => field.onChange(value[0])}
                           />
-                          <span className="w-16"><NumberFlow value={field.value} /></span>
+                          <span className="w-16">
+                            <NumberFlow value={field.value} />
+                          </span>
                         </div>
                       </FormControl>
                     </FormItem>
@@ -288,9 +317,9 @@ function Gradient() {
             <CardTitle className="text-sm">{t('gradient.exportImageSettings')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="mt-4 grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-2">
-                <Label className="text-xs pl-3">{t('gradient.presetSize')}</Label>
+                <Label className="pl-3 text-xs">{t('gradient.presetSize')}</Label>
                 <Select
                   value={selectedPreset}
                   onValueChange={(value) => {
@@ -308,9 +337,7 @@ function Gradient() {
                   <SelectContent>
                     {Array.from(new Set(sizeOptions.map(option => option.category)), category => (
                       <div key={category}>
-                        <div className="px-2 py-1.5 text-sm font-semibold text-muted-foreground">
-                          {t(category)}
-                        </div>
+                        <div className="text-muted-foreground px-2 py-1.5 text-sm font-semibold">{t(category)}</div>
                         {sizeOptions
                           .filter(option => option.category === category)
                           .map(option => (
@@ -325,7 +352,7 @@ function Gradient() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <Label className="text-xs pl-3">{t('gradient.exportFormat')}</Label>
+                <Label className="pl-3 text-xs">{t('gradient.exportFormat')}</Label>
                 <Select value={imageFormat} onValueChange={setImageFormat}>
                   <SelectTrigger className="h-8 text-xs">
                     <SelectValue />
@@ -340,7 +367,7 @@ function Gradient() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <Label className="text-xs pl-3">{t('gradient.width')}</Label>
+                <Label className="pl-3 text-xs">{t('gradient.width')}</Label>
                 <Input
                   type="number"
                   value={imageWidth}
@@ -348,12 +375,12 @@ function Gradient() {
                     setImageWidth(Number(e.target.value));
                     setSelectedPreset('');
                   }}
-                  className="w-full h-8 px-2 text-xs rounded-md border border-input bg-background"
+                  className="border-input bg-background h-8 w-full rounded-md border px-2 text-xs"
                 />
               </div>
 
               <div className="flex flex-col gap-2">
-                <Label className="text-xs pl-3">{t('gradient.height')}</Label>
+                <Label className="pl-3 text-xs">{t('gradient.height')}</Label>
                 <Input
                   type="number"
                   value={imageHeight}
@@ -361,15 +388,11 @@ function Gradient() {
                     setImageHeight(Number(e.target.value));
                     setSelectedPreset('');
                   }}
-                  className="w-full h-8 text-xs rounded-md border border-input bg-background"
+                  className="border-input bg-background h-8 w-full rounded-md border text-xs"
                 />
               </div>
 
-              <Button
-                size="sm"
-                className="col-span-2"
-                onClick={handleExportImage}
-              >
+              <Button size="sm" className="col-span-2" onClick={handleExportImage}>
                 {t('gradient.exportImage')}
               </Button>
             </div>

@@ -1,4 +1,5 @@
 import projects from '@content/projects/list';
+import { useMemo } from 'react';
 import ProjectIcon from './ProjectIcon';
 
 const EXTERNAL_LINK_RE = /^https?:/;
@@ -15,17 +16,30 @@ const GROUP_EN: Record<string, string> = {
 function ProjectList() {
   const visible = projects.filter(p => !p.hidden);
 
-  const grouped = GROUP_ORDER.map(group => ({
-    group,
-    items: visible.filter(p => p.group === group),
-  })).filter(g => g.items.length > 0);
+  const allGroups = useMemo(() => {
+    const groupMap = new Map<string, typeof visible>();
 
-  const ungrouped = visible.filter(p => !p.group || !GROUP_ORDER.includes(p.group));
+    visible.forEach((project) => {
+      const group = project.group && GROUP_ORDER.includes(project.group) ? project.group : '其他';
 
-  const allGroups = [
-    ...grouped,
-    ...(ungrouped.length > 0 ? [{ group: '其他', items: ungrouped }] : []),
-  ];
+      if (!groupMap.has(group)) {
+        groupMap.set(group, []);
+      }
+      groupMap.get(group)!.push(project);
+    });
+
+    const result = GROUP_ORDER.map(group => ({
+      group,
+      items: groupMap.get(group) || [],
+    })).filter(g => g.items.length > 0);
+
+    const otherItems = groupMap.get('其他');
+    if (otherItems && otherItems.length > 0) {
+      result.push({ group: '其他', items: otherItems });
+    }
+
+    return result;
+  }, [visible]);
 
   return (
     <div className="mx-auto max-w-[680px]">
@@ -172,7 +186,9 @@ function ProjectList() {
                   className="proj-item"
                 >
                   <span className="proj-num">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="proj-icon"><ProjectIcon type={type} /></span>
+                  <span className="proj-icon">
+                    <ProjectIcon type={type} />
+                  </span>
                   <span className="proj-body">
                     <span className="proj-name">{name}</span>
                     {description && <span className="proj-desc">{description}</span>}

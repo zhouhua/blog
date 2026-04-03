@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import createGlobalStore from './createGlobalStore';
 
 const storeKey = 'recentSearch';
@@ -33,7 +32,6 @@ function useRecentList(init?: IRecentItem[]) {
   function clearRencenList() {
     setRecentList([]);
   }
-  useEffect(() => {}, [recentList]);
   return {
     addRecent,
     clearRencenList,

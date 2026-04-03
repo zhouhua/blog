@@ -167,6 +167,9 @@ importers:
       dayjs:
         specifier: ^1.11.19
         version: 1.11.19
+      dompurify:
+        specifier: ^3.3.3
+        version: 3.3.3
       es-toolkit:
         specifier: ^1.45.1
         version: 1.45.1
@@ -348,6 +351,9 @@ importers:
       '@types/crypto-js':
         specifier: ^4.2.2
         version: 4.2.2
+      '@types/dompurify':
+        specifier: ^3.2.0
+        version: 3.2.0
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -3821,6 +3827,10 @@ packages:
 
   '@types/dom-speech-recognition@0.0.1':
     resolution: {integrity: sha512-udCxb8DvjcDKfk1WTBzDsxFbLgYxmQGKrE/ricoMqHRNjSlSUCcamVTA5lIQqzY10mY5qCY0QDwBfFEwhfoDPw==}
+
+  '@types/dompurify@3.2.0':
+    resolution: {integrity: sha512-Fgg31wv9QbLDA0SpTOXO3MaxySc4DKGLi8sna4/Utjo4r3ZRPdCt4UQee8BWr+Q5z21yifghREPJGYaEOEIACg==}
+    deprecated: This is a stub types definition. dompurify provides its own type definitions, so you do not need this installed.
 
   '@types/esrecurse@4.3.1':
     resolution: {integrity: sha512-xJBAbDifo5hpffDBuHl0Y8ywswbiAp/Wi7Y/GtAgSlZyIABppyurxVueOPE8LUQOxdlgi6Zqce7uoEpqNTeiUw==}
@@ -13809,6 +13819,10 @@ snapshots:
   '@types/deep-eql@4.0.2': {}
 
   '@types/dom-speech-recognition@0.0.1': {}
+
+  '@types/dompurify@3.2.0':
+    dependencies:
+      dompurify: 3.3.3
 
   '@types/esrecurse@4.3.1': {}
 
