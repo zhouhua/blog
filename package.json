@@ -3,9 +3,10 @@
   "type": "module",
   "version": "1.0.0",
   "scripts": {
-    "dev": "NODE_OPTIONS=--max-old-space-size=8192 astro dev",
-    "dev:network": "NODE_OPTIONS=--max-old-space-size=8192 astro dev --host",
-    "build": "NODE_OPTIONS=--max-old-space-size=8192 astro check && NODE_OPTIONS=--max-old-space-size=12288 astro build",
+    "dev": "NODE_OPTIONS=--max-old-space-size=6144 astro dev",
+    "dev:network": "NODE_OPTIONS=--max-old-space-size=6144 astro dev --host",
+    "build": "NODE_OPTIONS=--max-old-space-size=6144 astro check && NODE_OPTIONS=--max-old-space-size=8192 astro build",
+    "build:analyze": "ANALYZE=true NODE_OPTIONS=--max-old-space-size=8192 astro build",
     "preview": "astro preview",
     "preview:network": "astro preview --host",
     "astro": "astro",
@@ -149,6 +150,7 @@
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
+    "rollup-plugin-visualizer": "^7.0.1",
     "simple-git-hooks": "^2.13.1",
     "vitest": "^4.1.2"
   },

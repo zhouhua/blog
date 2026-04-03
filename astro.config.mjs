@@ -12,6 +12,7 @@ import { defineConfig } from 'astro/config';
 import rehypeKatex from 'rehype-katex';
 import rehypePrettyCode from 'rehype-pretty-code';
 import remarkMath from 'remark-math';
+import { visualizer } from 'rollup-plugin-visualizer';
 import { getSingletonHighlighter } from 'shiki';
 
 const isDev = process.argv.includes('dev');
@@ -35,11 +36,7 @@ const fixViteClientEnvImport = {
   },
 };
 
-const integrations = [
-  mdx(),
-  sitemap(),
-  react(),
-];
+const integrations = [mdx(), sitemap(), react()];
 
 if (isDev) {
   const { default: pageInsight } = await import('astro-page-insight');
@@ -115,17 +112,46 @@ export default defineConfig({
         }),
       ],
     ],
-    remarkPlugins: [
-      mediaCard,
-      remarkMath,
-      [remarkDescription, { name: 'excerpt' }],
-    ],
+    remarkPlugins: [mediaCard, remarkMath, [remarkDescription, { name: 'excerpt' }]],
     syntaxHighlight: false,
   },
   output: isDev ? 'server' : 'static',
   site: 'https://zhouhua.site/',
   trailingSlash: 'ignore',
   vite: {
+    build: {
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          manualChunks: (id) => {
+            // Vendor chunks for large libraries
+            if (id.includes('node_modules')) {
+              if (id.includes('react') || id.includes('react-dom')) {
+                return 'vendor-react';
+              }
+              if (id.includes('dayjs')) {
+                return 'vendor-dayjs';
+              }
+              if (id.includes('yet-another-react-lightbox')) {
+                return 'vendor-lightbox';
+              }
+              if (id.includes('mermaid')) {
+                return 'vendor-mermaid';
+              }
+              if (id.includes('html2canvas')) {
+                return 'vendor-html2canvas';
+              }
+              if (id.includes('xlsx')) {
+                return 'vendor-xlsx';
+              }
+              // Other vendor code
+              return 'vendor';
+            }
+            return undefined;
+          },
+        },
+      },
+    },
     optimizeDeps: {
       include: [
         '@giscus/react',
@@ -143,7 +169,21 @@ export default defineConfig({
         'yet-another-react-lightbox/plugins/zoom',
       ],
     },
-    plugins: [fixViteClientEnvImport, tailwindcss()],
+    plugins: [
+      fixViteClientEnvImport,
+      tailwindcss(),
+      // Bundle analyzer - only in production build with ANALYZE=true
+      ...(process.env.ANALYZE === 'true' && !isDev
+        ? /** @type {any} */ ([
+            visualizer({
+              emitFile: true,
+              filename: 'stats.html',
+              gzipSize: true,
+              open: true,
+            }),
+          ])
+        : []),
+    ],
     resolve: {
       // Ensure all islands and prebundled deps share one React runtime.
       dedupe: ['react', 'react-dom'],

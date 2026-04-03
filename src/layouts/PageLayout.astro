@@ -31,11 +31,10 @@ const { description, title } = Astro.props;
 
 <script>
 import mediumZoom from 'medium-zoom/dist/pure';
-import mermaid from 'mermaid';
 import { annotate } from 'rough-notation';
 import 'medium-zoom/dist/style.css';
 
-function initPageEffect() {
+async function initPageEffect() {
   const callouts = document.querySelectorAll<HTMLDivElement>('article .callout');
   callouts.forEach(callout =>
     annotate(callout, {
@@ -77,13 +76,17 @@ function initPageEffect() {
     background: 'color-mix(in oklch, var(--color-bg) 50%, transparent)',
   });
 
-  mermaid.initialize({ startOnLoad: false });
-  document.querySelectorAll<HTMLDivElement>('[data-language=mermaid]:not(.hidden)').forEach(async (item, i) => {
-    const code = item.textContent!;
-    const { svg } = await mermaid.render(`mermaid${i}`, code);
-    item.classList.add('hidden');
-    item.insertAdjacentHTML('afterend', `<p>${svg}</p>`);
-  });
+  const mermaidElements = document.querySelectorAll<HTMLDivElement>('[data-language=mermaid]:not(.hidden)');
+  if (mermaidElements.length > 0) {
+    const { default: mermaid } = await import('mermaid');
+    mermaid.initialize({ startOnLoad: false });
+    mermaidElements.forEach(async (item, i) => {
+      const code = item.textContent!;
+      const { svg } = await mermaid.render(`mermaid${i}`, code);
+      item.classList.add('hidden');
+      item.insertAdjacentHTML('afterend', `<p>${svg}</p>`);
+    });
+  }
 
   // Copy buttons for code blocks
   document.querySelectorAll<HTMLElement>('article pre[data-language]').forEach((pre) => {

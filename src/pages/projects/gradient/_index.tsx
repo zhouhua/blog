@@ -19,7 +19,6 @@ import { Switch } from '@react/ui/switch';
 import { Chrome } from '@uiw/react-color';
 import { colord, random as randomColor } from 'colord';
 import { random } from 'es-toolkit/math';
-import html2canvas from 'html2canvas';
 import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -62,7 +61,7 @@ function Gradient() {
   });
   const formValues = form.watch();
 
-  const handleExportImage = () => {
+  const handleExportImage = async () => {
     const element = document.createElement('div');
     element.style.width = `${imageWidth}px`;
     element.style.height = `${imageHeight}px`;
@@ -141,6 +140,8 @@ function Gradient() {
       element.appendChild(noiseSvg);
       document.body.appendChild(element);
 
+      // Dynamic import for html2canvas
+      const { default: html2canvas } = await import('html2canvas');
       html2canvas(element, {
         backgroundColor: null,
         scale: 2, // 提高导出图片质量
