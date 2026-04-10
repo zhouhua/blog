@@ -124,28 +124,11 @@ export default defineConfig({
       rollupOptions: {
         output: {
           manualChunks: (id) => {
-            // Vendor chunks for large libraries
+            // Keep React runtime in one chunk to avoid hydration/runtime ordering issues.
             if (id.includes('node_modules')) {
-              if (id.includes('react') || id.includes('react-dom') || id.includes('scheduler')) {
+              if (id.includes('/react/') || id.includes('/react-dom/') || id.includes('/scheduler/')) {
                 return 'vendor-react';
               }
-              if (id.includes('dayjs')) {
-                return 'vendor-dayjs';
-              }
-              if (id.includes('yet-another-react-lightbox')) {
-                return 'vendor-lightbox';
-              }
-              if (id.includes('mermaid')) {
-                return 'vendor-mermaid';
-              }
-              if (id.includes('html2canvas')) {
-                return 'vendor-html2canvas';
-              }
-              if (id.includes('xlsx')) {
-                return 'vendor-xlsx';
-              }
-              // Other vendor code
-              return 'vendor';
             }
             return undefined;
           },
