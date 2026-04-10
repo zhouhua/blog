@@ -5,10 +5,11 @@ import { Bar } from './_Bar';
 
 interface PerfTabProps {
   maxPerf: number;
-  onRun: () => void;
+  onRun: () => Promise<void> | void;
   perfResults: BenchmarkResult[] | null;
   progressRatio: number;
   running: boolean;
+  totalCases: number;
 }
 
 export function PerfTab({
@@ -17,6 +18,7 @@ export function PerfTab({
   perfResults,
   progressRatio,
   running,
+  totalCases,
 }: PerfTabProps) {
   return (
     <>
@@ -34,6 +36,10 @@ export function PerfTab({
                 />
               </div>
               <span className="text-[11px] text-muted-foreground tabular-nums">
+                {perfResults?.length ?? 0}
+                /
+                {totalCases}
+                {' · '}
                 {Math.round(progressRatio * 100)}
                 %
               </span>

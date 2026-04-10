@@ -30,7 +30,7 @@ export const GET: APIRoute = async ({ request }) => {
     return new Response(
       JSON.stringify({
         code: 1,
-        errors: validation.error.format(),
+        errors: validation.error.issues,
         message: '无效的 key',
       }),
       {
@@ -83,7 +83,7 @@ export const POST: APIRoute = async ({ request }) => {
       return new Response(
         JSON.stringify({
           code: 1,
-          errors: validation.error.format(),
+          errors: validation.error.issues,
           message: '无效的输入',
         }),
         {
@@ -155,7 +155,7 @@ export const DELETE: APIRoute = async ({ request }) => {
       return new Response(
         JSON.stringify({
           code: 1,
-          errors: validation.error.format(),
+          errors: validation.error.issues,
           message: '无效的输入',
         }),
         {

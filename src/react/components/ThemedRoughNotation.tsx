@@ -25,7 +25,7 @@ export function ThemedRoughNotation({ children, color, colorAlpha, colorVar, sho
   }, [colorVar, colorAlpha]);
 
   return (
-    <RoughNotation color={resolvedColor} show={show} {...props}>
+    <RoughNotation color={resolvedColor} show={show ?? false} {...props}>
       {children}
     </RoughNotation>
   );

@@ -1,5 +1,9 @@
 import { z } from 'zod';
 
+function isValidUrl(value: string) {
+  return URL.canParse(value);
+}
+
 /**
  * 创建短链接的输入验证 Schema
  */
@@ -7,7 +11,7 @@ export const createLinkSchema = z.object({
   value: z.string()
     .trim()
     .min(1, 'URL 不能为空')
-    .url('必须是有效的 URL')
+    .refine(isValidUrl, '必须是有效的 URL')
     .max(2048, 'URL 长度不能超过 2048 字符'),
 });
 
