@@ -193,5 +193,8 @@ export default defineConfig({
         ignored: ['**/.pnpm-store/**', '**/node_modules/**', '**/.git/**'],
       },
     },
+    worker: {
+      format: 'es',
+    },
   },
 });

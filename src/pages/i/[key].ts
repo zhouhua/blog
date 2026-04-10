@@ -1,6 +1,8 @@
 import type { APIRoute } from 'astro';
 import db from '@pages/api/_db';
 
+export const prerender = false;
+
 export const GET: APIRoute = async ({ params, redirect, rewrite }) => {
   const { key } = params;
   if (key) {

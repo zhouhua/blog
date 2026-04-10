@@ -1,5 +1,5 @@
+import type { WorkerBenchmarkResult } from './_perf-worker';
 import type { BenchmarkResult } from './_types';
-import type { WorkerBenchmarkResult } from './perf-worker';
 import { cn } from '@lib/utils';
 import { Badge } from '@react/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@react/ui/tabs';
@@ -32,7 +32,7 @@ export default function EsToolkitBenchmark({ inEmbed = false }: EsToolkitBenchma
     }
 
     const worker = new Worker(
-      new URL('./perf-worker.ts', import.meta.url),
+      new URL('./_perf-worker.ts', import.meta.url),
       { type: 'module' },
     );
 
