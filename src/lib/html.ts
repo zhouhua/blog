@@ -6,11 +6,14 @@ const CJK_WORD_RE = /[\p{sc=Katakana}\p{sc=Hiragana}\p{sc=Han}]/gu;
 const MARKDOWN_BLOCK_CODE_RE = /```[\S\s]*?```/g;
 const MARKDOWN_HEADING_RE = /^#{1,6}\s+/gm;
 
-const MARKDOWN_IMAGE_RE = /!\[.*?\]\(.*?\)/g;
-
-const MARKDOWN_LINK_RE = /\[([^\]]+)\]\((.*?)\)/g;
+// eslint-disable-next-line regexp/strict
+const MARKDOWN_IMAGE_RE = /!\[[\S\s]*?]\([\S\s]*?\)/g;
+// eslint-disable-next-line regexp/strict
+const MARKDOWN_LINK_RE = /\[([\S\s]*?)]\(([\S\s]*?)\)/g;
 const MARKDOWN_LIST_RE = /^\s*(?:[*+-]|\d+\.)\s+/gm;
 const MARKDOWN_QUOTE_RE = /^>\s?/gm;
+const HTML_COMMENT_RE = /<!--[\S\s]*?-->/g;
+const HTML_TAG_RE = /<[^>]+>/g;
 const MARKDOWN_WHITESPACE_RE = /\s+/g;
 const WHITESPACE_RE = /\s+/g;
 const imageModules = import.meta.glob<{ default: ImageMetadata }>(`../content/**/*.{jpeg,jpg,png,gif}`);
@@ -122,6 +125,8 @@ export function getMarkdownExcerpt(markdown: string, cut = 140) {
     .replace(MARKDOWN_HEADING_RE, '')
     .replace(MARKDOWN_LIST_RE, '')
     .replace(MARKDOWN_QUOTE_RE, '')
+    .replace(HTML_COMMENT_RE, ' ')
+    .replace(HTML_TAG_RE, ' ')
     .replace(MARKDOWN_WHITESPACE_RE, ' ')
     .trim();
 

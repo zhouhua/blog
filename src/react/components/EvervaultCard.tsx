@@ -26,7 +26,7 @@ function EvervaultCard({
   return (
     <div
       className={cn(
-        'p-0.5 bg-transparent aspect-square flex items-center justify-center w-full relative',
+        'bg-transparent aspect-square flex items-center justify-center w-full relative',
         className,
       )}
     >

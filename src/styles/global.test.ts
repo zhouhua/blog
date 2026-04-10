@@ -3,8 +3,13 @@ import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 const globalCss = readFileSync(resolve(process.cwd(), 'src/styles/global.css'), 'utf8');
+const REMOTE_CSS_IMPORT_RE = /@import\s+url\(["']?https?:\/\//;
 
 describe('global theme tokens', () => {
+  it('does not use remote @import that can block first paint styles', () => {
+    expect(globalCss).not.toMatch(REMOTE_CSS_IMPORT_RE);
+  });
+
   it('defines the semantic shadcn tokens used by project UI components', () => {
     [
       '--color-popover',

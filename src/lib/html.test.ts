@@ -58,6 +58,20 @@ const hidden = true;
     expect(getMarkdownExcerpt(markdown, 200)).not.toContain('![alt]');
     expect(getMarkdownExcerpt(markdown, 200)).not.toContain('```');
   });
+
+  it('strips inline html tags and comments', () => {
+    const markdown = `
+<p>Hello <strong>world</strong></p>
+<!-- hidden -->
+<div>Visible text</div>
+`;
+
+    const excerpt = getMarkdownExcerpt(markdown, 200);
+    expect(excerpt).toContain('Hello world');
+    expect(excerpt).toContain('Visible text');
+    expect(excerpt).not.toContain('<strong>');
+    expect(excerpt).not.toContain('hidden');
+  });
 });
 
 describe('gallery image helpers', () => {

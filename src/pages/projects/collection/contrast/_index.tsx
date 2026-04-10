@@ -6,7 +6,6 @@ import { Button } from '@react/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@react/ui/card';
 import { Popover, PopoverContent, PopoverTrigger } from '@react/ui/popover';
 import { Toaster } from '@react/ui/sonner';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@react/ui/tabs';
 import { Chrome } from '@uiw/react-color';
 import { random } from 'es-toolkit/math';
 import { useEffect, useState } from 'react';
@@ -197,24 +196,18 @@ function Contrast() {
         </Card>
         <Card className="bg-white w-full pt-6">
           <CardContent>
-            <Tabs defaultValue="css">
-              <TabsList>
-                <TabsTrigger value="css">{t('collection.contrast.exportCSS')}</TabsTrigger>
-              </TabsList>
-              <TabsContent value="css">
-                <div className="flex flex-col gap-2 mt-4">
-                  <SyntaxHighlighter language="css" style={oneLight} className="text-xs font-monospace max-h-32 overflow-auto max-w-[385px]">
-                    {`color: ${foreground};\nbackground-color: ${background};`}
-                  </SyntaxHighlighter>
-                  <Button
-                    className="mt-2"
-                    onClick={handleCopy}
-                  >
-                    {t('collection.contrast.copyToClipboard')}
-                  </Button>
-                </div>
-              </TabsContent>
-            </Tabs>
+            <h3 className="text-sm font-medium">{t('collection.contrast.exportCSS')}</h3>
+            <div className="flex flex-col gap-2 mt-4">
+              <SyntaxHighlighter language="css" style={oneLight} className="text-xs font-monospace max-h-32 overflow-auto max-w-[385px]">
+                {`color: ${foreground};\nbackground-color: ${background};`}
+              </SyntaxHighlighter>
+              <Button
+                className="mt-2"
+                onClick={handleCopy}
+              >
+                {t('collection.contrast.copyToClipboard')}
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
