@@ -12,6 +12,7 @@ interface Props {
 }
 
 const { gridLayout, posts, reverse = false, showAllLink } = Astro.props;
+const displayPosts = reverse ? posts.slice(0, 2).toReversed() : posts.slice(0, 2);
 const pairClassName = gridLayout === 'tiles'
   ? cn(
     'relative grid grid-cols-1 gap-y-10 sm:gap-x-6',
@@ -38,7 +39,7 @@ const pairClassName = gridLayout === 'tiles'
 </style>
 
 <div class={pairClassName}>
-      {posts.slice(0, 2).map((article, i) => (
+      {displayPosts.map((article, i) => (
         <ListItem
           gridLayout={gridLayout}
           narrow={gridLayout === 'tiles' && (reverse ? i === 0 : i === 1)}
@@ -53,7 +54,7 @@ const pairClassName = gridLayout === 'tiles'
           )}
           href="/articles"
         >
-          <EvervaultCard className="h-28 sm:h-[430px]" client:only="react" text="查看所有文章" />
+          <EvervaultCard className="sm:h-28 h-[430px]" client:only="react" text="查看所有文章" />
         </a>
       )}
 </div>

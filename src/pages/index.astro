@@ -92,6 +92,7 @@ document.addEventListener('astro:page-load', () => {
       <ArticlesPair
         gridLayout="tiles"
         posts={ap}
+        reverse={index % 2 !== 0}
         showAllLink={index === pairs.length - 1}
       />
     ))}
