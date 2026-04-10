@@ -126,7 +126,7 @@ export default defineConfig({
           manualChunks: (id) => {
             // Vendor chunks for large libraries
             if (id.includes('node_modules')) {
-              if (id.includes('react') || id.includes('react-dom')) {
+              if (id.includes('react') || id.includes('react-dom') || id.includes('scheduler')) {
                 return 'vendor-react';
               }
               if (id.includes('dayjs')) {
