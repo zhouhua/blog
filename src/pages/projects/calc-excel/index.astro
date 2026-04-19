@@ -1,0 +1,17 @@
+---
+import Container from '@components/Container.astro';
+import ProjectTitle from '@components/ProjectTitle.astro';
+import { HOME } from '@consts';
+import projectList from '@content/projects/list';
+import PageLayout from '@layouts/PageLayout.astro';
+import CalcExcel from './_index';
+
+const project = projectList.find(p => p.link === '/projects/calc-excel')!;
+---
+
+<PageLayout description={project.description} title={`${HOME.TITLE} - ${project.name}`}>
+  <ProjectTitle description={project.description} title={project.name} />
+  <Container>
+    <CalcExcel client:only="react" />
+  </Container>
+</PageLayout>

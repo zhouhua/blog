@@ -129,6 +129,13 @@ const list: Project[] = [
     type: 'web',
   },
   {
+    description: 'Excel 累加计算器，计算指定列累加值首次超过阈值的行',
+    group: 'demo/工具',
+    link: '/projects/calc-excel',
+    name: 'Excel 累加计算器',
+    type: 'web',
+  },
+  {
     description: '尝试实现 WPS 付费会员的表格拆分功能，支持快速按行或按列拆分多表，灵活性非常强',
     hidden: true,
     link: '/projects/splitTable',
