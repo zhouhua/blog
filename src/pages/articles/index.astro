@@ -25,15 +25,23 @@ const pairs: [CollectionEntry<'blog'>, CollectionEntry<'blog'>][] = data.reduce(
     title="周骅的博客 - 所有文章"
   />
   <Container>
-    {pairs.map((ap, index) => {
-      const isEven = index % 2 !== 0;
-      return (
-        <ArticlesPair
-          gridLayout="tiles"
-          posts={ap}
-          reverse={isEven}
-        />
-      );
-    })}
+    {pairs.length === 0
+? (
+      <div class="text-center py-20">
+        <p class="text-muted-foreground text-lg">还没有文章</p>
+      </div>
+    )
+: (
+      pairs.map((ap, index) => {
+        const isEven = index % 2 !== 0;
+        return (
+          <ArticlesPair
+            gridLayout="tiles"
+            posts={ap}
+            reverse={isEven}
+          />
+        );
+      })
+    )}
   </Container>
 </PageLayout>

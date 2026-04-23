@@ -37,20 +37,6 @@ const pairs: [CollectionEntry<'blog'>, CollectionEntry<'blog'>][] = featuredBlog
 );
 algolia();
 ---
-<script>
-import { navigate } from 'astro:transitions/client';
-
-document.addEventListener('astro:page-load', () => {
-  document.querySelectorAll('.journalCard').forEach((item) => {
-    item.addEventListener('click', () => {
-      const href = item.getAttribute('data-href');
-      if (href) {
-        navigate(href);
-      }
-    });
-  });
-});
-</script>
 
 <style>
 @reference '../styles/global.css';
@@ -67,27 +53,15 @@ document.addEventListener('astro:page-load', () => {
     box-shadow: inset -1px 1px 0 0 #ffffff5d;
   }
 }
-
-.fade::after {
-  background: linear-gradient(
-    180deg,
-    theme('colors.card / 0') 0%,
-    theme('colors.card') 95%
-  );
-}
 </style>
 
 <PageLayout description={HOME.DESCRIPTION} title={HOME.TITLE}>
   <ListTitle />
   <Container>
-    <h3
-      class={cn(
-        'mt-20 relative pb-20 font-normal opacity-25 md:pb-[60px] colorModeTransition',
-        'after:absolute after:left-40 after:right-0 after:top-[11px] after:h-px after:content-[\'\'] after:bg-gray',
-      )}
-    >
-      精选文章
-    </h3>
+    <div class="section-heading">
+      <h2 class="colorModeTransition">精选文章</h2>
+      <div class="section-heading-divider colorModeTransition" />
+    </div>
     {pairs.map((ap, index) => (
       <ArticlesPair
         gridLayout="tiles"
@@ -98,35 +72,32 @@ document.addEventListener('astro:page-load', () => {
     ))}
   </Container>
   <Container>
-    <h3
-      class={cn(
-        'mt-20 relative pb-20 font-normal opacity-25 md:pb-[60px] colorModeTransition',
-        'after:absolute after:left-40 after:right-0 after:top-[11px] after:h-px after:content-[\'\'] after:bg-gray',
-      )}
-    >
-      最新随笔
-    </h3>
+    <div class="section-heading">
+      <h2 class="colorModeTransition">最新随笔</h2>
+      <div class="section-heading-divider colorModeTransition" />
+    </div>
     <div class="relative z-10 columns-1 gap-y-6 sm:columns-2 sm:gap-x-6">
       {latestJournals.map(({ excerpt, journal }) => (
-        <div
+        <a
           class={cn(
             'journalCard mb-6',
             'relative z-10 max-w-none block',
-            'colorModeTransition break-inside-avoid-column cursor-pointer',
+            'colorModeTransition break-inside-avoid-column',
           )}
-          data-href={`/journal${dayjs(journal.data.date).format('YYYY-MM-DD')}`}
+          href={`/journal${dayjs(journal.data.date).format('YYYY-MM-DD')}`}
         >
           <article
             class={cn(
-              'fade',
-              'relative rounded-2xl bg-card px-10 pb-2 pt-12 sm:pt-8 md:px-8',
-              'after:absolute after:bottom-0 after:left-0 after:right-0 after:h-12 after:content-[\'\']',
+              'relative rounded-2xl bg-card px-10 pb-6 pt-12 sm:pt-8 md:px-8',
               'colorModeTransition overflow-hidden',
             )}
           >
             <p class="line-clamp-12 whitespace-pre-wrap leading-8">{excerpt}</p>
+            {excerpt.length >= 220 && (
+              <span class="text-xs text-muted-foreground mt-2 block">...</span>
+            )}
           </article>
-        </div>
+        </a>
       ))}
       <div
         class={cn('colorModeTransition break-inside-avoid-column mb-6')}
@@ -146,14 +117,10 @@ document.addEventListener('astro:page-load', () => {
     </div>
   </Container>
   <Container>
-    <h3
-      class={cn(
-        'mt-20 relative pb-10 font-normal opacity-25 md:pb-[40px] colorModeTransition',
-        'after:absolute after:left-40 after:right-0 after:top-[11px] after:h-px after:content-[\'\'] after:bg-gray',
-      )}
-    >
-      项目
-    </h3>
+    <div class="section-heading section-heading-compact">
+      <h2 class="colorModeTransition">项目</h2>
+      <div class="section-heading-divider colorModeTransition" />
+    </div>
     <HomeProjects />
   </Container>
 </PageLayout>

@@ -32,48 +32,22 @@ const visible = projects.filter(p => !p.hidden && p.group !== '设计工具' && 
   position: relative;
   padding: 18px 20px 20px;
   border-radius: 16px;
-  background:
-    radial-gradient(circle at -10% -10%, color-mix(in oklch, var(--color-bgRevert) 4%, transparent) 0, transparent 55%),
-    radial-gradient(circle at 110% 120%, color-mix(in oklch, var(--color-gray) 18%, transparent) 0, transparent 55%),
-    color-mix(in oklch, var(--color-bg) 90%, var(--color-card) 10%);
-  box-shadow:
-    0 26px 60px rgba(0, 0, 0, 0.16),
-    0 0 0 1px color-mix(in oklch, var(--color-border) 70%, transparent);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-lg);
   overflow: hidden;
   text-decoration: none;
   color: inherit;
   transition:
     transform 180ms ease-out,
     box-shadow 180ms ease-out,
-    background 200ms ease-out;
-}
-
-.card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    conic-gradient(from 220deg,
-      transparent 0 15%,
-      color-mix(in oklch, var(--color-bgRevert) 10%, transparent) 20% 30%,
-      transparent 35% 55%,
-      color-mix(in oklch, var(--color-gray) 18%, transparent) 60% 70%,
-      transparent 75% 100%);
-  opacity: 0;
-  mix-blend-mode: soft-light;
-  transition: opacity 220ms ease-out;
-  pointer-events: none;
+    border-color 180ms ease-out;
 }
 
 .card:hover {
   transform: translateY(-3px);
-  box-shadow:
-    0 30px 80px rgba(0, 0, 0, 0.26),
-    0 0 0 1px color-mix(in oklch, var(--color-bgRevert) 35%, transparent);
-}
-
-.card:hover::before {
-  opacity: 1;
+  box-shadow: var(--shadow-xl);
+  border-color: color-mix(in oklch, var(--color-accent) 60%, var(--color-border));
 }
 
 .pill-row {

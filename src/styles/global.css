@@ -1,5 +1,6 @@
 @import 'lxgw-wenkai-lite-webfont/lxgwwenkailite-regular.css';
 @import 'tailwindcss';
+@import './design-tokens.css';
 @custom-variant dark (&:where(.dark, .dark *));
 @plugin 'daisyui' {
   prefix: 'daisy-';
@@ -202,7 +203,6 @@
 
 body {
   overscroll-behavior-x: none;
-  text-align: justify;
   height: 100vh;
   overflow: overlay;
 }
@@ -538,8 +538,14 @@ article {
   word-break: break-word;
 }
 
-a:focus {
-  outline: none;
+article p {
+  text-align: justify;
+  text-justify: inter-ideograph;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
 }
 
 /* No focus rings/outlines for form controls */

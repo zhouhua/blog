@@ -2,6 +2,7 @@ import { cn } from '@lib/utils';
 import styles from '@styles/article.module.css';
 import DOMPurify from 'dompurify';
 import { Virtuoso } from 'react-virtuoso';
+import ErrorBoundary from './ErrorBoundary';
 
 export interface JournalItem {
   year: number;
@@ -19,6 +20,14 @@ interface Props {
 }
 
 export default function JournalList({ items }: Props) {
+  if (!items || items.length === 0) {
+    return (
+      <div className="text-center py-20">
+        <p className="text-muted-foreground text-lg">还没有随笔</p>
+      </div>
+    );
+  }
+
   const scrollParent = typeof document === 'undefined' ? null : document.body;
 
   const flat: FlatItem[] = [];
@@ -124,10 +133,25 @@ export default function JournalList({ items }: Props) {
         ));
 
   return (
-    <Virtuoso<FlatItem>
-      {...(scrollParent ? { customScrollParent: scrollParent } : {})}
-      data={flat}
-      itemContent={(index, item) => renderItem(item, index)}
-    />
+    <ErrorBoundary
+      fallback={(
+        <div className="text-center py-20">
+          <p className="text-destructive text-lg mb-4">随笔加载失败</p>
+          <button
+            className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+            onClick={() => window.location.reload()}
+            type="button"
+          >
+            刷新页面
+          </button>
+        </div>
+      )}
+    >
+      <Virtuoso<FlatItem>
+        {...(scrollParent ? { customScrollParent: scrollParent } : {})}
+        data={flat}
+        itemContent={(index, item) => renderItem(item, index)}
+      />
+    </ErrorBoundary>
   );
 }

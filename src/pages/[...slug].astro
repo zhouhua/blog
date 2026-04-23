@@ -80,11 +80,10 @@ const excerpt = getExcerpt(html);
     </article>
   <Comment client:only="react" />
   <Container>
-      <h3
-        class="relative pb-20 font-normal opacity-25 md:pb-[60px] colorModeTransition after:absolute after:left-40 after:right-0 after:top-[11px] after:h-px after:content-[''] after:bg-gray"
-      >
-        看看其他的文章
-      </h3>
+      <div class="section-heading">
+        <h2 class="colorModeTransition">看看其他的文章</h2>
+        <div class="section-heading-divider colorModeTransition" />
+      </div>
       <ArticlesPair gridLayout="tiles" posts={next} reverse={false} />
       <div class="mb-[65px]" />
   </Container>

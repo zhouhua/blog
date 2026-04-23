@@ -1,0 +1,69 @@
+/**
+ * Design Tokens
+ *
+ * 集中管理设计系统的可复用变量，确保跨页面一致性
+ */
+
+@layer base {
+  :root {
+    /* Section Heading Tokens */
+    --section-heading-opacity: 0.6;
+    --section-heading-gap: 1rem;
+    --section-heading-divider-height: 1px;
+    --section-heading-margin-top: 5rem;
+    --section-heading-padding-bottom: 5rem;
+    --section-heading-padding-bottom-md: 3.75rem;
+    --section-heading-padding-bottom-sm: 2.5rem;
+  }
+}
+
+/**
+ * Section Heading Component
+ *
+ * 用于页面分区标题（如"精选文章"、"最新随笔"等）
+ *
+ * 使用方式：
+ * <div class="section-heading">
+ *   <h2>标题文字</h2>
+ *   <div class="section-heading-divider"></div>
+ * </div>
+ */
+@layer components {
+  .section-heading {
+    margin-top: var(--section-heading-margin-top);
+    display: flex;
+    align-items: center;
+    gap: var(--section-heading-gap);
+    padding-bottom: var(--section-heading-padding-bottom);
+  }
+
+  .section-heading h2 {
+    font-weight: normal;
+    opacity: var(--section-heading-opacity);
+    white-space: nowrap;
+  }
+
+  .section-heading-divider {
+    flex: 1;
+    height: var(--section-heading-divider-height);
+    background-color: var(--color-gray);
+  }
+
+  /* 响应式变体 */
+  @media (min-width: 48rem) {
+    .section-heading {
+      padding-bottom: var(--section-heading-padding-bottom-md);
+    }
+  }
+
+  /* 紧凑变体（用于"项目"等） */
+  .section-heading-compact {
+    padding-bottom: var(--section-heading-padding-bottom-sm);
+  }
+
+  @media (min-width: 48rem) {
+    .section-heading-compact {
+      padding-bottom: calc(var(--section-heading-padding-bottom-sm) * 0.8);
+    }
+  }
+}

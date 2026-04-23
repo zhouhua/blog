@@ -1,5 +1,6 @@
 import projects from '@content/projects/list';
 import { useMemo } from 'react';
+import ErrorBoundary from './ErrorBoundary';
 import ProjectIcon from './ProjectIcon';
 
 const EXTERNAL_LINK_RE = /^https?:/;
@@ -42,9 +43,23 @@ function ProjectList() {
   }, [visible]);
 
   return (
-    <div className="mx-auto max-w-[680px]">
-      <style>
-        {`
+    <ErrorBoundary
+      fallback={(
+        <div className="text-center py-20">
+          <p className="text-destructive text-lg mb-4">项目列表加载失败</p>
+          <button
+            className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+            onClick={() => window.location.reload()}
+            type="button"
+          >
+            刷新页面
+          </button>
+        </div>
+      )}
+    >
+      <div className="mx-auto max-w-[680px]">
+        <style>
+          {`
         .proj-item {
           position: relative;
           display: flex;
@@ -69,8 +84,24 @@ function ProjectList() {
           transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
           z-index: 0;
         }
-        .proj-item:hover::before {
-          width: 100%;
+        @media (hover: hover) {
+          .proj-item:hover::before {
+            width: 100%;
+          }
+          .proj-item:hover .proj-name {
+            color: var(--color-accent-foreground);
+          }
+          .proj-item:hover .proj-desc {
+            opacity: 1;
+          }
+        }
+        @media (hover: none) {
+          .proj-item:active::before {
+            width: 100%;
+          }
+          .proj-desc {
+            opacity: 1;
+          }
         }
         .proj-item > * {
           position: relative;
@@ -163,43 +194,44 @@ function ProjectList() {
           .proj-desc { font-size: 0.78rem; }
         }
       `}
-      </style>
+        </style>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
-        {allGroups.map(({ group, items }) => (
-          <section key={group}>
-            <div className="group-header">
-              <span className="group-zh">{group}</span>
-              <span className="group-en">{GROUP_EN[group] ?? group.toUpperCase()}</span>
-              <span className="group-count">
-                {items.length}
-                {' '}
-                projects
-              </span>
-            </div>
-            <div>
-              {items.map(({ description, link, name, type }, i) => (
-                <a
-                  key={name}
-                  href={link}
-                  target={EXTERNAL_LINK_RE.test(link) ? '_blank' : '_self'}
-                  className="proj-item"
-                >
-                  <span className="proj-num">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="proj-icon">
-                    <ProjectIcon type={type} />
-                  </span>
-                  <span className="proj-body">
-                    <span className="proj-name">{name}</span>
-                    {description && <span className="proj-desc">{description}</span>}
-                  </span>
-                </a>
-              ))}
-            </div>
-          </section>
-        ))}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+          {allGroups.map(({ group, items }) => (
+            <section key={group}>
+              <div className="group-header">
+                <span className="group-zh">{group}</span>
+                <span className="group-en">{GROUP_EN[group] ?? group.toUpperCase()}</span>
+                <span className="group-count">
+                  {items.length}
+                  {' '}
+                  projects
+                </span>
+              </div>
+              <div>
+                {items.map(({ description, link, name, type }, i) => (
+                  <a
+                    key={name}
+                    href={link}
+                    target={EXTERNAL_LINK_RE.test(link) ? '_blank' : '_self'}
+                    className="proj-item"
+                  >
+                    <span className="proj-num">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="proj-icon">
+                      <ProjectIcon type={type} />
+                    </span>
+                    <span className="proj-body">
+                      <span className="proj-name">{name}</span>
+                      {description && <span className="proj-desc">{description}</span>}
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
       </div>
-    </div>
+    </ErrorBoundary>
   );
 }
 export default ProjectList;
