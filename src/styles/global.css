@@ -543,6 +543,21 @@ article p {
   text-justify: inter-ideograph;
 }
 
+article p:has(> img:only-child),
+article p:has(> picture:only-child) {
+  text-align: center;
+}
+
+.article-columns {
+  @apply mx-auto mb-[35px] mt-0 flex w-full max-w-[540px] flex-col items-center gap-5;
+  @apply sm:mb-[25px] sm:max-w-[620px];
+  @apply md:grid md:max-w-[760px] md:items-center md:gap-x-5 md:gap-y-4;
+}
+
+.article-columns > * {
+  @apply my-0 w-full max-w-full min-w-0;
+}
+
 a:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;

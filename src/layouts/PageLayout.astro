@@ -34,27 +34,37 @@ import mediumZoom from 'medium-zoom/dist/pure';
 import { annotate } from 'rough-notation';
 import 'medium-zoom/dist/style.css';
 
+function annotateOnce(
+  el: HTMLElement,
+  options: Parameters<typeof annotate>[1],
+) {
+  if (el.dataset.roughAnnotated === '1')
+    return;
+  el.dataset.roughAnnotated = '1';
+  annotate(el, options).show();
+}
+
 async function initPageEffect() {
   const callouts = document.querySelectorAll<HTMLDivElement>('article .callout');
   callouts.forEach(callout =>
-    annotate(callout, {
+    annotateOnce(callout, {
       animate: false,
       color: 'var(--color-bgAlt)',
       padding: 0,
       strokeWidth: 1,
       type: 'box',
-    }).show());
+    }));
 
   const blockquates = document.querySelectorAll<HTMLDivElement>('article blockquote');
   blockquates.forEach(blockquote =>
-    annotate(blockquote, {
+    annotateOnce(blockquote, {
       animate: false,
       brackets: ['left'],
       color: 'var(--color-bgAlt)',
       padding: 2,
       strokeWidth: 2,
       type: 'bracket',
-    }).show());
+    }));
 
   const limitOuterType = ['.article-columns', 'table', '.callout', 'blockquote', 'li', 'dd'];
   const limitOuterSelector = limitOuterType.map(type => `.article ${type}`).join(',');
