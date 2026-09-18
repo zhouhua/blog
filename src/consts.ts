@@ -28,4 +28,9 @@ export const PROJECTS: Metadata = {
   TITLE: '项目',
 };
 
+export const USES: Metadata = {
+  DESCRIPTION: '喜欢的、还在用的东西。会慢慢补。',
+  TITLE: '在用',
+};
+
 export const SOCIALS: Socials = [];

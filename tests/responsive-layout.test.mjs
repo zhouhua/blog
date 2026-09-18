@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 import { fetchPage, withAstroDevServer } from './helpers/astro-dev-server.mjs';
 
 const CLASS_SPLIT_RE = /\s+/;
-const DESKTOP_MENU_HREFS = ['/articles', '/projects', '/journals', '/photos', '/about'];
+const DESKTOP_MENU_HREFS = ['/articles', '/projects', '/journals', '/uses', '/about'];
 const MOBILE_MENU_SOURCE_PATH = new URL('../src/react/components/MobileMenu/index.tsx', import.meta.url);
 const HEADER_SOURCE_PATH = new URL('../src/components/Header.astro', import.meta.url);
 const CONTAINER_SOURCE_PATH = new URL('../src/components/Container.astro', import.meta.url);

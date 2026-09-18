@@ -4,7 +4,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@react/ui/dropdown-menu';
-import { Code, IdCard, MessageSquareText, PenTool } from 'lucide-react';
+import { Code, IdCard, MessageSquareText, PenTool, Star } from 'lucide-react';
 import { useState } from 'react';
 import MenuIcon from './MenuIcon';
 
@@ -48,7 +48,17 @@ export default function MobileMenu() {
         </DropdownMenuItem>
         <DropdownMenuItem
           asChild
-          key="language"
+          key="uses"
+          className="my-2 flex h-10 justify-center items-center text-lg hover:bg-bgRevert/10 rounded-lg gap-6 cursor-pointer"
+        >
+          <a href="/uses">
+            <Star className="h-4 w-4 mr-0 opacity-75 md:mr-2" />
+            <span>在用</span>
+          </a>
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          asChild
+          key="about"
           className="my-2 flex h-10 justify-center items-center text-lg hover:bg-bgRevert/10 rounded-lg gap-6 cursor-pointer"
         >
           <a href="/about">

@@ -1,0 +1,61 @@
+---
+import type { UseItem } from '@data/uses';
+import { cn } from '@lib/utils';
+
+interface Props {
+  items: UseItem[];
+}
+
+const { items } = Astro.props;
+const EXTERNAL_HREF_RE = /^https?:\/\//;
+
+function isExternal(href: string) {
+  return EXTERNAL_HREF_RE.test(href);
+}
+---
+
+<style>
+.use-card {
+  box-shadow:
+    0 18px 36px -18px rgba(0, 0, 0, 0.18),
+    0 8px 16px -12px rgba(0, 0, 0, 0.08);
+}
+
+.use-logo {
+  image-rendering: pixelated;
+}
+
+:global(.dark) .use-card {
+  box-shadow: inset 0 -1px 0 0 #ffffff1d;
+}
+</style>
+
+<ul class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+  {items.map(item => (
+    <li class={cn('use-card colorModeTransition flex items-center gap-4 rounded-2xl bg-card px-6 py-5')}>
+      <div class="min-w-0 flex-1">
+        <p class="text-lg font-semibold leading-7">
+          {item.href
+            ? (
+              <a
+                class="underline-offset-4 hover:text-accent-foreground hover:underline"
+                href={item.href}
+                rel={isExternal(item.href) ? 'noreferrer' : undefined}
+                target={isExternal(item.href) ? '_blank' : undefined}
+              >
+                {item.name}
+                {isExternal(item.href) && <span class="sr-only">（新窗口打开）</span>}
+              </a>
+            )
+            : item.name}
+        </p>
+        {item.note && (
+          <p class="mt-2 font-serif text-sm leading-6 text-muted-foreground">{item.note}</p>
+        )}
+      </div>
+      {item.logo && (
+        <img alt="" class="use-logo h-11 w-auto max-w-[46%] shrink-0" src={item.logo} />
+      )}
+    </li>
+  ))}
+</ul>
