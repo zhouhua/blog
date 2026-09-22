@@ -1,0 +1,55 @@
+---
+import type { PreparedUseGroup } from '@data/uses/prepare';
+import UseItemList from '@components/UseItemList.astro';
+
+interface Props {
+  groups: PreparedUseGroup[];
+  /** /uses passes this. Homepage must leave it off. */
+  anchors?: boolean;
+  /** Homepage passes this so groups sit under the「在用」h2. */
+  nested?: boolean;
+}
+
+const { anchors = false, groups, nested = false } = Astro.props;
+const GroupHeading = nested ? 'h3' : 'h2';
+const SubgroupHeading = nested ? 'h4' : 'h3';
+---
+
+{groups.map(group => (
+  <section class="scroll-mt-28" id={group.id}>
+    <div class="section-heading section-heading-compact">
+      <GroupHeading class="colorModeTransition">{group.title}</GroupHeading>
+      <div class="section-heading-divider colorModeTransition" />
+    </div>
+    <p class="mb-6 max-w-2xl font-serif text-sm leading-6 text-muted-foreground">
+      <span class="mr-2 font-sans text-xs tracking-widest">{group.indexLabel}</span>
+      {group.description}
+    </p>
+    {anchors && group.subgroups.length > 1 && (
+      <nav aria-label={`${group.title}的子分类`} class="mb-2 flex flex-wrap gap-x-4 gap-y-2">
+        {group.subgroups.map(subgroup => (
+          <a
+            class="text-sm text-muted-foreground underline-offset-4 hover:text-accent-foreground hover:underline"
+            href={`#${subgroup.id}`}
+          >
+            {subgroup.title}
+          </a>
+        ))}
+      </nav>
+    )}
+    {group.items.length > 0 && <UseItemList items={group.items} />}
+    {group.subgroups.map(subgroup => (
+      <section class="mt-10 scroll-mt-28" id={subgroup.id}>
+        <SubgroupHeading class="text-xl font-semibold leading-8">{subgroup.title}</SubgroupHeading>
+        {subgroup.description && (
+          <p class="mt-2 max-w-2xl font-serif text-sm leading-6 text-muted-foreground">
+            {subgroup.description}
+          </p>
+        )}
+        <div class="mt-4">
+          <UseItemList items={subgroup.items} />
+        </div>
+      </section>
+    ))}
+  </section>
+))}

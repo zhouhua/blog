@@ -24,7 +24,7 @@
  *
  * 使用方式：
  * <div class="section-heading">
- *   <h2>标题文字</h2>
+ *   <h2>或 h3 标题文字</h2>
  *   <div class="section-heading-divider"></div>
  * </div>
  */
@@ -37,7 +37,7 @@
     padding-bottom: var(--section-heading-padding-bottom);
   }
 
-  .section-heading h2 {
+  .section-heading :is(h2, h3) {
     font-weight: normal;
     opacity: var(--section-heading-opacity);
     white-space: nowrap;

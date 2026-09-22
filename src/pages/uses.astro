@@ -1,21 +1,13 @@
 ---
 import Container from '@components/Container.astro';
 import ListTitle from '@components/ListTitle.astro';
-import UseItemList from '@components/UseItemList.astro';
+import UseGroupList from '@components/UseGroupList.astro';
 import { USES } from '@consts';
 import { USES_GROUPS } from '@data/uses';
+import { prepareUseGroups } from '@data/uses/prepare';
 import PageLayout from '@layouts/PageLayout.astro';
 
-const groups = USES_GROUPS
-  .map(group => ({
-    ...group,
-    subgroups: (group.subgroups ?? []).filter(subgroup => subgroup.items.length > 0),
-  }))
-  .filter(group => group.items.length > 0 || group.subgroups.length > 0)
-  .map((group, index) => ({
-    ...group,
-    indexLabel: String(index + 1).padStart(2, '0'),
-  }));
+const groups = prepareUseGroups(USES_GROUPS);
 ---
 
 <PageLayout description={USES.DESCRIPTION} title={USES.TITLE}>
@@ -39,44 +31,6 @@ const groups = USES_GROUPS
         ))}
       </nav>
     )}
-
-    {groups.map(group => (
-      <section class="scroll-mt-28" id={group.id}>
-        <div class="section-heading section-heading-compact">
-          <h2 class="colorModeTransition">{group.title}</h2>
-          <div class="section-heading-divider colorModeTransition" />
-        </div>
-        <p class="mb-6 max-w-2xl font-serif text-sm leading-6 text-muted-foreground">
-          <span class="mr-2 font-sans text-xs tracking-widest">{group.indexLabel}</span>
-          {group.description}
-        </p>
-        {group.subgroups.length > 1 && (
-          <nav aria-label={`${group.title}的子分类`} class="mb-2 flex flex-wrap gap-x-4 gap-y-2">
-            {group.subgroups.map(subgroup => (
-              <a
-                class="text-sm text-muted-foreground underline-offset-4 hover:text-accent-foreground hover:underline"
-                href={`#${subgroup.id}`}
-              >
-                {subgroup.title}
-              </a>
-            ))}
-          </nav>
-        )}
-        {group.items.length > 0 && <UseItemList items={group.items} />}
-        {group.subgroups.map(subgroup => (
-          <section class="mt-10 scroll-mt-28" id={subgroup.id}>
-            <h3 class="text-xl font-semibold leading-8">{subgroup.title}</h3>
-            {subgroup.description && (
-              <p class="mt-2 max-w-2xl font-serif text-sm leading-6 text-muted-foreground">
-                {subgroup.description}
-              </p>
-            )}
-            <div class="mt-4">
-              <UseItemList items={subgroup.items} />
-            </div>
-          </section>
-        ))}
-      </section>
-    ))}
+    <UseGroupList anchors groups={groups} />
   </Container>
 </PageLayout>
