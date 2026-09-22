@@ -4,7 +4,10 @@ import ArticlesPair from '@components/ArticlesPair.astro';
 import Container from '@components/Container.astro';
 import HomeProjects from '@components/HomeProjects.astro';
 import ListTitle from '@components/ListTitle.astro';
+import UseGroupList from '@components/UseGroupList.astro';
 import { HOME } from '@consts';
+import { USES_GROUPS } from '@data/uses';
+import { prepareUseGroups } from '@data/uses/prepare';
 import PageLayout from '@layouts/PageLayout.astro';
 import { algolia } from '@lib/algolia';
 import dayjs from '@lib/dayjs';
@@ -35,6 +38,7 @@ const pairs: [CollectionEntry<'blog'>, CollectionEntry<'blog'>][] = featuredBlog
   },
   [],
 );
+const useGroups = prepareUseGroups(USES_GROUPS);
 algolia();
 ---
 
@@ -70,6 +74,13 @@ algolia();
         showAllLink={index === pairs.length - 1}
       />
     ))}
+  </Container>
+  <Container>
+    <div class="section-heading section-heading-compact">
+      <h2 class="colorModeTransition">项目</h2>
+      <div class="section-heading-divider colorModeTransition" />
+    </div>
+    <HomeProjects />
   </Container>
   <Container>
     <div class="section-heading">
@@ -116,11 +127,13 @@ algolia();
       </div>
     </div>
   </Container>
-  <Container>
-    <div class="section-heading section-heading-compact">
-      <h2 class="colorModeTransition">项目</h2>
-      <div class="section-heading-divider colorModeTransition" />
-    </div>
-    <HomeProjects />
-  </Container>
+  {useGroups.length > 0 && (
+    <Container>
+      <div class="section-heading section-heading-compact">
+        <h2 class="colorModeTransition">在用</h2>
+        <div class="section-heading-divider colorModeTransition" />
+      </div>
+      <UseGroupList groups={useGroups} nested />
+    </Container>
+  )}
 </PageLayout>
