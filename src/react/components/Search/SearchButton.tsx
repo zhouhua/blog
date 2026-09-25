@@ -34,17 +34,17 @@ export const SearchButton: FC<{ appId: string; appKey: string }> = ({ appId, app
         className={cn(
           'colorModeTransition',
           'flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-0 p-2 text-2xl opacity-50',
-          'sm:w-40 sm:justify-between sm:border sm:border-solid sm:border-gray sm:px-3 sm:text-sm sm:text-gray sm:opacity-100',
+          'md:w-40 md:justify-between md:border md:border-solid md:border-gray md:px-3 md:text-sm md:text-gray md:opacity-100',
         )}
         onClick={() => {
           setShowSearchPanel(true);
         }}
       >
-        <span className="flex items-center gap-1 sm:h-6">
+        <span className="flex items-center gap-1 md:h-6">
           <Search className="inline-block" />
-          <span className="hidden sm:inline"> 搜索</span>
+          <span className="hidden md:inline"> 搜索</span>
         </span>
-        <span className="hidden sm:flex">
+        <span className="hidden md:flex">
           <Kbd>{isMac ? '⌘' : 'ctrl'}</Kbd>
           <Kbd>k</Kbd>
         </span>

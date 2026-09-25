@@ -22,5 +22,5 @@ Managed by Trellis. Edits outside this block are preserved; edits inside may be 
 
 # 在用页
 
-`/uses` 的内容在 `src/data/uses/index.ts`。添加喜欢或正在用的东西之前，先读 `src/data/uses/AGENTS.md`，再决定放进已有分组、新建分组，还是放进子分类。不要预先发明分类，也不要在页面组件里写死分类。
+`/uses` 的内容在 `src/data/uses/index.ts`。添加喜欢或正在用的东西之前，先读 `src/data/uses/AGENTS.md`，再决定放进已有分组、新建分组，还是放进子分类。不要预先发明分类，也不要在页面组件里写死分类。介绍文章、logo 和头图按 `.cursor/skills/add-uses-content/SKILL.md`。
 

@@ -12,7 +12,7 @@ export default function MobileMenu() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenuTrigger className="block h-10 w-10 opacity-50 sm:hidden">
+      <DropdownMenuTrigger className="block h-10 w-10 opacity-50 md:hidden">
         <MenuIcon isOpen={isOpen} />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" alignOffset={-5} className="w-[calc(100vw-24px)] max-w-xs" sideOffset={20}>

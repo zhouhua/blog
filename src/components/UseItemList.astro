@@ -34,28 +34,32 @@ function isExternal(href: string) {
   {items.map(item => (
     <li class={cn('use-card colorModeTransition flex items-center gap-4 rounded-2xl bg-card px-6 py-5')}>
       <div class="min-w-0 flex-1">
-        <p class="text-lg font-semibold leading-7">
-          {item.href
-            ? (
-              <a
-                class="underline-offset-4 hover:text-accent-foreground hover:underline"
-                href={item.href}
-                rel={isExternal(item.href) ? 'noreferrer' : undefined}
-                target={isExternal(item.href) ? '_blank' : undefined}
-              >
-                {item.name}
-                {isExternal(item.href) && <span class="sr-only">（新窗口打开）</span>}
-              </a>
-            )
-            : item.name}
-        </p>
-        {item.note && (
-          <p class="mt-2 font-serif text-sm leading-6 text-muted-foreground">{item.note}</p>
-        )}
+          <p class="text-lg font-semibold leading-7">
+            {item.href
+              ? (
+                <a
+                  class="underline-offset-4 hover:text-accent-foreground hover:underline"
+                  href={item.href}
+                  rel={isExternal(item.href) ? 'noreferrer' : undefined}
+                  target={isExternal(item.href) ? '_blank' : undefined}
+                >
+                  {item.name}
+                  {isExternal(item.href) && <span class="sr-only">（新窗口打开）</span>}
+                </a>
+              )
+              : item.name}
+          </p>
+          {item.note && (
+            <p class="mt-2 font-serif text-sm leading-6 text-muted-foreground">{item.note}</p>
+          )}
       </div>
-      {item.logo && (
-        <img alt="" class="use-logo h-11 w-auto max-w-[46%] shrink-0" src={item.logo} />
-      )}
+        {item.logo && (
+          <img
+            alt=""
+            class={cn('h-auto max-h-11 w-auto max-w-[46%] shrink-0 object-contain', item.pixelated && 'use-logo', item.invert && 'dark:invert')}
+            src={item.logo}
+          />
+        )}
     </li>
   ))}
 </ul>
