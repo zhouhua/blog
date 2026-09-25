@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>客户端混合召回主链路</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --color-paper: #f5f5f5;
+        --color-ink: #2d3142;
+        --color-muted: #4f5d75;
+        --color-accent: #eb6c36;
+        --font-sans: 'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+        --font-serif: 'Instrument Serif', 'Noto Serif SC', serif;
+        --font-mono: 'Geist Mono', ui-monospace, monospace;
+      }
+      body {
+        font-family: var(--font-sans);
+        background: var(--color-paper);
+        color: var(--color-ink);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 2rem;
+      }
+      .frame {
+        max-width: 1200px;
+        width: 100%;
+      }
+      .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.66rem;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--color-muted);
+        margin-bottom: 0.5rem;
+      }
+      h1 {
+        font-family: var(--font-serif);
+        font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+        font-weight: 400;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+        color: var(--color-ink);
+        margin-bottom: 1.5rem;
+      }
+      svg {
+        width: 100%;
+        min-width: 960px;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frame">
+      <p class="eyebrow">Flowchart · Diagram Design</p>
+      <h1>客户端混合召回主链路</h1>
+
+      <svg
+        viewBox="0 0 1040 520"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-labelledby="pipeline-title pipeline-desc"
+      >
+        <title id="pipeline-title">客户端混合召回主链路</title>
+        <desc id="pipeline-desc">从用户查询经混合检索与可选 LLM 重排，到结果交给 UI 或明确 miss 的流程图。</desc>
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#4f5d75" />
+          </marker>
+          <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#eb6c36" />
+          </marker>
+        </defs>
+
+        <rect width="100%" height="100%" fill="#f5f5f5" />
+
+        <!-- Connectors -->
+        <line x1="156" y1="120" x2="196" y2="120" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)" />
+        <line x1="316" y1="120" x2="356" y2="120" stroke="#eb6c36" stroke-width="1.4" marker-end="url(#arrow-accent)" />
+        <line x1="516" y1="120" x2="556" y2="120" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)" />
+        <line x1="676" y1="120" x2="720" y2="120" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)" />
+
+        <!-- decision → rerank (right then down) -->
+        <path
+          d="M 880,120 H 900 Q 908,120 908,128 V 212 Q 908,220 900,220 H 880"
+          fill="none"
+          stroke="#eb6c36"
+          stroke-width="1.4"
+          marker-end="url(#arrow-accent)"
+        />
+        <!-- decision → fuse (down then left) -->
+        <path
+          d="M 800,168 V 212 Q 800,220 792,220 H 680"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1.2"
+          marker-end="url(#arrow)"
+        />
+        <!-- fuse → merge -->
+        <path
+          d="M 620,268 V 300 Q 620,308 628,308 H 756"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1.2"
+          marker-end="url(#arrow)"
+        />
+        <!-- rerank → merge -->
+        <path
+          d="M 840,268 V 300 Q 840,308 832,308 H 804"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1.2"
+          marker-end="url(#arrow)"
+        />
+        <!-- merge → result -->
+        <line x1="800" y1="320" x2="800" y2="360" stroke="#eb6c36" stroke-width="1.4" marker-end="url(#arrow-accent)" />
+        <!-- topk → miss -->
+        <path
+          d="M 616,144 V 340 Q 616,348 608,348 H 468 Q 460,348 460,356 V 368"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1"
+          stroke-dasharray="4,3"
+          marker-end="url(#arrow)"
+        />
+
+        <!-- Labels -->
+        <rect x="876" y="156" width="40" height="16" rx="2" fill="#f5f5f5" />
+        <text
+          x="896"
+          y="168"
+          fill="#eb6c36"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          精准
+        </text>
+
+        <rect x="720" y="188" width="40" height="16" rx="2" fill="#f5f5f5" />
+        <text
+          x="740"
+          y="200"
+          fill="#4f5d75"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          列表
+        </text>
+
+        <rect x="480" y="320" width="40" height="16" rx="2" fill="#f5f5f5" />
+        <text
+          x="500"
+          y="332"
+          fill="#4f5d75"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          空集
+        </text>
+
+        <!-- Nodes -->
+        <rect
+          x="40"
+          y="96"
+          width="116"
+          height="48"
+          rx="24"
+          fill="rgba(45,49,66,0.03)"
+          stroke="rgba(45,49,66,0.30)"
+          stroke-width="1"
+        />
+        <text
+          x="98"
+          y="118"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          用户查询
+        </text>
+        <text x="98" y="134" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          natural lang
+        </text>
+
+        <rect x="196" y="96" width="120" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="256"
+          y="118"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          抽出检索针
+        </text>
+        <text x="256" y="134" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          keyword · phrase
+        </text>
+
+        <rect
+          x="356"
+          y="92"
+          width="160"
+          height="56"
+          rx="6"
+          fill="rgba(235,108,54,0.08)"
+          stroke="#eb6c36"
+          stroke-width="1"
+        />
+        <text
+          x="436"
+          y="116"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          hybridRetrieve
+        </text>
+        <text x="436" y="134" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          lex ∪ vector
+        </text>
+
+        <rect
+          x="556"
+          y="96"
+          width="120"
+          height="48"
+          rx="6"
+          fill="rgba(45,49,66,0.05)"
+          stroke="#4f5d75"
+          stroke-width="1"
+        />
+        <text
+          x="616"
+          y="118"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          top K 候选
+        </text>
+        <text x="616" y="134" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          e.g. K=16
+        </text>
+
+        <polygon points="800,72 880,120 800,168 720,120" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="800"
+          y="116"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          走 LLM
+        </text>
+        <text
+          x="800"
+          y="132"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          重排？
+        </text>
+
+        <rect x="560" y="220" width="120" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="620"
+          y="242"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          融合分排序
+        </text>
+        <text x="620" y="258" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          0.4 + 0.6
+        </text>
+
+        <rect
+          x="760"
+          y="220"
+          width="160"
+          height="48"
+          rx="6"
+          fill="rgba(45,49,66,0.02)"
+          stroke="rgba(45,49,66,0.20)"
+          stroke-width="1"
+          stroke-dasharray="4,3"
+        />
+        <text
+          x="840"
+          y="242"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          LLM 短重排
+        </text>
+        <text x="840" y="258" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          small set only
+        </text>
+
+        <circle cx="800" cy="308" r="4" fill="#2d3142" />
+
+        <rect
+          x="720"
+          y="360"
+          width="160"
+          height="56"
+          rx="28"
+          fill="rgba(235,108,54,0.08)"
+          stroke="#eb6c36"
+          stroke-width="1"
+        />
+        <text
+          x="800"
+          y="384"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          结果交给 UI
+        </text>
+        <text x="800" y="400" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          hit · multi
+        </text>
+
+        <rect
+          x="400"
+          y="368"
+          width="120"
+          height="48"
+          rx="24"
+          fill="rgba(45,49,66,0.03)"
+          stroke="rgba(45,49,66,0.30)"
+          stroke-width="1"
+        />
+        <text
+          x="460"
+          y="390"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          明确 miss
+        </text>
+        <text x="460" y="406" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          both empty
+        </text>
+
+        <!-- Fix miss connector endpoint: path should end at miss left (400) not 700 -->
+        <!-- Legend -->
+        <line x1="40" y1="452" x2="1000" y2="452" stroke="rgba(45,49,66,0.10)" stroke-width="0.8" />
+        <text
+          x="40"
+          y="472"
+          fill="#4f5d75"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+        >
+          图例
+        </text>
+
+        <rect
+          x="100"
+          y="456"
+          width="24"
+          height="12"
+          rx="6"
+          fill="rgba(45,49,66,0.03)"
+          stroke="rgba(45,49,66,0.30)"
+          stroke-width="1"
+        />
+        <text
+          x="132"
+          y="466"
+          fill="#4f5d75"
+          font-size="12"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+        >
+          起止
+        </text>
+
+        <rect x="196" y="456" width="24" height="12" rx="2" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="228"
+          y="466"
+          fill="#4f5d75"
+          font-size="12"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+        >
+          步骤
+        </text>
+
+        <polygon points="308,462 320,456 332,462 320,468" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="344"
+          y="466"
+          fill="#4f5d75"
+          font-size="12"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+        >
+          判断
+        </text>
+
+        <rect
+          x="408"
+          y="456"
+          width="24"
+          height="12"
+          rx="2"
+          fill="rgba(235,108,54,0.08)"
+          stroke="#eb6c36"
+          stroke-width="1"
+        />
+        <text
+          x="440"
+          y="466"
+          fill="#4f5d75"
+          font-size="12"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+        >
+          焦点
+        </text>
+
+        <line x1="508" y1="462" x2="540" y2="462" stroke="#4f5d75" stroke-width="1" stroke-dasharray="4,3" />
+        <text
+          x="548"
+          y="466"
+          fill="#4f5d75"
+          font-size="12"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+        >
+          可选 / 降级
+        </text>
+      </svg>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>降级是一等公民</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --color-paper: #f5f5f5;
+        --color-ink: #2d3142;
+        --color-muted: #4f5d75;
+        --color-accent: #eb6c36;
+        --font-sans: 'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+        --font-serif: 'Instrument Serif', 'Noto Serif SC', serif;
+        --font-mono: 'Geist Mono', ui-monospace, monospace;
+      }
+      body {
+        font-family: var(--font-sans);
+        background: var(--color-paper);
+        color: var(--color-ink);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 2rem;
+      }
+      .frame {
+        max-width: 1000px;
+        width: 100%;
+      }
+      .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.66rem;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--color-muted);
+        margin-bottom: 0.5rem;
+      }
+      h1 {
+        font-family: var(--font-serif);
+        font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+        font-weight: 400;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+        color: var(--color-ink);
+        margin-bottom: 1.5rem;
+      }
+      svg {
+        width: 100%;
+        min-width: 720px;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frame">
+      <p class="eyebrow">Flowchart · Diagram Design</p>
+      <h1>降级是一等公民</h1>
+
+      <svg
+        viewBox="0 0 800 640"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-labelledby="degrade-title degrade-desc"
+      >
+        <title id="degrade-title">降级是一等公民</title>
+        <desc id="degrade-desc">降级流程图：嵌入未就绪时退回词检索，重排失败时退回融合分，两边都空则明确 miss。</desc>
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#4f5d75" />
+          </marker>
+          <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#eb6c36" />
+          </marker>
+        </defs>
+
+        <rect width="100%" height="100%" fill="#f5f5f5" />
+
+        <!-- Connectors -->
+        <line x1="400" y1="72" x2="400" y2="104" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)" />
+        <!-- decision YES down to hybrid -->
+        <line x1="400" y1="200" x2="400" y2="232" stroke="#eb6c36" stroke-width="1.4" marker-end="url(#arrow-accent)" />
+        <!-- decision NO right to lex -->
+        <line
+          x1="480"
+          y1="152"
+          x2="560"
+          y2="152"
+          stroke="#4f5d75"
+          stroke-width="1.2"
+          stroke-dasharray="4,3"
+          marker-end="url(#arrow)"
+        />
+        <!-- lex down then into score right edge -->
+        <path
+          d="M 640,176 V 320 Q 640,336 632,336 H 480"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1"
+          stroke-dasharray="4,3"
+          marker-end="url(#arrow)"
+        />
+        <!-- hybrid → score -->
+        <line x1="400" y1="280" x2="400" y2="312" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)" />
+        <!-- score → rerank? -->
+        <line x1="400" y1="360" x2="400" y2="392" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)" />
+        <!-- rerank YES down to result -->
+        <line x1="400" y1="488" x2="400" y2="520" stroke="#eb6c36" stroke-width="1.4" marker-end="url(#arrow-accent)" />
+        <!-- rerank NO right then down to fuse-decide then left to result -->
+        <path
+          d="M 480,440 H 600 Q 608,440 608,448 V 536 Q 608,544 600,544 H 480"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1"
+          stroke-dasharray="4,3"
+          marker-end="url(#arrow)"
+        />
+        <!-- score → miss (left branch) -->
+        <path
+          d="M 320,336 H 208 Q 200,336 200,344 V 528 Q 200,536 208,536 H 220"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1"
+          stroke-dasharray="4,3"
+          marker-end="url(#arrow)"
+        />
+
+        <!-- Labels -->
+        <rect x="404" y="208" width="40" height="16" rx="2" fill="#f5f5f5" />
+        <text
+          x="424"
+          y="220"
+          fill="#eb6c36"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          就绪
+        </text>
+
+        <rect x="500" y="132" width="52" height="16" rx="2" fill="#f5f5f5" />
+        <text
+          x="526"
+          y="144"
+          fill="#4f5d75"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          未就绪
+        </text>
+
+        <rect x="404" y="496" width="40" height="16" rx="2" fill="#f5f5f5" />
+        <text
+          x="424"
+          y="508"
+          fill="#eb6c36"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          成功
+        </text>
+
+        <rect x="516" y="420" width="40" height="16" rx="2" fill="#f5f5f5" />
+        <text
+          x="536"
+          y="432"
+          fill="#4f5d75"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          失败
+        </text>
+
+        <rect x="220" y="316" width="40" height="16" rx="2" fill="#f5f5f5" />
+        <text
+          x="240"
+          y="328"
+          fill="#4f5d75"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          空集
+        </text>
+
+        <!-- Nodes -->
+        <rect
+          x="320"
+          y="24"
+          width="160"
+          height="48"
+          rx="24"
+          fill="rgba(45,49,66,0.03)"
+          stroke="rgba(45,49,66,0.30)"
+          stroke-width="1"
+        />
+        <text
+          x="400"
+          y="52"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          开始召回
+        </text>
+
+        <!-- decision focal -->
+        <polygon
+          points="400,104 480,152 400,200 320,152"
+          fill="rgba(235,108,54,0.08)"
+          stroke="#eb6c36"
+          stroke-width="1"
+        />
+        <text
+          x="400"
+          y="148"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          嵌入就绪？
+        </text>
+        <text x="400" y="164" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          model / vectors
+        </text>
+
+        <rect
+          x="560"
+          y="128"
+          width="160"
+          height="48"
+          rx="6"
+          fill="rgba(45,49,66,0.02)"
+          stroke="rgba(45,49,66,0.20)"
+          stroke-width="1"
+          stroke-dasharray="4,3"
+        />
+        <text
+          x="640"
+          y="150"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          只用词检索
+        </text>
+        <text x="640" y="166" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          degrade
+        </text>
+
+        <rect x="320" y="232" width="160" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="400"
+          y="254"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          词面 ∪ 向量
+        </text>
+        <text x="400" y="270" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          hybrid
+        </text>
+
+        <rect
+          x="320"
+          y="312"
+          width="160"
+          height="48"
+          rx="6"
+          fill="rgba(45,49,66,0.05)"
+          stroke="#4f5d75"
+          stroke-width="1"
+        />
+        <text
+          x="400"
+          y="334"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          融合分排序
+        </text>
+        <text x="400" y="350" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          normalize · weight
+        </text>
+
+        <polygon points="400,392 480,440 400,488 320,440" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="400"
+          y="436"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          重排成功？
+        </text>
+        <text x="400" y="452" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          optional
+        </text>
+
+        <rect
+          x="520"
+          y="520"
+          width="160"
+          height="48"
+          rx="6"
+          fill="rgba(45,49,66,0.02)"
+          stroke="rgba(45,49,66,0.20)"
+          stroke-width="1"
+          stroke-dasharray="4,3"
+        />
+        <text
+          x="600"
+          y="542"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          用融合分定夺
+        </text>
+        <text x="600" y="558" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          fallback
+        </text>
+
+        <rect
+          x="320"
+          y="520"
+          width="160"
+          height="56"
+          rx="28"
+          fill="rgba(235,108,54,0.08)"
+          stroke="#eb6c36"
+          stroke-width="1"
+        />
+        <text
+          x="400"
+          y="544"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          单条 / 多选
+        </text>
+        <text x="400" y="560" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          hand to UI
+        </text>
+
+        <rect
+          x="80"
+          y="520"
+          width="140"
+          height="48"
+          rx="24"
+          fill="rgba(45,49,66,0.03)"
+          stroke="rgba(45,49,66,0.30)"
+          stroke-width="1"
+        />
+        <text
+          x="150"
+          y="548"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          明确 miss
+        </text>
+
+        <!-- Legend -->
+        <line x1="40" y1="596" x2="760" y2="596" stroke="rgba(45,49,66,0.10)" stroke-width="0.8" />
+        <text
+          x="40"
+          y="620"
+          fill="#4f5d75"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+        >
+          图例
+        </text>
+        <rect
+          x="100"
+          y="608"
+          width="24"
+          height="12"
+          rx="2"
+          fill="rgba(235,108,54,0.08)"
+          stroke="#eb6c36"
+          stroke-width="1"
+        />
+        <text
+          x="132"
+          y="618"
+          fill="#4f5d75"
+          font-size="12"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+        >
+          关键闸门
+        </text>
+        <line x1="220" y1="614" x2="252" y2="614" stroke="#4f5d75" stroke-width="1" stroke-dasharray="4,3" />
+        <text
+          x="260"
+          y="618"
+          fill="#4f5d75"
+          font-size="12"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+        >
+          降级路径
+        </text>
+        <line x1="360" y1="614" x2="392" y2="614" stroke="#eb6c36" stroke-width="1.4" />
+        <text
+          x="400"
+          y="618"
+          fill="#4f5d75"
+          font-size="12"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+        >
+          主路径
+        </text>
+      </svg>
+    </div>
+  </body>
+</html>
