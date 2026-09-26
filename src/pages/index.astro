@@ -1,10 +1,10 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import ArticlesPair from '@components/ArticlesPair.astro';
 import Container from '@components/Container.astro';
+import HomeArticleList from '@components/HomeArticleList.astro';
 import HomeProjects from '@components/HomeProjects.astro';
+import HomeUsesOverview from '@components/HomeUsesOverview.astro';
 import ListTitle from '@components/ListTitle.astro';
-import UseGroupList from '@components/UseGroupList.astro';
 import { HOME } from '@consts';
 import { USES_GROUPS } from '@data/uses';
 import { prepareUseGroups } from '@data/uses/prepare';
@@ -25,19 +25,9 @@ const latestJournals = journals.slice(0, 5).map(journal => ({
   excerpt: getMarkdownExcerpt(journal.body || '', 220),
   journal,
 }));
-const featuredBlogs: CollectionEntry<'blog'>[] = blogs
-  .filter(blog => blog.data.featured)
+const latestBlogs: CollectionEntry<'blog'>[] = blogs
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 9);
-const pairs: [CollectionEntry<'blog'>, CollectionEntry<'blog'>][] = featuredBlogs.reduce(
-  (result: [CollectionEntry<'blog'>, CollectionEntry<'blog'>][], _, index, array) => {
-    if (index % 2 === 0) {
-      result.push(array.slice(index, index + 2) as [CollectionEntry<'blog'>, CollectionEntry<'blog'>]);
-    }
-    return result;
-  },
-  [],
-);
+  .slice(0, 12);
 const useGroups = prepareUseGroups(USES_GROUPS);
 algolia();
 ---
@@ -62,18 +52,11 @@ algolia();
 <PageLayout description={HOME.DESCRIPTION} title={HOME.TITLE}>
   <ListTitle />
   <Container>
-    <div class="section-heading">
-      <h2 class="colorModeTransition">精选文章</h2>
+    <div class="section-heading section-heading-compact">
+      <h2 class="colorModeTransition">文章</h2>
       <div class="section-heading-divider colorModeTransition" />
     </div>
-    {pairs.map((ap, index) => (
-      <ArticlesPair
-        gridLayout="tiles"
-        posts={ap}
-        reverse={index % 2 !== 0}
-        showAllLink={index === pairs.length - 1}
-      />
-    ))}
+    <HomeArticleList posts={latestBlogs} />
   </Container>
   <Container>
     <div class="section-heading section-heading-compact">
@@ -133,7 +116,7 @@ algolia();
         <h2 class="colorModeTransition">在用</h2>
         <div class="section-heading-divider colorModeTransition" />
       </div>
-      <UseGroupList groups={useGroups} nested />
+      <HomeUsesOverview groups={useGroups} />
     </Container>
   )}
 </PageLayout>

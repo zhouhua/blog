@@ -21,9 +21,8 @@ const SubgroupHeading = nested ? 'h4' : 'h3';
       <GroupHeading class="colorModeTransition">{group.title}</GroupHeading>
       <div class="section-heading-divider colorModeTransition" />
     </div>
-    <p class="mb-6 max-w-2xl font-serif text-sm leading-6 text-muted-foreground">
-      <span class="mr-2 font-sans text-xs tracking-widest">{group.indexLabel}</span>
-      {group.description}
+    <p class="mb-6 font-sans text-xs tracking-widest text-muted-foreground">
+      {group.indexLabel}
     </p>
     {anchors && group.subgroups.length > 1 && (
       <nav aria-label={`${group.title}的子分类`} class="mb-2 flex flex-wrap gap-x-4 gap-y-2">

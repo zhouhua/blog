@@ -9,15 +9,13 @@ function item(name: string): UseItem {
 describe('prepareUseGroups', () => {
   it('drops empty groups, drops empty subgroups, keeps every remaining item, and renumbers', () => {
     const groups: UseGroup[] = [
-      { description: 'nothing', id: 'empty', items: [], title: '空' },
+      { id: 'empty', items: [], title: '空' },
       {
-        description: 'direct items',
         id: 'a',
         items: [item('one'), item('two')],
         title: 'A',
       },
       {
-        description: 'only subgroups',
         id: 'b',
         items: [],
         subgroups: [

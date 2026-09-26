@@ -1,0 +1,81 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import dayjs from '@lib/dayjs';
+
+interface Props {
+  posts: CollectionEntry<'blog'>[];
+}
+
+const { posts } = Astro.props;
+---
+
+<style>
+@reference '../styles/global.css';
+
+.article-list {
+  margin: 0 0 2rem;
+  list-style: none;
+  padding: 0;
+}
+
+.article-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0.55rem 0;
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+.article-row:hover .article-title {
+  color: var(--color-accent-foreground);
+}
+
+.article-title {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.45;
+  transition: color 0.2s ease;
+}
+
+.article-date {
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  color: var(--color-muted-foreground);
+  opacity: 0.75;
+  white-space: nowrap;
+}
+
+.article-more {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--color-muted-foreground);
+  text-decoration: none;
+  underline-offset: 4px;
+  transition: color 0.2s ease;
+}
+
+.article-more:hover {
+  color: var(--color-accent-foreground);
+  text-decoration: underline;
+}
+</style>
+
+<ul class="article-list">
+  {posts.map(post => (
+    <li>
+      <a class="article-row colorModeTransition" href={`/${post.id}`}>
+        <span class="article-title colorModeTransition">{post.data.title}</span>
+        <time class="article-date colorModeTransition" datetime={dayjs(post.data.date).format('YYYY-MM-DD')}>
+          {dayjs(post.data.date).format('YYYY-MM-DD')}
+        </time>
+      </a>
+    </li>
+  ))}
+</ul>
+<a class="article-more colorModeTransition" href="/articles">查看所有文章</a>

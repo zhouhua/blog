@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 
 interface Props {
@@ -32,7 +31,7 @@ export class ErrorBoundary extends Component<Props, State> {
     return { error, hasError: true };
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+  override componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     // 记录错误到控制台
     console.error('ErrorBoundary caught an error:', error, errorInfo);
 
@@ -42,7 +41,7 @@ export class ErrorBoundary extends Component<Props, State> {
     }
   }
 
-  render() {
+  override render() {
     if (this.state.hasError) {
       // 使用自定义 fallback 或默认错误 UI
       if (this.props.fallback) {

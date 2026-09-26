@@ -1,0 +1,98 @@
+---
+import type { PreparedUseGroup } from '@data/uses/prepare';
+
+interface Props {
+  groups: PreparedUseGroup[];
+}
+
+const { groups } = Astro.props;
+
+function allItemNames(group: PreparedUseGroup): string[] {
+  return [
+    ...group.items.map(item => item.name),
+    ...group.subgroups.flatMap(subgroup => subgroup.items.map(item => item.name)),
+  ];
+}
+---
+
+<style>
+@reference '../styles/global.css';
+
+.uses-overview {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  margin-bottom: 2rem;
+}
+
+.uses-group {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.5rem 1.5rem;
+  align-items: baseline;
+}
+
+@media (width >= 40rem) {
+  .uses-group {
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+  }
+}
+
+.uses-group-title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.uses-group-title a {
+  color: inherit;
+  text-decoration: none;
+  underline-offset: 4px;
+  transition: color 0.2s ease;
+}
+
+.uses-group-title a:hover {
+  color: var(--color-accent-foreground);
+  text-decoration: underline;
+}
+
+.uses-names {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--color-muted-foreground);
+}
+
+.uses-more {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--color-muted-foreground);
+  text-decoration: none;
+  underline-offset: 4px;
+  transition: color 0.2s ease;
+}
+
+.uses-more:hover {
+  color: var(--color-accent-foreground);
+  text-decoration: underline;
+}
+</style>
+
+<div class="uses-overview">
+  {groups.map((group) => {
+    const names = allItemNames(group);
+    return (
+      <div class="uses-group">
+        <h3 class="uses-group-title colorModeTransition">
+          <a href={`/uses#${group.id}`}>{group.title}</a>
+        </h3>
+        <p class="uses-names colorModeTransition">{names.join(' · ')}</p>
+      </div>
+    );
+  })}
+</div>
+<a class="uses-more colorModeTransition" href="/uses">查看全部在用</a>
