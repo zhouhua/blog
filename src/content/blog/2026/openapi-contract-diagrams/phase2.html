@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>阶段二：对外不动，对内 Protobuf</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --color-paper: #f5f5f5;
+        --color-ink: #2d3142;
+        --color-muted: #4f5d75;
+        --color-accent: #eb6c36;
+        --font-sans: 'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+        --font-serif: 'Instrument Serif', 'Noto Serif SC', serif;
+        --font-mono: 'Geist Mono', ui-monospace, monospace;
+      }
+      body {
+        font-family: var(--font-sans);
+        background: var(--color-paper);
+        color: var(--color-ink);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 2rem;
+      }
+      .frame {
+        max-width: 1200px;
+        width: 100%;
+      }
+      .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.66rem;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--color-muted);
+        margin-bottom: 0.5rem;
+      }
+      h1 {
+        font-family: var(--font-serif);
+        font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+        font-weight: 400;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+        color: var(--color-ink);
+        margin-bottom: 1.5rem;
+      }
+      svg {
+        width: 100%;
+        min-width: 900px;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frame">
+      <p class="eyebrow">Architecture · Diagram Design</p>
+      <h1>阶段二：对外不动，对内 Protobuf</h1>
+
+      <svg
+        viewBox="0 0 1000 520"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-labelledby="openapi-phase2-title openapi-phase2-desc"
+      >
+        <title id="openapi-phase2-title">阶段二：对外不动，对内 Protobuf</title>
+        <desc id="openapi-phase2-desc">
+          多端客户端仍只吃同一份 OpenAPI 与 AsyncAPI；BFF 对内用 Connect 调各服务 Protobuf，事件走 internal
+          events；客户端禁止直接生成 proto。
+        </desc>
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#4f5d75" />
+          </marker>
+          <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#eb6c36" />
+          </marker>
+          <marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#2e5aa8" />
+          </marker>
+        </defs>
+
+        <rect width="100%" height="100%" fill="#f5f5f5" />
+
+        <!-- Zones -->
+        <rect
+          x="40"
+          y="48"
+          width="200"
+          height="320"
+          rx="8"
+          fill="rgba(45,49,66,0.02)"
+          stroke="rgba(45,49,66,0.10)"
+          stroke-width="0.8"
+        />
+        <rect x="52" y="52" width="56" height="12" rx="2" fill="#f5f5f5" />
+        <text
+          x="80"
+          y="61"
+          fill="rgba(45,49,66,0.40)"
+          font-size="7"
+          font-family="'Geist Mono', monospace"
+          text-anchor="middle"
+          letter-spacing="0.14em"
+        >
+          CLIENTS
+        </text>
+
+        <rect
+          x="320"
+          y="48"
+          width="280"
+          height="320"
+          rx="8"
+          fill="rgba(235,108,54,0.04)"
+          stroke="rgba(235,108,54,0.35)"
+          stroke-width="0.8"
+          stroke-dasharray="4,4"
+        />
+        <rect x="332" y="52" width="96" height="12" rx="2" fill="#f5f5f5" />
+        <text
+          x="380"
+          y="61"
+          fill="rgba(235,108,54,0.70)"
+          font-size="7"
+          font-family="'Geist Mono', monospace"
+          text-anchor="middle"
+          letter-spacing="0.14em"
+        >
+          EDGE · STABLE
+        </text>
+
+        <rect
+          x="680"
+          y="48"
+          width="280"
+          height="320"
+          rx="8"
+          fill="rgba(45,49,66,0.02)"
+          stroke="rgba(45,49,66,0.10)"
+          stroke-width="0.8"
+        />
+        <rect x="692" y="52" width="72" height="12" rx="2" fill="#f5f5f5" />
+        <text
+          x="728"
+          y="61"
+          fill="rgba(45,49,66,0.40)"
+          font-size="7"
+          font-family="'Geist Mono', monospace"
+          text-anchor="middle"
+          letter-spacing="0.14em"
+        >
+          SERVICES
+        </text>
+
+        <!-- Arrows -->
+        <!-- clients → BFF (HTTP) -->
+        <line x1="220" y1="200" x2="340" y2="200" stroke="#2e5aa8" stroke-width="1.2" marker-end="url(#arrow-link)" />
+        <rect x="248" y="168" width="64" height="16" rx="2" fill="#f5f5f5" />
+        <text
+          x="280"
+          y="180"
+          fill="#7a8399"
+          font-size="8"
+          font-family="'Geist Mono', monospace"
+          text-anchor="middle"
+          letter-spacing="0.06em"
+        >
+          SAME SPEC
+        </text>
+
+        <!-- BFF → svc A -->
+        <path
+          d="M 580,160 H 640 Q 648,160 648,168 V 120 Q 648,112 656,112 H 700"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1.2"
+          marker-end="url(#arrow)"
+        />
+        <rect x="600" y="128" width="56" height="16" rx="2" fill="#f5f5f5" />
+        <text
+          x="628"
+          y="140"
+          fill="#7a8399"
+          font-size="8"
+          font-family="'Geist Mono', monospace"
+          text-anchor="middle"
+          letter-spacing="0.06em"
+        >
+          CONNECT
+        </text>
+
+        <!-- BFF → svc B -->
+        <path
+          d="M 580,200 H 640 Q 648,200 648,208 V 220 Q 648,228 656,228 H 700"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1.2"
+          marker-end="url(#arrow)"
+        />
+
+        <!-- BFF → events -->
+        <path
+          d="M 580,240 H 640 Q 648,240 648,248 V 300 Q 648,308 656,308 H 700"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1"
+          stroke-dasharray="4,3"
+          marker-end="url(#arrow)"
+        />
+        <rect x="600" y="268" width="48" height="16" rx="2" fill="#f5f5f5" />
+        <text
+          x="624"
+          y="280"
+          fill="#7a8399"
+          font-size="8"
+          font-family="'Geist Mono', monospace"
+          text-anchor="middle"
+          letter-spacing="0.06em"
+        >
+          EVENT
+        </text>
+
+        <!-- forbidden: clients → proto (dashed red-ish soft, with X label) -->
+        <path
+          d="M 140,280 V 400 Q 140,408 148,408 H 780 Q 788,408 788,400 V 340"
+          fill="none"
+          stroke="#7a8399"
+          stroke-width="1"
+          stroke-dasharray="4,3"
+        />
+        <rect x="400" y="384" width="120" height="16" rx="2" fill="#f5f5f5" />
+        <text
+          x="460"
+          y="396"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          禁止直连 proto
+        </text>
+
+        <!-- Clients stack -->
+        <rect x="60" y="96" width="160" height="56" rx="6" fill="#f5f5f5" />
+        <rect
+          x="60"
+          y="96"
+          width="160"
+          height="56"
+          rx="6"
+          fill="rgba(79,93,117,0.10)"
+          stroke="#7a8399"
+          stroke-width="1"
+        />
+        <text
+          x="140"
+          y="124"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          Web / 小程序
+        </text>
+        <text x="140" y="140" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          generated TS
+        </text>
+
+        <rect x="60" y="172" width="160" height="56" rx="6" fill="#f5f5f5" />
+        <rect
+          x="60"
+          y="172"
+          width="160"
+          height="56"
+          rx="6"
+          fill="rgba(79,93,117,0.10)"
+          stroke="#7a8399"
+          stroke-width="1"
+        />
+        <text
+          x="140"
+          y="200"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          iOS App
+        </text>
+        <text x="140" y="216" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          generated Swift
+        </text>
+
+        <rect x="60" y="248" width="160" height="56" rx="6" fill="#f5f5f5" />
+        <rect
+          x="60"
+          y="248"
+          width="160"
+          height="56"
+          rx="6"
+          fill="rgba(79,93,117,0.10)"
+          stroke="#7a8399"
+          stroke-width="1"
+        />
+        <text
+          x="140"
+          y="276"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          管理端
+        </text>
+        <text x="140" y="292" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          admin OpenAPI
+        </text>
+
+        <!-- BFF focal -->
+        <rect x="340" y="120" width="240" height="160" rx="6" fill="#f5f5f5" />
+        <rect
+          x="340"
+          y="120"
+          width="240"
+          height="160"
+          rx="6"
+          fill="rgba(235,108,54,0.08)"
+          stroke="#eb6c36"
+          stroke-width="1"
+        />
+        <rect
+          x="348"
+          y="126"
+          width="36"
+          height="12"
+          rx="2"
+          fill="transparent"
+          stroke="rgba(235,108,54,0.40)"
+          stroke-width="0.8"
+        />
+        <text
+          x="366"
+          y="135"
+          fill="rgba(235,108,54,0.80)"
+          font-size="7"
+          font-family="'Geist Mono', monospace"
+          text-anchor="middle"
+          letter-spacing="0.08em"
+        >
+          BFF
+        </text>
+        <text
+          x="460"
+          y="172"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          API Gateway / BFF
+        </text>
+        <text x="460" y="196" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          唯一改 external 的人
+        </text>
+        <text x="460" y="220" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          OpenAPI + AsyncAPI
+        </text>
+        <text x="460" y="244" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          path /v1 尽量不动
+        </text>
+
+        <!-- Services -->
+        <rect x="700" y="80" width="240" height="64" rx="6" fill="#f5f5f5" />
+        <rect x="700" y="80" width="240" height="64" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="820"
+          y="108"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          业务服务 A
+        </text>
+        <text x="820" y="128" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          xxx.v1 proto
+        </text>
+
+        <rect x="700" y="196" width="240" height="64" rx="6" fill="#f5f5f5" />
+        <rect x="700" y="196" width="240" height="64" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="820"
+          y="224"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          业务服务 B
+        </text>
+        <text x="820" y="244" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          yyy.v1 proto
+        </text>
+
+        <rect x="700" y="280" width="240" height="64" rx="6" fill="#f5f5f5" />
+        <rect
+          x="700"
+          y="280"
+          width="240"
+          height="64"
+          rx="6"
+          fill="rgba(45,49,66,0.05)"
+          stroke="#4f5d75"
+          stroke-width="1"
+          stroke-dasharray="4,3"
+        />
+        <text
+          x="820"
+          y="308"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          internal/events
+        </text>
+        <text x="820" y="328" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          AsyncAPI · MQ
+        </text>
+
+        <!-- Legend -->
+        <line x1="40" y1="448" x2="960" y2="448" stroke="rgba(45,49,66,0.10)" stroke-width="0.8" />
+        <text x="40" y="476" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">
+          LEGEND
+        </text>
+        <rect
+          x="140"
+          y="464"
+          width="16"
+          height="16"
+          rx="3"
+          fill="rgba(235,108,54,0.08)"
+          stroke="#eb6c36"
+          stroke-width="1"
+        />
+        <text
+          x="164"
+          y="476"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+        >
+          对外稳定面
+        </text>
+        <line x1="300" y1="472" x2="332" y2="472" stroke="#2e5aa8" stroke-width="1.2" marker-end="url(#arrow-link)" />
+        <text
+          x="340"
+          y="476"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+        >
+          同一份 HTTP/WS
+        </text>
+        <line
+          x1="500"
+          y1="472"
+          x2="532"
+          y2="472"
+          stroke="#4f5d75"
+          stroke-width="1"
+          stroke-dasharray="4,3"
+          marker-end="url(#arrow)"
+        />
+        <text
+          x="540"
+          y="476"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+        >
+          对内事件
+        </text>
+      </svg>
+    </div>
+  </body>
+</html>

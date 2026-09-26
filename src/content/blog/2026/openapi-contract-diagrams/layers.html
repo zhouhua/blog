@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>契约三层：语义、对外、对内</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --color-paper: #f5f5f5;
+        --color-ink: #2d3142;
+        --color-muted: #4f5d75;
+        --color-accent: #eb6c36;
+        --font-sans: 'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+        --font-serif: 'Instrument Serif', 'Noto Serif SC', serif;
+        --font-mono: 'Geist Mono', ui-monospace, monospace;
+      }
+      body {
+        font-family: var(--font-sans);
+        background: var(--color-paper);
+        color: var(--color-ink);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 2rem;
+      }
+      .frame {
+        max-width: 1200px;
+        width: 100%;
+      }
+      .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.66rem;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--color-muted);
+        margin-bottom: 0.5rem;
+      }
+      h1 {
+        font-family: var(--font-serif);
+        font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+        font-weight: 400;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+        color: var(--color-ink);
+        margin-bottom: 1.5rem;
+      }
+      svg {
+        width: 100%;
+        min-width: 900px;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frame">
+      <p class="eyebrow">Architecture · Diagram Design</p>
+      <h1>契约三层：语义、对外、对内</h1>
+
+      <svg
+        viewBox="0 0 1000 560"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-labelledby="openapi-layers-title openapi-layers-desc"
+      >
+        <title id="openapi-layers-title">契约三层：语义、对外、对内</title>
+        <desc id="openapi-layers-desc">
+          schemas 共享语义，external 的 OpenAPI 与 AsyncAPI 生成各端客户端，internal 的 Protobuf 在拆服务阶段再启用。
+        </desc>
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#4f5d75" />
+          </marker>
+          <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#eb6c36" />
+          </marker>
+          <marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#2e5aa8" />
+          </marker>
+        </defs>
+
+        <rect width="100%" height="100%" fill="#f5f5f5" />
+
+        <!-- Zones -->
+        <rect
+          x="280"
+          y="48"
+          width="280"
+          height="280"
+          rx="8"
+          fill="rgba(45,49,66,0.02)"
+          stroke="rgba(45,49,66,0.10)"
+          stroke-width="0.8"
+        />
+        <rect x="292" y="52" width="72" height="12" rx="2" fill="#f5f5f5" />
+        <text
+          x="328"
+          y="61"
+          fill="rgba(45,49,66,0.40)"
+          font-size="7"
+          font-family="'Geist Mono', monospace"
+          text-anchor="middle"
+          letter-spacing="0.14em"
+        >
+          EXTERNAL
+        </text>
+
+        <rect
+          x="640"
+          y="48"
+          width="320"
+          height="280"
+          rx="8"
+          fill="rgba(45,49,66,0.02)"
+          stroke="rgba(45,49,66,0.10)"
+          stroke-width="0.8"
+        />
+        <rect x="652" y="52" width="64" height="12" rx="2" fill="#f5f5f5" />
+        <text
+          x="684"
+          y="61"
+          fill="rgba(45,49,66,0.40)"
+          font-size="7"
+          font-family="'Geist Mono', monospace"
+          text-anchor="middle"
+          letter-spacing="0.14em"
+        >
+          CLIENTS
+        </text>
+
+        <rect
+          x="280"
+          y="360"
+          width="280"
+          height="100"
+          rx="8"
+          fill="rgba(45,49,66,0.02)"
+          stroke="rgba(45,49,66,0.20)"
+          stroke-width="0.8"
+          stroke-dasharray="4,4"
+        />
+        <rect x="292" y="364" width="72" height="12" rx="2" fill="#f5f5f5" />
+        <text
+          x="328"
+          y="373"
+          fill="rgba(45,49,66,0.40)"
+          font-size="7"
+          font-family="'Geist Mono', monospace"
+          text-anchor="middle"
+          letter-spacing="0.14em"
+        >
+          INTERNAL
+        </text>
+
+        <!-- Arrows (before boxes) -->
+        <!-- schemas → openapi -->
+        <line x1="200" y1="160" x2="300" y2="160" stroke="#eb6c36" stroke-width="1.2" marker-end="url(#arrow-accent)" />
+        <rect x="220" y="132" width="56" height="16" rx="2" fill="#f5f5f5" />
+        <text
+          x="248"
+          y="144"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          $ref
+        </text>
+
+        <!-- schemas → asyncapi (elbow down then right) -->
+        <path
+          d="M 120,204 V 248 Q 120,256 128,256 H 300"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1.2"
+          marker-end="url(#arrow)"
+        />
+
+        <!-- openapi → Go (attach y=120) -->
+        <line x1="540" y1="120" x2="660" y2="120" stroke="#2e5aa8" stroke-width="1.2" marker-end="url(#arrow-link)" />
+        <rect x="568" y="96" width="64" height="16" rx="2" fill="#f5f5f5" />
+        <text
+          x="600"
+          y="108"
+          fill="#7a8399"
+          font-size="8"
+          font-family="'Geist Mono', monospace"
+          text-anchor="middle"
+          letter-spacing="0.06em"
+        >
+          CODEGEN
+        </text>
+
+        <!-- openapi → TS (attach y=148) -->
+        <path
+          d="M 540,148 H 592 Q 600,148 600,156 V 188 Q 600,196 608,196 H 660"
+          fill="none"
+          stroke="#2e5aa8"
+          stroke-width="1.2"
+          marker-end="url(#arrow-link)"
+        />
+
+        <!-- openapi → Swift (attach y=168) -->
+        <path
+          d="M 540,168 H 580 Q 588,168 588,176 V 260 Q 588,268 596,268 H 660"
+          fill="none"
+          stroke="#2e5aa8"
+          stroke-width="1.2"
+          marker-end="url(#arrow-link)"
+        />
+
+        <!-- asyncapi → clients (WS) -->
+        <path
+          d="M 540,256 H 580 Q 588,256 588,264 V 300 Q 588,308 596,308 H 780"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1"
+          stroke-dasharray="4,3"
+          marker-end="url(#arrow)"
+        />
+        <rect x="640" y="280" width="48" height="16" rx="2" fill="#f5f5f5" />
+        <text
+          x="664"
+          y="292"
+          fill="#7a8399"
+          font-size="8"
+          font-family="'Geist Mono', monospace"
+          text-anchor="middle"
+          letter-spacing="0.06em"
+        >
+          WS
+        </text>
+
+        <!-- schemas → internal (dashed, phase 2) -->
+        <path
+          d="M 120,204 V 400 Q 120,408 128,408 H 300"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1"
+          stroke-dasharray="4,3"
+          marker-end="url(#arrow)"
+        />
+        <rect x="160" y="376" width="72" height="16" rx="2" fill="#f5f5f5" />
+        <text
+          x="196"
+          y="388"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          阶段二
+        </text>
+
+        <!-- schemas (focal) -->
+        <rect x="40" y="120" width="160" height="84" rx="6" fill="#f5f5f5" />
+        <rect
+          x="40"
+          y="120"
+          width="160"
+          height="84"
+          rx="6"
+          fill="rgba(235,108,54,0.08)"
+          stroke="#eb6c36"
+          stroke-width="1"
+        />
+        <rect
+          x="48"
+          y="126"
+          width="44"
+          height="12"
+          rx="2"
+          fill="transparent"
+          stroke="rgba(235,108,54,0.40)"
+          stroke-width="0.8"
+        />
+        <text
+          x="70"
+          y="135"
+          fill="rgba(235,108,54,0.80)"
+          font-size="7"
+          font-family="'Geist Mono', monospace"
+          text-anchor="middle"
+          letter-spacing="0.08em"
+        >
+          SCHEMA
+        </text>
+        <text
+          x="120"
+          y="164"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          schemas/
+        </text>
+        <text x="120" y="184" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          User · ApiResponse
+        </text>
+
+        <!-- openapi -->
+        <rect x="300" y="96" width="240" height="80" rx="6" fill="#f5f5f5" />
+        <rect x="300" y="96" width="240" height="80" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <rect
+          x="308"
+          y="102"
+          width="40"
+          height="12"
+          rx="2"
+          fill="transparent"
+          stroke="rgba(45,49,66,0.40)"
+          stroke-width="0.8"
+        />
+        <text
+          x="328"
+          y="111"
+          fill="rgba(45,49,66,0.80)"
+          font-size="7"
+          font-family="'Geist Mono', monospace"
+          text-anchor="middle"
+          letter-spacing="0.08em"
+        >
+          HTTP
+        </text>
+        <text
+          x="420"
+          y="140"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          openapi.yaml
+        </text>
+        <text x="420" y="160" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          REST · multipart · SSE
+        </text>
+
+        <!-- asyncapi -->
+        <rect x="300" y="216" width="240" height="80" rx="6" fill="#f5f5f5" />
+        <rect x="300" y="216" width="240" height="80" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <rect
+          x="308"
+          y="222"
+          width="28"
+          height="12"
+          rx="2"
+          fill="transparent"
+          stroke="rgba(45,49,66,0.40)"
+          stroke-width="0.8"
+        />
+        <text
+          x="322"
+          y="231"
+          fill="rgba(45,49,66,0.80)"
+          font-size="7"
+          font-family="'Geist Mono', monospace"
+          text-anchor="middle"
+          letter-spacing="0.08em"
+        >
+          WS
+        </text>
+        <text
+          x="420"
+          y="260"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          asyncapi.yaml
+        </text>
+        <text x="420" y="280" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          message · oneOf
+        </text>
+
+        <!-- Go -->
+        <rect x="660" y="80" width="140" height="64" rx="6" fill="#f5f5f5" />
+        <rect
+          x="660"
+          y="80"
+          width="140"
+          height="64"
+          rx="6"
+          fill="rgba(45,49,66,0.03)"
+          stroke="rgba(45,49,66,0.30)"
+          stroke-width="1"
+        />
+        <text
+          x="730"
+          y="108"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          Go
+        </text>
+        <text x="730" y="128" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          oapi-codegen
+        </text>
+
+        <!-- TS -->
+        <rect x="660" y="168" width="140" height="64" rx="6" fill="#f5f5f5" />
+        <rect
+          x="660"
+          y="168"
+          width="140"
+          height="64"
+          rx="6"
+          fill="rgba(45,49,66,0.03)"
+          stroke="rgba(45,49,66,0.30)"
+          stroke-width="1"
+        />
+        <text
+          x="730"
+          y="196"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          TypeScript
+        </text>
+        <text x="730" y="216" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          hey-api / openapi-ts
+        </text>
+
+        <!-- Swift -->
+        <rect x="660" y="256" width="140" height="64" rx="6" fill="#f5f5f5" />
+        <rect
+          x="660"
+          y="256"
+          width="140"
+          height="64"
+          rx="6"
+          fill="rgba(45,49,66,0.03)"
+          stroke="rgba(45,49,66,0.30)"
+          stroke-width="1"
+        />
+        <text
+          x="730"
+          y="284"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          Swift
+        </text>
+        <text x="730" y="304" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          Apple generator
+        </text>
+
+        <!-- internal proto -->
+        <rect x="300" y="388" width="240" height="56" rx="6" fill="#f5f5f5" />
+        <rect
+          x="300"
+          y="388"
+          width="240"
+          height="56"
+          rx="6"
+          fill="rgba(45,49,66,0.05)"
+          stroke="#4f5d75"
+          stroke-width="1"
+          stroke-dasharray="4,3"
+        />
+        <text
+          x="420"
+          y="412"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+          text-anchor="middle"
+        >
+          proto / events
+        </text>
+        <text x="420" y="432" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">
+          Connect · MQ
+        </text>
+
+        <!-- Legend -->
+        <line x1="40" y1="492" x2="960" y2="492" stroke="rgba(45,49,66,0.10)" stroke-width="0.8" />
+        <text x="40" y="516" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">
+          LEGEND
+        </text>
+        <rect
+          x="140"
+          y="504"
+          width="16"
+          height="16"
+          rx="3"
+          fill="rgba(235,108,54,0.08)"
+          stroke="#eb6c36"
+          stroke-width="1"
+        />
+        <text
+          x="164"
+          y="516"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+        >
+          语义真相
+        </text>
+        <rect x="280" y="504" width="16" height="16" rx="3" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="304"
+          y="516"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+        >
+          对外契约
+        </text>
+        <rect
+          x="420"
+          y="504"
+          width="16"
+          height="16"
+          rx="3"
+          fill="rgba(45,49,66,0.05)"
+          stroke="#4f5d75"
+          stroke-width="1"
+          stroke-dasharray="3,2"
+        />
+        <text
+          x="444"
+          y="516"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+        >
+          对内（后启）
+        </text>
+        <line x1="580" y1="512" x2="612" y2="512" stroke="#2e5aa8" stroke-width="1.2" marker-end="url(#arrow-link)" />
+        <text
+          x="620"
+          y="516"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', sans-serif"
+        >
+          HTTP codegen
+        </text>
+      </svg>
+    </div>
+  </body>
+</html>
