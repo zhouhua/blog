@@ -5,9 +5,10 @@ import ProjectIcon from './ProjectIcon';
 
 const EXTERNAL_LINK_RE = /^https?:/;
 
-const GROUP_ORDER = ['Obsidian 插件', '设计工具', 'demo/工具', '其他项目'];
+const GROUP_ORDER = ['AI 应用', 'Obsidian 插件', '设计工具', 'demo/工具', '其他项目'];
 
 const GROUP_EN: Record<string, string> = {
+  'AI 应用': 'AI APPS',
   'demo/工具': 'DEMO / TOOLS',
   'Obsidian 插件': 'OBSIDIAN',
   '其他项目': 'OTHERS',
@@ -209,7 +210,7 @@ function ProjectList() {
                 </span>
               </div>
               <div>
-                {items.map(({ description, link, name, type }, i) => (
+                {items.map(({ description, link, logo, name, type }, i) => (
                   <a
                     key={name}
                     href={link}
@@ -218,7 +219,7 @@ function ProjectList() {
                   >
                     <span className="proj-num">{String(i + 1).padStart(2, '0')}</span>
                     <span className="proj-icon">
-                      <ProjectIcon type={type} />
+                      <ProjectIcon logo={logo} type={type} />
                     </span>
                     <span className="proj-body">
                       <span className="proj-name">{name}</span>

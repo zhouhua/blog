@@ -1,14 +1,26 @@
+import inkaraLogo from '../../assets/image/inkara-logo.png';
+
 export type Type = 'gatsby' | 'github' | 'obsidian' | 'tool' | 'web';
 export interface Project {
   name: string;
   description: string;
   link: string;
   type: Type;
+  /** 项目专属 logo；有则优先于 type 图标 */
+  logo?: string;
   hidden?: boolean;
   group?: string;
 }
 
 const list: Project[] = [
+  {
+    description: '在纸上书写，墨迹渗入后页面以手写笔迹浮现回答',
+    group: 'AI 应用',
+    link: 'https://inkara.zhouhua.site',
+    logo: inkaraLogo.src,
+    name: '墨语 · inkara',
+    type: 'web',
+  },
   {
     description: '演示 font-feature-settings 的取值和效果',
     group: 'demo/工具',

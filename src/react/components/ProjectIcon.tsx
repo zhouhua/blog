@@ -18,6 +18,17 @@ const iconMap: Record<Type, ReactNode> = {
   web: <MonitorSmartphone className="mr-4 size-5" />,
 };
 
-const ProjectIcon = ({ type }: { type: Type }) => iconMap[type];
+function ProjectIcon({ logo, type }: { logo?: string; type: Type }) {
+  if (logo) {
+    return (
+      <img
+        alt=""
+        className="mr-4 size-5 rounded-sm object-cover"
+        src={logo}
+      />
+    );
+  }
+  return iconMap[type];
+}
 
 export default ProjectIcon;
