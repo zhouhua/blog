@@ -18,7 +18,7 @@ const iconMap: Record<Type, ReactNode> = {
   web: <MonitorSmartphone className="mr-4 size-5" />,
 };
 
-function ProjectIcon({ logo, type }: { logo?: string; type: Type }) {
+function ProjectIcon({ logo, type }: { logo?: string | undefined; type: Type }) {
   if (logo) {
     return (
       <img
