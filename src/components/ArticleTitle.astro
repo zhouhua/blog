@@ -82,7 +82,7 @@ const { isJournal = false, tags = [], time, title } = Astro.props;
       tags.map(tag => (
         <a href={`/tag/${tag.replace(TAG_SLUG_RE, '-').toLowerCase()}`}>
           <Badge className="text-sm font-monospace border-secondary/80" variant="outline">
-            <Hash className="mr-1 h-3 w-3 text-accent-foreground opacity-80" client:only="react" />
+            <Hash className="mr-1 h-3 w-3 text-accent-foreground opacity-80" />
             {tag}
           </Badge>
         </a>

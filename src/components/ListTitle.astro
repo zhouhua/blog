@@ -41,7 +41,7 @@ const { description, tag, title } = Astro.props;
       >
         关于
         <small>
-          <Hash className="ml-2 text-accent-foreground opacity-70" client:only="react" />
+          <Hash className="ml-2 text-accent-foreground opacity-70" />
         </small>
         <ThemedRoughNotation
           animate={false}
@@ -60,7 +60,7 @@ const { description, tag, title } = Astro.props;
         class="hidden text-sm underline-offset-4 hover:text-accent-foreground hover:underline sm:inline-flex sm:items-center"
         href="/articles"
       >
-        <ChevronRight className="mr-2" client:only="react" />
+        <ChevronRight className="mr-2" />
         所有文章
       </a>
     </div>

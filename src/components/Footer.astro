@@ -2,8 +2,8 @@
 import kofi from '@assets/image/kofi.png';
 import Container from '@components/Container.astro';
 import { SITE } from '@consts';
+import { GithubIcon } from '@react/icons/brands';
 import { Mail } from 'lucide-react';
-import { SiGithub } from 'react-icons/si';
 
 const year = new Date().getFullYear();
 ---
@@ -16,10 +16,10 @@ const year = new Date().getFullYear();
     </div>
     <div class="flex items-center gap-4 text-secondary-foreground/80">
       <a href="mailto:zhou--hua@163.com" class="flex items-center">
-        <Mail className="size-6" client:only="react" />
+        <Mail className="size-6" />
       </a>
       <a href="https://github.com/zhouhua" class="flex items-center">
-        <SiGithub className="size-6" client:only="react" />
+        <GithubIcon className="size-6" />
       </a>
       {/* eslint-disable-next-line react-dom/no-unsafe-target-blank */}
       <a href="https://ko-fi.com/O5O2VXBAE" target="_blank">

@@ -5,16 +5,17 @@ import { Dock, DockIcon } from '@react/ui/dock';
 import { Separator } from '@react/ui/separator';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@react/ui/tooltip';
 import {
+  AudioWaveform,
+  Blend,
   BookMarked,
   CircleUserRound,
+  Focus,
   Grid3X3,
   Home,
   Palette,
+  SquaresIntersect,
 } from 'lucide-react';
 import { Fragment } from 'react';
-import { BsNoiseReduction } from 'react-icons/bs';
-import { MdBlurOn, MdGradient } from 'react-icons/md';
-import { PiIntersectThreeDuotone } from 'react-icons/pi';
 
 interface DockerItem {
   name: string;
@@ -36,22 +37,22 @@ const data: DockerItem[][] = [
   ],
   [
     {
-      icon: <BsNoiseReduction className="size-4" />,
+      icon: <AudioWaveform className="size-4" />,
       link: '/projects/gradient',
       name: 'SVG Noise Generator',
     },
     {
-      icon: <MdBlurOn className="size-4" />,
+      icon: <Focus className="size-4" />,
       link: '/projects/blurry',
       name: 'Blurry Generator',
     },
     {
-      icon: <PiIntersectThreeDuotone className="size-4" />,
+      icon: <SquaresIntersect className="size-4" />,
       link: '/projects/animate-blurry',
       name: 'Animated Blurry',
     },
     {
-      icon: <MdGradient className="size-4" />,
+      icon: <Blend className="size-4" />,
       link: '/projects/collection/gradient',
       name: 'Gradient Collection',
     },
