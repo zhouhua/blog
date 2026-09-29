@@ -24,7 +24,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { toast } from 'sonner';
 import List from '../_List';
-import collections from './collection';
+import collections from './_collection';
 
 extend([namesPlugin]);
 

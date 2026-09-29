@@ -71,9 +71,7 @@ const adapter = isVercelBuild
         enabled: true,
       },
     })
-  : isDev
-    ? node({ mode: 'standalone' })
-    : null;
+  : node({ mode: 'standalone' });
 
 // https://astro.build/config
 export default defineConfig({

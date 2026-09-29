@@ -1,4 +1,4 @@
-import type { IPattern } from './collection';
+import type { IPattern } from './_collection';
 import { cn } from '@lib/utils';
 import NumberFlow from '@number-flow/react';
 import { HelpDrawer } from '@react/components/HelpDrawer';
@@ -25,7 +25,7 @@ import { toast } from 'sonner';
 
 import parse from 'style-to-js';
 import List from '../_List';
-import collections, { groups } from './collection';
+import collections, { groups } from './_collection';
 
 extend([namesPlugin, minifyPlugin]);
 
