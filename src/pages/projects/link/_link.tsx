@@ -55,6 +55,7 @@ import {
 } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
+import { buildShortUrl, isApiSuccess } from './_logic';
 
 declare module '@tanstack/react-table' {
   // add fuzzy filter to the filterFns
@@ -90,7 +91,7 @@ function ShortLink() {
   const { data = [], loading, refreshAsync } = useRequest<ILink[], never[]>(async () => {
     try {
       const res = await axios.get('/api/links');
-      if (res.data.code === 0) {
+      if (isApiSuccess(res.data.code)) {
         return res.data.list || [];
       }
       else {
@@ -106,8 +107,8 @@ function ShortLink() {
   const { loading: createLoading, runAsync } = useRequest(async () => {
     try {
       const res = await axios.post('/api/link', { value: url });
-      if (res.data.code === 0) {
-        copy(`${location.origin}/i/${res.data.key}`, {
+      if (isApiSuccess(res.data.code)) {
+        copy(buildShortUrl(location.origin, res.data.key), {
           onCopy: () => {
             toast.success('创建成功，短链地址已复制到剪切板!');
           },
@@ -137,7 +138,7 @@ function ShortLink() {
           key,
         },
       });
-      if (res.data.code === 0) {
+      if (isApiSuccess(res.data.code)) {
         toast.success('删除成功！');
         refreshAsync();
         return;
@@ -156,7 +157,7 @@ function ShortLink() {
           <div
             className="flex gap-1 items-center cursor-pointer"
             onClick={() => {
-              const url = `${location.origin}/i/${key}`;
+              const url = buildShortUrl(location.origin, key);
               copy(url, {
                 onCopy: () => {
                   toast.info(`${url} 已复制到剪切板`);
@@ -222,7 +223,7 @@ function ShortLink() {
               variant="link"
               className="text-gray"
               onClick={() => {
-                const url = `${location.origin}/i/${key}`;
+                const url = buildShortUrl(location.origin, key);
                 window.open(url, '_blank');
               }}
             >

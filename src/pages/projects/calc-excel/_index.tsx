@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import * as XLSX from 'xlsx';
 import { ExcelUploader } from './_ExcelUploader';
+import { findRowExceedingThreshold } from './_logic';
 
 interface CalculationResult {
   rowNumber: number;
@@ -65,54 +66,38 @@ function CalcExcel() {
   const handleCalculate = () => {
     setResult(null);
 
-    if (!selectedColumn) {
-      toast.error('请选择列');
-      return;
-    }
+    const outcome = findRowExceedingThreshold({
+      columns,
+      selectedColumn,
+      sheetData,
+      threshold,
+    });
 
-    const thresholdValue = Number.parseFloat(threshold);
-    if (Number.isNaN(thresholdValue)) {
-      toast.error('请输入有效的阈值');
-      return;
-    }
-
-    const columnIndex = columns.indexOf(selectedColumn);
-    if (columnIndex === -1) {
-      toast.error('选择的列不存在');
-      return;
-    }
-
-    let cumulativeSum = 0;
-    for (let i = 1; i < sheetData.length; i++) {
-      const row = sheetData[i];
-      if (!row)
-        continue;
-
-      const cellValue = Number.parseFloat(String(row[columnIndex] || 0));
-
-      if (Number.isNaN(cellValue)) {
-        continue;
-      }
-
-      cumulativeSum += cellValue;
-
-      if (cumulativeSum > thresholdValue) {
-        const rowData: Record<string, unknown> = {};
-        columns.forEach((col, idx) => {
-          rowData[col] = row[idx];
-        });
-
-        setResult({
-          cumulativeSum,
-          rowData,
-          rowNumber: i + 1,
-        });
-        toast.success(`找到目标行：第 ${i + 1} 行`);
+    if (!outcome.ok) {
+      if (outcome.reason === 'missing-column') {
+        toast.error('请选择列');
         return;
       }
+      if (outcome.reason === 'invalid-threshold') {
+        toast.error('请输入有效的阈值');
+        return;
+      }
+      if (outcome.reason === 'column-not-found') {
+        toast.error('选择的列不存在');
+        return;
+      }
+      toast.warning(
+        `所有行累加后的值为 ${(outcome.cumulativeSum ?? 0).toFixed(2)}，未超过阈值 ${Number.parseFloat(threshold)}`,
+      );
+      return;
     }
 
-    toast.warning(`所有行累加后的值为 ${cumulativeSum.toFixed(2)}，未超过阈值 ${thresholdValue}`);
+    setResult({
+      cumulativeSum: outcome.cumulativeSum,
+      rowData: outcome.rowData,
+      rowNumber: outcome.rowNumber,
+    });
+    toast.success(`找到目标行：第 ${outcome.rowNumber} 行`);
   };
 
   return (

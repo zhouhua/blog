@@ -1,0 +1,10 @@
+shellEmulator: true
+trustPolicy: no-downgrade
+allowBuilds:
+  '@parcel/watcher': true
+  '@sentry/cli': true
+  bufferutil: true
+  esbuild: true
+  puppeteer: true
+  sharp: true
+  simple-git-hooks: true

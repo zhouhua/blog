@@ -31,7 +31,6 @@ ctx.onmessage = async (event: MessageEvent<WorkerMessage>) => {
 
   const [esModule, lodashEsModule] = await Promise.all([
     import('es-toolkit'),
-    // eslint-disable-next-line e18e/ban-dependencies
     import('lodash-es'),
   ]);
 

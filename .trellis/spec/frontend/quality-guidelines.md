@@ -8,10 +8,13 @@ Match the checks the repo already runs. Do not add a second formatter or a new t
 pnpm lint          # eslint, zero warnings policy is not configured; warnings exist
 pnpm lint:fix      # eslint --fix
 pnpm test          # vitest run, jsdom, src/**/*.test.ts and src/**/*.test.tsx
+pnpm test:coverage # vitest run --coverage (local only; no CI threshold)
 pnpm build         # astro check, then astro build
 ```
 
 `pnpm build` is the type check. Pre-commit runs `eslint --fix` through lint-staged on staged files.
+
+CI (`.github/workflows/ci.yml`) runs `pnpm lint` and `pnpm test` on push and pull_request. It does **not** run `build` or coverage.
 
 Vitest config is `vitest.config.ts`: environment `jsdom`, setup file `vitest.setup.ts`, include only tests under `src/`. Files in `tests/*.test.mjs` are not part of that include list. `tests/responsive-layout.test.mjs` is a source-text assertion over Astro/TSX class names, not a browser test. Follow that style only when you are locking a class string; otherwise use a `src/**/*.test.ts` unit test.
 

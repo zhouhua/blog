@@ -15,6 +15,7 @@ export default config(
       '.trellis/**/*',
       '.vscode/**/*',
       'dist/**/*',
+      'coverage/**/*',
       'exports/**/*',
       'public/**/*',
       'src/react/ui/**/*',
@@ -33,6 +34,9 @@ export default config(
   },
   {
     rules: {
+      'e18e/ban-dependencies': ['error', {
+        allowed: ['axios', 'crypto-js', 'lint-staged', 'lodash-es'],
+      }],
       'eslint-comments/no-unlimited-disable': 'off',
       'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
       'no-console': 'warn',

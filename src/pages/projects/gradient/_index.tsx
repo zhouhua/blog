@@ -17,13 +17,18 @@ import { Slider } from '@react/ui/slider';
 import { Toaster } from '@react/ui/sonner';
 import { Switch } from '@react/ui/switch';
 import { Chrome } from '@uiw/react-color';
-import { colord, random as randomColor } from 'colord';
+import { random as randomColor } from 'colord';
 import { random } from 'es-toolkit/math';
 import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useWindowSize } from 'react-use';
 import { z } from 'zod';
+import {
+  buildGradientSvgMarkup,
+  buildLinearGradientCss,
+  deriveGradientStops,
+} from './_logic';
 
 const formSchema = z.object({
   enableNoise: z.boolean(),
@@ -41,14 +46,8 @@ function Gradient() {
   const [imageFormat, setImageFormat] = useState('png');
   const [selectedPreset, setSelectedPreset] = useState<string>('');
   const [color1, color2, color3, rotate] = useMemo(() => {
-    if (colorMode === 'solid') {
-      return [colord(color), colord(color), colord(color), 0];
-    }
-    const color2 = colord(color).alpha(1).desaturate(random(0.1, 0.15)).lighten(random(0.1, 0.15));
-    const color1 = color2.rotate(random(-70, -50)).saturate(random(0.15, 0.2)).lighten(random(0, 0.5));
-    const color3 = color2.rotate(random(50, 70)).saturate(random(0.45, 0.55)).darken(random(0.1, 0.15));
-    const rotate = Math.floor(random(0, 360));
-    return [color1, color2, color3, rotate];
+    const stops = deriveGradientStops(color, colorMode, random);
+    return [stops.color1, stops.color2, stops.color3, stops.rotate];
   }, [color, colorMode]);
 
   const form = useForm({
@@ -70,26 +69,17 @@ function Gradient() {
     element.style.overflow = 'hidden';
 
     if (imageFormat === 'svg') {
-      const filterContent = `
-        <filter id="noise" x="0" y="0">
-          <feTurbulence type="fractalNoise" baseFrequency="${formValues.noiseFrequency}" numOctaves="3" stitchTiles="stitch" />
-          <feBlend mode="normal" />
-        </filter>
-      `;
-      const svgContent = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="${imageWidth}" height="${imageHeight}">
-          <defs>
-            <linearGradient id="lineGradient" gradientTransform="rotate(${rotate})">
-              <stop offset="0%" stop-color="${color1.toHex()}" />
-              <stop offset="50%" stop-color="${color2.toHex()}" />
-              <stop offset="100%" stop-color="${color3.toHex()}" />
-            </linearGradient>
-            ${formValues.enableNoise ? filterContent : ''}
-          </defs>
-          <rect x="0" y="0" width="${imageWidth}" height="${imageHeight}" fill="url(#lineGradient)" />
-          ${formValues.enableNoise ? `<rect width="${imageWidth}" height="${imageHeight}" x="0" y="0" filter="url(#noise)" opacity="${formValues.opacity}" />` : ''}
-        </svg>
-      `;
+      const svgContent = buildGradientSvgMarkup({
+        color1Hex: color1.toHex(),
+        color2Hex: color2.toHex(),
+        color3Hex: color3.toHex(),
+        enableNoise: formValues.enableNoise,
+        height: imageHeight,
+        noiseFrequency: formValues.noiseFrequency,
+        opacity: formValues.opacity,
+        rotate,
+        width: imageWidth,
+      });
       const blob = new Blob([svgContent], { type: 'image/svg+xml' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -103,7 +93,12 @@ function Gradient() {
       gradientSvg.style.width = '100%';
       gradientSvg.style.height = '100%';
       gradientSvg.style.position = 'absolute';
-      gradientSvg.style.backgroundImage = `linear-gradient(${rotate}deg, ${color1.toHex()}, ${color2.toHex()}, ${color3.toHex()})`;
+      gradientSvg.style.backgroundImage = buildLinearGradientCss(
+        rotate,
+        color1.toHex(),
+        color2.toHex(),
+        color3.toHex(),
+      );
 
       const noiseSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       noiseSvg.setAttribute('width', '100%');

@@ -1,0 +1,3 @@
+{"file": ".trellis/spec/frontend/quality-guidelines.md", "reason": "验收时核对：测试命名、_logic 模式、未引入 Playwright/第二 runner"}
+{"file": ".trellis/spec/frontend/component-guidelines.md", "reason": "确认抽取未破坏 Astro/React island 边界"}
+{"file": ".trellis/tasks/09-29-automated-testing/design.md", "reason": "对照抽取边界与 CI 设计做完成检查"}
