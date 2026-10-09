@@ -114,6 +114,10 @@ export default defineConfig({
     syntaxHighlight: false,
   },
   output: isDev ? 'server' : 'static',
+  // Bind IPv4 explicitly — default "localhost" can be ::1-only, breaking 127.0.0.1 clients.
+  server: {
+    host: '127.0.0.1',
+  },
   site: 'https://zhouhua.site/',
   trailingSlash: 'ignore',
   vite: {

@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.0.0",
   "scripts": {
-    "dev": "NODE_OPTIONS=--max-old-space-size=6144 astro dev",
+    "dev": "NODE_OPTIONS=--max-old-space-size=6144 astro dev --host 127.0.0.1",
     "dev:network": "NODE_OPTIONS=--max-old-space-size=6144 astro dev --host",
     "build": "NODE_OPTIONS=--max-old-space-size=6144 astro check && NODE_OPTIONS=--max-old-space-size=8192 astro build",
     "build:analyze": "ANALYZE=true NODE_OPTIONS=--max-old-space-size=8192 astro build",
