@@ -23,6 +23,15 @@ describe('createLinkSchema', () => {
     const result = createLinkSchema.safeParse({ value: 'not-a-url' });
     expect(result.success).toBe(false);
   });
+
+  it('rejects javascript and data urls', () => {
+    expect(createLinkSchema.safeParse({ value: 'javascript:alert(1)' }).success).toBe(false);
+    expect(createLinkSchema.safeParse({ value: 'data:text/html,hi' }).success).toBe(false);
+  });
+
+  it('rejects ftp urls', () => {
+    expect(createLinkSchema.safeParse({ value: 'ftp://example.com/a' }).success).toBe(false);
+  });
 });
 
 describe('deleteLinkSchema', () => {

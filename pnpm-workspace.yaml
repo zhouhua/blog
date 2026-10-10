@@ -1,5 +1,9 @@
 shellEmulator: true
 trustPolicy: no-downgrade
+# Known transitive pins that fail no-downgrade (also listed in .npmrc).
+trustPolicyExclude:
+  - chokidar@4.0.3
+  - semver@6.3.1
 allowBuilds:
   '@parcel/watcher': true
   '@sentry/cli': true

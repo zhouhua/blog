@@ -1,18 +1,8 @@
 import type { APIRoute } from 'astro';
-import dayjs from '@lib/dayjs';
 import { apiLogger } from '@lib/logger';
-import { hash } from 'ohash';
 import db from './_db';
 import { createLinkSchema, deleteLinkSchema, getLinkSchema } from './_schemas';
-import { base62 } from './_utils';
-
-function createLinkKey(value: string) {
-  let num = 0;
-  for (const char of hash(value)) {
-    num = (num * 33 + char.charCodeAt(0)) >>> 0;
-  }
-  return base62(num || 1);
-}
+import { createLinkKey, isUniqueViolation } from './_utils';
 
 export const GET: APIRoute = async ({ request }) => {
   const url = new URL(request.url);
@@ -104,15 +94,27 @@ export const POST: APIRoute = async ({ request }) => {
       const item = await db.selectFrom('links').selectAll().where('key', '=', key).executeTakeFirst();
 
       if (!item) {
-        await db.insertInto('links').values({ key, last_use: new Date(), value }).execute();
-        break;
+        try {
+          await db.insertInto('links').values({ key, last_use: new Date(), value }).execute();
+          break;
+        }
+        catch (error) {
+          // Concurrent insert on the same key — re-check instead of failing hard.
+          if (!isUniqueViolation(error)) {
+            throw error;
+          }
+          const raced = await db.selectFrom('links').selectAll().where('key', '=', key).executeTakeFirst();
+          if (raced?.value === value) {
+            await db.updateTable('links').set({ last_use: new Date() }).where('key', '=', key).execute();
+            break;
+          }
+          maxRetry--;
+          padding += ' ';
+          continue;
+        }
       }
       else if (item.value === value) {
         await db.updateTable('links').set({ last_use: new Date() }).where('key', '=', key).execute();
-        break;
-      }
-      else if (dayjs().subtract(3, 'M').isAfter(dayjs(item.last_use))) {
-        await db.updateTable('links').set({ last_use: new Date(), value }).where('key', '=', key).execute();
         break;
       }
       else {

@@ -1,7 +1,7 @@
 import type { MarkdownInstance } from 'astro';
+import { createHash } from 'node:crypto';
 import process from 'node:process';
 import { algoliasearch } from 'algoliasearch';
-import crypto from 'crypto-js';
 import { chunk } from 'es-toolkit/array';
 import { omit } from 'es-toolkit/object';
 import { shouldRunAlgoliaIndex } from './algolia-utils';
@@ -9,7 +9,7 @@ import { getExcerpt } from './html';
 import { appLogger } from './logger';
 
 function MD5(str: string) {
-  return crypto.MD5(str).toString();
+  return createHash('md5').update(str).digest('hex');
 }
 
 const indexName = 'blog';

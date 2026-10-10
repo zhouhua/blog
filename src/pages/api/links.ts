@@ -1,5 +1,8 @@
 import type { APIRoute } from 'astro';
+import { apiLogger } from '@lib/logger';
 import db from './_db';
+
+export const prerender = false;
 
 export const GET: APIRoute = async () => {
   try {
@@ -14,12 +17,13 @@ export const GET: APIRoute = async () => {
       },
     );
   }
-  catch (e) { }
-
-  return new Response(JSON.stringify({ code: 1 }), {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    status: 404,
-  });
+  catch (error) {
+    apiLogger.error('Database error in GET /api/links', error);
+    return new Response(JSON.stringify({ code: 1, message: '服务器错误' }), {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      status: 500,
+    });
+  }
 };

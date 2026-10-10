@@ -30,8 +30,8 @@
 ### 1.1 轮换敏感凭证并从 Git 历史删除
 
 #### 问题描述
-- `.env` 文件被提交到版本控制
-- 包含数据库密码 `Mvb5uPA3eQCa`、Algolia Admin Key 等
+- `.env` 文件曾被提交到版本控制
+- 包含数据库密码、Algolia Admin Key 等（具体值勿写入文档；见 SECURITY_FIX_GUIDE）
 - 任何有 Git 访问权限的人都可以获取
 
 #### 实施步骤

@@ -45,7 +45,6 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { useRequest } from 'ahooks';
-import axios from 'axios';
 import copy from 'copy-to-clipboard';
 import {
   Ban,
@@ -90,39 +89,45 @@ interface ILink {
 function ShortLink() {
   const { data = [], loading, refreshAsync } = useRequest<ILink[], never[]>(async () => {
     try {
-      const res = await axios.get('/api/links');
-      if (isApiSuccess(res.data.code)) {
-        return res.data.list || [];
+      const res = await fetch('/api/links');
+      const data = await res.json();
+      if (isApiSuccess(data.code)) {
+        return data.list || [];
       }
       else {
         toast.error('获取短链列表失败！');
         return [];
       }
     }
-    catch (e) {
+    catch {
       return [];
     }
   }, {});
   const [url, setUrl] = useState<string>('');
   const { loading: createLoading, runAsync } = useRequest(async () => {
     try {
-      const res = await axios.post('/api/link', { value: url });
-      if (isApiSuccess(res.data.code)) {
-        copy(buildShortUrl(location.origin, res.data.key), {
+      const res = await fetch('/api/link', {
+        body: JSON.stringify({ value: url }),
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+      });
+      const data = await res.json();
+      if (isApiSuccess(data.code)) {
+        copy(buildShortUrl(location.origin, data.key), {
           onCopy: () => {
             toast.success('创建成功，短链地址已复制到剪切板!');
           },
         });
         refreshAsync();
         setTimeout(setUrl, 1000, '');
-        return res.data.list || [];
+        return data.list || [];
       }
       else {
         toast.error('创建短链失败！');
         return [];
       }
     }
-    catch (e) {
+    catch {
       return [];
     }
   }, {
@@ -133,18 +138,20 @@ function ShortLink() {
   const tableContainerRef = useRef<HTMLDivElement>(null);
   const deleteLink = async (key: string) => {
     try {
-      const res = await axios.delete(`/api/link`, {
-        data: {
-          key,
-        },
+      const res = await fetch('/api/link', {
+        body: JSON.stringify({ key }),
+        headers: { 'Content-Type': 'application/json' },
+        method: 'DELETE',
       });
-      if (isApiSuccess(res.data.code)) {
+      const data = await res.json();
+      if (isApiSuccess(data.code)) {
         toast.success('删除成功！');
         refreshAsync();
         return;
       }
     }
-    catch (e) {
+    catch {
+      // toast below
     }
     toast.error('删除失败！');
   };
@@ -177,7 +184,7 @@ function ShortLink() {
       accessorKey: 'value',
       cell: ({ getValue }) => {
         const url = getValue() as string;
-        return <a href={url} className="text-accent hover:underline" target="_blank">{url}</a>;
+        return <a href={url} className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">{url}</a>;
       },
       enableGlobalFilter: true,
       header: 'URL',
