@@ -1,9 +1,12 @@
 import archifyLogo from '../../assets/image/archify-logo.png';
 import cascadiaCodeLogo from '../../assets/image/cascadia-code-logo.png';
 import chromeLogo from '../../assets/image/chrome-logo.png';
+import claudeCodeLogo from '../../assets/image/claude-code-logo.png';
+import codexLogo from '../../assets/image/codex-logo.png';
 import cursorLogo from '../../assets/image/cursor-logo.png';
+import diagramDesignLogo from '../../assets/image/diagram-design-logo.png';
 import firaCodeLogo from '../../assets/image/fira-code-gh-logo.png';
-import grillMeLogo from '../../assets/image/grill-me.png';
+import grillWithDocsLogo from '../../assets/image/grill-with-docs.png';
 import hallmarkLogo from '../../assets/image/hallmark-logo.png';
 import impeccableLogo from '../../assets/image/impeccable-logo.png';
 import iterm2Logo from '../../assets/image/iterm2.png';
@@ -11,11 +14,15 @@ import lucideLogo from '../../assets/image/lucide-logo.png';
 import lxgwZhenkaiLogo from '../../assets/image/lxgw-zhenkai-logo.png';
 import mosLogo from '../../assets/image/mos.png';
 import ohMyZshLogo from '../../assets/image/oh-my-zsh-logo.png';
+import opencodeLogo from '../../assets/image/opencode-logo.png';
 import openpanelLogo from '../../assets/image/openpanel-logo.png';
 import phosphoriconsLogo from '../../assets/image/phosphoricons-logo.png';
+import ponytailLogo from '../../assets/image/ponytail.png';
 import raycastLogo from '../../assets/image/raycast.png';
 import reiconLogo from '../../assets/image/reicon-logo.png';
+import squirrelLogo from '../../assets/image/squirrel-logo.png';
 import superpowersLogo from '../../assets/image/superpowers.png';
+import tasteSkillLogo from '../../assets/image/taste-skill-logo.png';
 import trellisLogo from '../../assets/image/trellis.png';
 import typelessLogo from '../../assets/image/typeless-logo.png';
 import uiUxProMaxLogo from '../../assets/image/ui-ux-pro-max-logo.png';
@@ -77,10 +84,16 @@ export const USES_GROUPS: UseGroup[] = [
             note: '装在 coding agent 上的一套开发方法。先确认规格，再按测试驱动实现。',
           },
           {
-            href: '/2026/grill-me',
-            logo: grillMeLogo.src,
-            name: 'grill-me',
-            note: '从一个还没成形的想法问起，直到问清楚。不写文件。',
+            href: '/2026/grill-with-docs',
+            logo: grillWithDocsLogo.src,
+            name: 'grill-with-docs',
+            note: '对计划或设计做追问，直到和 agent 达成同一理解，并把词汇和难定的决定写进仓库。',
+          },
+          {
+            href: '/2026/ponytail',
+            logo: ponytailLogo.src,
+            name: 'ponytail',
+            note: '给 AI coding agent 用的规则集。让它只写能完成任务的最少代码。',
           },
         ],
         title: '方法论',
@@ -108,6 +121,12 @@ export const USES_GROUPS: UseGroup[] = [
             name: 'impeccable',
             note: '给 agent 用的设计词汇。用来从零做界面、改已有界面，并守住已有的设计系统。',
           },
+          {
+            href: 'https://www.tasteskill.dev/',
+            logo: tasteSkillLogo.src,
+            name: 'taste-skill',
+            note: '给 AI agent 用的反套版前端框架。用开源 skill 文件，阻止 Cursor、Claude Code、Codex 等交出套路化的界面。',
+          },
         ],
         title: '设计',
       },
@@ -119,6 +138,12 @@ export const USES_GROUPS: UseGroup[] = [
             logo: archifyLogo.src,
             name: 'archify',
             note: '写给 coding agent 的 skill。把系统描述画成可交互的技术图。',
+          },
+          {
+            href: 'https://diagramdesign.dev',
+            logo: diagramDesignLogo.src,
+            name: 'diagram-design',
+            note: '给 agent 用的画图 skill。按你的品牌，把图输出成自包含的 HTML + SVG。',
           },
         ],
         title: '图表',
@@ -148,13 +173,6 @@ export const USES_GROUPS: UseGroup[] = [
         note: '替代系统「终端」的终端模拟器。',
       },
       {
-        href: 'https://cursor.com/',
-        invert: true,
-        logo: cursorLogo.src,
-        name: 'cursor',
-        note: '编程用的 agent。把想法交给它，由它做成软件。',
-      },
-      {
         href: 'https://www.typeless.com/',
         logo: typelessLogo.src,
         name: 'typeless',
@@ -166,9 +184,16 @@ export const USES_GROUPS: UseGroup[] = [
         name: 'chrome',
         note: '网页浏览器。用来浏览网页。',
       },
+      {
+        href: 'https://rime.im/',
+        logo: squirrelLogo.src,
+        name: '鼠须管',
+        note: 'Rime 在 macOS 上的输入法前端。用来输入中文。',
+      },
     ],
     title: 'Mac 软件',
   },
+
   {
     id: 'open-source',
     items: [
@@ -244,5 +269,37 @@ export const USES_GROUPS: UseGroup[] = [
       },
     ],
     title: '设计',
+  },
+  {
+    id: 'coding-agents',
+    items: [
+      {
+        href: 'https://openai.com/codex/',
+        invert: true,
+        logo: codexLogo.src,
+        name: 'codex',
+        note: 'OpenAI 的编程 agent。在终端里查看、修改代码并运行命令。',
+      },
+      {
+        href: 'https://claude.com/product/claude-code',
+        logo: claudeCodeLogo.src,
+        name: 'claude code',
+        note: 'Anthropic 的编程 agent。读懂代码库，改文件、跑命令，把功能做出来。',
+      },
+      {
+        href: 'https://opencode.ai/',
+        logo: opencodeLogo.src,
+        name: 'opencode',
+        note: '开源的 AI coding agent。在终端、IDE 或桌面里帮你写代码。',
+      },
+      {
+        href: 'https://cursor.com/',
+        invert: true,
+        logo: cursorLogo.src,
+        name: 'cursor',
+        note: '编程用的 agent。把想法交给它，由它做成软件。',
+      },
+    ],
+    title: '编程 Agent',
   },
 ];
