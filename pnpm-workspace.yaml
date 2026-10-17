@@ -9,6 +9,7 @@ allowBuilds:
   '@sentry/cli': true
   bufferutil: true
   esbuild: true
-  puppeteer: true
+  # Dev-only (astro-page-insight). Its postinstall downloads Chrome and fails the Vercel install.
+  puppeteer: false
   sharp: true
   simple-git-hooks: true
