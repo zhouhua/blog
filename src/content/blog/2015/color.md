@@ -1,5 +1,6 @@
 ---
 title: 带 Alpha 通道的色彩叠加问题
+description: css3 的 rgba 色彩模式、png/gif 图片的 alpha 通道、canvas 的 rgba 色彩模式、css3 的阴影、css3 的 opacity 属性等等，这些应用在网页中…
 tags:
   - alpha通道
   - color

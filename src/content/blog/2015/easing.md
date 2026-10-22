@@ -1,5 +1,6 @@
 ---
 title: 学写 jquery 缓动函数
+description: 问题引入：实现如下效果 两个方块的追逐效果，使用 css3，实现起来没什么难度： 用到了 css3 的 animate 属性，不是很复杂。
 tags:
   - animate
   - css3

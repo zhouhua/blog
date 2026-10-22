@@ -1,5 +1,6 @@
 ---
 title: 如何在 Node.js 环境下操作 DOM
+description: Javascript 之所以为 Javascript，很重要的原因是浏览器为其实现了 DOM 和 BOM 接口（参考）。
 tags:
   - dom
   - jsdom

@@ -9,7 +9,7 @@ hero: ./rabbit.jpg
 type: post
 date: 2017-07-30 10:00:00
 featured: true
-description: '阅读《复杂》一书时的笔记及延伸。本文涉及到的生态学、数学、计算机科学部分都比较肤浅，如有错漏，欢迎斧正。..'
+description: 阅读 《复杂》 一书时的笔记及延伸。本文涉及到的生态学、数学、计算机科学部分都比较肤浅，如有错漏，欢迎斧正。
 ---
 
 > 阅读 [《复杂》](https://book.douban.com/subject/6749832/) 一书时的笔记及延伸。

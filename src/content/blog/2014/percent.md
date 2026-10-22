@@ -1,5 +1,6 @@
 ---
 title: padding、margin 纵向取值问题
+description: 这个问题之所以被忽略，是因为使用场景有限。因为在布局的时候，我们通常只关注宽度，流式布局、响应式布局中，我们常常会给 padding 设置横向的百分比数值。
 tags:
   - CSS
   - margin

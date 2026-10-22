@@ -16,7 +16,7 @@ export async function GET(context: Context) {
   return rss({
     description: HOME.DESCRIPTION,
     items: items.map(item => ({
-      description: item.data.description,
+      description: item.data.description ?? '',
       link: `/${item.id}/`,
       pubDate: item.data.date,
       title: item.data.title,

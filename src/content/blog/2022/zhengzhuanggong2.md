@@ -1,5 +1,6 @@
 ---
 title: 郑庄公的性格分析（下）
+description: 郑庄公性格分析（下）：结局如何回扣性格与选择。
 tags:
   - 历史
   - 郑庄公
@@ -8,6 +9,7 @@ type: post
 hero: ./zhengzhuanggong2.jpg
 heroCopyright: Photo by <a href="https://unsplash.com/@zhangkaiyv?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">zhang kaiyv</a> on <a href="https://unsplash.com/photos/photo-of-yellow-trees-IR-rzCPNGGg?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
 date: 2022-09-18 10:00:00
+
 ---
 
 郑庄公如何对待弟弟和母亲，多少还算家事范畴，而他如何对待周天子，则代表了他对待君臣纲常的态度。关于他不尊礼法，挑战天子的故事就更多了，第一件事就是周郑交质。

@@ -1,5 +1,6 @@
 ---
 title: 网页中元素实现水平居中的方法
+description: "网页元素水平居中的常见做法：行内 text-align、块级定宽 margin:auto，以及更现代的布局方式。"
 tags:
   - CSS
   - 水平居中

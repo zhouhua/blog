@@ -1,5 +1,6 @@
 ---
 title: Ponytail：让 AI agent 只写能工作的最少代码
+description: Ponytail：约束 AI agent 只写能工作的最少代码，少抽象、少提前设计。
 tags:
   - AI
   - skill

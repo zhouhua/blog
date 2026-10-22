@@ -1,5 +1,6 @@
 ---
 title: Superpowers：一套软件开发方法
+description: Superpowers：一套给软件开发用的方法与 skill 组合，强调流程与验证。
 tags:
   - AI
   - skill

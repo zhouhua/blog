@@ -1,5 +1,6 @@
 ---
 title: hallmark：给 coding agent 的设计 skill
+description: hallmark：给 coding agent 用的设计 skill，约束视觉与交互品味。
 tags:
   - AI
   - skill

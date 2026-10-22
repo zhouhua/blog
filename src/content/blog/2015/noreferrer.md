@@ -1,5 +1,6 @@
 ---
 title: 聊聊 rel=noreferrer 的事
+description: "背景 .scale { font-size: 2em; } 在一个页面 A 中，点击一个链接，浏览器会跳转到页面 B。"
 tags:
   - Javascript
   - noreferrer

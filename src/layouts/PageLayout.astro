@@ -2,26 +2,61 @@
 import Footer from '@components/Footer.astro';
 import Head from '@components/Head.astro';
 import Header from '@components/Header.astro';
-import { SITE } from '@consts';
 import 'katex/dist/katex.css';
 
 type Props = {
   title: string;
   description: string;
+  image?: string | undefined;
+  imageAlt?: string | undefined;
+  imageWidth?: number | undefined;
+  imageHeight?: number | undefined;
+  imageType?: string | undefined;
+  ogType?: 'article' | 'website' | undefined;
+  publishedTime?: Date | string | undefined;
+  jsonLd?: null | Record<string, unknown> | undefined;
 };
 
-const { description, title } = Astro.props;
+const {
+  description,
+  image,
+  imageAlt,
+  imageHeight,
+  imageType,
+  imageWidth,
+  jsonLd,
+  ogType,
+  publishedTime,
+  title,
+} = Astro.props;
 ---
 
 <!doctype html>
 <html lang="zh-Hans">
   <head>
-    <Head description={description} title={title ? `${title} | ${SITE.NAME}` : SITE.NAME} />
+    <Head
+      description={description}
+      image={image}
+      imageAlt={imageAlt}
+      imageHeight={imageHeight}
+      imageType={imageType}
+      imageWidth={imageWidth}
+      jsonLd={jsonLd}
+      ogType={ogType}
+      publishedTime={publishedTime}
+      title={title}
+    />
   </head>
   <body class="colorModeTransition relative h-screen overflow-y-auto scrollbar-both-edges bg-bg">
     <div class="bg-bg text-foreground" data-vaul-drawer-wrapper>
+      <a
+        class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-bg focus:px-3 focus:py-2 focus:shadow"
+        href="#main"
+      >
+        跳到正文
+      </a>
       <Header />
-      <main transition:animate="slide">
+      <main id="main" transition:animate="slide">
         <slot />
       </main>
       <Footer />

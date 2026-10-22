@@ -1,5 +1,6 @@
 ---
 title: Web 防护：CORS、CSRF、XSS 和响应头
+description: CORS、CSRF、XSS 与安全响应头：网关和前端日常该守住的几层防护。
 tags:
   - 安全
   - Web

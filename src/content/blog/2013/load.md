@@ -1,5 +1,6 @@
 ---
 title: CSS 性能优化系列之加载原理
+description: 从 CSS 加载原理谈性能：样式如何阻塞渲染，以及优化加载链路的思路。
 tags:
   - Cache
   - CSS

@@ -1,7 +1,7 @@
 ---
 import Container from '@components/Container.astro';
 import ProjectTitle from '@components/ProjectTitle.astro';
-import { HOME, SITE } from '@consts';
+import { HOME } from '@consts';
 import projectList from '@content/projects/list';
 import PageLayout from '@layouts/PageLayout.astro';
 import Benchmark from './_index';
@@ -16,11 +16,10 @@ const description
   = project?.description ?? 'es-toolkit 与 lodash-es 的 bundle size 和运行性能对比';
 
 const layoutTitle = `${HOME.TITLE} - ${name}`;
-const headTitle = `${name} | ${SITE.NAME}`;
 ---
 
 {embed && (
-  <EmbedPage description={description} title={headTitle}>
+  <EmbedPage description={description} title={name}>
     <div class="flex h-full w-full items-stretch justify-center p-4 sm:p-6">
       <div class="flex h-full w-full max-w-5xl mx-auto items-stretch">
         <Benchmark client:only="react" inEmbed={true} />

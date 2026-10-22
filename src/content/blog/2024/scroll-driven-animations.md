@@ -1,5 +1,6 @@
 ---
 title: 介绍 scroll-driven animations
+description: CSS scroll-driven animations：不用 JS 也能把滚动进度接到动画时间线上。
 tags:
   - css
   - javascript

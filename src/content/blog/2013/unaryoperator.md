@@ -1,5 +1,6 @@
 ---
 title: 从 +new Date 说起，Javascript 的一元操作符
+description: 从 +new Date 出发，梳理 JavaScript 一元操作符的类型转换与常见写法。
 tags:
   - ECMAScript
   - Javascript

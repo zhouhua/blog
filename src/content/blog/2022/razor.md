@@ -1,5 +1,6 @@
 ---
 title: 汉隆剃刀
+description: 汉隆剃刀：能用愚蠢解释的，就不要先用恶意解释。
 tags:
   - 汉隆剃刀
   - 思维方式
@@ -7,6 +8,7 @@ type: post
 category: 思维方式
 hero: ./razor.jpg
 date: 2022-05-16 10:00:00
+
 ---
 
 记录一下今天看到一个有意思的思想：[汉隆剃刀](https://mp.weixin.qq.com/s?__biz=MjM5NjAxOTU4MA==&mid=3009239354&idx=1&sn=87766d4c8cbee43ce98adb35083f70d5&chksm=90465529a731dc3f09570f553993a1155f9f03a73a429a8899f001741fc67cc1b77b10a895e2&scene=21)。

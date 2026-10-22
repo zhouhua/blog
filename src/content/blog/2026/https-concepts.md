@@ -1,5 +1,6 @@
 ---
 title: HTTPS 该搞清楚的几件事
+description: 把 HTTPS 里的协议、证书、套件、HSTS、OCSP 串成一条能动手配置的线。
 tags:
   - HTTPS
   - 安全

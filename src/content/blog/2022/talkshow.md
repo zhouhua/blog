@@ -1,5 +1,6 @@
 ---
 title: 谈谈脱口秀大会第五季
+description: 脱口秀大会第五季：好笑之外，结构、人物与行业审美在变什么。
 tags:
   - 脱口秀
 category: 其他
@@ -7,6 +8,7 @@ type: post
 hero: ./talkshow.jpg
 heroCopyright: Photo by <a href="https://unsplash.com/@timmossholder?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Tim Mossholder</a> on <a href="https://unsplash.com/photos/laugh-neon-signage-imlD5dbcLM4?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
 date: 2022-10-07 10:00:00
+
 ---
 
 这几天补了一下《脱口秀大会 5》，谈几点感受。最大的疑问是笑果这家公司怎么了。

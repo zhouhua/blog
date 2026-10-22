@@ -1,5 +1,6 @@
 ---
 title: 免费证书和收费证书怎么选
+description: 免费证书与收费证书差在哪：验证、保险、支持与适用场景怎么选。
 tags:
   - HTTPS
   - SSL

@@ -1,5 +1,6 @@
 ---
 title: 更优雅地绘制阴影
+description: Box-shadow 虽然是一个 css3 的属性，但由于浏览器支持不错，且用它来营造一种立体感、层次感着实方便，这让它成为了互联网上随处可见的 css3 特效。
 tags:
   - box-shadow
   - CSS

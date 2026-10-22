@@ -1,5 +1,6 @@
 ---
 title: 必会 CSS3 技能：background-clip/background-origin
+description: CSS3 中新增了许多 background 类的属性。今天就来聊聊 background-clip 和 background-origin。
 tags:
   - background-clip
   - background-origin

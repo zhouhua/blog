@@ -1,5 +1,6 @@
 ---
 title: GDG 分享 - RTC 技术在大力家教业务的应用
+description: GDG 分享回顾：RTC 技术在大力家教业务里的应用与取舍。
 tags:
   - GDG
   - RTC
@@ -8,6 +9,7 @@ type: post
 hero: ./gdg-rtc.jpg
 featured: true
 date: 2022-01-15 10:00:00
+
 ---
 
 > 本文是 2022-01-15 GDG 主题分享内容的文字整理

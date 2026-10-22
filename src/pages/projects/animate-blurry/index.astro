@@ -1,10 +1,11 @@
 ---
-import { HOME } from '@consts';
 import Minimal from '@layouts/Minimal.astro';
 import AnimateBlurry from './_index';
 
 ---
-
-<Minimal description="" title={`${HOME.TITLE} - Calendar`}>
+<Minimal
+  description="动态模糊色彩背景演示，可生成会动的 blurry 画面"
+  title="Animate Blurry"
+>
   <div class="w-sceen h-screen relative"><AnimateBlurry client:only="react" /></div>
 </Minimal>

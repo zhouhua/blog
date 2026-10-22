@@ -1,5 +1,6 @@
 ---
 title: 深入了解 javascript 的 sort 方法
+description: 在 javascript 中，数组对象有一个有趣的方法 sort，它接收一个类型为函数的参数作为排序的依据。这意味着开发者只需要关注如何比较两个值的大小，而不用管“排序”这件事内部是如何实现的。
 tags:
   - Javascript
   - quicksort

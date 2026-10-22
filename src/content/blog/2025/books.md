@@ -1,5 +1,6 @@
 ---
 title: 我的 2024 年度书单
+description: 2024 年度书单：读过什么、留下什么判断，不写成清单营销。
 tags:
   - 读书
 category: 阅读

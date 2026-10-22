@@ -1,5 +1,6 @@
 ---
 title: 为什么 API 契约中心该是 OpenAPI，而不是 Thrift
+description: 对外契约该以 OpenAPI 为中心，而不是指望从 Thrift「翻译」出好用的 HTTP 面。
 tags:
   - OpenAPI
   - AsyncAPI

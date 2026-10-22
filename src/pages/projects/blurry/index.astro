@@ -1,9 +1,11 @@
 ---
+import projectList from '@content/projects/list';
 import Minimal from '@layouts/Minimal.astro';
 import Blurry from './_index';
 
+const project = projectList.find(p => p.link === '/projects/blurry');
 ---
-<Minimal description="" title="">
+<Minimal description={project?.description ?? '生成优雅的模糊色彩背景图片'} title={project?.name ?? 'Blurry Generator'}>
   <div class="w-sceen h-screen relative">
     <Blurry client:only="react" />
   </div>

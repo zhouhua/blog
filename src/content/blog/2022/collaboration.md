@@ -1,5 +1,6 @@
 ---
 title: “协作”是新一代办公软件的基石
+description: 协作何以成为新一代办公软件的基石：工具如何改变协作方式本身。
 tags:
   - 产品思维
   - 协作
@@ -11,6 +12,7 @@ category: 产品
 type: post
 hero: ./collaboration.jpg
 date: 2022-09-16 10:00:00
+
 ---
 
 近期比较引人注目的一件事就是 adobe 收购了 figma，虽然 figma 的高溢价导致 adobe 的股价应声下跌，但我认为对于 adobe 来说，却是转型的第一步，付出再大的代价都不可惜。

@@ -1,5 +1,6 @@
 ---
 title: 征服 number 类型的 input 框
+description: 在移动端 H5 页面开发中，有时候会有一些数值输入方面的需求。
 tags:
   - input
   - javascript

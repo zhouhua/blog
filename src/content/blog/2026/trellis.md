@@ -1,5 +1,6 @@
 ---
 title: Trellis：给 coding agent 的脚手架
+description: Trellis：给 coding agent 的脚手架，把规划、实现与检查收进可复用工作流。
 tags:
   - AI
   - skill

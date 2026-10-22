@@ -1,5 +1,6 @@
 ---
 title: 基于本地模型的 RAG 工程方案
+description: 基于本地模型的 RAG 工程方案：召回、降级与管线拆分的落地经验。
 tags:
   - AI
   - RAG

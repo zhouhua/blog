@@ -1,5 +1,6 @@
 ---
 title: phantomjs 使用说明
+description: phantomjs 实现了一个无界面的 webkit 浏览器。
 tags:
   - Node.js
   - phantom

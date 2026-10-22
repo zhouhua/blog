@@ -1,5 +1,6 @@
 ---
 title: canvas 元素的宽高
+description: canvas 的 CSS 宽高与属性宽高不是一回事：画布分辨率和显示尺寸如何对应。
 tags:
   - canvas
   - CSS

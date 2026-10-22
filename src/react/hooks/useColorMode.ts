@@ -5,10 +5,15 @@ type UseColorModeType = () => [ColorMode, (colorMode: ColorMode) => void];
 
 const storeKey = 'colorMode';
 
-function setup() {
-  return typeof window === 'undefined'
-    ? 'light'
-    : ((localStorage.getItem(storeKey) || 'light') as ColorMode);
+function setup(): ColorMode {
+  if (typeof window === 'undefined') {
+    return 'light';
+  }
+  const stored = localStorage.getItem(storeKey);
+  if (stored === 'dark' || stored === 'light') {
+    return stored;
+  }
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
 function applyChange(newColorMode: ColorMode) {

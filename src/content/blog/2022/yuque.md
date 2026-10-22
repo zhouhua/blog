@@ -1,5 +1,6 @@
 ---
 title: 语雀的定价决策
+description: 从语雀定价看内容工具的商业决策：免费、付费与用户预期如何取舍。
 tags:
   - 语雀
   - 产品思维
@@ -10,6 +11,7 @@ type: post
 hero: ./yuque.jpg
 heroCopyright: Photo by <a href="https://unsplash.com/@leekos?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Kostiantyn Li</a> on <a href="https://unsplash.com/photos/a-house-made-out-of-money-on-a-white-background-1sCXwVoqKAw?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
 date: 2022-10-26 10:00:00
+
 ---
 
 今天一早，就有同事转发了语雀的新的付费计划：[语雀个人版新定价的细则](https://www.yuque.com/docs/share/26348e63-d6f2-464c-889c-2af952f1144d)。虽然我不是语雀的用户，但我看到这份收费计划时，直观地感觉这个设计十分糟糕。有很多方面有都问题，比如分享功能收费，协作功能不收费、暗黑模式收费等等。而我今天着重要谈的一点错误是免费计划限制苛刻的使用用量。新的语雀收费计划里是这么说的：免费会员只可以新建 100 篇文档（包含小记、文档、数据表、表格、画板等）。

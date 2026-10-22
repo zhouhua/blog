@@ -1,5 +1,6 @@
 ---
 title: impeccable：给 agent 的设计词汇
+description: impeccable：给 agent 的设计词汇表，用来写界面时少说空话。
 tags:
   - AI
   - skill

@@ -1,5 +1,6 @@
 ---
 title: 让你的网站成为自定义搜索引擎
+description: 起 有一天，我在打理博客的时候，无意看到了这样的提示： “按 tab 可通过 zhouhua.info 进行搜索”？
 tags:
   - chrome
   - OpenSearch

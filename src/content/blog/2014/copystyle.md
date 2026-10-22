@@ -1,5 +1,6 @@
 ---
 title: 另辟蹊径复制样式
+description: 技能get$\checkmark$ 先说一个需求，我想给一个元素应用另外一个指定元素的样式，应该怎么做？对于一个特定的项目，我想通常做法是规范代码风格，直接把 class 复制过来就可以了。
 tags:
   - CSS
   - getComputedStyle

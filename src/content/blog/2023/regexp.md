@@ -1,5 +1,6 @@
 ---
 title: 记录遇到的关于 regexp.test() 的一个小坑
+description: regexp.test() 的 lastIndex 陷阱：全局正则复用时为何第二次结果不对。
 tags:
   - javascript
 category: 技术

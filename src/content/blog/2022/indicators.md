@@ -1,5 +1,6 @@
 ---
 title: 古德哈特定律
+description: 古德哈特定律：指标一旦变成目标，就不再是好指标。
 tags:
   - 古德哈特定律
   - 数据导向
@@ -8,6 +9,7 @@ type: post
 category: 思维方式
 hero: ./indicators.jpg
 date: 2022-05-17 10:00:00
+
 ---
 
 ## 古德哈特定律

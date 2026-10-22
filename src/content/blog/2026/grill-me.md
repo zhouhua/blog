@@ -1,5 +1,6 @@
 ---
 title: Grill Me：把想法问清楚
+description: Grill Me：用一组尖锐问题把模糊想法问清楚，再开始设计和实现。
 tags:
   - AI
   - skill

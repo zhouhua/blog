@@ -1,9 +1,11 @@
 ---
+import projectList from '@content/projects/list';
 import Minimal from '@layouts/Minimal.astro';
 import Gradient from './_index';
 
+const project = projectList.find(p => p.link === '/projects/collection/gradient');
 ---
-<Minimal description="" title="">
+<Minimal description={project?.description ?? '收集一些渐变色彩'} title={project?.name ?? 'Gradient Collection'}>
   <div class="w-sceen h-screen relative">
     <Gradient client:only="react" />
   </div>

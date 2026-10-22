@@ -1,5 +1,6 @@
 ---
 title: phantomjs 配合 kindlegen，kindle 看天涯不费力
+description: 前言 kindle 看书挺舒服的，网页上看到大段文字就想搬到 kindle 里去。以前会用一些转寄的服务，网页上随手点个 send to kindle，倒也方便。
 tags:
   - Javascript
   - kindle

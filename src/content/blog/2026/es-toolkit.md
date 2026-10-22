@@ -1,5 +1,6 @@
 ---
 title: es-toolkit：更现代的 JS 工具库
+description: 面向现代 JS/TS 的工具库：比 lodash 更小更快，并提供近乎完整的兼容迁移路径。
 tags:
   - javascript
   - typescript

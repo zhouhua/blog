@@ -1,5 +1,6 @@
 ---
 title: streamText 怎么流式吐结构化对象
+description: 用 AI SDK 的 streamText / partialOutputStream，在 schema 未齐时也能流式渲染结构化对象。
 tags:
   - AI
   - AI SDK

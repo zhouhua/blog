@@ -36,6 +36,10 @@ const html = entry!.body!;
 const { timeToRead, wordCount } = getReadInfo(html);
 const hero = await getImage(join('content/blog/', dirname(post.id), post.data.hero));
 const excerpt = getExcerpt(html);
+const description = post.data.description?.trim() || excerpt;
+const ogImageType = hero?.format
+  ? `image/${hero.format === 'jpg' ? 'jpeg' : hero.format}`
+  : undefined;
 ---
 <style>
 @reference '../styles/global.css';
@@ -52,7 +56,17 @@ const excerpt = getExcerpt(html);
   }
 }
 </style>
-<PageLayout description={excerpt} title={post.data.title}>
+<PageLayout
+  description={description}
+  image={hero?.src}
+  imageAlt={post.data.title}
+  imageHeight={hero?.height}
+  imageType={ogImageType}
+  imageWidth={hero?.width}
+  ogType="article"
+  publishedTime={post.data.date}
+  title={post.data.title}
+>
   <ArticleTitle tags={post.data.tags} time={post.data.date} title={post.data.title}>
     {wordCount}个字 &bull; {timeToRead}分钟读完
   </ArticleTitle>

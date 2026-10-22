@@ -1,5 +1,6 @@
 ---
 title: 在 Node.js 中实现阻塞
+description: Node.js 中与生俱来的单线程编程、回调函数异步式风格让我们有时喜有时忧。先说单线程，很多人会费解于 Node.js 的单线程如何能做到高并发？
 tags:
   - fiber
   - Javascript

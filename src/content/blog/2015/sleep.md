@@ -1,5 +1,6 @@
 ---
 title: 别说不可能，Node.js 中实现 sleep
+description: Node.js 最让人不爽的就是其单线程特性，很多事情没法做，对 CPU 密集型的场景，性能也不够强劲。
 tags:
   - addon
   - CSS

@@ -1,5 +1,6 @@
 ---
 title: 在存量 iOS App 里嵌 React Native：独立 Framework + 自建 OTA
+description: 在存量 iOS App 里嵌 React Native：独立 Framework 与自建 OTA 的一条可行路径。
 tags:
   - iOS
   - React Native

@@ -1,5 +1,6 @@
 ---
 title: fibers in Node.js
+description: fiber/纤程 在操作系统中，除了进程和线程外，还有一种较少应用的纤程（fiber，也叫协程）。纤程常常拿来跟线程做对比，对于操作系统而言，它们都是较轻量级的运行态。
 tags:
   - fiber
   - Javascript

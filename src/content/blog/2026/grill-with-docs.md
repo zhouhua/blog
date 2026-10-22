@@ -1,5 +1,6 @@
 ---
 title: Grill with Docs：对着代码库把计划问清楚
+description: 对着代码库与文档「烤问」计划，减少拍脑袋方案，让改动边界更清楚。
 tags:
   - AI
   - skill

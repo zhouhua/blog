@@ -1,11 +1,12 @@
 ---
+import projectList from '@content/projects/list';
 import Minimal from '@layouts/Minimal.astro';
 import Contrast from './_index';
 
+const project = projectList.find(p => p.link === '/projects/collection/contrast');
 ---
-<Minimal description="" title="">
+<Minimal description={project?.description ?? '收集一些撞色配色'} title={project?.name ?? 'Clashing Colors Collection'}>
   <div class="w-sceen h-screen relative">
     <Contrast client:only="react" />
   </div>
 </Minimal>
-

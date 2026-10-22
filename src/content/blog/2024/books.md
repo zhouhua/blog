@@ -1,5 +1,6 @@
 ---
 title: 我的 2023 年度书单
+description: 2023 年度书单：一年里真正读完并想记下的书。
 tags:
   - 读书
 category: 阅读

@@ -1,5 +1,6 @@
 ---
 title: archify：把系统描述画成可交互的技术图
+description: 把系统描述交给 archify，生成可交互的技术架构图，适合给 agent 与文档共用。
 tags:
   - AI
   - skill

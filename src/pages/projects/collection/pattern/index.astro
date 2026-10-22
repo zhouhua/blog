@@ -1,9 +1,11 @@
 ---
+import projectList from '@content/projects/list';
 import Minimal from '@layouts/Minimal.astro';
 import Pattern from './_index';
 
+const project = projectList.find(p => p.link === '/projects/collection/pattern');
 ---
-<Minimal description="" title="">
+<Minimal description={project?.description ?? '收集一些 SVG 和 CSS 的 Pattern'} title={project?.name ?? 'Pattern Collection'}>
   <div class="w-sceen h-screen relative">
     <Pattern client:only="react" />
   </div>

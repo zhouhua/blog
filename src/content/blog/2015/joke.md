@@ -1,5 +1,6 @@
 ---
 title: 长姿势
+description: "javascript 有一个鲜为人知的运算符，叫“趋向于”， 写作 --> 。可以声明一个变量 然后让它趋向于另一个数。"
 tags:
   - Javascript
   - joke

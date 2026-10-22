@@ -1,9 +1,11 @@
 ---
+import projectList from '@content/projects/list';
 import Minimal from '@layouts/Minimal.astro';
 import Gradient from './_index';
 
+const project = projectList.find(p => p.link === '/projects/gradient');
 ---
-<Minimal description="" title="">
+<Minimal description={project?.description ?? '生成背景图片噪点'} title={project?.name ?? 'SVG Noise Generator'}>
   <div class="w-sceen h-screen relative">
     <Gradient client:only="react" />
   </div>

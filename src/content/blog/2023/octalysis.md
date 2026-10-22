@@ -1,5 +1,6 @@
 ---
 title: Octalysis 游戏化框架理论
+description: Octalysis 游戏化框架：八大核心驱动力如何用来设计产品与激励。
 tags:
   - 游戏化
   - 产品思维

@@ -1,6 +1,8 @@
 ---
 import process from 'node:process';
+import logoSvg from '@assets/icon/logo.svg';
 import logoImage from '@assets/image/logo.png';
+import { SITE } from '@consts';
 import { ClientRouter } from 'astro:transitions';
 import APM from './APM.astro';
 import '@styles/global.css';
@@ -8,42 +10,124 @@ import '@styles/global.css';
 interface Props {
   title: string;
   description: string;
-  image?: string;
+  /** Document <title>; defaults to `${title} | ${SITE.NAME}`. */
+  documentTitle?: string | undefined;
+  /** Open Graph / Twitter title without site name. Defaults to `title`. */
+  ogTitle?: string | undefined;
+  image?: string | undefined;
+  imageAlt?: string | undefined;
+  imageWidth?: number | undefined;
+  imageHeight?: number | undefined;
+  imageType?: string | undefined;
+  ogType?: 'article' | 'website' | undefined;
+  publishedTime?: Date | string | undefined;
+  jsonLd?: null | Record<string, unknown> | undefined;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { description, image = logoImage.src, title } = Astro.props;
+const {
+  description,
+  documentTitle,
+  image = logoImage.src,
+  imageAlt,
+  imageHeight,
+  imageType,
+  imageWidth,
+  jsonLd = null,
+  ogTitle,
+  ogType = 'website',
+  publishedTime,
+  title,
+} = Astro.props;
+
+const resolvedOgTitle = ogTitle ?? (title || SITE.NAME);
+const resolvedDocumentTitle = documentTitle
+  ?? (title ? `${title} | ${SITE.NAME}` : SITE.NAME);
+const imageURL = new URL(image, Astro.url);
+const publishedTimeIso = publishedTime
+  ? new Date(publishedTime).toISOString()
+  : undefined;
+
+const resolvedJsonLd = jsonLd ?? (ogType === 'article'
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      'author': {
+        '@type': 'Person',
+        'name': '周骅',
+      },
+      'datePublished': publishedTimeIso,
+      description,
+      'headline': resolvedOgTitle,
+      'image': imageURL.href,
+      'mainEntityOfPage': {
+        '@id': canonicalURL.href,
+        '@type': 'WebPage',
+      },
+      'publisher': {
+        '@type': 'Person',
+        'name': '周骅',
+      },
+    }
+  : null);
 ---
 
-<!-- Global Metadata -->
+<!-- Capo-ish: charset / viewport → title → early theme hints → styles (via import) → other meta/links → scripts -->
 <meta charset="utf-8" />
-<meta content="width=device-width,initial-scale=1" name="viewport" />
-<link href={logoImage.src} rel="icon" type="image/x-icon" />
-<link href="/sitemap-index.xml" rel="sitemap" />
-<meta content={Astro.generator} name="generator" />
+<meta content="width=device-width" name="viewport" />
+<title>{resolvedDocumentTitle}</title>
+<meta content="light dark" name="color-scheme" />
+<meta content="#f8f7fa" media="(prefers-color-scheme: light)" name="theme-color" />
+<meta content="#2c2938" media="(prefers-color-scheme: dark)" name="theme-color" />
+<script is:inline>
+  (function () {
+    try {
+      const stored = localStorage.getItem('colorMode');
+      const dark = stored
+        ? stored === 'dark'
+        : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (dark) {
+        document.documentElement.classList.add('dark');
+      }
+    }
+    catch (_) {}
+  })();
+</script>
 
-<!-- Canonical URL -->
 <link href={canonicalURL} rel="canonical" />
-
-<!-- Primary Meta Tags -->
-<title>{title}</title>
-<meta content={title} name="title" />
+<link href={logoSvg.src} rel="icon" type="image/svg+xml" />
+<link href="/sitemap-index.xml" rel="sitemap" />
+<link
+  href="/rss.xml"
+  rel="alternate"
+  title={`${SITE.NAME} 的文章 RSS`}
+  type="application/rss+xml"
+/>
+<meta content={Astro.generator} name="generator" />
 <meta content={description} name="description" />
 
-<!-- Open Graph / Facebook -->
-<meta content="website" property="og:type" />
+<meta content={ogType} property="og:type" />
 <meta content={Astro.url} property="og:url" />
-<meta content={title} property="og:title" />
+<meta content={SITE.NAME} property="og:site_name" />
+<meta content={resolvedOgTitle} property="og:title" />
 <meta content={description} property="og:description" />
-<meta content={new URL(image, Astro.url)} property="og:image" />
+<meta content={imageURL} property="og:image" />
+{imageAlt && <meta content={imageAlt} property="og:image:alt" />}
+{imageType && <meta content={imageType} property="og:image:type" />}
+{imageWidth && <meta content={String(imageWidth)} property="og:image:width" />}
+{imageHeight && <meta content={String(imageHeight)} property="og:image:height" />}
+{publishedTimeIso && <meta content={publishedTimeIso} property="article:published_time" />}
 
-<!-- Twitter -->
 <meta content="summary_large_image" property="twitter:card" />
 <meta content={Astro.url} property="twitter:url" />
-<meta content={title} property="twitter:title" />
+<meta content={resolvedOgTitle} property="twitter:title" />
 <meta content={description} property="twitter:description" />
-<meta content={new URL(image, Astro.url)} property="twitter:image" />
+<meta content={imageURL} property="twitter:image" />
+
+{resolvedJsonLd && (
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(resolvedJsonLd)} />
+)}
 
 <ClientRouter />
 

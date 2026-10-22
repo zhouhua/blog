@@ -1,5 +1,6 @@
 ---
 title: Application Cache
+description: HTML5 Application Cache 是什么、怎么用，以及和 LocalStorage 等存储的差别。
 tags:
   - application cache
   - html5

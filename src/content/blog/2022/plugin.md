@@ -1,5 +1,6 @@
 ---
 title: 依赖注入与插件系统
+description: 依赖注入与插件系统：扩展点怎么设计，才不会把核心拖成泥潭。
 tags:
   - 依赖注入
   - 插件系统
@@ -8,6 +9,7 @@ type: post
 hero: ./plugin.jpg
 heroCopyright: Photo by <a href="https://unsplash.com/@brina_blum?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Brina Blum</a> on <a href="https://unsplash.com/photos/black-usb-flash-drive-Bb_X4JgSqIM?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
 date: 2022-10-12 10:00:00
+
 ---
 
 很难得写点偏技术层面的东西。

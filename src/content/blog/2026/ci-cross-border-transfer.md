@@ -1,5 +1,6 @@
 ---
 title: 优化 GitHub 到国内云服务器的部署速度
+description: 优化 GitHub 到国内云服务器的部署链路，缩短跨境传输与构建等待。
 tags:
   - CI
   - Docker

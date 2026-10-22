@@ -1,5 +1,6 @@
 ---
 title: “===” 也有不靠谱的时候
+description: 自古js多奇葩，语言层面上有许多坑，入坑多了也就习惯了。那就再多一个坑吧。javascript在判断两个值是否相等时，有两种方式 == 和 ===。
 tags:
   - Javascript
 id: 430

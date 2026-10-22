@@ -1,5 +1,6 @@
 ---
 title: 用 Thrift IDL 拉齐前后端类型
+description: 用 Thrift IDL 拉齐前后端类型，减少手写 DTO 与对不齐的字段。
 tags:
   - Thrift
   - TypeScript

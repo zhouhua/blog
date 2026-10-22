@@ -1,5 +1,6 @@
 ---
 title: ui-ux-pro-max：做界面时查的设计资料
+description: ui-ux-pro-max：做界面时查阅的设计资料 skill，补齐常见 UX 判断。
 tags:
   - AI
   - skill

@@ -1,5 +1,6 @@
 ---
 title: 在 Node.js 中使用多线程编程
+description: 在以前的博文 别说不可能，Node.js 中实现 sleep 中，我向大家介绍了 Node.js addon 的用法。
 tags:
   - addon
   - c/c++
