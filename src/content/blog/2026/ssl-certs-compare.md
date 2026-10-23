@@ -66,7 +66,7 @@ sudo certbot certonly --manual --preferred-challenges dns \
   -d example.com -d '*.example.com'
 ```
 
-生产环境别长期停在 `--manual`；接到 DNS 提供商插件或 ACME 客户端上，续期才能睡得着。
+生产环境别长期停在 `--manual`；接到 DNS 提供商插件或 ACME 客户端上，续期才能睡得着。ACME 怎么验域，见 [ACME 该搞清楚的几件事](/2026/dns-acme-challenge)。
 
 ### 开源、透明
 
@@ -343,7 +343,7 @@ LE 的钱是零，运维不是。最低要有：
 理论上有，实务少；理赔条件苛刻、举证难，很多时候更像营销话术。别当选型主轴。
 
 **Q6：通配符是不是该买商业的？**  
-两边都有通配符。该问的是 DNS-01 自动化你能不能稳住，不是商标。
+两边都有通配符。该问的是 DNS-01 自动化你能不能稳住，不是商标。原理见 [ACME 该搞清楚的几件事](/2026/dns-acme-challenge)。
 
 | 场景 | 更常落哪边 |
 |------|------------|
