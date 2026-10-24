@@ -2,6 +2,7 @@
   "name": "",
   "type": "module",
   "version": "1.0.0",
+  "packageManager": "pnpm@10.33.0",
   "scripts": {
     "dev": "NODE_OPTIONS=--max-old-space-size=6144 astro dev --host 127.0.0.1",
     "dev:network": "NODE_OPTIONS=--max-old-space-size=6144 astro dev --host",
