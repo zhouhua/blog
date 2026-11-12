@@ -325,4 +325,4 @@ server {
 - [ ] HTTP→HTTPS 301；会话缓存合理  
 - [ ] 续期自动化 + 到期告警；SSL Labs / testssl 能定期跑  
 
-对我来说，HTTPS 不是装完证书就结束，而是协议版本、证书链、续期、HSTS 分阶段和 stapling 几件事一起收口。下一步你可以先对现网跑一遍 SSL Labs，看链和协议两项有没有红字。
+对我来说，HTTPS 要一起收口的是协议版本、证书链、续期、HSTS 分阶段和 stapling。下一步你可以先对现网跑一遍 SSL Labs，看链和协议两项有没有红字。

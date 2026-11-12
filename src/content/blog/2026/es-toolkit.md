@@ -12,7 +12,7 @@ featured: true
 date: 2026-03-20 10:00:00
 ---
 
-**TL;DR：** 如果你在现代前端项目里还在用 lodash，这篇文章会带你认识一个更适合 2020s 的选择：**es-toolkit**——一个专为 ES2017+ 设计、对 TypeScript 友好的工具库，单个函数体积往往只有 lodash 的几十分之一，性能普遍快 2–3 倍，并且提供了对 lodash 几乎 100% 行为兼容的迁移路径。
+**TL;DR：** 如果你在现代前端项目里还在用 lodash，这篇文章会带你认识一个更适合 2020s 的选择：**es-toolkit**。它专为 ES2017+ 设计，对 TypeScript 友好，单个函数体积往往只有 lodash 的几十分之一，性能普遍快 2–3 倍，并且提供了对 lodash 几乎 100% 行为兼容的迁移路径。
 
 这篇文章主要面向已经在生产环境使用 lodash 的前端 / Node.js 开发者，以及正在做性能优化、包体积优化或者 TypeScript 类型治理的人。如果你只是偶尔在小脚本里用用 lodash，迁不迁都问题不大；但如果你的项目是一个长期维护的中大型应用，工具库的选择会在接下来几年里持续影响你的构建时间、运行性能和类型体验。
 
@@ -33,11 +33,11 @@ import { groupBy, uniqBy } from 'lodash-es';
 
 即便用了 `lodash-es` 加 tree shaking，导入一个 `groupBy` 仍然会带来数 KB 的代码——因为 lodash 内部有大量为 ES5 环境准备的 polyfill 和兼容代码。
 
-lodash 作为 JavaScript 工具库的事实标准，陪伴了我们很多年。但它诞生于 ES6 之前的年代，很多设计决策已经显得过时。今天要介绍的 [es-toolkit](https://github.com/toss/es-toolkit)，是一个面向现代 JavaScript 的替代方案，由韩国金融科技公司 Toss 开源，目前在 GitHub 上已有超过 10,000 个 star。
+lodash 作为 JavaScript 工具库的事实标准，陪伴了我们很多年。但它诞生于 ES6 之前的年代，很多设计决策已经显得过时。今天要介绍的 [es-toolkit](https://github.com/toss/es-toolkit) 面向现代 JavaScript，用来替代 lodash，由韩国金融科技公司 Toss 开源，目前在 GitHub 上已有超过 10,000 个 star。
 
 ## es-toolkit 是什么
 
-es-toolkit 的自我介绍很直接：**比 lodash 快 2-3 倍，体积最多小 97%**。这不是夸张的营销话术，而是有实测数据支撑的结论。
+es-toolkit 的自我介绍很直接：**比 lodash 快 2-3 倍，体积最多小 97%**。这有实测数据。
 
 它覆盖了日常开发中最常用的工具函数，按功能分为几个模块：
 
@@ -57,7 +57,7 @@ lodash 的代码写于 ES5 时代，为了实现各种功能，内部有大量�
 
 es-toolkit 则完全基于现代 JavaScript 特性（ES2017+）构建，不需要任何 polyfill，实现逻辑极其精简。以 `chunk` 函数为例，es-toolkit 的实现只有不到 100 字节。
 
-这个差距在实际项目中是非常显著的——如果你的包体积对用户的加载性能有影响，es-toolkit 能帮你省掉一大块。
+这个差距在实际项目中是非常显著的。如果你的包体积对用户的加载性能有影响，es-toolkit 能帮你省掉一大块。
 
 ### 性能：利用现代 JS API
 
@@ -75,7 +75,7 @@ es-toolkit 性能提升的核心原因，是直接使用了现代 JavaScript 内
 | `intersectionWith` | 8,074,722 | 3,814,479 | **2.12×** |
 | `unionBy` | 6,435,983 | 3,794,899 | **1.69×** |
 
-`omit` 能快出将近 12 倍，原因很简单：lodash 的 `omit` 用了大量内部工具函数层层调用，而 es-toolkit 直接用解构和 `Object.fromEntries` 几行就搞定了。
+`omit` 能快出将近 12 倍。lodash 的 `omit` 用了大量内部工具函数层层调用，而 es-toolkit 直接用解构和 `Object.fromEntries` 几行就搞定了。
 
 ## 我们自己来验证一下
 
@@ -224,7 +224,7 @@ const byDept = groupBy(users, u => u.department);
 // byDept.engineering → 正确推断为数组类型
 ```
 
-此外，es-toolkit 还提供了一些实用的类型守卫，比如 `isNotNil`，在过滤数组时非常有用：
+es-toolkit 还提供了一些实用的类型守卫，比如 `isNotNil`，在过滤数组时非常有用：
 
 ```typescript
 import { isNotNil } from 'es-toolkit';
@@ -283,4 +283,4 @@ chunk([1, 2, 3, 4], 0);
 - **性能**在大多数场景下有 2-3 倍提升，某些函数甚至能到 10 倍以上
 - **迁移成本低**，兼容层让你可以渐进式切换，不用一次性大改
 
-lodash 在它的时代是无可替代的，但 JavaScript 已经今非昔比。es-toolkit 代表了现代工具库应有的样子：精简、快速、类型安全。
+lodash 在它的时代是无可替代的，但 JavaScript 已经今非昔比。es-toolkit 更小、更快，类型也更完整。
