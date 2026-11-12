@@ -1,0 +1,24 @@
+{
+  "title": "就事论事的智慧",
+  "date": "2022-07-01",
+  "author": "周骅",
+  "column": "思维方式",
+  "article_type": "深度分析",
+  "topic_tags": [
+    "逻辑",
+    "事实",
+    "观点",
+    "信仰",
+    "底层逻辑",
+    "立场"
+  ],
+  "hook_type": "观点式",
+  "structure_pattern": "总-分-总",
+  "source_types": [
+    "公开资料",
+    "案例对比"
+  ],
+  "word_count": 7595,
+  "notable": "",
+  "source": "src/content/blog/2022/logic.md"
+}

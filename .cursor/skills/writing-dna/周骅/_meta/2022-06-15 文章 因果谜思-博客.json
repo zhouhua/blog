@@ -1,0 +1,19 @@
+{
+  "title": "因果谜思",
+  "date": "2022-06-15",
+  "author": "周骅",
+  "column": "思维方式",
+  "article_type": "深度分析",
+  "topic_tags": [
+    "因果"
+  ],
+  "hook_type": "观点式",
+  "structure_pattern": "Q&A",
+  "source_types": [
+    "公开资料",
+    "案例对比"
+  ],
+  "word_count": 3460,
+  "notable": "",
+  "source": "src/content/blog/2022/causation.md"
+}

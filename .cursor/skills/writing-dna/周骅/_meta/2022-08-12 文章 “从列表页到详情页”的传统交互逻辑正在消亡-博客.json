@@ -1,0 +1,19 @@
+{
+  "title": "“从列表页到详情页”的传统交互逻辑正在消亡",
+  "date": "2022-08-12",
+  "author": "周骅",
+  "column": "产品",
+  "article_type": "深度分析",
+  "topic_tags": [
+    "产品思维"
+  ],
+  "hook_type": "场景式",
+  "structure_pattern": "总-分-总",
+  "source_types": [
+    "一手素材",
+    "案例对比"
+  ],
+  "word_count": 1483,
+  "notable": "",
+  "source": "src/content/blog/2022/listpage.md"
+}

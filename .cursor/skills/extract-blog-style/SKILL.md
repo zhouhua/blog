@@ -1,13 +1,13 @@
 ---
 name: extract-blog-style
-description: Distill this blog author's language style from Markdown posts and journals into a reusable voice profile. Use when the user asks to extract, distill, or refresh 文风, 语言风格, 写作风格, or voice from 文章, 随笔, blog posts, or journals in this repository, or to update `.cursor/skills/extract-blog-style/voice.md`.
+description: Distill this blog author's language style from Markdown posts and journals. Use when the user asks to extract, distill, or refresh 文风, 语言风格, or 写作风格 from 文章, 随笔, blog posts, or journals. Do not recreate voice.md. Writing uses `.cursor/skills/writing-dna/周骅/`.
 ---
 
 # 提炼博客文风
 
 从本仓库的文章和随笔里抽出作者怎么写，写成可复查的文风档案。档案记表达习惯，不记观点，也不替作者发明信念。
 
-已有 `voice.md` 且用户要按这个文风写东西时，只读档案，不要重新抽样。用户明确要更新、重抽、或说档案不像自己时，才重跑下面的流程。
+按这个文风写东西时，读 `.cursor/skills/writing-dna/周骅/Writing-DNA.md`，不要重新抽样，不要重建 `voice.md`。用户明确要更新、重抽、或说档案不像自己时，才重跑下面的流程，产物改那套 Writing DNA，不新建 `voice.md`。
 
 ## 语料
 
@@ -51,9 +51,9 @@ description: Distill this blog author's language style from Markdown posts and j
 
 ## 校准
 
-先在对话里给出档案草稿，不要直接写文件。用户改过的地方写进规则：加强、减弱、删除，或从共用挪到某一册。用户确认后，按 [profile-template.md](references/profile-template.md) 写入 `voice.md`（与本 `SKILL.md` 同目录）。用户说「直接写进文件」时跳过等待，仍要过质量门。
+先在对话里给出草稿，不要直接写文件。用户确认后，改 `.cursor/skills/writing-dna/周骅/` 里对应的分层稿。不要新建 `voice.md`。用户说「直接写进文件」时跳过等待，仍要过质量门。
 
-`voice.md` 只留规则、短引文和少量用户认可的例子。不要粘贴全文。
+分层稿只留规则、短引文和少量用户认可的例子。不要粘贴全文。
 
 ## 质量门
 

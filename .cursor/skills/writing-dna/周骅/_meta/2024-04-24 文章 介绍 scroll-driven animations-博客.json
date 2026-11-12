@@ -1,0 +1,20 @@
+{
+  "title": "介绍 scroll-driven animations",
+  "date": "2024-04-24",
+  "author": "周骅",
+  "column": "技术",
+  "article_type": "深度分析",
+  "topic_tags": [
+    "css",
+    "javascript",
+    "动画"
+  ],
+  "hook_type": "观点式",
+  "structure_pattern": "总-分-总",
+  "source_types": [
+    "案例对比"
+  ],
+  "word_count": 6447,
+  "notable": "",
+  "source": "src/content/blog/2024/scroll-driven-animations.md"
+}

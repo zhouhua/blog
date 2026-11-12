@@ -1,0 +1,24 @@
+{
+  "title": "谈谈迭代与数据驱动",
+  "date": "2022-05-06",
+  "author": "周骅",
+  "column": "产品",
+  "article_type": "深度分析",
+  "topic_tags": [
+    "迭代",
+    "快速迭代",
+    "数据驱动",
+    "ab 测试",
+    "混沌系统",
+    "logistic"
+  ],
+  "hook_type": "观点式",
+  "structure_pattern": "总-分-总",
+  "source_types": [
+    "一手素材",
+    "案例对比"
+  ],
+  "word_count": 1498,
+  "notable": "",
+  "source": "src/content/blog/2022/data-driven.md"
+}

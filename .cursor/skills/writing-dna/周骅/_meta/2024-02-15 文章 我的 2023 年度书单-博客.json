@@ -1,0 +1,19 @@
+{
+  "title": "我的 2023 年度书单",
+  "date": "2024-02-15",
+  "author": "周骅",
+  "column": "阅读",
+  "article_type": "深度分析",
+  "topic_tags": [
+    "读书"
+  ],
+  "hook_type": "观点式",
+  "structure_pattern": "总-分-总",
+  "source_types": [
+    "公开资料",
+    "案例对比"
+  ],
+  "word_count": 5253,
+  "notable": "",
+  "source": "src/content/blog/2024/books.md"
+}

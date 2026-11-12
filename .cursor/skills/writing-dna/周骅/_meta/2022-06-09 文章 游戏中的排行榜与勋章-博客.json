@@ -1,0 +1,22 @@
+{
+  "title": "游戏中的排行榜与勋章",
+  "date": "2022-06-09",
+  "author": "周骅",
+  "column": "产品",
+  "article_type": "深度分析",
+  "topic_tags": [
+    "游戏",
+    "排行榜",
+    "成就系统",
+    "产品思维"
+  ],
+  "hook_type": "观点式",
+  "structure_pattern": "总-分-总",
+  "source_types": [
+    "一手素材",
+    "案例对比"
+  ],
+  "word_count": 1306,
+  "notable": "",
+  "source": "src/content/blog/2022/accomplishment.md"
+}

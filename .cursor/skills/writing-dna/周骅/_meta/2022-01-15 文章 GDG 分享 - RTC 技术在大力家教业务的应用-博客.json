@@ -1,0 +1,19 @@
+{
+  "title": "GDG 分享 - RTC 技术在大力家教业务的应用",
+  "date": "2022-01-15",
+  "author": "周骅",
+  "column": "分享",
+  "article_type": "深度分析",
+  "topic_tags": [
+    "GDG",
+    "RTC"
+  ],
+  "hook_type": "观点式",
+  "structure_pattern": "Q&A",
+  "source_types": [
+    "案例对比"
+  ],
+  "word_count": 4050,
+  "notable": "分享稿，14 张幻灯片承担大纲",
+  "source": "src/content/blog/2022/gdg-rtc.md"
+}

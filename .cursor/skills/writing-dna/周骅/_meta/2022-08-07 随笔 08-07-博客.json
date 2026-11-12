@@ -1,0 +1,18 @@
+{
+  "title": "08-07",
+  "date": "2022-08-07",
+  "author": "周骅",
+  "column": "随笔",
+  "article_type": "短评",
+  "topic_tags": [
+    "随笔"
+  ],
+  "hook_type": "场景式",
+  "structure_pattern": "总-分-总",
+  "source_types": [
+    "一手素材"
+  ],
+  "word_count": 103,
+  "notable": "短于约 150 字，统计计入，结构模板不作为主样本",
+  "source": "src/content/journals/2022/08-07.md"
+}

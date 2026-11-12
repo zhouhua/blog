@@ -1,0 +1,24 @@
+{
+  "title": "我的产品观 - 2022",
+  "date": "2022-05-22",
+  "author": "周骅",
+  "column": "产品",
+  "article_type": "深度分析",
+  "topic_tags": [
+    "产品思维",
+    "ab 测试",
+    "产品经理",
+    "产品观",
+    "俞军产品方法论",
+    "认知偏误"
+  ],
+  "hook_type": "场景式",
+  "structure_pattern": "Q&A",
+  "source_types": [
+    "一手素材",
+    "案例对比"
+  ],
+  "word_count": 8775,
+  "notable": "",
+  "source": "src/content/blog/2022/product.md"
+}

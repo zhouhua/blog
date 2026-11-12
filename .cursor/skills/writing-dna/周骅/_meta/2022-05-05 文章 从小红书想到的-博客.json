@@ -1,0 +1,23 @@
+{
+  "title": "从小红书想到的",
+  "date": "2022-05-05",
+  "author": "周骅",
+  "column": "产品",
+  "article_type": "深度分析",
+  "topic_tags": [
+    "产品",
+    "用户反馈",
+    "信息密度",
+    "信息载体",
+    "小红书",
+    "知乎"
+  ],
+  "hook_type": "观点式",
+  "structure_pattern": "总-分-总",
+  "source_types": [
+    "案例对比"
+  ],
+  "word_count": 1619,
+  "notable": "",
+  "source": "src/content/blog/2022/information.md"
+}
