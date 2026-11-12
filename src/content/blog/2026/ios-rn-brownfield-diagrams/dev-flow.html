@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>日常开发</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@400&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #f5f5f5;
+        color: #2d3142;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 48px 32px;
+        font-family: 'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      }
+      .frame {
+        width: 960px;
+      }
+      .eyebrow {
+        font-family: 'Geist Mono', ui-monospace, monospace;
+        font-size: 8px;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #4f5d75;
+        margin-bottom: 8px;
+      }
+      h1 {
+        font-family: 'Instrument Serif', 'Noto Serif SC', 'PingFang SC', serif;
+        font-size: 28px;
+        font-weight: 400;
+        line-height: 1.2;
+        margin-bottom: 24px;
+      }
+      svg {
+        width: 960px;
+        height: 636px;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frame">
+      <p class="eyebrow">Flowchart · Diagram Design</p>
+      <h1>日常开发</h1>
+      <svg
+        width="960"
+        height="636"
+        viewBox="0 0 960 636"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-labelledby="dev-title dev-desc"
+      >
+        <title id="dev-title">日常开发</title>
+        <desc id="dev-desc">改一个 RN 页面的六步按原文顺序走完，标签没有拆开。第五步仍是同一步，不是分支。</desc>
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#4f5d75" />
+          </marker>
+          <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#eb6c36" />
+          </marker>
+          <marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#2e5aa8" />
+          </marker>
+        </defs>
+        <rect width="960" height="636" fill="#f5f5f5" />
+        <line
+          x1="480"
+          y1="104"
+          x2="480"
+          y2="132"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1.2"
+          marker-end="url(#arrow)"
+        />
+        <line
+          x1="480"
+          y1="196"
+          x2="480"
+          y2="224"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1.2"
+          marker-end="url(#arrow)"
+        />
+        <line
+          x1="480"
+          y1="320"
+          x2="480"
+          y2="348"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1.2"
+          marker-end="url(#arrow)"
+        />
+        <line
+          x1="480"
+          y1="412"
+          x2="480"
+          y2="440"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1.2"
+          marker-end="url(#arrow)"
+        />
+        <line
+          x1="480"
+          y1="504"
+          x2="480"
+          y2="532"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1.2"
+          marker-end="url(#arrow)"
+        />
+        <rect x="300" y="40" width="360" height="64" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="316"
+          y="76"
+          text-anchor="start"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          开 feature 分支
+        </text>
+        <rect x="300" y="132" width="360" height="64" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="316"
+          y="168"
+          text-anchor="start"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          pnpm start（Metro）
+        </text>
+        <rect x="300" y="224" width="360" height="96" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="316"
+          y="260"
+          text-anchor="start"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          Xcode DEBUG
+        </text>
+        <text
+          x="316"
+          y="288"
+          text-anchor="start"
+          fill="#4f5d75"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          Bundle 切本地 Metro
+        </text>
+        <rect x="300" y="348" width="360" height="64" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="316"
+          y="384"
+          text-anchor="start"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          改 TSX → 热更新
+        </text>
+        <rect x="300" y="440" width="360" height="64" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="316"
+          y="476"
+          text-anchor="start"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          Bridge / 容器有改动则重编原生
+        </text>
+        <rect x="300" y="532" width="360" height="64" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="316"
+          y="568"
+          text-anchor="start"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          JS 与必要原生变更同一 PR
+        </text>
+      </svg>
+    </div>
+  </body>
+</html>

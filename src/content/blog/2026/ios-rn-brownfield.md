@@ -22,15 +22,7 @@ date: 2026-10-14 17:30:00
 
 ## 推荐形态
 
-```mermaid
-flowchart TB
-  Host["原生 App（Swift）"]
-  FW["独立 Framework<br/>RN Runtime + Hermes + Native Modules"]
-  JS["独立 JS 工程<br/>Metro / AppRegistry 多页面"]
-  OTA["OTA：expo-updates 协议客户端 + 自建 Updates 服务"]
-
-  Host --> FW --> JS --> OTA
-```
+![宿主经独立 Framework 挂 JS，再接自建 OTA](./ios-rn-brownfield-shape.png)
 
 整 App 迁 RN 成本高；独立 RN App 会双包、双登录、跳转体验差；主 Target 直接塞 RN Pods，冲突面大、升级难排查。更稳的是 **独立 Framework Target 挂 RN**。OTA 若要零 SaaS、数据不出境，用 **Expo Updates Protocol + 自建服务** 比托管 EAS Update 更合适。
 
@@ -48,39 +40,7 @@ flowchart TB
 | Updates 服务 | 按 `runtimeVersion` + channel 下发签名 manifest 与 bundle |
 | CDN / OSS | 存 bundle、图片等静态资源；可选存路由表 |
 
-```mermaid
-flowchart TB
-  subgraph Host["Host App（Swift / UIKit）"]
-    Nav["Tab · 导航栈 · 既有业务"]
-    Router["PageRouter<br/>page_key → Native VC | H5 VC | Dynamic VC"]
-    Nav --> Router
-  end
-
-  subgraph H5["H5Container"]
-    WK["WKWebView + JSBridge"]
-  end
-
-  subgraph Dyn["Dynamic Framework"]
-    RN["RN Bridge / Hermes"]
-    Root["RootView(moduleName)"]
-    NM["Native Module Bridge"]
-  end
-
-  subgraph CDN["对象存储 + CDN"]
-    Routes["page-routes.json"]
-    Assets["H5 / RN assets"]
-  end
-
-  subgraph Updates["Updates 控制面"]
-    Ctrl["Postgres + Dashboard + Publish CLI<br/>Channel: ios-staging / ios-production"]
-  end
-
-  Router --> H5
-  Router --> Dyn
-  WK --> CDN
-  Dyn -->|"OTA / 内置 bundle"| CDN
-  Updates -->|"manifest + launchAsset"| CDN
-```
+![宿主用 page_key 打开 H5 或 RN，资源与清单分开放](./ios-rn-brownfield-overview.png)
 
 H5 走 WKWebView + JSBridge；RN 走独立 Framework 里的 Bridge / Hermes。两边静态资源都可以落到对象存储 + CDN。Updates 控制面（Postgres + Dashboard + Publish CLI）按 channel 发 manifest 和 `launchAsset`。
 
@@ -223,15 +183,7 @@ RN 用 0.76+（New Architecture + Hermes），minor 锁定。最低 iOS 与 RN �
 
 **对象存储 + CDN**：控制面只负责 manifest；bundle 与图片放 OSS/S3，CDN 加速。注意 `CDN_BASE_URL` 与 bucket key 前缀不要叠成 `/ota/ota/`。
 
-```mermaid
-flowchart LR
-  Client["Client"]
-  API["Updates API<br/>小 JSON / multipart manifest"]
-  CDN["CDN<br/>launchAsset.jsbundle / .hbc + assets"]
-
-  Client --> API
-  Client --> CDN
-```
+![客户端分别向 Updates API 和 CDN 取数](./ios-rn-brownfield-fetch.png)
 
 路由配置可选：仅 CDN JSON 做全局默认和灾备；业务 API 做按用户 / 实验覆盖；App 内 defaults 做离线兜底。若动态页同时支持 H5，同一套 Bridge 语义，静态站放 CDN 即可，不必再起 Node 渲染服务。
 
@@ -243,14 +195,7 @@ flowchart LR
 
 日常改一个 RN 页面：feature 分支 → `cd apps/mobile-rn && pnpm install && pnpm start` → Xcode DEBUG，Bundle 切到本地 Metro → 改 TSX 热更新。Bridge / 原生容器有改动，再编一次原生。JS 与必要的原生 / Podfile 变更放同一 PR。
 
-```mermaid
-flowchart LR
-  A["开 feature 分支"] --> B["pnpm start（Metro）"]
-  B --> C["Xcode DEBUG<br/>Bundle 切本地 Metro"]
-  C --> D["改 TSX → 热更新"]
-  D --> E["Bridge / 容器有改动则重编原生"]
-  E --> F["JS 与必要原生变更同一 PR"]
-```
+![改一个 RN 页面的六步，沿一条路径走完](./ios-rn-brownfield-dev.png)
 
 Metro 默认 8081，若本机业务 API 也占用，改其一（如 `pnpm start --port 8082`）。Node 路径写到 `.xcode.env.local`（gitignore），模板用 `.xcode.env`。
 
@@ -274,18 +219,7 @@ pnpm build:ios
 
 ## 打包与部署：两条管道
 
-```mermaid
-flowchart TB
-  subgraph Store["App Store / TestFlight"]
-    S1["原生壳 + Framework +（可选）内置 jsbundle"]
-    S2["触发：改原生 / Bridge / Pod / runtimeVersion"]
-  end
-
-  subgraph OTA["OTA（Updates channel）"]
-    O1["仅 JS bundle + assets"]
-    O2["触发：改 mobile-rn 业务代码"]
-  end
-```
+![商店包和 OTA 各一组，两组之间没有连线](./ios-rn-brownfield-pipelines.png)
 
 内置 bundle 跟商店包走，给首次安装、无网、OTA 未拉到时兜底，也让 Review 包行为可预期：
 
@@ -321,23 +255,7 @@ npx eoas rollback --branch ios-production
 
 端到端时序：
 
-```mermaid
-sequenceDiagram
-  participant Dev as 开发者
-  participant CI as CI / eoas
-  participant Up as Updates + CDN
-  participant App as 客户端
-  participant RN as RCTBridge
-
-  Dev->>CI: 修改 RN 页并 publish
-  CI->>Up: 上传 manifest + launchAsset + assets
-  App->>Up: 后台 prefetch GET /manifest
-  Up-->>App: 签名 manifest
-  App->>Up: 下载 launchAsset + assets
-  App->>App: 写入 Application Support
-  App->>RN: 打开动态页，只读缓存加载
-  Note over App: 杀进程冷启动仍应秒开
-```
+![publish 之后，客户端只读缓存打开动态页](./ios-rn-brownfield-sequence.png)
 
 服务端探测（无需 token）：
 

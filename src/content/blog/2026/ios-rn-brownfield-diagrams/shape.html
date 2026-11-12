@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>推荐形态</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@400&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #f5f5f5;
+        color: #2d3142;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 48px 32px;
+        font-family: 'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      }
+      .frame {
+        width: 960px;
+      }
+      .eyebrow {
+        font-family: 'Geist Mono', ui-monospace, monospace;
+        font-size: 8px;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #4f5d75;
+        margin-bottom: 8px;
+      }
+      h1 {
+        font-family: 'Instrument Serif', 'Noto Serif SC', 'PingFang SC', serif;
+        font-size: 28px;
+        font-weight: 400;
+        line-height: 1.2;
+        margin-bottom: 24px;
+      }
+      svg {
+        width: 960px;
+        height: 504px;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frame">
+      <p class="eyebrow">Architecture · Diagram Design</p>
+      <h1>推荐形态</h1>
+      <svg
+        width="960"
+        height="504"
+        viewBox="0 0 960 504"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-labelledby="shape-title shape-desc"
+      >
+        <title id="shape-title">推荐形态</title>
+        <desc id="shape-desc">
+          四个组件自上而下相连：原生 App、独立 Framework、独立 JS 工程、自建 OTA。换行与原文一致。
+        </desc>
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#4f5d75" />
+          </marker>
+          <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#eb6c36" />
+          </marker>
+          <marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#2e5aa8" />
+          </marker>
+        </defs>
+        <rect width="960" height="504" fill="#f5f5f5" />
+        <line
+          x1="480"
+          y1="104"
+          x2="480"
+          y2="136"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1.2"
+          marker-end="url(#arrow)"
+        />
+        <line
+          x1="480"
+          y1="232"
+          x2="480"
+          y2="264"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1.2"
+          marker-end="url(#arrow)"
+        />
+        <line
+          x1="480"
+          y1="360"
+          x2="480"
+          y2="392"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1.2"
+          marker-end="url(#arrow)"
+        />
+        <rect x="272" y="40" width="416" height="64" rx="6" fill="#f5f5f5" />
+        <rect
+          x="272"
+          y="40"
+          width="416"
+          height="64"
+          rx="6"
+          fill="rgba(79,93,117,0.10)"
+          stroke="#7a8399"
+          stroke-width="1"
+        />
+        <text
+          x="288"
+          y="76"
+          text-anchor="start"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          原生 App（Swift）
+        </text>
+        <rect x="272" y="136" width="416" height="96" rx="6" fill="#f5f5f5" />
+        <rect
+          x="272"
+          y="136"
+          width="416"
+          height="96"
+          rx="6"
+          fill="rgba(235,108,54,0.08)"
+          stroke="#eb6c36"
+          stroke-width="1"
+        />
+        <text
+          x="288"
+          y="172"
+          text-anchor="start"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          独立 Framework
+        </text>
+        <text
+          x="288"
+          y="200"
+          text-anchor="start"
+          fill="#4f5d75"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          RN Runtime + Hermes + Native Modules
+        </text>
+        <rect x="272" y="264" width="416" height="96" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="288"
+          y="300"
+          text-anchor="start"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          独立 JS 工程
+        </text>
+        <text
+          x="288"
+          y="328"
+          text-anchor="start"
+          fill="#4f5d75"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          Metro / AppRegistry 多页面
+        </text>
+        <rect x="272" y="392" width="416" height="72" rx="6" fill="#f5f5f5" />
+        <rect
+          x="272"
+          y="392"
+          width="416"
+          height="72"
+          rx="6"
+          fill="rgba(45,49,66,0.03)"
+          stroke="rgba(45,49,66,0.30)"
+          stroke-width="1"
+        />
+        <text
+          x="288"
+          y="428"
+          text-anchor="start"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          OTA：expo-updates 协议客户端 + 自建 Updates 服务
+        </text>
+      </svg>
+    </div>
+  </body>
+</html>

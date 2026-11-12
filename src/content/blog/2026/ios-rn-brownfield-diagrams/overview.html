@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>总体架构</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@400&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #f5f5f5;
+        color: #2d3142;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 48px 32px;
+        font-family: 'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      }
+      .frame {
+        width: 1400px;
+      }
+      .eyebrow {
+        font-family: 'Geist Mono', ui-monospace, monospace;
+        font-size: 8px;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #4f5d75;
+        margin-bottom: 8px;
+      }
+      h1 {
+        font-family: 'Instrument Serif', 'Noto Serif SC', 'PingFang SC', serif;
+        font-size: 28px;
+        font-weight: 400;
+        line-height: 1.2;
+        margin-bottom: 24px;
+      }
+      svg {
+        width: 1400px;
+        height: 600px;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frame">
+      <p class="eyebrow">Architecture · Diagram Design</p>
+      <h1>总体架构</h1>
+      <svg
+        width="1400"
+        height="600"
+        viewBox="0 0 1400 600"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-labelledby="overview-title overview-desc"
+      >
+        <title id="overview-title">总体架构</title>
+        <desc id="overview-desc">
+          宿主里导航进入 PageRouter，再打开 H5Container 或 Dynamic Framework。WKWebView、Dynamic Framework 和 Updates
+          控制面都指向对象存储。Dynamic Framework 内的三块之间没有连线。
+        </desc>
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#4f5d75" />
+          </marker>
+          <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#eb6c36" />
+          </marker>
+          <marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#2e5aa8" />
+          </marker>
+        </defs>
+        <rect width="1400" height="600" fill="#f5f5f5" />
+        <rect
+          x="32"
+          y="40"
+          width="416"
+          height="336"
+          rx="8"
+          fill="rgba(45,49,66,0.02)"
+          stroke="rgba(45,49,66,0.10)"
+          stroke-width="0.8"
+        />
+        <rect
+          x="496"
+          y="40"
+          width="272"
+          height="136"
+          rx="8"
+          fill="rgba(45,49,66,0.02)"
+          stroke="rgba(45,49,66,0.10)"
+          stroke-width="0.8"
+        />
+        <rect
+          x="496"
+          y="232"
+          width="272"
+          height="328"
+          rx="8"
+          fill="rgba(45,49,66,0.02)"
+          stroke="rgba(45,49,66,0.10)"
+          stroke-width="0.8"
+        />
+        <rect
+          x="960"
+          y="40"
+          width="400"
+          height="216"
+          rx="8"
+          fill="rgba(45,49,66,0.02)"
+          stroke="rgba(45,49,66,0.10)"
+          stroke-width="0.8"
+        />
+        <rect
+          x="960"
+          y="320"
+          width="400"
+          height="200"
+          rx="8"
+          fill="rgba(45,49,66,0.02)"
+          stroke="rgba(45,49,66,0.10)"
+          stroke-width="0.8"
+        />
+        <rect x="48" y="52" width="196" height="20" rx="2" fill="#f5f5f5" />
+        <text
+          x="56"
+          y="66"
+          text-anchor="start"
+          fill="#4f5d75"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          Host App（Swift / UIKit）
+        </text>
+        <rect x="512" y="52" width="100" height="20" rx="2" fill="#f5f5f5" />
+        <text
+          x="520"
+          y="66"
+          text-anchor="start"
+          fill="#4f5d75"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          H5Container
+        </text>
+        <rect x="512" y="244" width="144" height="20" rx="2" fill="#f5f5f5" />
+        <text
+          x="520"
+          y="258"
+          text-anchor="start"
+          fill="#4f5d75"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          Dynamic Framework
+        </text>
+        <rect x="976" y="52" width="112" height="20" rx="2" fill="#f5f5f5" />
+        <text
+          x="984"
+          y="66"
+          text-anchor="start"
+          fill="#4f5d75"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          对象存储 + CDN
+        </text>
+        <rect x="976" y="332" width="116" height="20" rx="2" fill="#f5f5f5" />
+        <text
+          x="984"
+          y="346"
+          text-anchor="start"
+          fill="#4f5d75"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          Updates 控制面
+        </text>
+        <line
+          x1="240"
+          y1="152"
+          x2="240"
+          y2="176"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1.2"
+          marker-end="url(#arrow)"
+        />
+        <path
+          d="M 432 208 H 624 Q 632 208 632 200 V 176"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1.2"
+          marker-end="url(#arrow)"
+        />
+        <line
+          x1="432"
+          y1="272"
+          x2="496"
+          y2="272"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1.2"
+          marker-end="url(#arrow)"
+        />
+        <line
+          x1="752"
+          y1="120"
+          x2="960"
+          y2="120"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1.2"
+          marker-end="url(#arrow)"
+        />
+        <path
+          d="M 768 508 H 924 Q 932 508 932 500 V 228 Q 932 220 940 220 H 960"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1.2"
+          marker-end="url(#arrow)"
+        />
+        <line
+          x1="1100"
+          y1="320"
+          x2="1100"
+          y2="256"
+          fill="none"
+          stroke="#4f5d75"
+          stroke-width="1.2"
+          marker-end="url(#arrow)"
+        />
+        <rect x="778" y="480" width="136" height="20" rx="2" fill="#f5f5f5" />
+        <text
+          x="846"
+          y="494"
+          text-anchor="middle"
+          fill="#4f5d75"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          OTA / 内置 bundle
+        </text>
+        <rect x="1116" y="276" width="176" height="20" rx="2" fill="#f5f5f5" />
+        <text
+          x="1124"
+          y="290"
+          text-anchor="start"
+          fill="#4f5d75"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          manifest + launchAsset
+        </text>
+        <rect x="48" y="88" width="384" height="64" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="64"
+          y="124"
+          text-anchor="start"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          Tab · 导航栈 · 既有业务
+        </text>
+        <rect x="48" y="176" width="384" height="136" rx="6" fill="#f5f5f5" />
+        <rect
+          x="48"
+          y="176"
+          width="384"
+          height="136"
+          rx="6"
+          fill="rgba(235,108,54,0.08)"
+          stroke="#eb6c36"
+          stroke-width="1"
+        />
+        <text
+          x="64"
+          y="212"
+          text-anchor="start"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          PageRouter
+        </text>
+        <text
+          x="64"
+          y="240"
+          text-anchor="start"
+          fill="#4f5d75"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          page_key → Native VC | H5 VC | Dynamic VC
+        </text>
+        <rect x="512" y="88" width="240" height="64" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="528"
+          y="124"
+          text-anchor="start"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          WKWebView + JSBridge
+        </text>
+        <rect x="512" y="280" width="240" height="56" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="528"
+          y="316"
+          text-anchor="start"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          RN Bridge / Hermes
+        </text>
+        <rect x="512" y="356" width="240" height="56" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="528"
+          y="392"
+          text-anchor="start"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          RootView(moduleName)
+        </text>
+        <rect x="512" y="432" width="240" height="56" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="528"
+          y="468"
+          text-anchor="start"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          Native Module Bridge
+        </text>
+        <rect x="976" y="88" width="368" height="56" rx="6" fill="#f5f5f5" />
+        <rect
+          x="976"
+          y="88"
+          width="368"
+          height="56"
+          rx="6"
+          fill="rgba(45,49,66,0.05)"
+          stroke="#4f5d75"
+          stroke-width="1"
+        />
+        <text
+          x="992"
+          y="124"
+          text-anchor="start"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          page-routes.json
+        </text>
+        <rect x="976" y="164" width="368" height="56" rx="6" fill="#f5f5f5" />
+        <rect
+          x="976"
+          y="164"
+          width="368"
+          height="56"
+          rx="6"
+          fill="rgba(45,49,66,0.05)"
+          stroke="#4f5d75"
+          stroke-width="1"
+        />
+        <text
+          x="992"
+          y="200"
+          text-anchor="start"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          H5 / RN assets
+        </text>
+        <rect x="976" y="368" width="368" height="112" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1" />
+        <text
+          x="992"
+          y="404"
+          text-anchor="start"
+          fill="#2d3142"
+          font-size="12"
+          font-weight="600"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          Postgres + Dashboard + Publish CLI
+        </text>
+        <text
+          x="992"
+          y="432"
+          text-anchor="start"
+          fill="#4f5d75"
+          font-size="12"
+          font-weight="500"
+          font-family="'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        >
+          Channel: ios-staging / ios-production
+        </text>
+      </svg>
+    </div>
+  </body>
+</html>
