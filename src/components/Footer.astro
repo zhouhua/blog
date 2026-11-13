@@ -12,8 +12,9 @@ const year = new Date().getFullYear();
   <Container>
     <div class="colorModeTransition relative mx-auto mb-5 mt-[120px] border-[1px] border-solid border-bgAlt sm:my-[60px]" />
     <div class="colorModeTransition relative flex flex-col items-center gap-5 pb-[50px] text-center sm:flex-row sm:items-center sm:justify-between sm:pb-20 sm:text-left md:pb-[100px]">
-      <div>
-        Copyright © {year} | {SITE.NAME}
+      <div class="flex flex-col gap-2">
+        <span>Copyright © {year} | {SITE.NAME}</span>
+        <a class="text-sm text-secondary-foreground/80 hover:underline" href="/llms.txt">llms.txt</a>
       </div>
       <div class="flex items-center gap-4 text-secondary-foreground/80">
         <a href="mailto:zhou--hua@163.com" class="flex items-center">

@@ -15,6 +15,7 @@ type Props = {
   ogType?: 'article' | 'website' | undefined;
   publishedTime?: Date | string | undefined;
   jsonLd?: null | Record<string, unknown> | undefined;
+  markdownHref?: string | undefined;
 };
 
 const {
@@ -25,6 +26,7 @@ const {
   imageType,
   imageWidth,
   jsonLd,
+  markdownHref,
   ogType,
   publishedTime,
   title,
@@ -42,6 +44,7 @@ const {
       imageType={imageType}
       imageWidth={imageWidth}
       jsonLd={jsonLd}
+      markdownHref={markdownHref}
       ogType={ogType}
       publishedTime={publishedTime}
       title={title}
@@ -163,6 +166,38 @@ async function initPageEffect() {
       }, 2000);
     });
     pre.appendChild(btn);
+  });
+
+  // Collapse code blocks that run well past a preview.
+  const collapseLimit = 320;
+  document.querySelectorAll<HTMLElement>('article [data-rehype-pretty-code-figure]').forEach((figure) => {
+    if (figure.querySelector('.code-collapse-btn'))
+      return;
+    const pre = figure.querySelector<HTMLElement>('pre[data-language]');
+    if (!pre || pre.dataset.language === 'mermaid' || pre.scrollHeight <= collapseLimit + 48)
+      return;
+
+    figure.classList.add('is-collapsible', 'is-collapsed');
+    const fade = document.createElement('div');
+    fade.className = 'code-collapse-fade';
+    fade.setAttribute('aria-hidden', 'true');
+    pre.appendChild(fade);
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'code-collapse-btn';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML = `
+      <span class="code-collapse-chevron" aria-hidden="true"></span>
+      <span class="code-collapse-label">展开全部</span>
+    `;
+    const label = btn.querySelector<HTMLElement>('.code-collapse-label')!;
+    btn.addEventListener('click', () => {
+      const collapsed = figure.classList.toggle('is-collapsed');
+      btn.setAttribute('aria-expanded', String(!collapsed));
+      label.textContent = collapsed ? '展开全部' : '收起';
+    });
+    figure.appendChild(btn);
   });
 }
 

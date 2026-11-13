@@ -16,7 +16,7 @@ Agent Skill 是一个指令目录，用来教编程 Agent 一套可重复的做�
 
 要让人找得到，在自己的域名上放一份 `.well-known/agent-skills/index.json`。每个 Skill 一条，写下 `name`、`description`、`type`、`url`，以及文件的 `sha256` 摘要。
 
-`npx skills` 会读这份索引。Skill 写在 GitHub 仓库里，安装器和 Claude 的插件市场可以直接从仓库取；发出去的字节放在你自己的域名上，摘要就按这一份来算。形态分三种：单文件、多文件、套装，各有各的处理。安装命令多留几种，因为读者用的工具不一样。
+`npx skills` 会读这份索引。Skill 写在 GitHub 仓库里，安装器和 Claude 的插件市场可以直接从仓库取。发出去的字节放在你自己的域名上，摘要就按这一份来算。形态分三种：单文件、多文件和套装，各有各的处理。安装命令多留几种，因为读者用的工具不一样。
 
 这不是一套新机制。npm 和 RubyGems 一直就是这么做的，只是这次指向一个带着 `SKILL.md` 的目录。
 
@@ -46,7 +46,7 @@ npx skills add https://skills.example.com --skill readme-guide
 npx skills add https://skills.example.com --skill '*'
 ```
 
-这里要保留完整的 `https://` URL。`owner/repo` 形式会被当作 Git 仓库来源，不能用省略协议的写法代替完整的 `https` 地址。尽量使用域名根地址；附带路径会限定索引查找范围，不应依赖安装器继续回退到根目录。
+这里要保留完整的 `https://` URL。`owner/repo` 形式会被当作 Git 仓库来源，不能用省略协议的写法代替完整的 `https` 地址。尽量使用域名根地址。附带路径会限定索引查找范围，不应依赖安装器继续回退到根目录。
 
 这种发现机制来自 Cloudflare 提出的开放 RFC，采用 `.well-known/` 固定路径约定，底层 Skill 格式则由 Anthropic 引入。发现格式并不专属于某一家安装器，其他客户端也可以读取索引、解析文件并完成安装。
 
@@ -113,7 +113,7 @@ references/style-guide.md
 
 摘要针对整个 `.tar.gz` 文件计算，而不是只针对 Markdown。
 
-归档与摘要最好在同一轮构建中生成。压缩包包含的不只是正文：文件顺序、权限、修改时间，以及 gzip 自身的时间戳都会影响最终字节。同一组源文件打包两次，也可能得到不同摘要。
+归档与摘要最好在同一轮构建中生成。压缩包包含的不只是正文，文件顺序、权限和修改时间，以及 gzip 自身的时间戳都会影响最终字节。同一组源文件打包两次，也可能得到不同摘要。
 
 如果归档和索引必须分开构建，就需要固定这些变量。例如，在 GNU tar 环境下，可以采用下面的方式控制排序、所有者和时间戳，并通过 `gzip -n` 去掉压缩头中的名称与时间戳信息：
 
@@ -157,9 +157,9 @@ GitHub 仓库承担三项工作：
 
 其次，自有域名上的下载请求可以在自己的服务器或边缘日志中观察，方便统计索引访问和文件下载。
 
-还有一个更直接的原因：可以对最终发布的文件计算摘要。
+还有一个更直接的原因，可以对最终发布的文件计算摘要。
 
-假设索引指向 `main` 分支上的 raw 文件。发布索引时，内容与摘要一致；随后仓库有了新提交，raw 地址返回了新内容，索引却还保留旧摘要。符合规范的安装器就会拒绝安装，直到索引重新构建。
+假设索引指向 `main` 分支上的 raw 文件。发布索引时，内容与摘要一致。随后仓库有了新提交，raw 地址返回了新内容，索引却还保留旧摘要。符合规范的安装器就会拒绝安装，直到索引重新构建。
 
 固定到提交 SHA 可以保持一致，但不会自动跟随最新版本。跟随分支能拿到新内容，却需要同步更新摘要。
 
@@ -174,13 +174,13 @@ GitHub 仓库承担三项工作：
 
 这样，索引中的摘要对应的就是你实际提供下载的那份文件。
 
-这是一种发布选择，不是协议对自有域名的强制要求。核心原则是：对实际交付的文件计算摘要，并控制它与索引的更新关系。
+这是一种发布选择，不是协议对自有域名的强制要求。核心原则是对实际交付的文件计算摘要，并控制它与索引的更新关系。
 
 也要分清完整性与内容审查。仓库里如果进入了错误或恶意内容，重新托管只会忠实地复制它，再生成一个正确摘要。摘要不能替代对源文件的审查。
 
 ## 四种安装方式，各有用途
 
-发布页面可以先让用户选择 Claude Code、Cursor、Codex、GitHub Copilot 或 Gemini CLI，再展示对应的安装方式。同一份 Skill 内容可以复用，不需要为每个 Agent 重写一份。
+发布页面可以先让用户选择 Claude Code、Cursor 和 Codex，再加上 GitHub Copilot 或 Gemini CLI，再展示对应的安装方式。同一份 Skill 内容可以复用，不需要为每个 Agent 重写一份。
 
 命令里的域名、组织名和市场名称都是例子，发布时换成自己的。
 
@@ -240,7 +240,7 @@ curl -fsSL \
 
 这些命令依赖已有的基础工具，不必另装专门的 Skill 安装器，适合容器构建等场景。不过，直接下载和解压本身不会完成发现索引中的摘要验证。
 
-四种入口看起来有些重复，实际服务的是不同使用习惯：有人用插件市场，有人信任仓库来源，有人需要带发现与校验的安装器，也有人只想在脚本里调用基础工具。发布方多维护几组命令，就能少让用户为安装方式绕路。
+四种入口看起来有些重复，实际服务的是不同使用习惯。有人用插件市场，有人信任仓库来源，有人需要带发现与校验的安装器，也有人只想在脚本里调用基础工具。发布方多维护几组命令，就能少让用户为安装方式绕路。
 
 ## 发布前做四项检查
 
@@ -301,212 +301,213 @@ npx skills add https://skills.example.com --skill readme-guide
 
 这些事件反映的是人在安装入口上的操作。它们看不到对方是否真的在终端执行了复制的命令，因此还需要另一组信号：索引和文件的 HTTP 请求。
 
-`/.well-known/agent-skills/index.json` 与每个 Skill 的下载地址，都是普通 HTTP 资源。可以在边缘或服务器端依据 `User-Agent` 分类，观察哪些客户端在解析目录、获取文件。
+`/.well-known/agent-skills/index.json` 与每个 Skill 的下载地址，都是普通 HTTP 资源。可以在边缘或服务器端依据 `User-Agent` 分类，观察哪些客户端在解析这份索引、请求这些下载地址。
 
 页面交互说明人们在选择什么，请求日志说明哪些内容被实际获取。两组数据应分别看待，不能把埋点准备完成当成已经证明了发布效果。
 
-## 把发布方法本身做成一个 Skill
+## 交给 Agent 的说明
 
-前面讲的是如何发布 Skills。这套流程本身也可以做成一份 Skill。它不教 Agent 去写某一项技能的业务内容，而是让 Agent 建立目录、打包文件、生成发现索引，并验证安装。
+前面是给人看的发布步骤。下面这段直接交给 Agent：什么时候动手，按什么顺序做，哪些做法不要碰，做完如何验收。它不负责写某一个 Skill 的正文。
 
-把下面的代码保存为 `skills-visibility/SKILL.md`，放进目标 Agent 的 Skills 目录，也可以直接贴进对话，让它按这套流程处理当前项目。尖括号里的内容要换成自己的值。`<origin>` 是带协议、不带路径的域名根地址，例如 `https://skills.example.com`。仓库、发布域名和目标 Agent 也要一并告诉它。
+贴进当前对话即可。尖括号换成自己的值。`<origin>` 是带协议、不带路径的域名根地址，例如 `https://skills.example.com`。仓库、发布域名和目标 Agent 也一起告诉它。
 
-```markdown
----
-name: skills-visibility
-description: >-
-    发布 Agent Skills 目录，使 AI 编程工具及其安装器能够发现和安装这些技能。
-    当用户需要发布、分发或共享 Skills，配置 npx skills、gh skill 或 Claude
-    插件市场安装，创建或修复 .well-known/agent-skills/index.json，
-    在自有域名托管文件并生成完整性摘要，选择单文件、多文件或套装打包方式，
-    或配置安装统计时使用。
-    不用于编写单个 Skill 的业务内容，也不用于 llms.txt 或 Markdown 内容协商。
----
+````markdown
+当用户要发布、分发或共享 Skills 时，按下面的步骤做：让技能能通过 `npx skills`、`gh skill` 或 Claude 插件市场安装；建立或修复 `.well-known/agent-skills/index.json`；把文件放在自己控制的域名上，并为实际提供下载的字节计算完整性摘要；决定单文件、多文件还是套装；或者给安装行为做统计。也用于纠正一个常见错误：把发现索引指向 raw.githubusercontent.com，而不是指向自己控制的域名。
 
-# 发布可发现、可安装的 Agent Skills
+不要用来编写某一个 Skill 的正文，那是写一份 `SKILL.md`。也不要用来让页面能被 LLM 阅读，那是 `llms.txt` 或 Markdown 内容协商，另一件事。
 
-按以下步骤建立 Skills 发布目录。维护源文件、生成安装文件、计算摘要和生成索引
-应形成一致的发布流程。前五步相互依赖，安装入口、统计和验证分别安排。
+按下面的步骤发布一批技能，让编程 Agent 自己找到并装上，不必每次由你递一个地址。机制是固定路径上的一份发现索引。索引做对了，`npx skills`、`gh skill` 和 Claude 插件市场都能解析这些技能。
 
-## 1. 在 Git 仓库中维护源文件
+## 工作流
 
-将每项技能组织为 skills/<name>/SKILL.md，附带文件与入口一起维护。
-通过版本控制和代码审查管理修改。
+第 1 到第 5 步前后依赖。第 6 到第 8 步可以单独交付。
 
-仓库同时支持两类直接安装：
+### 1. 在 Git 仓库里维护每一项技能
 
-* gh skill install <owner>/<repo> <name>
-* Claude 插件市场：在仓库根目录维护 .claude-plugin/marketplace.json。
+每项技能放成 `skills/<name>/SKILL.md`。仓库不是可选项，因为有两条安装路径直接从仓库解析：
 
-读取市场清单中的 name，作为安装命令里的 @marketplace 名称；不要根据仓库名猜测。
+- `gh skill install <owner>/<repo> <name>` 从仓库读取 `SKILL.md`。
+- Claude 插件市场从带有根目录 `.claude-plugin/marketplace.json` 的仓库安装。清单里的 `name` 就是 `claude plugin install <skill>@<marketplace>` 里 `@` 后面的那一段。读清单，不要用仓库名去猜。
 
-## 2. 先判断发布形式
+仓库也是审查、保留版本、继续改这份技能的地方。把它当代码对待。
 
-逐项检查文件结构，再决定打包方式：
+### 2. 先判断每一项的形态
 
-* 单文件：目录中只有 SKILL.md，直接发布 Markdown。
-* 多文件：除 SKILL.md 外还有脚本、参考资料或模板，必须将附件一起打包。
-* 套装：一个仓库发布多个独立 Skills。套装只是容器，不要求有自己的 SKILL.md。
+三种形态，后面每一层的处理都不一样。发布前先分类：
 
-不要把多文件 Skill 当作单文件发布，否则安装会遗漏附件。
+- 单文件：目录里只有 `SKILL.md`。安装就是复制一个文件，也短到可以直接贴进正在运行的 Agent。
+- 多文件：`SKILL.md` 之外还有脚本、参考资料或模板。不能靠复制一个文件完成安装，必须打成归档。
+- 套装：一个仓库同时发布多项技能。每一项单独发布、单独安装。套装是容器，不是一项技能，自己没有 `SKILL.md`。
 
-## 3. 在受控域名发布，并对实际文件计算摘要
+形态判错是最常见的发布故障：把多文件技能当成单文件，安装会悄悄丢掉除 `SKILL.md` 以外的全部文件。
 
-从源仓库读取内容，将文件写入发布目录或对象存储的发布位置。
-对最终提供下载的文件计算 SHA-256，不能用源目录或另一份文件的摘要代替。
+### 3. 从自己控制的域名提供文件，并对实际提供的字节计算摘要
 
-本工作流采用自有域名重新托管，不把索引直接指向会随分支变化的 raw 文件。
-否则仓库更新后，下载内容可能已经变化，索引却仍保留旧摘要，导致安装失败。
+这一步最容易被跳过，也最要紧。每一份 `digest` 都要对你实际提供下载的那一份字节计算，并且和提供下载发生在同一处。具体做法：在生成发布文件的那个环节（静态站点构建、CI、一段 shell，或写入对象存储的服务）从仓库取出载荷，写进你自己的发布产物，再对写下的那个文件做哈希。
 
-重新托管后，可以在每次构建中读取经过审查的默认分支，并同步更新文件和摘要。
-它保证发布内容与摘要一致，不保证上游内容安全。源文件仍需审查。
+把 `url` 指到 `raw.githubusercontent.com`，等于为一份你控制不了交付的字节公布哈希。仓库被强推，或托管方改变 raw 文件的提供方式，已经公布的摘要后面的字节就变了。完整性检查会失败，安装会一直被拒绝，直到你重新构建。
 
-## 4. 根据形式生成发布文件
+重新托管去掉这个故障，还多一个好处：每次构建都从你自己的副本重算摘要，所以可以跟踪仓库的默认分支，而不必钉死某一次提交。上游推送会在你下一次部署时带上新的、正确的哈希上线。
 
-* 单文件：直接提供 /agent-skills/<name>/SKILL.md。
-* 多文件：提供平铺的 <name>.tar.gz，SKILL.md 和附件位于归档根目录。
-* 套装：另提供 <bundle>-bundle.tar.gz，各成员以 <name>/ 目录并列放置，
-    不再套一层 bundle 目录。
-* 可选的人类阅读版本：提供带顶层 <name>/ 目录的 ZIP，方便下载和浏览。
-    它与供安装器使用的平铺归档分开，不写入发现索引。
+它买到的是一致，不是对上游内容的免疫。错误的推送会被同样忠实地重新托管并计算摘要。摘要保护的是从你到安装器这一段；仓库里放进什么，仍然要你自己审查。跟踪一条你审查过的分支。
 
-归档和摘要在同一轮构建中生成。若它们可能来自不同构建，进一步固定文件顺序、
-权限、所有者和修改时间，并使用 gzip -n 去掉压缩头中的名称与时间戳信息。
-GNU tar 参数不能直接假定在所有平台可用；macOS 可使用 gtar。
+记住这条：源文件放哪里都行；提供下载的文件，和计算摘要，要在同一处完成。
 
-发布目录可以是：
+### 4. 做出你要提供下载的归档
+
+按形态，在自己的域名上放一个稳定地址：
+
+- 单文件：原样提供 `SKILL.md`，例如 `<origin>/agent-skills/<name>/SKILL.md`。
+- 多文件：一份平铺的 `.tar.gz`。`SKILL.md` 和其余文件在归档根目录，不要再包一层目录。安装器会把归档解进该技能自己的目录。
+- 套装：一份 `<bundle>-bundle.tar.gz`。各项技能以 `<name>/` 并列放在归档根目录，不再套一层套装目录。这样 `curl … | tar -xz -C <skills-dir>` 一次就能全部落下。
+- 给人看的可选 ZIP：顶层包一层 `<name>/`，方便下载后阅读。它和平铺的安装归档分开，也不写进发现索引。指向它的条目解出来会深一层。
+
+打包和计算摘要放在同一次里做。`.tar.gz` 里不只有文件内容：成员顺序、当时 umask 留下的权限、嵌入的修改时间、gzip 自己的时间戳，都会让同一份技能打两次包得到不同哈希。一起做，两者就不会不一致。如果两件事可能被拆开（一次构建发布索引、另一次上传归档；CDN 还在提供昨天的压缩包；或者有人要独立复现你的摘要），把这些不确定因素也钉死。GNU tar 的参数在 macOS 上用 `gtar`：
+
+```bash
+# 平铺、可复现的多文件技能归档
+cd <skill-dir>
+find . -type f -exec chmod 0644 {} +
+# 只有随包发布的脚本才 chmod 0755
+tar --sort=name --owner=0 --group=0 --numeric-owner \
+    --mtime='UTC 2020-01-01' -cf - * \
+  | gzip -n > ../<name>.tar.gz
+```
+
+在技能目录内部运行 `tar`，归档才会是平的。套装则在上一层目录运行同一条命令，让每个 `<name>/` 并列出现在归档根目录。
+
+发布出来的目录类似：
 
 ```text
 .well-known/agent-skills/index.json
-agent-skills/readme-guide/SKILL.md
+agent-skills/good-readme/SKILL.md
 agent-skills/pdf-extract.tar.gz
-agent-skills/writing-tools-bundle.tar.gz
+agent-skills/testing-bundle.tar.gz
 ```
 
-组合归档是便捷下载入口，不单独作为一个 Skill 写入索引。
+`good-readme` 是单文件，`type` 用 `skill-md`。`pdf-extract` 是多文件，`type` 用 `archive`。套装压缩包只是方便一次下载，不是索引里的一条。
 
-## 5. 生成发现索引
+### 5. 写发现索引
 
-在域名根路径发布 /.well-known/agent-skills/index.json，
-使用 application/json 响应类型。
+在域名根路径发布 `/.well-known/agent-skills/index.json`，响应类型为 `application/json`。这就是安装器要找的文件：`npx skills add <origin>` 会请求 `<origin>/.well-known/agent-skills/index.json`。传给它的地址必须是带协议的域名根，不能少，也不能多：
 
-采用 https://schemas.agentskills.io/discovery/0.2.0/schema.json，
-顶层使用 $schema 和 skills。每个 Skill 条目包含：
+- 没有协议（`skills.example.com`、`owner/repo`）：安装器把它当成要克隆的 Git 仓库，而不是要读取索引的域名。
+- 带了路径（`<origin>/agent-skills`）：安装器只在该路径下找索引，不会再回退到域名根上的那一份。
 
-* name：符合 Skill 命名规则，在整个索引中唯一；遇到重名时使构建失败。
-* description：从该 Skill 的 front matter 复制适用场景描述。
-* type：单文件使用 skill-md，多文件使用 archive。
-* url：指向已发布的 Markdown 或归档文件。
-* digest：对该 URL 实际提供的文件计算摘要，格式为 sha256:<hex>。
+格式不是某一家安装器私有的。它指向 agentskills.io 的发现 schema：
 
-套装的每个成员分别建立普通条目。不要创建套装整体条目，
-也不要自行添加 version、origin、bundles 或 per-skill bundle 字段。
-
-摘要验证是必需步骤。符合发现规范的客户端必须重新计算下载内容的摘要，
-并拒绝使用不匹配的文件。
-
-给 npx skills 的地址必须是带协议的域名根，例如 https://skills.example.com。
-省略协议会被当作仓库来源；增加路径会限定索引查找范围，不能指望回退到域名根目录。
-
-## 6. 提供多种安装入口
-
-按目标 Agent 生成命令，区分用户级与项目级安装位置。
-同一份 Skill 内容可以复用，不要为不同工具复制维护相同正文。
-
-从发现索引安装：
-
-```bash
-npx skills add <origin> --skill <name> -a <agent> -g
+```json
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "good-readme",
+      "description": "Agent 用来判断该不该用这项技能的那一句「在这种时候用」。",
+      "type": "skill-md",
+      "url": "https://skills.example.com/agent-skills/good-readme/SKILL.md",
+      "digest": "sha256:9f2b…"
+    },
+    {
+      "name": "pdf-extract",
+      "description": "多文件技能的那一句「在这种时候用」。",
+      "type": "archive",
+      "url": "https://skills.example.com/agent-skills/pdf-extract.tar.gz",
+      "digest": "sha256:1c4a…"
+    }
+  ]
+}
 ```
 
-省略 --skill 可交互选择，使用 --skill '*' 可安装全部。
+顶层只有两个键：`$schema` 和 `skills`。每项技能五个字段：
 
-Claude 插件市场：
+- `name`：安装器使用的标识。必须是合法的技能名（小写字母、数字、单个连字符），否则安装器会拒绝。整个索引里必须唯一：安装器按 `name` 索引，重名会盖掉前一条，而不是新增。构建时遇到重名就失败。
+- `description`：Agent 用来判断相关性的那一句。从该技能自己的 front matter 复制。
+- `type`：单文件用 `skill-md`（`url` 就是那份 `SKILL.md`）；多文件用 `archive`（`url` 是压缩包）。
+- `url`：字节所在的地址。按第 3 步，放在你自己的域名上。
+- `digest`：`url` 上那一份字节的 `sha256:`。校验是必须做的：符合规范的客户端必须重新计算下载内容的摘要，并且不得使用校验失败的内容。摘要错了不是降级安装，而是挡住安装。
+
+套装只通过它的成员出现在索引里，每一项用自己的名字做一条普通条目，再加上第 4 步那份组合归档供下载。不要为套装整体建一条，也不要加 `version`、`origin`、`bundles`。
+
+### 6. 给出不止一种安装命令
+
+用户用的工具不一样，只留一条命令，不用这条命令的人就走了。`SKILL.md` 是跨 Agent 的，载荷相同，变的只是目标目录（`~/.claude/skills`、`~/.cursor/skills`、`~/.agents/skills`、`~/.copilot/skills`、`~/.gemini/skills`）。提供这几种：
+
+- `npx skills`：读发现索引。`npx skills add <origin> --skill <name> -a <agent> -g`。去掉 `--skill` 是交互选择，`--skill '*'` 安装全部。
+- `claude plugin`：Claude 的插件市场，也是套装最合适的路径，一次安装拿下整套。先 `claude plugin marketplace add <owner>/<repo>`，再 `claude plugin install <skill>@<marketplace>`。`@` 后面是该仓库 `.claude-plugin/marketplace.json` 里的 `name`，不一定等于仓库名。读它，不要假设。
+- `gh skill`：从仓库安装一项技能。`gh skill install <owner>/<repo> <name>`。套装名不能这么装，因为它不对应某一个技能目录。
+- `curl`：不额外引入安装器，也是唯一一种事先什么都不用装的方式。命令跟着第 4 步的形态走。
+
+单文件：
 
 ```bash
-claude plugin marketplace add <owner>/<repo>
-claude plugin install <plugin>@<marketplace>
-```
-
-套装可以通过包含多个 Skills 的插件一次安装。
-
-直接从仓库安装单个 Skill：
-
-```bash
-gh skill install <owner>/<repo> <name>
-```
-
-不要把没有对应单个 Skill 目录的套装名称传给它。
-
-基础工具安装按发布形式分别处理：
-
-```bash
-# 单文件
 curl -fsSL --create-dirs \
-    <origin>/agent-skills/<name>/SKILL.md \
-    -o <skills-dir>/<name>/SKILL.md
+  <origin>/agent-skills/<name>/SKILL.md \
+  -o <skills-dir>/<name>/SKILL.md
+```
 
-# 多文件：解压到该 Skill 自己的目录
+多文件：平铺压缩包解进该技能自己的目录。
+
+```bash
 mkdir -p <skills-dir>/<name>
 curl -fsSL <origin>/agent-skills/<name>.tar.gz \
-    | tar -xz -C <skills-dir>/<name>
+  | tar -xz -C <skills-dir>/<name>
+```
 
-# 套装：解压到 Skills 公共目录
+套装：每一项已经是一个目录，解进 Skills 的公共目录。
+
+```bash
 mkdir -p <skills-dir>
 curl -fsSL <origin>/agent-skills/<bundle>-bundle.tar.gz \
-    | tar -xz -C <skills-dir>
+  | tar -xz -C <skills-dir>
 ```
 
-不要省略目录创建；目标目录不存在时，tar -C 会失败。
-以上直接下载命令本身不执行发现索引中的摘要验证。
+`mkdir -p` 不能省。目标目录不存在时，`tar -C` 会因为无法进入该目录而失败。这几条直接下载本身不做发现索引里的摘要校验。
 
-## 7. 配置统计（可选）
+按谁会复制来配命令：要插件市场的人、写脚本的人、习惯从仓库安装的人、跟着步骤走只想要一条可复制命令的人，各留一条。
 
-在展示安装命令的页面记录命令复制、目标 Agent、安装方式，
-以及 SKILL.md 全文复制、归档下载和源码链接点击。
+### 7. 给安装做统计（可选）
 
-在服务器端记录索引和各个文件 URL 的请求，按 User-Agent 分类。
-将通用爬虫与实际安装客户端分开，不要直接把总请求数当作安装量。
+你看不到别人电脑上跑的那条 `curl`，但你能测量自己提供的部分：
 
-如果多篇页面展示相同的安装入口，在事件中附上来源页面标识，
-以便区分哪个页面带来了操作。
+- 展示安装命令的地方（文档页、落地页、README）：复制了哪条命令、哪个 Agent、哪种方式，以及 `SKILL.md` 全文复制和跳到源码仓库的点击。
+- 服务器一侧：对 `/.well-known/agent-skills/index.json` 和每个技能 `url` 的请求，按 `User-Agent` 分类。先拆开这些类别再相信总数。打到一份固定路径文件上的「Agent」流量，多数是通用爬虫，不是你关心的安装器。
+- 按来源页面：同一组安装命令出现在不止一个页面时，给每条事件带上来源页面标识。否则你只知道哪项技能被安装，不知道是哪个页面带来的。
 
-## 8. 验证发布结果
+### 8. 验收
 
-* 请求索引响应头，确认 Content-Type 为 application/json。
-* 获取索引正文，确认 JSON 有效，条目包含全部预期 Skills。
-* 选择一个文件，从线上 URL 下载并计算 SHA-256，与 digest 比较。
-* 用 tar -tzf 检查单个 Skill 的归档，确认 SKILL.md 位于根目录。
-* 通过 npx skills 从域名安装，确认文件落在目标 Agent 的正确目录。
-* 提出 Skill 适用的任务，观察 Agent 是否加载它，以验证 description 的触发效果。
+- `curl -fsSLI <origin>/.well-known/agent-skills/index.json` 的 `content-type` 是 `application/json`。
+- 对同一地址 `curl -fsSL`，得到有效 JSON，列出你打算发布的每一项，没有多出来的。
+- 任选一条，`curl -fsSL <url> | sha256sum` 与公布的 `digest` 一致。摘要算的不是你实际提供的那份文件时，这一步会静静失败。
+- `tar -tzf <name>.tar.gz` 在归档根目录列出 `SKILL.md`，而不是 `<name>/SKILL.md`。
+- `npx skills add <origin> --skill <name>` 能装进目标 Agent 的 Skills 目录。再向 Agent 提一个这项技能该处理的任务，看它会不会加载。这是检验 `description` 有没有写到触发条件的唯一办法。
 
-## 避免这些错误
+## 不要做这些
 
-* 发布会随仓库分支变化的 raw URL，却未同步更新摘要。
-* 多文件 Skill 只交付 SKILL.md，遗漏脚本和资料。
-* 单个 Skill 归档多套一层目录，形成 <name>/<name>/SKILL.md。
-* 将整个套装作为一个索引条目，而不是逐个列出成员。
-* 使用重复名称，或自行增加安装器不理解的索引字段。
-* 分开打包与计算摘要，同时保留不确定的归档元数据。
-* 省略 digest，或在摘要生成后重新生成发布文件。
-* 给按域名安装的命令传入不带协议的域名，或错误的子路径。
-* 只提供一种安装方式，让使用其他工具的人自行摸索。
+- 不要把发现索引指向 `raw.githubusercontent.com`，或任何不是由你构建出来的主机。摘要和实际提供的字节会分开，安装会坏。重新托管，并对自己的副本计算摘要。
+- 不要只为躲开 raw URL 的问题去钉死某次提交。重新托管做对了，就可以安全地跟踪默认分支；钉死提交只会让技能变旧。
+- 不要在单个技能的归档里再包一层目录。安装器把平铺归档解进技能目录；`<name>/<name>/SKILL.md` 会让安装失败。
+- 不要为整个套装只写一条发现条目。每一项用自己的名字单独列出。安装器按 `name` 索引。
+- 不要自造 schema 里没有的字段：顶层的 `version`、`origin`，`bundles` 数组，或每项技能上的 `bundle`。多出来的字段安装器不会读。
+- 不要公布一份你复现不了的摘要。把哈希和打包拆开，又留下不确定的压缩包（权限没钉、成员没排序、修改时间是当下的、没用 `gzip -n`），技能没改，你公布的哈希也会对不上你提供的文件。
+- 不要省掉 `digest`。没有完整性哈希，安装器无从校验；损坏或被换掉的载荷会静静装上。
+- 传给 `npx skills` 的只能是带协议的域名根。带路径会把查找限定在该路径下，且不会回退到根；不带协议会被当成 Git 仓库去克隆。传 `<origin>`。
+- 不要只留一种安装命令。多留几种成本很低，差别是读者装上了，还是关掉了。
 
-## 最终交付检查
+## 最后检查
 
-1. 索引路径正确，以 application/json 提供，每个条目都有五个必要字段。
-2. 所有文件均从受控发布位置提供，摘要与线上字节一致。
-3. 单文件、多文件和套装成员的类型、归档结构及条目组织正确。
-4. 整个索引中的 Skill 名称唯一。
-5. 至少验证 npx skills 和一种仓库安装方式（gh skill 或 Claude 插件市场）。
-```
+1. `/.well-known/agent-skills/index.json` 存在，以 `application/json` 提供，是有效 JSON，每一项都有 `name`、`description`、`type`、`url`、`digest`。
+2. 每个 `url` 都在你控制、并由你构建的域名上，没有 raw 仓库地址。
+3. 每个 `digest` 都与该 `url` 上实际提供的字节一致。
+4. 单文件是 `type: skill-md`；多文件是 `type: archive`，且压缩包是平的；套装里的每一项各有一条，名称在整个索引里唯一。
+5. 至少 `npx skills` 再加上一种从仓库安装的方式（`gh skill` 或 Claude 插件市场）能装成功。
+````
 
-Agent 读到的是一份工作说明：什么时候用、交付哪些文件、哪些做法要避开、怎样验收。文章给人读，Skill 给 Agent 执行。两者可以一起发布。
+贴进去之后，Agent 按这份说明执行。
 
 ## 发布 Skill，不需要另造一套分发系统
 
 Skill 的内容形式比较新，发布方法却很熟悉：一个固定位置的索引、每份安装文件的明确地址，以及客户端在使用前验证的摘要。
 
-先在仓库中维护和审查内容，再按照单文件、多文件或套装的形式交付；让索引描述实际发布的文件，为不同工具提供可用的安装入口，最后用一次真实安装检验整条流程。
+先在仓库中维护和审查内容，再按照单文件、多文件或套装的形式交付。让索引描述实际发布的文件，为不同工具提供可用的安装入口，最后用一次真实安装检验整条流程。
 
 做到这些，一份工程经验才从“别人可以读到的文档”，变成了“别人的 Agent 可以安装并采用的方法”。

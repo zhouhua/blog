@@ -326,6 +326,56 @@ article pre[data-language]:hover .copy-code-btn {
   background: color-mix(in oklch, var(--chart-2) 38%, var(--background));
   color: oklch(0.18 0.02 287);
 }
+.copy-code-btn {
+  z-index: 2;
+}
+
+article [data-rehype-pretty-code-figure].is-collapsed pre[data-language] {
+  max-height: 320px;
+  overflow: hidden;
+}
+.code-collapse-fade {
+  display: none;
+}
+article [data-rehype-pretty-code-figure].is-collapsed .code-collapse-fade {
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  height: 4.5rem;
+  background: linear-gradient(to bottom, transparent, var(--background) 72%);
+  pointer-events: none;
+}
+.code-collapse-btn {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1rem;
+  border: 0;
+  border-top: 1px solid var(--border);
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 14px;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.code-collapse-btn:hover {
+  background: color-mix(in oklch, var(--muted) 55%, var(--background));
+}
+.code-collapse-chevron {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-1px);
+}
+article [data-rehype-pretty-code-figure].is-collapsible:not(.is-collapsed) .code-collapse-chevron {
+  transform: rotate(225deg) translateY(1px);
+}
 
 /* Article code blocks (rehype-pretty-code) */
 article [data-rehype-pretty-code-figure] {

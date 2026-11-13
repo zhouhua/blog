@@ -22,6 +22,7 @@ interface Props {
   ogType?: 'article' | 'website' | undefined;
   publishedTime?: Date | string | undefined;
   jsonLd?: null | Record<string, unknown> | undefined;
+  markdownHref?: string | undefined;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -35,6 +36,7 @@ const {
   imageType,
   imageWidth,
   jsonLd = null,
+  markdownHref,
   ogTitle,
   ogType = 'website',
   publishedTime,
@@ -104,6 +106,13 @@ const resolvedJsonLd = jsonLd ?? (ogType === 'article'
   title={`${SITE.NAME} 的文章 RSS`}
   type="application/rss+xml"
 />
+{markdownHref && (
+  <link
+    href={new URL(markdownHref, Astro.site)}
+    rel="alternate"
+    type="text/markdown"
+  />
+)}
 <meta content={Astro.generator} name="generator" />
 <meta content={description} name="description" />
 

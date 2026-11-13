@@ -3,8 +3,7 @@ import Container from '@components/Container.astro';
 import ListTitle from '@components/ListTitle.astro';
 import { JOURNALS } from '@consts';
 import PageLayout from '@layouts/PageLayout.astro';
-import { getReadInfo } from '@lib/html';
-import JournalList from '@react/components/JournalList';
+import { getMarkdownExcerpt, getReadInfo } from '@lib/html';
 import { getCollection } from 'astro:content';
 import dayjs from 'dayjs';
 
@@ -14,14 +13,24 @@ const items = data.map((item) => {
   const dateString = dayjs(item.data.date).format('MM-DD');
   const body = item.body || '';
   const { timeToRead, wordCount } = getReadInfo(body);
+  const excerpt = getMarkdownExcerpt(body);
   return {
     dateString,
-    html: item.rendered?.html ?? '',
+    excerpt,
+    href: `/journal${year}-${dateString}`,
     timeToRead,
+    truncated: excerpt.length >= 140,
     wordCount,
     year,
   };
 });
+
+const groups = new Map<number, typeof items>();
+for (const item of items) {
+  const entries = groups.get(item.year) ?? [];
+  entries.push(item);
+  groups.set(item.year, entries);
+}
 ---
 
 <PageLayout description={JOURNALS.DESCRIPTION} title={JOURNALS.TITLE}>
@@ -30,6 +39,29 @@ const items = data.map((item) => {
     title="周骅的博客 - 所有随笔"
   />
   <Container>
-    <JournalList client:only="react" items={items} />
+    {items.length === 0
+      ? <p class="mt-8 text-zinc-500">还没有随笔。</p>
+      : (
+        <div class="mt-8 flex flex-col gap-10">
+          {Array.from(groups.entries(), ([year, entries]) => (
+            <section>
+              <h2 class="text-2xl font-semibold">{year}</h2>
+              <ul class="mt-4 flex flex-col gap-6">
+                {entries.map(entry => (
+                  <li>
+                    <a class="text-sm text-zinc-500 hover:underline" href={entry.href}>{entry.dateString}</a>
+                    {entry.excerpt && (
+                      <a class="mt-1 block leading-7" href={entry.href}>
+                        {entry.excerpt}{entry.truncated ? '…' : ''}
+                      </a>
+                    )}
+                    <p class="mt-1 text-sm text-zinc-500">{entry.wordCount} 字 · {entry.timeToRead} 分钟</p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+      )}
   </Container>
 </PageLayout>

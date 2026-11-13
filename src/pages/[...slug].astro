@@ -14,7 +14,9 @@ import { Picture } from 'astro:assets';
 import { getCollection, getEntry, render } from 'astro:content';
 import { sampleSize } from 'es-toolkit/array';
 
-export const prerender = true;
+// Astro only detects a literal true or false. Leaving this non-literal keeps dev
+// on the server output, where Accept is readable, and production static output prerendered.
+export const prerender = import.meta.env.PROD;
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -63,6 +65,7 @@ const ogImageType = hero?.format
   imageHeight={hero?.height}
   imageType={ogImageType}
   imageWidth={hero?.width}
+  markdownHref={`/${post.id}.md`}
   ogType="article"
   publishedTime={post.data.date}
   title={post.data.title}
